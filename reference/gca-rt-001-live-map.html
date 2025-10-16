@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCA-RT-001: Live Map View</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        /* iPhone 16 Pro Frame */
+        .iphone-frame {
+            width: 393px;
+            height: 852px;
+            background: #000;
+            border-radius: 55px;
+            padding: 12px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 
+                        0 0 0 1px rgba(255,255,255,0.1);
+            position: relative;
+        }
+        
+        .dynamic-island {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background: #000;
+            border-radius: 22px;
+            z-index: 10;
+        }
+        
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 43px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .app-container {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+            padding: 55px 24px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+            z-index: 20;
+        }
+        
+        /* Map Container */
+        .map-container {
+            flex: 1;
+            position: relative;
+            background: #0a0a0a;
+            overflow: hidden;
+        }
+        
+        /* Golf Course Map */
+        .golf-course-map {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: linear-gradient(135deg, #0a1f0a 0%, #061506 100%);
+        }
+        
+        /* Map Grid */
+        .map-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        /* Golf Holes */
+        .hole {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: rgba(52, 199, 89, 0.1);
+            border: 1px solid rgba(52, 199, 89, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: rgba(52, 199, 89, 0.8);
+            font-weight: 600;
+        }
+        
+        /* Cart Markers */
+        .cart-marker {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+        
+        .cart-marker:hover {
+            transform: translate(-50%, -50%) scale(1.2);
+            z-index: 10;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .cart-icon {
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            color: #fff;
+            backdrop-filter: blur(10px);
+        }
+        
+        .cart-marker.active .cart-icon {
+            background: rgba(52, 199, 89, 0.2);
+            border-color: #34c759;
+        }
+        
+        .cart-marker.idle .cart-icon {
+            background: rgba(255, 149, 0, 0.2);
+            border-color: #ff9500;
+        }
+        
+        .cart-marker.charging .cart-icon {
+            background: rgba(0, 122, 255, 0.2);
+            border-color: #007aff;
+        }
+        
+        .cart-marker.maintenance .cart-icon {
+            background: rgba(255, 59, 48, 0.2);
+            border-color: #ff3b30;
+        }
+        
+        .cart-marker.offline .cart-icon {
+            background: rgba(102, 102, 102, 0.2);
+            border-color: #666;
+        }
+        
+        /* Top Controls */
+        .map-controls {
+            position: absolute;
+            top: 80px;
+            left: 0;
+            right: 0;
+            padding: 0 16px;
+            z-index: 15;
+        }
+        
+        .search-bar {
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .search-input {
+            flex: 1;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .search-input::placeholder {
+            color: #666;
+        }
+        
+        .filter-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #fff;
+            font-size: 16px;
+        }
+        
+        /* Filter Panel */
+        .filter-panel {
+            position: absolute;
+            top: 140px;
+            left: 16px;
+            right: 16px;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 16px;
+            display: none;
+            z-index: 14;
+        }
+        
+        .filter-panel.active {
+            display: block;
+        }
+        
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        
+        .filter-chip {
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            font-size: 12px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        
+        .filter-chip.active {
+            background: rgba(255,255,255,0.1);
+            border-color: #fff;
+            color: #fff;
+        }
+        
+        /* Status Bar (Bottom Info) */
+        .status-panel {
+            position: absolute;
+            bottom: 90px;
+            left: 16px;
+            right: 16px;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px 16px;
+            z-index: 15;
+        }
+        
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+        
+        .status-item {
+            text-align: center;
+        }
+        
+        .status-count {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .status-label {
+            font-size: 9px;
+            color: #666;
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        .status-item.active .status-count { color: #34c759; }
+        .status-item.idle .status-count { color: #ff9500; }
+        .status-item.charging .status-count { color: #007aff; }
+        .status-item.maintenance .status-count { color: #ff3b30; }
+        .status-item.offline .status-count { color: #666; }
+        
+        /* Cart Detail Popup */
+        .cart-popup {
+            position: absolute;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px;
+            min-width: 160px;
+            display: none;
+            z-index: 30;
+        }
+        
+        .cart-popup.active {
+            display: block;
+        }
+        
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .popup-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .popup-status {
+            font-size: 8px;
+            padding: 2px 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+        
+        .popup-info {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .popup-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+        }
+        
+        .popup-label {
+            color: #666;
+        }
+        
+        .popup-value {
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .popup-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .popup-btn {
+            padding: 6px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 10px;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .popup-btn.primary {
+            background: rgba(52, 199, 89, 0.2);
+            border-color: #34c759;
+        }
+        
+        /* Map Controls (Zoom) */
+        .zoom-controls {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 15;
+        }
+        
+        .zoom-btn {
+            width: 36px;
+            height: 36px;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #fff;
+            font-size: 18px;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            padding: 12px 0 28px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            z-index: 20;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .nav-item.active .nav-icon {
+            color: #fff;
+        }
+        
+        .nav-item.active .nav-label {
+            color: #fff;
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            color: #666;
+        }
+        
+        .nav-label {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 500;
+        }
+        
+        /* Map Legend */
+        .map-legend {
+            position: absolute;
+            top: 140px;
+            right: 16px;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 8px;
+            display: none;
+            z-index: 14;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px;
+        }
+        
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        
+        .legend-label {
+            font-size: 10px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-frame">
+        <div class="dynamic-island"></div>
+        <div class="screen">
+            <div class="app-container">
+                <!-- Status Bar -->
+                <div class="status-bar">
+                    <div class="time">09:41</div>
+                    <div class="status-icons">
+                        <span>5G</span>
+                        <span>━━━</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+                
+                <!-- Map Container -->
+                <div class="map-container">
+                    <div class="golf-course-map" id="mapCanvas">
+                        <div class="map-grid"></div>
+                        
+                        <!-- Golf Holes -->
+                        <div class="hole" style="top: 15%; left: 20%;">1</div>
+                        <div class="hole" style="top: 25%; left: 40%;">2</div>
+                        <div class="hole" style="top: 20%; left: 65%;">3</div>
+                        <div class="hole" style="top: 35%; left: 75%;">4</div>
+                        <div class="hole" style="top: 45%; left: 60%;">5</div>
+                        <div class="hole" style="top: 50%; left: 40%;">6</div>
+                        <div class="hole" style="top: 60%; left: 25%;">7</div>
+                        <div class="hole" style="top: 70%; left: 45%;">8</div>
+                        <div class="hole" style="top: 75%; left: 65%;">9</div>
+                        
+                        <!-- Cart Markers -->
+                        <div class="cart-marker active" style="top: 18%; left: 25%;" onclick="showCartDetail('001', event)">
+                            <div class="cart-icon">001</div>
+                        </div>
+                        <div class="cart-marker active" style="top: 28%; left: 45%;" onclick="showCartDetail('002', event)">
+                            <div class="cart-icon">002</div>
+                        </div>
+                        <div class="cart-marker idle" style="top: 23%; left: 70%;" onclick="showCartDetail('003', event)">
+                            <div class="cart-icon">003</div>
+                        </div>
+                        <div class="cart-marker charging" style="top: 85%; left: 50%;" onclick="showCartDetail('004', event)">
+                            <div class="cart-icon">004</div>
+                        </div>
+                        <div class="cart-marker maintenance" style="top: 38%; left: 78%;" onclick="showCartDetail('005', event)">
+                            <div class="cart-icon">005</div>
+                        </div>
+                        <div class="cart-marker active" style="top: 48%; left: 62%;" onclick="showCartDetail('006', event)">
+                            <div class="cart-icon">006</div>
+                        </div>
+                        <div class="cart-marker active" style="top: 53%; left: 38%;" onclick="showCartDetail('007', event)">
+                            <div class="cart-icon">007</div>
+                        </div>
+                        <div class="cart-marker offline" style="top: 63%; left: 28%;" onclick="showCartDetail('008', event)">
+                            <div class="cart-icon">008</div>
+                        </div>
+                        <div class="cart-marker active" style="top: 73%; left: 48%;" onclick="showCartDetail('009', event)">
+                            <div class="cart-icon">009</div>
+                        </div>
+                        <div class="cart-marker idle" style="top: 78%; left: 68%;" onclick="showCartDetail('010', event)">
+                            <div class="cart-icon">010</div>
+                        </div>
+                        <div class="cart-marker active" style="top: 35%; left: 35%;" onclick="showCartDetail('011', event)">
+                            <div class="cart-icon">011</div>
+                        </div>
+                        <div class="cart-marker charging" style="top: 85%; left: 55%;" onclick="showCartDetail('012', event)">
+                            <div class="cart-icon">012</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Map Controls -->
+                    <div class="map-controls">
+                        <div class="search-bar">
+                            <input type="text" class="search-input" placeholder="Search cart ID or location..." id="searchInput">
+                            <div class="filter-btn" onclick="toggleFilter()">⚙</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Filter Panel -->
+                    <div class="filter-panel" id="filterPanel">
+                        <div class="filter-grid">
+                            <div class="filter-chip active" data-status="active">Active</div>
+                            <div class="filter-chip active" data-status="idle">Idle</div>
+                            <div class="filter-chip active" data-status="charging">Charging</div>
+                            <div class="filter-chip active" data-status="maintenance">Service</div>
+                            <div class="filter-chip active" data-status="offline">Offline</div>
+                            <div class="filter-chip" data-status="geofence">Geofence</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Zoom Controls -->
+                    <div class="zoom-controls">
+                        <div class="zoom-btn" onclick="zoomIn()">+</div>
+                        <div class="zoom-btn" onclick="zoomOut()">−</div>
+                    </div>
+                    
+                    <!-- Status Panel -->
+                    <div class="status-panel">
+                        <div class="status-grid">
+                            <div class="status-item active">
+                                <div class="status-count">7</div>
+                                <div class="status-label">Active</div>
+                            </div>
+                            <div class="status-item idle">
+                                <div class="status-count">2</div>
+                                <div class="status-label">Idle</div>
+                            </div>
+                            <div class="status-item charging">
+                                <div class="status-count">2</div>
+                                <div class="status-label">Charge</div>
+                            </div>
+                            <div class="status-item maintenance">
+                                <div class="status-count">1</div>
+                                <div class="status-label">Service</div>
+                            </div>
+                            <div class="status-item offline">
+                                <div class="status-count">1</div>
+                                <div class="status-label">Offline</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cart Detail Popup -->
+                    <div class="cart-popup" id="cartPopup">
+                        <div class="popup-header">
+                            <div class="popup-title" id="popupTitle">GCA-001</div>
+                            <div class="popup-status" id="popupStatus">ACTIVE</div>
+                        </div>
+                        <div class="popup-info">
+                            <div class="popup-row">
+                                <span class="popup-label">Battery</span>
+                                <span class="popup-value" id="popupBattery">78%</span>
+                            </div>
+                            <div class="popup-row">
+                                <span class="popup-label">Speed</span>
+                                <span class="popup-value" id="popupSpeed">12 km/h</span>
+                            </div>
+                            <div class="popup-row">
+                                <span class="popup-label">Location</span>
+                                <span class="popup-value" id="popupLocation">Hole 1</span>
+                            </div>
+                            <div class="popup-row">
+                                <span class="popup-label">Runtime</span>
+                                <span class="popup-value" id="popupRuntime">2.5 hrs</span>
+                            </div>
+                        </div>
+                        <div class="popup-actions">
+                            <div class="popup-btn primary" onclick="openCartDetail()">Detail</div>
+                            <div class="popup-btn" onclick="trackCart()">Track</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Map Legend -->
+                    <div class="map-legend" id="mapLegend">
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #34c759;"></div>
+                            <span class="legend-label">Active</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #ff9500;"></div>
+                            <span class="legend-label">Idle</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #007aff;"></div>
+                            <span class="legend-label">Charging</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #ff3b30;"></div>
+                            <span class="legend-label">Service</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #666;"></div>
+                            <span class="legend-label">Offline</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Navigation -->
+                <div class="bottom-nav">
+                    <div class="nav-item" onclick="navigateTo('GCA-HM-001')">
+                        <div class="nav-icon">▦</div>
+                        <div class="nav-label">Home</div>
+                    </div>
+                    <div class="nav-item active" onclick="navigateTo('GCA-RT-001')">
+                        <div class="nav-icon">◉</div>
+                        <div class="nav-label">Monitor</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-CM-001')">
+                        <div class="nav-icon">▣</div>
+                        <div class="nav-label">Fleet</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-MM-001')">
+                        <div class="nav-icon">⚙</div>
+                        <div class="nav-label">Service</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-ST-001')">
+                        <div class="nav-icon">☰</div>
+                        <div class="nav-label">System</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // GCA-RT-001 Live Map Controller
+        class LiveMapController {
+            constructor() {
+                this.carts = new Map();
+                this.filters = {
+                    active: true,
+                    idle: true,
+                    charging: true,
+                    maintenance: true,
+                    offline: true,
+                    geofence: false
+                };
+                this.zoomLevel = 1;
+                this.selectedCart = null;
+                this.init();
+            }
+            
+            init() {
+                this.loadCartData();
+                this.setupEventListeners();
+                this.startRealtimeUpdates();
+                this.initializeGeofence();
+            }
+            
+            loadCartData() {
+                // Simulated cart data
+                const cartData = [
+                    { id: '001', status: 'active', battery: 78, speed: 12, location: 'Hole 1', runtime: 2.5 },
+                    { id: '002', status: 'active', battery: 65, speed: 15, location: 'Hole 2', runtime: 3.1 },
+                    { id: '003', status: 'idle', battery: 82, speed: 0, location: 'Hole 3', runtime: 1.8 },
+                    { id: '004', status: 'charging', battery: 45, speed: 0, location: 'Charging Station', runtime: 0 },
+                    { id: '005', status: 'maintenance', battery: 100, speed: 0, location: 'Service Bay', runtime: 0 },
+                    { id: '006', status: 'active', battery: 91, speed: 8, location: 'Hole 5', runtime: 1.2 },
+                    { id: '007', status: 'active', battery: 12, speed: 18, location: 'Hole 6', runtime: 4.8 },
+                    { id: '008', status: 'offline', battery: 0, speed: 0, location: 'Last: Hole 7', runtime: 0 },
+                    { id: '009', status: 'active', battery: 56, speed: 14, location: 'Hole 8', runtime: 3.5 },
+                    { id: '010', status: 'idle', battery: 73, speed: 0, location: 'Hole 9', runtime: 2.2 },
+                    { id: '011', status: 'active', battery: 88, speed: 10, location: 'Hole 4', runtime: 1.6 },
+                    { id: '012', status: 'charging', battery: 67, speed: 0, location: 'Charging Station', runtime: 0 }
+                ];
+                
+                cartData.forEach(cart => {
+                    this.carts.set(cart.id, cart);
+                });
+            }
+            
+            setupEventListeners() {
+                // Search functionality
+                const searchInput = document.getElementById('searchInput');
+                searchInput?.addEventListener('input', (e) => {
+                    this.searchCarts(e.target.value);
+                });
+                
+                // Filter chips
+                document.querySelectorAll('.filter-chip').forEach(chip => {
+                    chip.addEventListener('click', (e) => {
+                        const status = e.target.dataset.status;
+                        this.toggleFilter(status, e.target);
+                    });
+                });
+                
+                // Close popup on map click
+                document.getElementById('mapCanvas')?.addEventListener('click', (e) => {
+                    if (e.target.id === 'mapCanvas') {
+                        this.hideCartPopup();
+                    }
+                });
+            }
+            
+            startRealtimeUpdates() {
+                // Simulate real-time position updates
+                setInterval(() => {
+                    this.updateCartPositions();
+                    this.updateStatusCounts();
+                }, 3000);
+                
+                // Simulate telemetry updates
+                setInterval(() => {
+                    this.updateTelemetry();
+                }, 1000);
+            }
+            
+            updateCartPositions() {
+                // Simulate small position changes
+                document.querySelectorAll('.cart-marker').forEach(marker => {
+                    if (marker.classList.contains('active')) {
+                        const currentTop = parseFloat(marker.style.top);
+                        const currentLeft = parseFloat(marker.style.left);
+                        
+                        const newTop = currentTop + (Math.random() - 0.5) * 2;
+                        const newLeft = currentLeft + (Math.random() - 0.5) * 2;
+                        
+                        marker.style.top = `${Math.max(5, Math.min(95, newTop))}%`;
+                        marker.style.left = `${Math.max(5, Math.min(95, newLeft))}%`;
+                    }
+                });
+            }
+            
+            updateTelemetry() {
+                this.carts.forEach((cart, id) => {
+                    if (cart.status === 'active') {
+                        cart.battery = Math.max(0, cart.battery - Math.random() * 0.1);
+                        cart.speed = Math.random() * 20;
+                        cart.runtime += 0.001;
+                    }
+                });
+            }
+            
+            updateStatusCounts() {
+                // Update status panel counts
+                const counts = {
+                    active: 0,
+                    idle: 0,
+                    charging: 0,
+                    maintenance: 0,
+                    offline: 0
+                };
+                
+                this.carts.forEach(cart => {
+                    counts[cart.status]++;
+                });
+                
+                Object.keys(counts).forEach(status => {
+                    const element = document.querySelector(`.status-item.${status} .status-count`);
+                    if (element) {
+                        element.textContent = counts[status];
+                    }
+                });
+            }
+            
+            initializeGeofence() {
+                // Initialize geofence boundaries
+                console.log('Geofence initialized');
+            }
+            
+            searchCarts(query) {
+                const lowerQuery = query.toLowerCase();
+                document.querySelectorAll('.cart-marker').forEach(marker => {
+                    const cartId = marker.querySelector('.cart-icon').textContent;
+                    const cart = this.carts.get(cartId);
+                    
+                    if (cartId.includes(lowerQuery) || 
+                        (cart && cart.location.toLowerCase().includes(lowerQuery))) {
+                        marker.style.display = 'block';
+                        if (query.length > 0) {
+                            marker.style.animation = 'pulse 0.5s infinite';
+                        }
+                    } else if (query.length > 0) {
+                        marker.style.display = 'none';
+                    } else {
+                        marker.style.display = 'block';
+                        marker.style.animation = 'pulse 2s infinite';
+                    }
+                });
+            }
+            
+            toggleFilter(status, element) {
+                this.filters[status] = !this.filters[status];
+                element.classList.toggle('active');
+                
+                // Apply filters to markers
+                this.applyFilters();
+            }
+            
+            applyFilters() {
+                document.querySelectorAll('.cart-marker').forEach(marker => {
+                    const classes = marker.className.split(' ');
+                    const status = classes.find(c => ['active', 'idle', 'charging', 'maintenance', 'offline'].includes(c));
+                    
+                    if (status && this.filters[status]) {
+                        marker.style.display = 'block';
+                    } else {
+                        marker.style.display = 'none';
+                    }
+                });
+            }
+            
+            showCartDetail(cartId, event) {
+                event.stopPropagation();
+                const cart = this.carts.get(cartId);
+                if (!cart) return;
+                
+                const popup = document.getElementById('cartPopup');
+                const marker = event.currentTarget;
+                
+                // Update popup content
+                document.getElementById('popupTitle').textContent = `GCA-${cartId}`;
+                document.getElementById('popupStatus').textContent = cart.status.toUpperCase();
+                document.getElementById('popupBattery').textContent = `${cart.battery.toFixed(0)}%`;
+                document.getElementById('popupSpeed').textContent = `${cart.speed.toFixed(0)} km/h`;
+                document.getElementById('popupLocation').textContent = cart.location;
+                document.getElementById('popupRuntime').textContent = `${cart.runtime.toFixed(1)} hrs`;
+                
+                // Position popup near marker
+                const rect = marker.getBoundingClientRect();
+                const containerRect = marker.parentElement.getBoundingClientRect();
+                
+                popup.style.left = `${rect.left - containerRect.left + 40}px`;
+                popup.style.top = `${rect.top - containerRect.top}px`;
+                
+                // Adjust if popup goes off screen
+                if (rect.left > window.innerWidth / 2) {
+                    popup.style.left = `${rect.left - containerRect.left - 180}px`;
+                }
+                
+                popup.classList.add('active');
+                this.selectedCart = cartId;
+            }
+            
+            hideCartPopup() {
+                document.getElementById('cartPopup').classList.remove('active');
+                this.selectedCart = null;
+            }
+            
+            zoomIn() {
+                this.zoomLevel = Math.min(2, this.zoomLevel + 0.2);
+                this.applyZoom();
+            }
+            
+            zoomOut() {
+                this.zoomLevel = Math.max(0.5, this.zoomLevel - 0.2);
+                this.applyZoom();
+            }
+            
+            applyZoom() {
+                const map = document.getElementById('mapCanvas');
+                map.style.transform = `scale(${this.zoomLevel})`;
+                map.style.transformOrigin = 'center center';
+            }
+        }
+        
+        // Initialize controller
+        const mapController = new LiveMapController();
+        
+        // Global functions
+        function toggleFilter() {
+            const panel = document.getElementById('filterPanel');
+            panel.classList.toggle('active');
+        }
+        
+        function showCartDetail(cartId, event) {
+            mapController.showCartDetail(cartId, event);
+        }
+        
+        function zoomIn() {
+            mapController.zoomIn();
+            showToast('Zoom In');
+        }
+        
+        function zoomOut() {
+            mapController.zoomOut();
+            showToast('Zoom Out');
+        }
+        
+        function openCartDetail() {
+            showToast(`Opening GCA-${mapController.selectedCart} detail view`);
+            navigateTo('GCA-RT-002');
+        }
+        
+        function trackCart() {
+            showToast(`Tracking GCA-${mapController.selectedCart}`);
+            mapController.hideCartPopup();
+        }
+        
+        function navigateTo(pageId) {
+            showToast(`Navigate to ${pageId}`);
+            console.log(`Navigation: ${pageId}`);
+        }
+        
+        // Toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(255,255,255,0.1);
+                backdrop-filter: blur(20px);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-size: 13px;
+                z-index: 200;
+                animation: fadeInOut 2s ease-in-out;
+                border: 1px solid rgba(255,255,255,0.1);
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 2000);
+        }
+        
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInOut {
+                0% { opacity: 0; transform: translate(-50%, 20px); }
+                20% { opacity: 1; transform: translate(-50%, 0); }
+                80% { opacity: 1; transform: translate(-50%, 0); }
+                100% { opacity: 0; transform: translate(-50%, -20px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

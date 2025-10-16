@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCA-ST-001: System Configuration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        /* iPhone 16 Pro Frame */
+        .iphone-frame {
+            width: 393px;
+            height: 852px;
+            background: #000;
+            border-radius: 55px;
+            padding: 12px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 
+                        0 0 0 1px rgba(255,255,255,0.1);
+            position: relative;
+        }
+        
+        .dynamic-island {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background: #000;
+            border-radius: 22px;
+            z-index: 10;
+        }
+        
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 43px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .app-container {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            background: #000;
+            padding: 55px 24px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+        }
+        
+        /* Header */
+        .header {
+            background: #000;
+            padding: 12px 24px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .header-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .header-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        
+        .header-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        /* System Info Card */
+        .system-info {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 12px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        
+        .info-item {
+            text-align: center;
+        }
+        
+        .info-value {
+            font-size: 14px;
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        .info-label {
+            font-size: 10px;
+            color: #666;
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        /* Content */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 80px;
+        }
+        
+        /* Settings Section */
+        .settings-section {
+            padding: 16px 24px;
+        }
+        
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+        
+        /* Settings List */
+        .settings-list {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .settings-item {
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+        
+        .settings-item:hover {
+            background: rgba(255,255,255,0.02);
+        }
+        
+        .settings-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+        
+        .settings-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        .settings-info {
+            flex: 1;
+        }
+        
+        .settings-label {
+            font-size: 14px;
+            color: #fff;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        
+        .settings-desc {
+            font-size: 11px;
+            color: #666;
+        }
+        
+        .settings-value {
+            font-size: 13px;
+            color: #999;
+            margin-right: 8px;
+        }
+        
+        .settings-arrow {
+            color: #666;
+            font-size: 12px;
+        }
+        
+        /* Toggle Switch */
+        .toggle-switch {
+            width: 48px;
+            height: 28px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 14px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .toggle-switch.active {
+            background: #34c759;
+        }
+        
+        .toggle-knob {
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .toggle-switch.active .toggle-knob {
+            left: 22px;
+        }
+        
+        /* Alert Rules */
+        .rule-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .rule-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .rule-name {
+            font-size: 13px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .rule-status {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        
+        .rule-status.active {
+            background: rgba(52, 199, 89, 0.2);
+            border: 1px solid #34c759;
+            color: #34c759;
+        }
+        
+        .rule-status.inactive {
+            background: rgba(102, 102, 102, 0.2);
+            border: 1px solid #666;
+            color: #666;
+        }
+        
+        .rule-conditions {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+        
+        .rule-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .rule-btn {
+            padding: 4px 8px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 4px;
+            color: #fff;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .rule-btn:hover {
+            background: rgba(255,255,255,0.06);
+        }
+        
+        /* User Management */
+        .user-list {
+            display: grid;
+            gap: 8px;
+        }
+        
+        .user-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-size: 14px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .user-role {
+            font-size: 11px;
+            color: #999;
+            margin-top: 2px;
+        }
+        
+        .user-status {
+            text-align: right;
+        }
+        
+        .status-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: #34c759;
+            border-radius: 50%;
+            margin-right: 4px;
+        }
+        
+        .status-dot.offline {
+            background: #666;
+        }
+        
+        .status-text {
+            font-size: 10px;
+            color: #666;
+        }
+        
+        /* API Configuration */
+        .api-endpoint {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .endpoint-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .endpoint-name {
+            font-size: 13px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .endpoint-method {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        
+        .method-get {
+            background: rgba(52, 199, 89, 0.2);
+            color: #34c759;
+        }
+        
+        .method-post {
+            background: rgba(0, 122, 255, 0.2);
+            color: #007aff;
+        }
+        
+        .method-put {
+            background: rgba(255, 149, 0, 0.2);
+            color: #ff9500;
+        }
+        
+        .method-delete {
+            background: rgba(255, 59, 48, 0.2);
+            color: #ff3b30;
+        }
+        
+        .endpoint-url {
+            font-size: 11px;
+            color: #666;
+            font-family: 'SF Mono', monospace;
+            background: rgba(255,255,255,0.03);
+            padding: 4px 6px;
+            border-radius: 4px;
+            margin-top: 4px;
+        }
+        
+        /* Backup Status */
+        .backup-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 16px;
+        }
+        
+        .backup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .backup-title {
+            font-size: 14px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .backup-status {
+            font-size: 11px;
+            color: #34c759;
+        }
+        
+        .backup-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .backup-stat {
+            background: rgba(255,255,255,0.03);
+            padding: 8px;
+            border-radius: 6px;
+        }
+        
+        .backup-stat-label {
+            font-size: 10px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        
+        .backup-stat-value {
+            font-size: 13px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .backup-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        
+        .backup-btn {
+            padding: 10px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        
+        .backup-btn:hover {
+            background: rgba(255,255,255,0.06);
+        }
+        
+        .backup-btn.primary {
+            background: rgba(52, 199, 89, 0.1);
+            border-color: rgba(52, 199, 89, 0.3);
+            color: #34c759;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            padding: 12px 0 28px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            z-index: 20;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .nav-item.active .nav-icon {
+            color: #fff;
+        }
+        
+        .nav-item.active .nav-label {
+            color: #fff;
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            color: #666;
+        }
+        
+        .nav-label {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-frame">
+        <div class="dynamic-island"></div>
+        <div class="screen">
+            <div class="app-container">
+                <!-- Status Bar -->
+                <div class="status-bar">
+                    <div class="time">09:41</div>
+                    <div class="status-icons">
+                        <span>5G</span>
+                        <span>━━━</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+                
+                <!-- Header -->
+                <div class="header">
+                    <div class="header-top">
+                        <div class="header-title">System</div>
+                        <div class="header-actions">
+                            <div class="header-btn" onclick="syncSystem()">↻</div>
+                            <div class="header-btn" onclick="showNotifications()">🔔</div>
+                        </div>
+                    </div>
+                    
+                    <!-- System Info -->
+                    <div class="system-info">
+                        <div class="info-item">
+                            <div class="info-value">v2.1.0</div>
+                            <div class="info-label">Version</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value">99.8%</div>
+                            <div class="info-label">Uptime</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value">Level 3</div>
+                            <div class="info-label">Access</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content -->
+                <div class="content">
+                    <!-- General Settings -->
+                    <div class="settings-section">
+                        <div class="section-title">General Settings</div>
+                        <div class="settings-list">
+                            <div class="settings-item" onclick="openSetting('company')">
+                                <div class="settings-left">
+                                    <div class="settings-icon">🏢</div>
+                                    <div class="settings-info">
+                                        <div class="settings-label">Company Information</div>
+                                        <div class="settings-desc">Name, address, contact details</div>
+                                    </div>
+                                </div>
+                                <div class="settings-arrow">›</div>
+                            </div>
+                            
+                            <div class="settings-item" onclick="openSetting('timezone')">
+                                <div class="settings-left">
+                                    <div class="settings-icon">🌍</div>
+                                    <div class="settings-info">
+                                        <div class="settings-label">Time Zone & Language</div>
+                                        <div class="settings-desc">KST (UTC+9) • Korean</div>
+                                    </div>
+                                </div>
+                                <div class="settings-arrow">›</div>
+                            </div>
+                            
+                            <div class="settings-item" onclick="toggleNotifications()">
+                                <div class="settings-left">
+                                    <div class="settings-icon">🔔</div>
+                                    <div class="settings-info">
+                                        <div class="settings-label">Push Notifications</div>
+                                        <div class="settings-desc">Enable real-time alerts</div>
+                                    </div>
+                                </div>
+                                <div class="toggle-switch active" onclick="event.stopPropagation(); toggleSwitch(this)">
+                                    <div class="toggle-knob"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item" onclick="toggleDarkMode()">
+                                <div class="settings-left">
+                                    <div class="settings-icon">🌙</div>
+                                    <div class="settings-info">
+                                        <div class="settings-label">Dark Mode</div>
+                                        <div class="settings-desc">Always enabled</div>
+                                    </div>
+                                </div>
+                                <div class="toggle-switch active" onclick="event.stopPropagation(); toggleSwitch(this)">
+                                    <div class="toggle-knob"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Alert Configuration -->
+                    <div class="settings-section">
+                        <div class="section-title">Alert Rules</div>
+                        
+                        <div class="rule-card">
+                            <div class="rule-header">
+                                <div class="rule-name">Low Battery Alert</div>
+                                <div class="rule-status active">Active</div>
+                            </div>
+                            <div class="rule-conditions">Trigger when battery < 20%</div>
+                            <div class="rule-conditions">Priority: High • Notify: All Operators</div>
+                            <div class="rule-actions">
+                                <button class="rule-btn" onclick="editRule('battery')">Edit</button>
+                                <button class="rule-btn" onclick="testRule('battery')">Test</button>
+                            </div>
+                        </div>
+                        
+                        <div class="rule-card">
+                            <div class="rule-header">
+                                <div class="rule-name">Geofence Violation</div>
+                                <div class="rule-status active">Active</div>
+                            </div>
+                            <div class="rule-conditions">Trigger when cart exits boundary</div>
+                            <div class="rule-conditions">Priority: Critical • Notify: Manager</div>
+                            <div class="rule-actions">
+                                <button class="rule-btn" onclick="editRule('geofence')">Edit</button>
+                                <button class="rule-btn" onclick="testRule('geofence')">Test</button>
+                            </div>
+                        </div>
+                        
+                        <div class="rule-card">
+                            <div class="rule-header">
+                                <div class="rule-name">Maintenance Due</div>
+                                <div class="rule-status inactive">Inactive</div>
+                            </div>
+                            <div class="rule-conditions">Trigger at service intervals</div>
+                            <div class="rule-conditions">Priority: Normal • Notify: Tech Team</div>
+                            <div class="rule-actions">
+                                <button class="rule-btn" onclick="editRule('maintenance')">Edit</button>
+                                <button class="rule-btn" onclick="toggleRule('maintenance')">Enable</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- User Management -->
+                    <div class="settings-section">
+                        <div class="section-title">User Management</div>
+                        
+                        <div class="user-list">
+                            <div class="user-card">
+                                <div class="user-avatar">KM</div>
+                                <div class="user-info">
+                                    <div class="user-name">Kim Manager</div>
+                                    <div class="user-role">Administrator • Level 3</div>
+                                </div>
+                                <div class="user-status">
+                                    <span class="status-dot"></span>
+                                    <div class="status-text">Online</div>
+                                </div>
+                            </div>
+                            
+                            <div class="user-card">
+                                <div class="user-avatar">JL</div>
+                                <div class="user-info">
+                                    <div class="user-name">Jung Lee</div>
+                                    <div class="user-role">Supervisor • Level 2</div>
+                                </div>
+                                <div class="user-status">
+                                    <span class="status-dot"></span>
+                                    <div class="status-text">Online</div>
+                                </div>
+                            </div>
+                            
+                            <div class="user-card">
+                                <div class="user-avatar">SP</div>
+                                <div class="user-info">
+                                    <div class="user-name">Seo Park</div>
+                                    <div class="user-role">Operator • Level 1</div>
+                                </div>
+                                <div class="user-status">
+                                    <span class="status-dot offline"></span>
+                                    <div class="status-text">Offline</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="backup-btn" style="margin-top: 12px; width: 100%;" onclick="manageUsers()">
+                            Manage Users & Permissions
+                        </button>
+                    </div>
+                    
+                    <!-- API Configuration -->
+                    <div class="settings-section">
+                        <div class="section-title">API Configuration</div>
+                        
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <div class="endpoint-name">Telemetry Stream</div>
+                                <div class="endpoint-method method-get">WS</div>
+                            </div>
+                            <div class="endpoint-url">wss://realtime.golfcart-admin.com</div>
+                        </div>
+                        
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <div class="endpoint-name">Cart Management</div>
+                                <div class="endpoint-method method-get">GET</div>
+                            </div>
+                            <div class="endpoint-url">https://api.golfcart-admin.com/v1/carts</div>
+                        </div>
+                        
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <div class="endpoint-name">Maintenance</div>
+                                <div class="endpoint-method method-post">POST</div>
+                            </div>
+                            <div class="endpoint-url">https://api.golfcart-admin.com/v1/maintenance</div>
+                        </div>
+                        
+                        <button class="backup-btn" style="margin-top: 12px; width: 100%;" onclick="configureAPI()">
+                            Configure API Keys & Endpoints
+                        </button>
+                    </div>
+                    
+                    <!-- Backup & Recovery -->
+                    <div class="settings-section">
+                        <div class="section-title">Backup & Recovery</div>
+                        
+                        <div class="backup-card">
+                            <div class="backup-header">
+                                <div class="backup-title">Automated Backup</div>
+                                <div class="backup-status">● Active</div>
+                            </div>
+                            
+                            <div class="backup-info">
+                                <div class="backup-stat">
+                                    <div class="backup-stat-label">Last Backup</div>
+                                    <div class="backup-stat-value">2 hours ago</div>
+                                </div>
+                                <div class="backup-stat">
+                                    <div class="backup-stat-label">Next Backup</div>
+                                    <div class="backup-stat-value">10:00 PM</div>
+                                </div>
+                                <div class="backup-stat">
+                                    <div class="backup-stat-label">Backup Size</div>
+                                    <div class="backup-stat-value">1.2 GB</div>
+                                </div>
+                                <div class="backup-stat">
+                                    <div class="backup-stat-label">Storage Used</div>
+                                    <div class="backup-stat-value">24.8 GB</div>
+                                </div>
+                            </div>
+                            
+                            <div class="backup-actions">
+                                <button class="backup-btn primary" onclick="backupNow()">Backup Now</button>
+                                <button class="backup-btn" onclick="restoreBackup()">Restore</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- System Information -->
+                    <div class="settings-section">
+                        <div class="section-title">System Information</div>
+                        <div class="settings-list">
+                            <div class="settings-item" onclick="viewLogs()">
+                                <div class="settings-left">
+                                    <div class="settings-icon">📋</div>
+                                    <div class="settings-info">
+                                        <div class="settings-label">System Logs</div>
+                                        <div class="settings-desc">View activity and error logs</div>
+                                    </div>
+                                </div>
+                                <div class="settings-arrow">›</div>
+                            </div>
+                            
+                            <div class="settings-item" onclick="checkUpdates()">
+                                <div class="settings-left">
+                                    <div class="settings-icon">⬇</div>
+                                    <div class="settings-info">
+                                        <div class="settings-label">Software Updates</div>
+                                        <div class="settings-desc">Current: v2.1.0</div>
+                                    </div>
+                                </div>
+                                <div class="settings-value">Up to date</div>
+                            </div>
+                            
+                            <div class="settings-item" onclick="viewLicense()">
+                                <div class="settings-left">
+                                    <div class="settings-icon">📜</div>
+                                    <div class="settings-info">
+                                        <div class="settings-label">License</div>
+                                        <div class="settings-desc">Enterprise • Expires: Dec 2025</div>
+                                    </div>
+                                </div>
+                                <div class="settings-arrow">›</div>
+                            </div>
+                            
+                            <div class="settings-item" onclick="showSupport()">
+                                <div class="settings-left">
+                                    <div class="settings-icon">❓</div>
+                                    <div class="settings-info">
+                                        <div class="settings-label">Support</div>
+                                        <div class="settings-desc">Get help and documentation</div>
+                                    </div>
+                                </div>
+                                <div class="settings-arrow">›</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Navigation -->
+                <div class="bottom-nav">
+                    <div class="nav-item" onclick="navigateTo('GCA-HM-001')">
+                        <div class="nav-icon">▦</div>
+                        <div class="nav-label">Home</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-RT-001')">
+                        <div class="nav-icon">◉</div>
+                        <div class="nav-label">Monitor</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-CM-001')">
+                        <div class="nav-icon">▣</div>
+                        <div class="nav-label">Fleet</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-MM-001')">
+                        <div class="nav-icon">⚙</div>
+                        <div class="nav-label">Service</div>
+                    </div>
+                    <div class="nav-item active" onclick="navigateTo('GCA-ST-001')">
+                        <div class="nav-icon">☰</div>
+                        <div class="nav-label">System</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // GCA-ST-001 System Configuration Controller
+        class SystemConfigController {
+            constructor() {
+                this.settings = {
+                    notifications: true,
+                    darkMode: true,
+                    autoBackup: true,
+                    alertRules: [],
+                    users: [],
+                    apiKeys: {}
+                };
+                this.init();
+            }
+            
+            init() {
+                this.loadSettings();
+                this.checkSystemStatus();
+                this.startMonitoring();
+            }
+            
+            loadSettings() {
+                // Load system settings from storage/backend
+                console.log('Loading system settings...');
+            }
+            
+            checkSystemStatus() {
+                // Check system health and uptime
+                const uptime = 99.8;
+                const version = 'v2.1.0';
+                console.log(`System Status: ${uptime}% uptime, Version: ${version}`);
+            }
+            
+            startMonitoring() {
+                // Start monitoring system performance
+                setInterval(() => {
+                    this.updateSystemMetrics();
+                }, 60000); // Update every minute
+            }
+            
+            updateSystemMetrics() {
+                // Update system metrics
+                console.log('Updating system metrics...');
+            }
+            
+            toggleSwitch(element) {
+                element.classList.toggle('active');
+                const isActive = element.classList.contains('active');
+                
+                // Update corresponding setting
+                if (element.closest('.settings-item').querySelector('.settings-label').textContent.includes('Notifications')) {
+                    this.settings.notifications = isActive;
+                    showToast(`Notifications ${isActive ? 'enabled' : 'disabled'}`);
+                } else if (element.closest('.settings-item').querySelector('.settings-label').textContent.includes('Dark Mode')) {
+                    this.settings.darkMode = isActive;
+                    showToast(`Dark mode ${isActive ? 'enabled' : 'disabled'}`);
+                }
+            }
+            
+            editRule(ruleType) {
+                showToast(`Editing ${ruleType} rule`);
+                // Navigate to rule editor
+                navigateTo('GCA-AL-003');
+            }
+            
+            testRule(ruleType) {
+                showToast(`Testing ${ruleType} rule...`);
+                // Simulate rule trigger
+                setTimeout(() => {
+                    showToast(`Test alert sent for ${ruleType} rule`);
+                }, 1500);
+            }
+            
+            toggleRule(ruleType) {
+                const ruleCard = event.target.closest('.rule-card');
+                const statusElement = ruleCard.querySelector('.rule-status');
+                
+                if (statusElement.classList.contains('inactive')) {
+                    statusElement.classList.remove('inactive');
+                    statusElement.classList.add('active');
+                    statusElement.textContent = 'Active';
+                    event.target.textContent = 'Disable';
+                } else {
+                    statusElement.classList.remove('active');
+                    statusElement.classList.add('inactive');
+                    statusElement.textContent = 'Inactive';
+                    event.target.textContent = 'Enable';
+                }
+                
+                showToast(`${ruleType} rule ${statusElement.textContent.toLowerCase()}`);
+            }
+            
+            backupNow() {
+                showToast('Starting backup...');
+                // Simulate backup process
+                setTimeout(() => {
+                    showToast('Backup completed successfully');
+                }, 3000);
+            }
+            
+            restoreBackup() {
+                if (confirm('Are you sure you want to restore from backup? This will replace current data.')) {
+                    showToast('Restoring from backup...');
+                    setTimeout(() => {
+                        showToast('Restore completed');
+                    }, 3000);
+                }
+            }
+            
+            syncSystem() {
+                showToast('Syncing system data...');
+                // Perform system sync
+                setTimeout(() => {
+                    showToast('System synchronized');
+                }, 2000);
+            }
+        }
+        
+        // Initialize controller
+        const systemController = new SystemConfigController();
+        
+        // Global functions
+        function syncSystem() {
+            systemController.syncSystem();
+        }
+        
+        function showNotifications() {
+            showToast('Opening notification center');
+            navigateTo('GCA-AL-001');
+        }
+        
+        function openSetting(setting) {
+            showToast(`Opening ${setting} settings`);
+        }
+        
+        function toggleSwitch(element) {
+            systemController.toggleSwitch(element);
+        }
+        
+        function toggleNotifications() {
+            const toggle = event.currentTarget.querySelector('.toggle-switch');
+            toggleSwitch(toggle);
+        }
+        
+        function toggleDarkMode() {
+            const toggle = event.currentTarget.querySelector('.toggle-switch');
+            toggleSwitch(toggle);
+        }
+        
+        function editRule(ruleType) {
+            systemController.editRule(ruleType);
+        }
+        
+        function testRule(ruleType) {
+            systemController.testRule(ruleType);
+        }
+        
+        function toggleRule(ruleType) {
+            systemController.toggleRule(ruleType);
+        }
+        
+        function manageUsers() {
+            showToast('Opening user management');
+            navigateTo('GCA-ST-002');
+        }
+        
+        function configureAPI() {
+            showToast('Opening API configuration');
+            navigateTo('GCA-ST-004');
+        }
+        
+        function backupNow() {
+            systemController.backupNow();
+        }
+        
+        function restoreBackup() {
+            systemController.restoreBackup();
+        }
+        
+        function viewLogs() {
+            showToast('Opening system logs');
+            navigateTo('GCA-ST-006');
+        }
+        
+        function checkUpdates() {
+            showToast('Checking for updates...');
+            setTimeout(() => {
+                showToast('System is up to date');
+            }, 2000);
+        }
+        
+        function viewLicense() {
+            showToast('Opening license information');
+            navigateTo('GCA-ST-007');
+        }
+        
+        function showSupport() {
+            showToast('Opening support center');
+            navigateTo('GCA-ST-007');
+        }
+        
+        function navigateTo(pageId) {
+            console.log(`Navigate to ${pageId}`);
+        }
+        
+        // Toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(255,255,255,0.1);
+                backdrop-filter: blur(20px);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-size: 13px;
+                z-index: 300;
+                animation: fadeInOut 2s ease-in-out;
+                border: 1px solid rgba(255,255,255,0.1);
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 2000);
+        }
+        
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInOut {
+                0% { opacity: 0; transform: translate(-50%, 20px); }
+                20% { opacity: 1; transform: translate(-50%, 0); }
+                80% { opacity: 1; transform: translate(-50%, 0); }
+                100% { opacity: 0; transform: translate(-50%, -20px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

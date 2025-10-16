@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCA-MM-002: Create Work Order</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        /* iPhone 16 Pro Frame */
+        .iphone-frame {
+            width: 393px;
+            height: 852px;
+            background: #000;
+            border-radius: 55px;
+            padding: 12px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 
+                        0 0 0 1px rgba(255,255,255,0.1);
+            position: relative;
+        }
+        
+        .dynamic-island {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background: #000;
+            border-radius: 22px;
+            z-index: 10;
+        }
+        
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 43px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .app-container {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            background: #000;
+            padding: 55px 24px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+        }
+        
+        /* Header */
+        .header {
+            background: #000;
+            padding: 12px 24px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .back-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #fff;
+            font-size: 18px;
+            transition: all 0.2s;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .header-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.3px;
+        }
+        
+        .save-btn {
+            margin-left: auto;
+            padding: 8px 16px;
+            background: #34c759;
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .save-btn:hover {
+            background: #30d158;
+        }
+        
+        .save-btn:disabled {
+            background: rgba(52, 199, 89, 0.3);
+            color: rgba(0,0,0,0.5);
+            cursor: not-allowed;
+        }
+        
+        /* Progress Indicator */
+        .progress-bar {
+            display: flex;
+            gap: 8px;
+            padding: 0 40px;
+        }
+        
+        .progress-step {
+            flex: 1;
+            height: 3px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            position: relative;
+        }
+        
+        .progress-step.active {
+            background: #34c759;
+        }
+        
+        .progress-step.completed {
+            background: #34c759;
+        }
+        
+        /* Content */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 80px;
+        }
+        
+        /* Form Sections */
+        .form-section {
+            padding: 16px 24px;
+        }
+        
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+        
+        /* Form Fields */
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .required {
+            color: #ff3b30;
+            margin-left: 2px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        
+        .form-input:focus {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.15);
+        }
+        
+        .form-input::placeholder {
+            color: #666;
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+        }
+        
+        .form-textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            resize: vertical;
+            min-height: 80px;
+            font-family: inherit;
+        }
+        
+        .form-textarea:focus {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.15);
+        }
+        
+        /* Priority Selector */
+        .priority-selector {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        
+        .priority-option {
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .priority-option:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .priority-option.selected {
+            border-color: currentColor;
+            background: rgba(255,255,255,0.08);
+        }
+        
+        .priority-option.p1 {
+            color: #ff3b30;
+        }
+        
+        .priority-option.p2 {
+            color: #ff9500;
+        }
+        
+        .priority-option.p3 {
+            color: #007aff;
+        }
+        
+        .priority-option.p4 {
+            color: #34c759;
+        }
+        
+        .priority-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        
+        .priority-desc {
+            font-size: 9px;
+            opacity: 0.8;
+        }
+        
+        /* Cart Selector */
+        .cart-selector {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .cart-search {
+            flex: 1;
+            position: relative;
+        }
+        
+        .scan-btn {
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 16px;
+        }
+        
+        .scan-btn:hover {
+            background: rgba(255,255,255,0.06);
+        }
+        
+        .cart-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            margin-top: 4px;
+            max-height: 160px;
+            overflow-y: auto;
+            display: none;
+            z-index: 10;
+        }
+        
+        .cart-suggestions.active {
+            display: block;
+        }
+        
+        .suggestion-item {
+            padding: 10px 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .suggestion-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+        
+        .suggestion-id {
+            font-size: 13px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .suggestion-info {
+            font-size: 11px;
+            color: #666;
+            margin-top: 2px;
+        }
+        
+        /* Date Time Picker */
+        .datetime-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        
+        /* Technician Assignment */
+        .technician-list {
+            display: grid;
+            gap: 8px;
+        }
+        
+        .technician-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .technician-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .technician-item.selected {
+            background: rgba(52, 199, 89, 0.1);
+            border-color: rgba(52, 199, 89, 0.3);
+        }
+        
+        .tech-avatar {
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+        }
+        
+        .tech-info {
+            flex: 1;
+        }
+        
+        .tech-name {
+            font-size: 14px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .tech-status {
+            font-size: 11px;
+            color: #666;
+            margin-top: 2px;
+        }
+        
+        .tech-workload {
+            text-align: right;
+        }
+        
+        .workload-count {
+            font-size: 14px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .workload-label {
+            font-size: 10px;
+            color: #666;
+        }
+        
+        /* Parts Selector */
+        .parts-section {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 12px;
+        }
+        
+        .parts-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .parts-title {
+            font-size: 13px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .add-part-btn {
+            padding: 4px 8px;
+            background: rgba(52, 199, 89, 0.2);
+            border: 1px solid #34c759;
+            border-radius: 4px;
+            color: #34c759;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .parts-list {
+            display: grid;
+            gap: 8px;
+        }
+        
+        .part-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 6px;
+        }
+        
+        .part-name {
+            flex: 1;
+            font-size: 12px;
+            color: #fff;
+        }
+        
+        .part-qty {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .remove-part {
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 59, 48, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #ff3b30;
+            font-size: 12px;
+        }
+        
+        /* Bottom Actions */
+        .bottom-actions {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            padding: 16px 24px 34px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 12px;
+            z-index: 20;
+        }
+        
+        .action-btn {
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-align: center;
+        }
+        
+        .action-btn.secondary {
+            background: rgba(255,255,255,0.06);
+            color: #fff;
+        }
+        
+        .action-btn.primary {
+            background: #34c759;
+            color: #000;
+        }
+        
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* Success Modal */
+        .success-modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(20px);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        
+        .success-modal.active {
+            display: flex;
+        }
+        
+        .success-content {
+            background: #111;
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            max-width: 280px;
+        }
+        
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(52, 199, 89, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 32px;
+        }
+        
+        .success-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        
+        .success-message {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 24px;
+        }
+        
+        .success-wo-number {
+            font-size: 16px;
+            font-weight: 600;
+            color: #34c759;
+            margin-bottom: 24px;
+        }
+        
+        .success-actions {
+            display: grid;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-frame">
+        <div class="dynamic-island"></div>
+        <div class="screen">
+            <div class="app-container">
+                <!-- Status Bar -->
+                <div class="status-bar">
+                    <div class="time">09:41</div>
+                    <div class="status-icons">
+                        <span>5G</span>
+                        <span>━━━</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+                
+                <!-- Header -->
+                <div class="header">
+                    <div class="header-nav">
+                        <div class="back-btn" onclick="goBack()">←</div>
+                        <div class="header-title">Create Work Order</div>
+                        <button class="save-btn" onclick="saveAsDraft()" id="saveBtn">Save Draft</button>
+                    </div>
+                    
+                    <!-- Progress Indicator -->
+                    <div class="progress-bar">
+                        <div class="progress-step completed" id="step1"></div>
+                        <div class="progress-step active" id="step2"></div>
+                        <div class="progress-step" id="step3"></div>
+                        <div class="progress-step" id="step4"></div>
+                    </div>
+                </div>
+                
+                <!-- Content -->
+                <div class="content">
+                    <!-- Work Order Type -->
+                    <div class="form-section">
+                        <div class="section-title">Work Order Information</div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Work Order Type <span class="required">*</span></label>
+                            <select class="form-select" id="woType" onchange="updateFormFields()">
+                                <option value="">Select type...</option>
+                                <option value="emergency">Emergency Repair</option>
+                                <option value="preventive">Preventive Maintenance</option>
+                                <option value="battery">Battery Service</option>
+                                <option value="tire">Tire Service</option>
+                                <option value="inspection">Safety Inspection</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Priority Level <span class="required">*</span></label>
+                            <div class="priority-selector">
+                                <div class="priority-option p1" onclick="selectPriority('p1')">
+                                    <div class="priority-label">P1</div>
+                                    <div class="priority-desc">Critical</div>
+                                </div>
+                                <div class="priority-option p2" onclick="selectPriority('p2')">
+                                    <div class="priority-label">P2</div>
+                                    <div class="priority-desc">High</div>
+                                </div>
+                                <div class="priority-option p3 selected" onclick="selectPriority('p3')">
+                                    <div class="priority-label">P3</div>
+                                    <div class="priority-desc">Normal</div>
+                                </div>
+                                <div class="priority-option p4" onclick="selectPriority('p4')">
+                                    <div class="priority-label">P4</div>
+                                    <div class="priority-desc">Low</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Description <span class="required">*</span></label>
+                            <textarea class="form-textarea" 
+                                      placeholder="Describe the work required..." 
+                                      id="description"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Cart Selection -->
+                    <div class="form-section">
+                        <div class="section-title">Cart Selection</div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Cart ID <span class="required">*</span></label>
+                            <div class="cart-selector">
+                                <div class="cart-search">
+                                    <input type="text" 
+                                           class="form-input" 
+                                           placeholder="Enter cart ID or search..."
+                                           id="cartId"
+                                           oninput="searchCarts(this.value)"
+                                           onfocus="showSuggestions()"
+                                           onblur="hideSuggestions()">
+                                    <div class="cart-suggestions" id="cartSuggestions">
+                                        <div class="suggestion-item" onmousedown="selectCart('GCA-001')">
+                                            <div class="suggestion-id">GCA-001</div>
+                                            <div class="suggestion-info">EZ-GO RXV • Active • Hole 3</div>
+                                        </div>
+                                        <div class="suggestion-item" onmousedown="selectCart('GCA-007')">
+                                            <div class="suggestion-id">GCA-007</div>
+                                            <div class="suggestion-info">Club Car DS • Low Battery • Hole 8</div>
+                                        </div>
+                                        <div class="suggestion-item" onmousedown="selectCart('GCA-015')">
+                                            <div class="suggestion-id">GCA-015</div>
+                                            <div class="suggestion-info">Yamaha Drive2 • Emergency • Hole 15</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="scan-btn" onclick="scanQRCode()">📷</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Current Location</label>
+                            <input type="text" 
+                                   class="form-input" 
+                                   placeholder="Auto-detected or enter manually..."
+                                   id="location">
+                        </div>
+                    </div>
+                    
+                    <!-- Schedule -->
+                    <div class="form-section">
+                        <div class="section-title">Schedule</div>
+                        
+                        <div class="form-group">
+                            <div class="datetime-row">
+                                <div>
+                                    <label class="form-label">Date</label>
+                                    <input type="date" class="form-input" id="scheduleDate">
+                                </div>
+                                <div>
+                                    <label class="form-label">Time</label>
+                                    <input type="time" class="form-input" id="scheduleTime">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Estimated Duration</label>
+                            <select class="form-select" id="duration">
+                                <option value="30">30 minutes</option>
+                                <option value="60" selected>1 hour</option>
+                                <option value="120">2 hours</option>
+                                <option value="180">3 hours</option>
+                                <option value="240">4 hours</option>
+                                <option value="480">Full day</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Technician Assignment -->
+                    <div class="form-section">
+                        <div class="section-title">Assign Technician</div>
+                        
+                        <div class="technician-list">
+                            <div class="technician-item" onclick="selectTechnician('tech1')">
+                                <div class="tech-avatar">JK</div>
+                                <div class="tech-info">
+                                    <div class="tech-name">Jungkook Kim</div>
+                                    <div class="tech-status">Available • Certified</div>
+                                </div>
+                                <div class="tech-workload">
+                                    <div class="workload-count">2</div>
+                                    <div class="workload-label">Active WO</div>
+                                </div>
+                            </div>
+                            
+                            <div class="technician-item" onclick="selectTechnician('tech2')">
+                                <div class="tech-avatar">ML</div>
+                                <div class="tech-info">
+                                    <div class="tech-name">Min Lee</div>
+                                    <div class="tech-status">Available • Senior Tech</div>
+                                </div>
+                                <div class="tech-workload">
+                                    <div class="workload-count">3</div>
+                                    <div class="workload-label">Active WO</div>
+                                </div>
+                            </div>
+                            
+                            <div class="technician-item" onclick="selectTechnician('tech3')">
+                                <div class="tech-avatar">SP</div>
+                                <div class="tech-info">
+                                    <div class="tech-name">Sujin Park</div>
+                                    <div class="tech-status">Busy • Lead Tech</div>
+                                </div>
+                                <div class="tech-workload">
+                                    <div class="workload-count">5</div>
+                                    <div class="workload-label">Active WO</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Parts Required -->
+                    <div class="form-section">
+                        <div class="section-title">Parts Required</div>
+                        
+                        <div class="parts-section">
+                            <div class="parts-header">
+                                <div class="parts-title">Selected Parts</div>
+                                <button class="add-part-btn" onclick="addPart()">+ Add</button>
+                            </div>
+                            <div class="parts-list" id="partsList">
+                                <div class="part-item">
+                                    <div class="part-name">Battery Pack (48V)</div>
+                                    <div class="part-qty">Qty: 1</div>
+                                    <div class="remove-part" onclick="removePart(this)">×</div>
+                                </div>
+                                <div class="part-item">
+                                    <div class="part-name">Charging Cable</div>
+                                    <div class="part-qty">Qty: 1</div>
+                                    <div class="remove-part" onclick="removePart(this)">×</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Notes -->
+                    <div class="form-section">
+                        <div class="section-title">Additional Notes</div>
+                        
+                        <div class="form-group">
+                            <textarea class="form-textarea" 
+                                      placeholder="Any special instructions or notes..."
+                                      id="notes"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Actions -->
+                <div class="bottom-actions">
+                    <button class="action-btn secondary" onclick="saveAsDraft()">Save Draft</button>
+                    <button class="action-btn primary" onclick="createWorkOrder()">Create Work Order</button>
+                </div>
+                
+                <!-- Success Modal -->
+                <div class="success-modal" id="successModal">
+                    <div class="success-content">
+                        <div class="success-icon">✓</div>
+                        <div class="success-title">Work Order Created</div>
+                        <div class="success-message">Your work order has been successfully created and assigned.</div>
+                        <div class="success-wo-number" id="woNumber">WO-2025-0848</div>
+                        <div class="success-actions">
+                            <button class="action-btn primary" onclick="viewWorkOrder()">View Work Order</button>
+                            <button class="action-btn secondary" onclick="createAnother()">Create Another</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // GCA-MM-002 Create Work Order Controller
+        class CreateWOController {
+            constructor() {
+                this.workOrder = {
+                    type: '',
+                    priority: 'p3',
+                    description: '',
+                    cartId: '',
+                    location: '',
+                    scheduleDate: '',
+                    scheduleTime: '',
+                    duration: 60,
+                    technician: null,
+                    parts: [],
+                    notes: '',
+                    status: 'draft'
+                };
+                this.currentStep = 1;
+                this.selectedTechnician = null;
+                this.init();
+            }
+            
+            init() {
+                this.setDefaultDateTime();
+                this.setupEventListeners();
+                this.validateForm();
+            }
+            
+            setDefaultDateTime() {
+                // Set default date to today
+                const today = new Date();
+                const dateStr = today.toISOString().split('T')[0];
+                document.getElementById('scheduleDate').value = dateStr;
+                
+                // Set default time to next hour
+                const hours = today.getHours() + 1;
+                const timeStr = `${hours.toString().padStart(2, '0')}:00`;
+                document.getElementById('scheduleTime').value = timeStr;
+            }
+            
+            setupEventListeners() {
+                // Add input listeners for validation
+                const inputs = document.querySelectorAll('.form-input, .form-select, .form-textarea');
+                inputs.forEach(input => {
+                    input.addEventListener('input', () => this.validateForm());
+                    input.addEventListener('change', () => this.validateForm());
+                });
+            }
+            
+            validateForm() {
+                const requiredFields = {
+                    type: document.getElementById('woType').value,
+                    description: document.getElementById('description').value,
+                    cartId: document.getElementById('cartId').value
+                };
+                
+                const isValid = requiredFields.type && 
+                               requiredFields.description && 
+                               requiredFields.cartId;
+                
+                // Update save button state
+                const saveBtn = document.getElementById('saveBtn');
+                if (isValid) {
+                    saveBtn.disabled = false;
+                } else {
+                    saveBtn.disabled = true;
+                }
+                
+                return isValid;
+            }
+            
+            updateFormFields() {
+                const type = document.getElementById('woType').value;
+                
+                // Auto-set priority based on type
+                if (type === 'emergency') {
+                    this.selectPriority('p1');
+                } else if (type === 'preventive') {
+                    this.selectPriority('p3');
+                }
+                
+                // Update parts list based on type
+                this.updatePartsSuggestions(type);
+            }
+            
+            selectPriority(priority) {
+                this.workOrder.priority = priority;
+                
+                // Update UI
+                document.querySelectorAll('.priority-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                
+                document.querySelector(`.priority-option.${priority}`).classList.add('selected');
+            }
+            
+            searchCarts(query) {
+                // Simulate cart search
+                const suggestions = document.getElementById('cartSuggestions');
+                if (query.length > 0) {
+                    suggestions.classList.add('active');
+                } else {
+                    suggestions.classList.remove('active');
+                }
+            }
+            
+            showSuggestions() {
+                const cartId = document.getElementById('cartId').value;
+                if (cartId.length > 0) {
+                    document.getElementById('cartSuggestions').classList.add('active');
+                }
+            }
+            
+            hideSuggestions() {
+                setTimeout(() => {
+                    document.getElementById('cartSuggestions').classList.remove('active');
+                }, 200);
+            }
+            
+            selectCart(cartId) {
+                document.getElementById('cartId').value = cartId;
+                document.getElementById('cartSuggestions').classList.remove('active');
+                
+                // Auto-fill location based on cart
+                this.autoFillLocation(cartId);
+            }
+            
+            autoFillLocation(cartId) {
+                const locations = {
+                    'GCA-001': 'Hole 3',
+                    'GCA-007': 'Hole 8',
+                    'GCA-015': 'Hole 15'
+                };
+                
+                if (locations[cartId]) {
+                    document.getElementById('location').value = locations[cartId];
+                }
+            }
+            
+            selectTechnician(techId) {
+                this.selectedTechnician = techId;
+                
+                // Update UI
+                document.querySelectorAll('.technician-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                
+                event.currentTarget.classList.add('selected');
+            }
+            
+            updatePartsSuggestions(type) {
+                const partsList = document.getElementById('partsList');
+                partsList.innerHTML = '';
+                
+                const partsSuggestions = {
+                    'battery': ['Battery Pack (48V)', 'Charging Cable'],
+                    'tire': ['Tire (Front)', 'Tire (Rear)', 'Wheel Nuts'],
+                    'preventive': ['Oil Filter', 'Air Filter', 'Spark Plug'],
+                    'emergency': ['Emergency Kit', 'Diagnostic Tool']
+                };
+                
+                if (partsSuggestions[type]) {
+                    partsSuggestions[type].forEach(part => {
+                        this.addPartToList(part);
+                    });
+                }
+            }
+            
+            addPartToList(partName, qty = 1) {
+                const partsList = document.getElementById('partsList');
+                const partItem = document.createElement('div');
+                partItem.className = 'part-item';
+                partItem.innerHTML = `
+                    <div class="part-name">${partName}</div>
+                    <div class="part-qty">Qty: ${qty}</div>
+                    <div class="remove-part" onclick="removePart(this)">×</div>
+                `;
+                partsList.appendChild(partItem);
+            }
+            
+            removePart(element) {
+                element.parentElement.remove();
+            }
+            
+            addPart() {
+                showToast('Part selector modal');
+                // Would open a modal to select parts from inventory
+            }
+            
+            saveAsDraft() {
+                if (this.validateForm()) {
+                    this.workOrder.status = 'draft';
+                    this.saveWorkOrder();
+                    showToast('Work order saved as draft');
+                }
+            }
+            
+            createWorkOrder() {
+                if (this.validateForm()) {
+                    this.workOrder.status = 'pending';
+                    const woNumber = this.generateWONumber();
+                    this.saveWorkOrder();
+                    this.showSuccessModal(woNumber);
+                } else {
+                    showToast('Please fill all required fields');
+                }
+            }
+            
+            generateWONumber() {
+                const year = new Date().getFullYear();
+                const number = Math.floor(Math.random() * 9000) + 1000;
+                return `WO-${year}-${number}`;
+            }
+            
+            saveWorkOrder() {
+                // Collect all form data
+                this.workOrder.type = document.getElementById('woType').value;
+                this.workOrder.description = document.getElementById('description').value;
+                this.workOrder.cartId = document.getElementById('cartId').value;
+                this.workOrder.location = document.getElementById('location').value;
+                this.workOrder.scheduleDate = document.getElementById('scheduleDate').value;
+                this.workOrder.scheduleTime = document.getElementById('scheduleTime').value;
+                this.workOrder.duration = document.getElementById('duration').value;
+                this.workOrder.notes = document.getElementById('notes').value;
+                
+                // Save to backend
+                console.log('Saving work order:', this.workOrder);
+            }
+            
+            showSuccessModal(woNumber) {
+                document.getElementById('woNumber').textContent = woNumber;
+                document.getElementById('successModal').classList.add('active');
+            }
+            
+            scanQRCode() {
+                showToast('Opening QR scanner');
+                // Would open camera for QR scanning
+            }
+        }
+        
+        // Initialize controller
+        const woController = new CreateWOController();
+        
+        // Global functions
+        function goBack() {
+            showToast('Returning to work orders');
+            navigateTo('GCA-MM-001');
+        }
+        
+        function saveAsDraft() {
+            woController.saveAsDraft();
+        }
+        
+        function updateFormFields() {
+            woController.updateFormFields();
+        }
+        
+        function selectPriority(priority) {
+            woController.selectPriority(priority);
+        }
+        
+        function searchCarts(query) {
+            woController.searchCarts(query);
+        }
+        
+        function showSuggestions() {
+            woController.showSuggestions();
+        }
+        
+        function hideSuggestions() {
+            woController.hideSuggestions();
+        }
+        
+        function selectCart(cartId) {
+            woController.selectCart(cartId);
+        }
+        
+        function selectTechnician(techId) {
+            woController.selectTechnician(techId);
+        }
+        
+        function removePart(element) {
+            woController.removePart(element);
+        }
+        
+        function addPart() {
+            woController.addPart();
+        }
+        
+        function createWorkOrder() {
+            woController.createWorkOrder();
+        }
+        
+        function scanQRCode() {
+            woController.scanQRCode();
+        }
+        
+        function viewWorkOrder() {
+            document.getElementById('successModal').classList.remove('active');
+            showToast('Opening work order details');
+            navigateTo('GCA-MM-003');
+        }
+        
+        function createAnother() {
+            document.getElementById('successModal').classList.remove('active');
+            // Reset form
+            document.querySelectorAll('.form-input, .form-textarea').forEach(input => {
+                input.value = '';
+            });
+            document.getElementById('woType').value = '';
+            woController.setDefaultDateTime();
+            showToast('Create new work order');
+        }
+        
+        function navigateTo(pageId) {
+            console.log(`Navigate to ${pageId}`);
+        }
+        
+        // Toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(255,255,255,0.1);
+                backdrop-filter: blur(20px);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-size: 13px;
+                z-index: 300;
+                animation: fadeInOut 2s ease-in-out;
+                border: 1px solid rgba(255,255,255,0.1);
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 2000);
+        }
+        
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInOut {
+                0% { opacity: 0; transform: translate(-50%, 20px); }
+                20% { opacity: 1; transform: translate(-50%, 0); }
+                80% { opacity: 1; transform: translate(-50%, 0); }
+                100% { opacity: 0; transform: translate(-50%, -20px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

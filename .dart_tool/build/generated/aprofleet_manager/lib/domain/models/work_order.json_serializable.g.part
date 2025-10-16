@@ -1,0 +1,158 @@
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$WoPartImpl _$$WoPartImplFromJson(Map<String, dynamic> json) => _$WoPartImpl(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      quantity: (json['quantity'] as num).toInt(),
+      notes: json['notes'] as String?,
+    );
+
+Map<String, dynamic> _$$WoPartImplToJson(_$WoPartImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'quantity': instance.quantity,
+      'notes': instance.notes,
+    };
+
+_$WorkOrderImpl _$$WorkOrderImplFromJson(Map<String, dynamic> json) =>
+    _$WorkOrderImpl(
+      id: json['id'] as String,
+      type: $enumDecode(_$WorkOrderTypeEnumMap, json['type']),
+      priority: $enumDecode(_$PriorityEnumMap, json['priority']),
+      cartId: json['cartId'] as String,
+      description: json['description'] as String,
+      status: $enumDecode(_$WorkOrderStatusEnumMap, json['status']),
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      startedAt: json['startedAt'] == null
+          ? null
+          : DateTime.parse(json['startedAt'] as String),
+      completedAt: json['completedAt'] == null
+          ? null
+          : DateTime.parse(json['completedAt'] as String),
+      technician: json['technician'] as String?,
+      parts: (json['parts'] as List<dynamic>?)
+          ?.map((e) => WoPart.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      location: json['location'] as String?,
+      notes: json['notes'] as String?,
+    );
+
+Map<String, dynamic> _$$WorkOrderImplToJson(_$WorkOrderImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'type': _$WorkOrderTypeEnumMap[instance.type]!,
+      'priority': _$PriorityEnumMap[instance.priority]!,
+      'cartId': instance.cartId,
+      'description': instance.description,
+      'status': _$WorkOrderStatusEnumMap[instance.status]!,
+      'createdAt': instance.createdAt.toIso8601String(),
+      'startedAt': instance.startedAt?.toIso8601String(),
+      'completedAt': instance.completedAt?.toIso8601String(),
+      'technician': instance.technician,
+      'parts': instance.parts,
+      'location': instance.location,
+      'notes': instance.notes,
+    };
+
+const _$WorkOrderTypeEnumMap = {
+  WorkOrderType.emergencyRepair: 'emergencyRepair',
+  WorkOrderType.preventive: 'preventive',
+  WorkOrderType.battery: 'battery',
+  WorkOrderType.tire: 'tire',
+  WorkOrderType.safety: 'safety',
+  WorkOrderType.other: 'other',
+};
+
+const _$PriorityEnumMap = {
+  Priority.p1: 'p1',
+  Priority.p2: 'p2',
+  Priority.p3: 'p3',
+  Priority.p4: 'p4',
+};
+
+const _$WorkOrderStatusEnumMap = {
+  WorkOrderStatus.draft: 'draft',
+  WorkOrderStatus.pending: 'pending',
+  WorkOrderStatus.inProgress: 'in_progress',
+  WorkOrderStatus.onHold: 'on_hold',
+  WorkOrderStatus.completed: 'completed',
+  WorkOrderStatus.cancelled: 'cancelled',
+};
+
+_$WorkOrderDraftImpl _$$WorkOrderDraftImplFromJson(Map<String, dynamic> json) =>
+    _$WorkOrderDraftImpl(
+      type: $enumDecode(_$WorkOrderTypeEnumMap, json['type']),
+      priority: $enumDecode(_$PriorityEnumMap, json['priority']),
+      description: json['description'] as String,
+      cartId: json['cartId'] as String,
+      location: json['location'] as String?,
+      scheduledAt: json['scheduledAt'] == null
+          ? null
+          : DateTime.parse(json['scheduledAt'] as String),
+      estimatedDuration: json['estimatedDuration'] == null
+          ? null
+          : Duration(microseconds: (json['estimatedDuration'] as num).toInt()),
+      technician: json['technician'] as String?,
+      parts: (json['parts'] as List<dynamic>?)
+          ?.map((e) => WoPart.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      checklist: (json['checklist'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as bool),
+      ),
+      notes: json['notes'] as String?,
+    );
+
+Map<String, dynamic> _$$WorkOrderDraftImplToJson(
+        _$WorkOrderDraftImpl instance) =>
+    <String, dynamic>{
+      'type': _$WorkOrderTypeEnumMap[instance.type]!,
+      'priority': _$PriorityEnumMap[instance.priority]!,
+      'description': instance.description,
+      'cartId': instance.cartId,
+      'location': instance.location,
+      'scheduledAt': instance.scheduledAt?.toIso8601String(),
+      'estimatedDuration': instance.estimatedDuration?.inMicroseconds,
+      'technician': instance.technician,
+      'parts': instance.parts,
+      'checklist': instance.checklist,
+      'notes': instance.notes,
+    };
+
+_$WorkOrderFilterImpl _$$WorkOrderFilterImplFromJson(
+        Map<String, dynamic> json) =>
+    _$WorkOrderFilterImpl(
+      statuses: (json['statuses'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$WorkOrderStatusEnumMap, e))
+          .toSet(),
+      priorities: (json['priorities'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$PriorityEnumMap, e))
+          .toSet(),
+      types: (json['types'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$WorkOrderTypeEnumMap, e))
+          .toSet(),
+      cartId: json['cartId'] as String?,
+      technician: json['technician'] as String?,
+      fromDate: json['fromDate'] == null
+          ? null
+          : DateTime.parse(json['fromDate'] as String),
+      toDate: json['toDate'] == null
+          ? null
+          : DateTime.parse(json['toDate'] as String),
+    );
+
+Map<String, dynamic> _$$WorkOrderFilterImplToJson(
+        _$WorkOrderFilterImpl instance) =>
+    <String, dynamic>{
+      'statuses':
+          instance.statuses?.map((e) => _$WorkOrderStatusEnumMap[e]!).toList(),
+      'priorities':
+          instance.priorities?.map((e) => _$PriorityEnumMap[e]!).toList(),
+      'types': instance.types?.map((e) => _$WorkOrderTypeEnumMap[e]!).toList(),
+      'cartId': instance.cartId,
+      'technician': instance.technician,
+      'fromDate': instance.fromDate?.toIso8601String(),
+      'toDate': instance.toDate?.toIso8601String(),
+    };

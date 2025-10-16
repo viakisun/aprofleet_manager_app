@@ -1,0 +1,73 @@
+{
+  "rules": {
+    "battery": {
+      "enabled": true,
+      "threshold": 50.0,
+      "severity": "warning",
+      "priority": "p2",
+      "message": "Battery level below 50%"
+    },
+    "battery_critical": {
+      "enabled": true,
+      "threshold": 20.0,
+      "severity": "critical",
+      "priority": "p1",
+      "message": "Battery level critical below 20%"
+    },
+    "temperature": {
+      "enabled": true,
+      "threshold": 75.0,
+      "severity": "warning",
+      "priority": "p2",
+      "message": "Motor temperature exceeded 75°C"
+    },
+    "temperature_critical": {
+      "enabled": true,
+      "threshold": 85.0,
+      "severity": "critical",
+      "priority": "p1",
+      "message": "Motor temperature critical above 85°C"
+    },
+    "geofence": {
+      "enabled": true,
+      "threshold": 1.0,
+      "severity": "warning",
+      "priority": "p2",
+      "message": "Cart has exited designated area"
+    },
+    "maintenance": {
+      "enabled": true,
+      "threshold": 0.0,
+      "severity": "info",
+      "priority": "p3",
+      "message": "Scheduled maintenance due"
+    },
+    "maintenance_overdue": {
+      "enabled": true,
+      "threshold": 2.0,
+      "severity": "warning",
+      "priority": "p2",
+      "message": "Maintenance overdue by 2+ days"
+    },
+    "emergency": {
+      "enabled": true,
+      "threshold": 0.0,
+      "severity": "critical",
+      "priority": "p1",
+      "message": "Emergency stop activated"
+    }
+  },
+  "notificationsEnabled": true,
+  "slaResponse": {
+    "p1": "PT5M",
+    "p2": "PT30M",
+    "p3": "PT8H",
+    "p4": "PT24H"
+  },
+  "slaResolution": {
+    "p1": "PT30M",
+    "p2": "PT4H",
+    "p3": "PT24H",
+    "p4": "PT72H"
+  }
+}

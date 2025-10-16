@@ -1,0 +1,193 @@
+[
+  {
+    "id": "WO-2025-0001",
+    "type": "emergencyRepair",
+    "priority": "p1",
+    "cartId": "GCA-003",
+    "description": "Emergency brake failure - immediate attention required",
+    "status": "inProgress",
+    "createdAt": "2025-01-15T08:30:00Z",
+    "startedAt": "2025-01-15T09:00:00Z",
+    "technician": "John Smith",
+    "location": "Hole 3 - Fairway",
+    "parts": [
+      {"id": "BRK-001", "name": "Brake Pad Set", "quantity": 1, "serialNumber": "BRK-2025-001"}
+    ],
+    "checklist": {
+      "inspect_brakes": true,
+      "replace_pads": true,
+      "test_braking": false,
+      "safety_check": false
+    },
+    "notes": "Customer reported complete brake failure while driving"
+  },
+  {
+    "id": "WO-2025-0002",
+    "type": "battery",
+    "priority": "p2",
+    "cartId": "GCA-007",
+    "description": "Battery replacement - low capacity detected",
+    "status": "pending",
+    "createdAt": "2025-01-15T10:15:00Z",
+    "technician": "Sarah Johnson",
+    "location": "Charging Station A",
+    "parts": [
+      {"id": "BAT-001", "name": "Battery Pack 48V", "quantity": 1, "serialNumber": "BAT-2025-002"}
+    ],
+    "checklist": {
+      "remove_old_battery": false,
+      "install_new_battery": false,
+      "test_charging": false,
+      "calibrate_system": false
+    }
+  },
+  {
+    "id": "WO-2025-0003",
+    "type": "preventive",
+    "priority": "p3",
+    "cartId": "GCA-011",
+    "description": "Monthly preventive maintenance check",
+    "status": "pending",
+    "createdAt": "2025-01-15T11:00:00Z",
+    "technician": "Mike Chen",
+    "location": "Maintenance Bay 1",
+    "parts": [
+      {"id": "FIL-001", "name": "Air Filter", "quantity": 1, "serialNumber": "FIL-2025-003"}
+    ],
+    "checklist": {
+      "check_tires": false,
+      "inspect_brakes": false,
+      "test_lights": false,
+      "check_battery": false,
+      "lubricate_joints": false
+    }
+  },
+  {
+    "id": "WO-2025-0004",
+    "type": "tire",
+    "priority": "p3",
+    "cartId": "GCA-005",
+    "description": "Front tire replacement - worn tread",
+    "status": "completed",
+    "createdAt": "2025-01-14T14:30:00Z",
+    "startedAt": "2025-01-14T15:00:00Z",
+    "completedAt": "2025-01-14T16:30:00Z",
+    "technician": "Lisa Wang",
+    "location": "Hole 7 - Cart Path",
+    "parts": [
+      {"id": "TIR-001", "name": "Front Tire 18x8.5", "quantity": 1, "serialNumber": "TIR-2025-004"}
+    ],
+    "checklist": {
+      "remove_old_tire": true,
+      "install_new_tire": true,
+      "balance_wheel": true,
+      "test_drive": true
+    }
+  },
+  {
+    "id": "WO-2025-0005",
+    "type": "safety",
+    "priority": "p2",
+    "cartId": "GCA-009",
+    "description": "Safety inspection - annual check",
+    "status": "pending",
+    "createdAt": "2025-01-15T12:00:00Z",
+    "technician": "David Kim",
+    "location": "Safety Inspection Bay",
+    "checklist": {
+      "check_seatbelts": false,
+      "test_horn": false,
+      "check_mirrors": false,
+      "test_lights": false,
+      "check_emergency_brake": false
+    }
+  },
+  {
+    "id": "WO-2025-0006",
+    "type": "emergencyRepair",
+    "priority": "p1",
+    "cartId": "GCA-001",
+    "description": "Motor controller failure - cart not responding",
+    "status": "inProgress",
+    "createdAt": "2025-01-15T13:45:00Z",
+    "startedAt": "2025-01-15T14:00:00Z",
+    "technician": "John Smith",
+    "location": "Hole 1 - Tee Box",
+    "parts": [
+      {"id": "MOT-001", "name": "Motor Controller", "quantity": 1, "serialNumber": "MOT-2025-006"}
+    ],
+    "checklist": {
+      "diagnose_issue": true,
+      "remove_old_controller": true,
+      "install_new_controller": false,
+      "test_system": false
+    }
+  },
+  {
+    "id": "WO-2025-0007",
+    "type": "battery",
+    "priority": "p2",
+    "cartId": "GCA-012",
+    "description": "Battery charging issue - slow charge rate",
+    "status": "onHold",
+    "createdAt": "2025-01-15T09:30:00Z",
+    "technician": "Sarah Johnson",
+    "location": "Charging Station B",
+    "notes": "Waiting for diagnostic equipment"
+  },
+  {
+    "id": "WO-2025-0008",
+    "type": "preventive",
+    "priority": "p4",
+    "cartId": "GCA-004",
+    "description": "Quarterly deep cleaning and inspection",
+    "status": "pending",
+    "createdAt": "2025-01-15T15:00:00Z",
+    "technician": "Mike Chen",
+    "location": "Detailing Bay",
+    "checklist": {
+      "deep_clean_interior": false,
+      "clean_exterior": false,
+      "check_upholstery": false,
+      "inspect_electronics": false
+    }
+  },
+  {
+    "id": "WO-2025-0009",
+    "type": "tire",
+    "priority": "p3",
+    "cartId": "GCA-008",
+    "description": "Rear tire pressure adjustment",
+    "status": "completed",
+    "createdAt": "2025-01-14T16:00:00Z",
+    "startedAt": "2025-01-14T16:15:00Z",
+    "completedAt": "2025-01-14T16:45:00Z",
+    "technician": "Lisa Wang",
+    "location": "Hole 5 - Cart Path",
+    "checklist": {
+      "check_pressure": true,
+      "adjust_pressure": true,
+      "test_drive": true
+    }
+  },
+  {
+    "id": "WO-2025-0010",
+    "type": "other",
+    "priority": "p4",
+    "cartId": "GCA-010",
+    "description": "GPS module firmware update",
+    "status": "pending",
+    "createdAt": "2025-01-15T16:30:00Z",
+    "technician": "David Kim",
+    "location": "Electronics Bay",
+    "parts": [
+      {"id": "GPS-001", "name": "GPS Module", "quantity": 1, "serialNumber": "GPS-2025-010"}
+    ],
+    "checklist": {
+      "backup_configuration": false,
+      "update_firmware": false,
+      "restore_configuration": false,
+      "test_gps": false
+    }
+  }
+]

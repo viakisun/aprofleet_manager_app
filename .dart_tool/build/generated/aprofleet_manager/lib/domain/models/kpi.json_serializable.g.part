@@ -1,0 +1,43 @@
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$KpiImpl _$$KpiImplFromJson(Map<String, dynamic> json) => _$KpiImpl(
+      availabilityRate: (json['availabilityRate'] as num).toDouble(),
+      mttr: (json['mttr'] as num).toDouble(),
+      utilization: (json['utilization'] as num).toDouble(),
+      dailyDistance: (json['dailyDistance'] as num).toDouble(),
+      trend: $enumDecode(_$KpiTrendDirectionEnumMap, json['trend']),
+      lastUpdated: DateTime.parse(json['lastUpdated'] as String),
+    );
+
+Map<String, dynamic> _$$KpiImplToJson(_$KpiImpl instance) => <String, dynamic>{
+      'availabilityRate': instance.availabilityRate,
+      'mttr': instance.mttr,
+      'utilization': instance.utilization,
+      'dailyDistance': instance.dailyDistance,
+      'trend': _$KpiTrendDirectionEnumMap[instance.trend]!,
+      'lastUpdated': instance.lastUpdated.toIso8601String(),
+    };
+
+const _$KpiTrendDirectionEnumMap = {
+  KpiTrendDirection.up: 'up',
+  KpiTrendDirection.down: 'down',
+  KpiTrendDirection.stable: 'stable',
+};
+
+_$KpiTrendImpl _$$KpiTrendImplFromJson(Map<String, dynamic> json) =>
+    _$KpiTrendImpl(
+      availabilityChange: (json['availabilityChange'] as num).toDouble(),
+      mttrChange: (json['mttrChange'] as num).toDouble(),
+      utilizationChange: (json['utilizationChange'] as num).toDouble(),
+      distanceChange: (json['distanceChange'] as num).toDouble(),
+    );
+
+Map<String, dynamic> _$$KpiTrendImplToJson(_$KpiTrendImpl instance) =>
+    <String, dynamic>{
+      'availabilityChange': instance.availabilityChange,
+      'mttrChange': instance.mttrChange,
+      'utilizationChange': instance.utilizationChange,
+      'distanceChange': instance.distanceChange,
+    };

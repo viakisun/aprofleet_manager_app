@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCA-AR-001: Analytics Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        /* iPhone 16 Pro Frame */
+        .iphone-frame {
+            width: 393px;
+            height: 852px;
+            background: #000;
+            border-radius: 55px;
+            padding: 12px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 
+                        0 0 0 1px rgba(255,255,255,0.1);
+            position: relative;
+        }
+        
+        .dynamic-island {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background: #000;
+            border-radius: 22px;
+            z-index: 10;
+        }
+        
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 43px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .app-container {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            background: #000;
+            padding: 55px 24px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+        }
+        
+        /* Header */
+        .header {
+            background: #000;
+            padding: 12px 24px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .header-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .header-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        
+        .header-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        /* Date Range Selector */
+        .date-range {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        
+        .date-range::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .date-option {
+            padding: 6px 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 6px;
+            color: #666;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        
+        .date-option.active {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.15);
+            color: #fff;
+        }
+        
+        /* Content */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 80px;
+            padding-top: 12px;
+        }
+        
+        /* KPI Cards */
+        .kpi-section {
+            padding: 0 24px 16px;
+        }
+        
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        
+        .kpi-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .kpi-card.full-width {
+            grid-column: span 2;
+        }
+        
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        
+        .kpi-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        .kpi-trend {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        .kpi-trend.up {
+            background: rgba(52, 199, 89, 0.2);
+            color: #34c759;
+        }
+        
+        .kpi-trend.down {
+            background: rgba(255, 59, 48, 0.2);
+            color: #ff3b30;
+        }
+        
+        .kpi-value {
+            font-size: 26px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        
+        .kpi-unit {
+            font-size: 14px;
+            font-weight: 400;
+            color: #666;
+            margin-left: 4px;
+        }
+        
+        .kpi-subtitle {
+            font-size: 11px;
+            color: #999;
+        }
+        
+        .kpi-chart {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 60px;
+            height: 30px;
+            opacity: 0.3;
+        }
+        
+        /* Charts */
+        .chart-section {
+            padding: 16px 24px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .section-action {
+            font-size: 11px;
+            color: #007aff;
+            cursor: pointer;
+        }
+        
+        .chart-container {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 16px;
+            height: 180px;
+            position: relative;
+        }
+        
+        /* Bar Chart */
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 120px;
+            margin-top: 20px;
+        }
+        
+        .bar {
+            flex: 1;
+            margin: 0 2px;
+            background: linear-gradient(to top, #007aff, #0051d5);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .bar:hover {
+            opacity: 0.8;
+        }
+        
+        .bar-label {
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 9px;
+            color: #666;
+        }
+        
+        .bar-value {
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        /* Line Chart */
+        .line-chart {
+            height: 120px;
+            position: relative;
+            margin-top: 20px;
+        }
+        
+        .chart-svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .chart-line {
+            stroke: #34c759;
+            stroke-width: 2;
+            fill: none;
+        }
+        
+        .chart-area {
+            fill: url(#gradient);
+            opacity: 0.2;
+        }
+        
+        .chart-dot {
+            fill: #34c759;
+            stroke: #000;
+            stroke-width: 2;
+        }
+        
+        /* Pie Chart */
+        .pie-chart-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+        }
+        
+        .pie-chart {
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+        
+        .pie-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        
+        .pie-center-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .pie-center-label {
+            font-size: 9px;
+            color: #666;
+        }
+        
+        .pie-legend {
+            flex: 1;
+            padding-left: 20px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        
+        .legend-label {
+            font-size: 11px;
+            color: #999;
+            flex: 1;
+        }
+        
+        .legend-value {
+            font-size: 11px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        
+        .comparison-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .comparison-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        
+        .comparison-label {
+            font-size: 9px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        /* Export Modal */
+        .export-modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px);
+            z-index: 100;
+            display: none;
+        }
+        
+        .export-modal.active {
+            display: block;
+        }
+        
+        .export-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #111;
+            border-radius: 24px 24px 0 0;
+            padding: 24px;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        
+        .export-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .export-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .export-close {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .export-options {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .export-option {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .export-option:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .export-option-title {
+            font-size: 14px;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        
+        .export-option-desc {
+            font-size: 11px;
+            color: #666;
+        }
+        
+        .export-btn {
+            width: 100%;
+            padding: 14px;
+            background: #34c759;
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            padding: 12px 0 28px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            z-index: 20;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .nav-item.active .nav-icon {
+            color: #fff;
+        }
+        
+        .nav-item.active .nav-label {
+            color: #fff;
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            color: #666;
+        }
+        
+        .nav-label {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-frame">
+        <div class="dynamic-island"></div>
+        <div class="screen">
+            <div class="app-container">
+                <!-- Status Bar -->
+                <div class="status-bar">
+                    <div class="time">09:41</div>
+                    <div class="status-icons">
+                        <span>5G</span>
+                        <span>━━━</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+                
+                <!-- Header -->
+                <div class="header">
+                    <div class="header-top">
+                        <div class="header-title">Analytics</div>
+                        <div class="header-actions">
+                            <div class="header-btn" onclick="refreshData()">↻</div>
+                            <div class="header-btn" onclick="openExport()">↓</div>
+                            <div class="header-btn" onclick="toggleFullscreen()">⛶</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Date Range Selector -->
+                    <div class="date-range">
+                        <div class="date-option" onclick="selectDateRange('today')">Today</div>
+                        <div class="date-option active" onclick="selectDateRange('week')">This Week</div>
+                        <div class="date-option" onclick="selectDateRange('month')">This Month</div>
+                        <div class="date-option" onclick="selectDateRange('quarter')">Quarter</div>
+                        <div class="date-option" onclick="selectDateRange('year')">Year</div>
+                        <div class="date-option" onclick="selectDateRange('custom')">Custom</div>
+                    </div>
+                </div>
+                
+                <!-- Content -->
+                <div class="content">
+                    <!-- KPI Cards -->
+                    <div class="kpi-section">
+                        <div class="kpi-grid">
+                            <div class="kpi-card">
+                                <div class="kpi-header">
+                                    <div class="kpi-label">Availability Rate</div>
+                                    <div class="kpi-trend up">+3.2%</div>
+                                </div>
+                                <div class="kpi-value">94.8<span class="kpi-unit">%</span></div>
+                                <div class="kpi-subtitle">Target: 95%</div>
+                                <svg class="kpi-chart" viewBox="0 0 60 30">
+                                    <polyline points="0,25 10,20 20,22 30,15 40,18 50,10 60,12" 
+                                              stroke="#34c759" stroke-width="2" fill="none" opacity="0.5"/>
+                                </svg>
+                            </div>
+                            
+                            <div class="kpi-card">
+                                <div class="kpi-header">
+                                    <div class="kpi-label">MTTR</div>
+                                    <div class="kpi-trend down">-12%</div>
+                                </div>
+                                <div class="kpi-value">18<span class="kpi-unit">min</span></div>
+                                <div class="kpi-subtitle">Improved by 3 min</div>
+                                <svg class="kpi-chart" viewBox="0 0 60 30">
+                                    <polyline points="0,10 10,15 20,12 30,18 40,16 50,20 60,18" 
+                                              stroke="#ff3b30" stroke-width="2" fill="none" opacity="0.5"/>
+                                </svg>
+                            </div>
+                            
+                            <div class="kpi-card full-width">
+                                <div class="kpi-header">
+                                    <div class="kpi-label">Daily Utilization</div>
+                                    <div class="kpi-trend up">+8.5%</div>
+                                </div>
+                                <div class="kpi-value">847<span class="kpi-unit">km</span></div>
+                                <div class="kpi-subtitle">28 carts • Avg: 30.3 km/cart</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cart Performance Chart -->
+                    <div class="chart-section">
+                        <div class="section-header">
+                            <div class="section-title">Fleet Performance</div>
+                            <div class="section-action" onclick="viewDetails('performance')">Details →</div>
+                        </div>
+                        <div class="chart-container">
+                            <div class="bar-chart">
+                                <div class="bar" style="height: 85%;" onclick="showBarDetails('mon')">
+                                    <div class="bar-value">85%</div>
+                                    <div class="bar-label">Mon</div>
+                                </div>
+                                <div class="bar" style="height: 92%;" onclick="showBarDetails('tue')">
+                                    <div class="bar-value">92%</div>
+                                    <div class="bar-label">Tue</div>
+                                </div>
+                                <div class="bar" style="height: 88%;" onclick="showBarDetails('wed')">
+                                    <div class="bar-value">88%</div>
+                                    <div class="bar-label">Wed</div>
+                                </div>
+                                <div class="bar" style="height: 95%;" onclick="showBarDetails('thu')">
+                                    <div class="bar-value">95%</div>
+                                    <div class="bar-label">Thu</div>
+                                </div>
+                                <div class="bar" style="height: 90%;" onclick="showBarDetails('fri')">
+                                    <div class="bar-value">90%</div>
+                                    <div class="bar-label">Fri</div>
+                                </div>
+                                <div class="bar" style="height: 78%;" onclick="showBarDetails('sat')">
+                                    <div class="bar-value">78%</div>
+                                    <div class="bar-label">Sat</div>
+                                </div>
+                                <div class="bar" style="height: 82%;" onclick="showBarDetails('sun')">
+                                    <div class="bar-value">82%</div>
+                                    <div class="bar-label">Sun</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Battery Health Trend -->
+                    <div class="chart-section">
+                        <div class="section-header">
+                            <div class="section-title">Battery Health Trend</div>
+                            <div class="section-action" onclick="viewDetails('battery')">Details →</div>
+                        </div>
+                        <div class="chart-container">
+                            <div class="line-chart">
+                                <svg class="chart-svg" viewBox="0 0 300 120">
+                                    <defs>
+                                        <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#34c759;stop-opacity:0.3" />
+                                            <stop offset="100%" style="stop-color:#34c759;stop-opacity:0" />
+                                        </linearGradient>
+                                    </defs>
+                                    <polyline class="chart-area" 
+                                              points="0,100 50,85 100,88 150,75 200,80 250,70 300,72 300,120 0,120" />
+                                    <polyline class="chart-line" 
+                                              points="0,100 50,85 100,88 150,75 200,80 250,70 300,72" />
+                                    <circle class="chart-dot" cx="0" cy="100" r="3"/>
+                                    <circle class="chart-dot" cx="50" cy="85" r="3"/>
+                                    <circle class="chart-dot" cx="100" cy="88" r="3"/>
+                                    <circle class="chart-dot" cx="150" cy="75" r="3"/>
+                                    <circle class="chart-dot" cx="200" cy="80" r="3"/>
+                                    <circle class="chart-dot" cx="250" cy="70" r="3"/>
+                                    <circle class="chart-dot" cx="300" cy="72" r="3"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Maintenance Overview -->
+                    <div class="chart-section">
+                        <div class="section-header">
+                            <div class="section-title">Maintenance Distribution</div>
+                            <div class="section-action" onclick="viewDetails('maintenance')">Details →</div>
+                        </div>
+                        <div class="chart-container">
+                            <div class="pie-chart-container">
+                                <div class="pie-chart">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle cx="50" cy="50" r="40" fill="none" stroke="#34c759" stroke-width="20" 
+                                                stroke-dasharray="100 251.2" transform="rotate(-90 50 50)"/>
+                                        <circle cx="50" cy="50" r="40" fill="none" stroke="#007aff" stroke-width="20" 
+                                                stroke-dasharray="75 251.2" stroke-dashoffset="-100" transform="rotate(-90 50 50)"/>
+                                        <circle cx="50" cy="50" r="40" fill="none" stroke="#ff9500" stroke-width="20" 
+                                                stroke-dasharray="50 251.2" stroke-dashoffset="-175" transform="rotate(-90 50 50)"/>
+                                        <circle cx="50" cy="50" r="40" fill="none" stroke="#ff3b30" stroke-width="20" 
+                                                stroke-dasharray="26.2 251.2" stroke-dashoffset="-225" transform="rotate(-90 50 50)"/>
+                                    </svg>
+                                    <div class="pie-center">
+                                        <div class="pie-center-value">142</div>
+                                        <div class="pie-center-label">Total</div>
+                                    </div>
+                                </div>
+                                <div class="pie-legend">
+                                    <div class="legend-item">
+                                        <div class="legend-dot" style="background: #34c759;"></div>
+                                        <div class="legend-label">Preventive</div>
+                                        <div class="legend-value">58</div>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-dot" style="background: #007aff;"></div>
+                                        <div class="legend-label">Battery</div>
+                                        <div class="legend-value">42</div>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-dot" style="background: #ff9500;"></div>
+                                        <div class="legend-label">Tire</div>
+                                        <div class="legend-value">28</div>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-dot" style="background: #ff3b30;"></div>
+                                        <div class="legend-label">Emergency</div>
+                                        <div class="legend-value">14</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cost Analysis -->
+                    <div class="chart-section">
+                        <div class="section-header">
+                            <div class="section-title">Cost Analysis</div>
+                            <div class="section-action" onclick="viewDetails('cost')">Details →</div>
+                        </div>
+                        <div class="comparison-grid">
+                            <div class="comparison-card">
+                                <div class="comparison-value">₩2.8M</div>
+                                <div class="comparison-label">Total</div>
+                            </div>
+                            <div class="comparison-card">
+                                <div class="comparison-value">₩1.2M</div>
+                                <div class="comparison-label">Labor</div>
+                            </div>
+                            <div class="comparison-card">
+                                <div class="comparison-value">₩1.6M</div>
+                                <div class="comparison-label">Parts</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Export Modal -->
+                <div class="export-modal" id="exportModal">
+                    <div class="export-content">
+                        <div class="export-header">
+                            <div class="export-title">Export Report</div>
+                            <div class="export-close" onclick="closeExport()">×</div>
+                        </div>
+                        
+                        <div class="export-options">
+                            <div class="export-option" onclick="selectExportFormat('pdf')">
+                                <div class="export-option-title">PDF Report</div>
+                                <div class="export-option-desc">Complete analytics report with charts</div>
+                            </div>
+                            <div class="export-option" onclick="selectExportFormat('excel')">
+                                <div class="export-option-title">Excel Spreadsheet</div>
+                                <div class="export-option-desc">Raw data for further analysis</div>
+                            </div>
+                            <div class="export-option" onclick="selectExportFormat('csv')">
+                                <div class="export-option-title">CSV Data</div>
+                                <div class="export-option-desc">Simple data export</div>
+                            </div>
+                        </div>
+                        
+                        <button class="export-btn" onclick="exportData()">Export</button>
+                    </div>
+                </div>
+                
+                <!-- Bottom Navigation -->
+                <div class="bottom-nav">
+                    <div class="nav-item" onclick="navigateTo('GCA-HM-001')">
+                        <div class="nav-icon">▦</div>
+                        <div class="nav-label">Home</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-RT-001')">
+                        <div class="nav-icon">◉</div>
+                        <div class="nav-label">Monitor</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-CM-001')">
+                        <div class="nav-icon">▣</div>
+                        <div class="nav-label">Fleet</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-MM-001')">
+                        <div class="nav-icon">⚙</div>
+                        <div class="nav-label">Service</div>
+                    </div>
+                    <div class="nav-item active" onclick="navigateTo('GCA-ST-001')">
+                        <div class="nav-icon">☰</div>
+                        <div class="nav-label">System</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // GCA-AR-001 Analytics Dashboard Controller
+        class AnalyticsController {
+            constructor() {
+                this.currentDateRange = 'week';
+                this.selectedExportFormat = null;
+                this.data = {
+                    availability: [],
+                    mttr: [],
+                    utilization: [],
+                    maintenance: {},
+                    cost: {}
+                };
+                this.init();
+            }
+            
+            init() {
+                this.loadAnalyticsData();
+                this.startDataRefresh();
+                this.animateCharts();
+            }
+            
+            loadAnalyticsData() {
+                // Simulate loading analytics data
+                this.data = {
+                    availability: [85, 92, 88, 95, 90, 78, 82],
+                    mttr: [22, 20, 19, 18, 17, 18, 18],
+                    utilization: [750, 820, 780, 847, 810, 680, 720],
+                    maintenance: {
+                        preventive: 58,
+                        battery: 42,
+                        tire: 28,
+                        emergency: 14
+                    },
+                    cost: {
+                        total: 2800000,
+                        labor: 1200000,
+                        parts: 1600000
+                    },
+                    batteryHealth: [92, 90, 88, 85, 83, 80, 78]
+                };
+            }
+            
+            startDataRefresh() {
+                // Simulate real-time data updates
+                setInterval(() => {
+                    this.updateMetrics();
+                }, 30000); // Update every 30 seconds
+            }
+            
+            updateMetrics() {
+                // Simulate metric updates
+                const availability = 90 + Math.random() * 10;
+                const mttr = 15 + Math.random() * 10;
+                const utilization = 800 + Math.random() * 100;
+                
+                // Update UI
+                this.updateKPICards(availability, mttr, utilization);
+            }
+            
+            updateKPICards(availability, mttr, utilization) {
+                // Update KPI values with animation
+                console.log('Updating KPIs:', { availability, mttr, utilization });
+            }
+            
+            animateCharts() {
+                // Animate charts on load
+                const bars = document.querySelectorAll('.bar');
+                bars.forEach((bar, index) => {
+                    setTimeout(() => {
+                        bar.style.transition = 'height 0.5s ease-out';
+                    }, index * 100);
+                });
+            }
+            
+            selectDateRange(range) {
+                this.currentDateRange = range;
+                
+                // Update active state
+                document.querySelectorAll('.date-option').forEach(option => {
+                    option.classList.remove('active');
+                });
+                event.target.classList.add('active');
+                
+                // Reload data for selected range
+                this.loadDataForRange(range);
+                showToast(`Loading ${range} data`);
+            }
+            
+            loadDataForRange(range) {
+                // Load data based on selected date range
+                switch(range) {
+                    case 'today':
+                        // Load today's data
+                        break;
+                    case 'week':
+                        // Load week data
+                        break;
+                    case 'month':
+                        // Load month data
+                        break;
+                    case 'quarter':
+                        // Load quarter data
+                        break;
+                    case 'year':
+                        // Load year data
+                        break;
+                    case 'custom':
+                        // Show date picker
+                        this.showDatePicker();
+                        break;
+                }
+            }
+            
+            showDatePicker() {
+                showToast('Custom date range selector');
+            }
+            
+            refreshData() {
+                showToast('Refreshing analytics data...');
+                this.loadAnalyticsData();
+                this.animateCharts();
+            }
+            
+            exportData(format) {
+                const formats = {
+                    pdf: 'PDF Report',
+                    excel: 'Excel Spreadsheet',
+                    csv: 'CSV Data'
+                };
+                
+                showToast(`Exporting as ${formats[format]}`);
+                
+                // Simulate export process
+                setTimeout(() => {
+                    showToast('Export completed successfully');
+                }, 2000);
+            }
+            
+            generatePredictiveAnalysis() {
+                // Generate predictive analytics
+                const predictions = {
+                    nextWeekAvailability: 93.5,
+                    maintenanceNeeded: 8,
+                    batteryReplacements: 3,
+                    estimatedCost: 850000
+                };
+                
+                return predictions;
+            }
+            
+            calculateTrends() {
+                // Calculate trend percentages
+                const trends = {};
+                
+                Object.keys(this.data).forEach(key => {
+                    if (Array.isArray(this.data[key])) {
+                        const arr = this.data[key];
+                        const recent = arr[arr.length - 1];
+                        const previous = arr[arr.length - 2];
+                        trends[key] = ((recent - previous) / previous * 100).toFixed(1);
+                    }
+                });
+                
+                return trends;
+            }
+        }
+        
+        // Initialize controller
+        const analyticsController = new AnalyticsController();
+        
+        // Global functions
+        function selectDateRange(range) {
+            analyticsController.selectDateRange(range);
+        }
+        
+        function refreshData() {
+            analyticsController.refreshData();
+        }
+        
+        function openExport() {
+            document.getElementById('exportModal').classList.add('active');
+        }
+        
+        function closeExport() {
+            document.getElementById('exportModal').classList.remove('active');
+        }
+        
+        function selectExportFormat(format) {
+            analyticsController.selectedExportFormat = format;
+            document.querySelectorAll('.export-option').forEach(option => {
+                option.style.background = 'rgba(255,255,255,0.03)';
+            });
+            event.currentTarget.style.background = 'rgba(255,255,255,0.08)';
+        }
+        
+        function exportData() {
+            if (analyticsController.selectedExportFormat) {
+                analyticsController.exportData(analyticsController.selectedExportFormat);
+                closeExport();
+            } else {
+                showToast('Please select an export format');
+            }
+        }
+        
+        function toggleFullscreen() {
+            showToast('Fullscreen mode');
+        }
+        
+        function viewDetails(section) {
+            showToast(`Opening ${section} details`);
+            navigateTo('GCA-AR-002');
+        }
+        
+        function showBarDetails(day) {
+            showToast(`${day.toUpperCase()} performance details`);
+        }
+        
+        function navigateTo(pageId) {
+            console.log(`Navigate to ${pageId}`);
+        }
+        
+        // Toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(255,255,255,0.1);
+                backdrop-filter: blur(20px);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-size: 13px;
+                z-index: 200;
+                animation: fadeInOut 2s ease-in-out;
+                border: 1px solid rgba(255,255,255,0.1);
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 2000);
+        }
+        
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInOut {
+                0% { opacity: 0; transform: translate(-50%, 20px); }
+                20% { opacity: 1; transform: translate(-50%, 0); }
+                80% { opacity: 1; transform: translate(-50%, 0); }
+                100% { opacity: 0; transform: translate(-50%, -20px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCA-AL-001: Alert Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        /* iPhone 16 Pro Frame */
+        .iphone-frame {
+            width: 393px;
+            height: 852px;
+            background: #000;
+            border-radius: 55px;
+            padding: 12px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 
+                        0 0 0 1px rgba(255,255,255,0.1);
+            position: relative;
+        }
+        
+        .dynamic-island {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background: #000;
+            border-radius: 22px;
+            z-index: 10;
+        }
+        
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 43px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .app-container {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            background: #000;
+            padding: 55px 24px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+        }
+        
+        /* Header */
+        .header {
+            background: #000;
+            padding: 12px 24px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .header-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .header-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        
+        .header-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .header-btn.active {
+            background: rgba(255, 59, 48, 0.2);
+            border-color: #ff3b30;
+            color: #ff3b30;
+        }
+        
+        /* Alert Summary */
+        .alert-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        
+        .summary-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .summary-card:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .summary-count {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .summary-label {
+            font-size: 9px;
+            color: #666;
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        .summary-card.critical .summary-count { color: #ff3b30; }
+        .summary-card.warning .summary-count { color: #ff9500; }
+        .summary-card.info .summary-count { color: #007aff; }
+        .summary-card.resolved .summary-count { color: #34c759; }
+        
+        /* Filter Section */
+        .filter-section {
+            padding: 12px 24px;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .filter-section::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .filter-chip {
+            padding: 6px 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 6px;
+            color: #666;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        
+        .filter-chip.active {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.15);
+            color: #fff;
+        }
+        
+        /* Content */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 80px;
+        }
+        
+        /* Alert List */
+        .alert-list {
+            padding: 16px 24px;
+        }
+        
+        .alert-group {
+            margin-bottom: 24px;
+        }
+        
+        .group-header {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .group-count {
+            background: rgba(255,255,255,0.1);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+        }
+        
+        .alert-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .alert-item:hover {
+            background: rgba(255,255,255,0.05);
+            transform: translateX(2px);
+        }
+        
+        .alert-item.unread {
+            border-left: 3px solid #007aff;
+        }
+        
+        .alert-severity {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+        }
+        
+        .alert-severity.critical { background: #ff3b30; }
+        .alert-severity.warning { background: #ff9500; }
+        .alert-severity.info { background: #007aff; }
+        .alert-severity.success { background: #34c759; }
+        
+        .alert-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        
+        .alert-icon-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+        
+        .alert-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        
+        .alert-icon.critical {
+            background: rgba(255, 59, 48, 0.2);
+            color: #ff3b30;
+        }
+        
+        .alert-icon.warning {
+            background: rgba(255, 149, 0, 0.2);
+            color: #ff9500;
+        }
+        
+        .alert-icon.info {
+            background: rgba(0, 122, 255, 0.2);
+            color: #007aff;
+        }
+        
+        .alert-icon.success {
+            background: rgba(52, 199, 89, 0.2);
+            color: #34c759;
+        }
+        
+        .alert-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            flex: 1;
+        }
+        
+        .alert-time {
+            font-size: 10px;
+            color: #666;
+        }
+        
+        .alert-message {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .alert-meta {
+            display: flex;
+            gap: 12px;
+            font-size: 11px;
+            color: #666;
+        }
+        
+        .alert-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .alert-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .alert-btn {
+            padding: 6px 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .alert-btn:hover {
+            background: rgba(255,255,255,0.06);
+        }
+        
+        .alert-btn.primary {
+            background: rgba(52, 199, 89, 0.1);
+            border-color: rgba(52, 199, 89, 0.3);
+            color: #34c759;
+        }
+        
+        .alert-btn.danger {
+            background: rgba(255, 59, 48, 0.1);
+            border-color: rgba(255, 59, 48, 0.3);
+            color: #ff3b30;
+        }
+        
+        /* Alert Detail Modal */
+        .alert-modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px);
+            z-index: 100;
+            display: none;
+        }
+        
+        .alert-modal.active {
+            display: block;
+        }
+        
+        .modal-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #111;
+            border-radius: 24px 24px 0 0;
+            padding: 24px;
+            max-height: 85%;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .modal-section {
+            margin-bottom: 20px;
+        }
+        
+        .modal-section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+        
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .detail-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
+        .detail-label {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 4px;
+        }
+        
+        .detail-value {
+            font-size: 14px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .escalation-path {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+        }
+        
+        .escalation-step {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .escalation-arrow {
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .step-label {
+            font-size: 10px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        
+        .step-value {
+            font-size: 12px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .modal-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 24px;
+        }
+        
+        .modal-btn {
+            padding: 14px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        
+        .modal-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .modal-btn.primary {
+            background: #34c759;
+            border-color: #34c759;
+            color: #000;
+        }
+        
+        .modal-btn.full {
+            grid-column: span 2;
+        }
+        
+        /* Settings Panel */
+        .settings-panel {
+            position: absolute;
+            top: 120px;
+            right: 24px;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px;
+            width: 200px;
+            display: none;
+            z-index: 50;
+        }
+        
+        .settings-panel.active {
+            display: block;
+        }
+        
+        .settings-item {
+            padding: 8px;
+            color: #fff;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        
+        .settings-item:hover {
+            background: rgba(255,255,255,0.06);
+        }
+        
+        .settings-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.06);
+            margin: 8px 0;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            padding: 12px 0 28px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            z-index: 20;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        .nav-item.active .nav-icon {
+            color: #fff;
+        }
+        
+        .nav-item.active .nav-label {
+            color: #fff;
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            color: #666;
+        }
+        
+        .nav-label {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 500;
+        }
+        
+        .nav-badge {
+            position: absolute;
+            top: 4px;
+            right: 24px;
+            background: #ff3b30;
+            color: #fff;
+            font-size: 9px;
+            font-weight: 600;
+            padding: 2px 4px;
+            border-radius: 8px;
+            min-width: 16px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-frame">
+        <div class="dynamic-island"></div>
+        <div class="screen">
+            <div class="app-container">
+                <!-- Status Bar -->
+                <div class="status-bar">
+                    <div class="time">09:41</div>
+                    <div class="status-icons">
+                        <span>5G</span>
+                        <span>━━━</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+                
+                <!-- Header -->
+                <div class="header">
+                    <div class="header-top">
+                        <div class="header-title">Alert Center</div>
+                        <div class="header-actions">
+                            <div class="header-btn" onclick="markAllRead()">✓</div>
+                            <div class="header-btn" onclick="toggleSettings()">⚙</div>
+                            <div class="header-btn active" onclick="toggleMute()">🔔</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Alert Summary -->
+                    <div class="alert-summary">
+                        <div class="summary-card critical" onclick="filterBySeverity('critical')">
+                            <div class="summary-count">5</div>
+                            <div class="summary-label">Critical</div>
+                        </div>
+                        <div class="summary-card warning" onclick="filterBySeverity('warning')">
+                            <div class="summary-count">12</div>
+                            <div class="summary-label">Warning</div>
+                        </div>
+                        <div class="summary-card info" onclick="filterBySeverity('info')">
+                            <div class="summary-count">8</div>
+                            <div class="summary-label">Info</div>
+                        </div>
+                        <div class="summary-card resolved" onclick="filterBySeverity('resolved')">
+                            <div class="summary-count">24</div>
+                            <div class="summary-label">Resolved</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Filter Section -->
+                <div class="filter-section">
+                    <div class="filter-chip active" onclick="filterAlerts('all')">All</div>
+                    <div class="filter-chip" onclick="filterAlerts('unread')">Unread</div>
+                    <div class="filter-chip" onclick="filterAlerts('cart')">Cart</div>
+                    <div class="filter-chip" onclick="filterAlerts('battery')">Battery</div>
+                    <div class="filter-chip" onclick="filterAlerts('maintenance')">Maintenance</div>
+                    <div class="filter-chip" onclick="filterAlerts('geofence')">Geofence</div>
+                    <div class="filter-chip" onclick="filterAlerts('system')">System</div>
+                </div>
+                
+                <!-- Content -->
+                <div class="content">
+                    <div class="alert-list">
+                        <!-- Active Alerts -->
+                        <div class="alert-group">
+                            <div class="group-header">
+                                <span>ACTIVE ALERTS</span>
+                                <span class="group-count">5</span>
+                            </div>
+                            
+                            <div class="alert-item unread" onclick="openAlert('ALT-2025-1847')">
+                                <div class="alert-severity critical"></div>
+                                <div class="alert-header">
+                                    <div class="alert-icon-title">
+                                        <div class="alert-icon critical">🛑</div>
+                                        <div class="alert-title">Emergency Stop Activated</div>
+                                    </div>
+                                    <div class="alert-time">2 min ago</div>
+                                </div>
+                                <div class="alert-message">
+                                    Cart GCA-015 has triggered emergency stop at Hole 15. Immediate attention required.
+                                </div>
+                                <div class="alert-meta">
+                                    <div class="alert-meta-item">Cart: GCA-015</div>
+                                    <div class="alert-meta-item">Location: Hole 15</div>
+                                    <div class="alert-meta-item">Priority: P1</div>
+                                </div>
+                                <div class="alert-actions">
+                                    <button class="alert-btn primary" onclick="event.stopPropagation(); acknowledgeAlert('ALT-2025-1847')">Acknowledge</button>
+                                    <button class="alert-btn" onclick="event.stopPropagation(); viewCart('015')">View Cart</button>
+                                    <button class="alert-btn" onclick="event.stopPropagation(); createWorkOrder('015')">Create WO</button>
+                                </div>
+                            </div>
+                            
+                            <div class="alert-item unread" onclick="openAlert('ALT-2025-1846')">
+                                <div class="alert-severity critical"></div>
+                                <div class="alert-header">
+                                    <div class="alert-icon-title">
+                                        <div class="alert-icon critical">⚡</div>
+                                        <div class="alert-title">Battery Critical Level</div>
+                                    </div>
+                                    <div class="alert-time">18 min ago</div>
+                                </div>
+                                <div class="alert-message">
+                                    Cart GCA-007 battery at 8%. Risk of complete discharge. Immediate charging required.
+                                </div>
+                                <div class="alert-meta">
+                                    <div class="alert-meta-item">Cart: GCA-007</div>
+                                    <div class="alert-meta-item">Battery: 8%</div>
+                                    <div class="alert-meta-item">Est. Time: 10 min</div>
+                                </div>
+                                <div class="alert-actions">
+                                    <button class="alert-btn primary" onclick="event.stopPropagation(); acknowledgeAlert('ALT-2025-1846')">Acknowledge</button>
+                                    <button class="alert-btn" onclick="event.stopPropagation(); sendReturnCommand('007')">Return to Base</button>
+                                </div>
+                            </div>
+                            
+                            <div class="alert-item" onclick="openAlert('ALT-2025-1845')">
+                                <div class="alert-severity warning"></div>
+                                <div class="alert-header">
+                                    <div class="alert-icon-title">
+                                        <div class="alert-icon warning">📍</div>
+                                        <div class="alert-title">Geofence Violation</div>
+                                    </div>
+                                    <div class="alert-time">25 min ago</div>
+                                </div>
+                                <div class="alert-message">
+                                    Cart GCA-012 has exited authorized zone. Currently 150m outside boundary.
+                                </div>
+                                <div class="alert-meta">
+                                    <div class="alert-meta-item">Cart: GCA-012</div>
+                                    <div class="alert-meta-item">Distance: 150m</div>
+                                    <div class="alert-meta-item">Zone: Restricted</div>
+                                </div>
+                                <div class="alert-actions">
+                                    <button class="alert-btn" onclick="event.stopPropagation(); viewLocation('012')">View Location</button>
+                                    <button class="alert-btn" onclick="event.stopPropagation(); sendAlert('012')">Send Alert</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Alerts -->
+                        <div class="alert-group">
+                            <div class="group-header">
+                                <span>RECENT</span>
+                                <span class="group-count">8</span>
+                            </div>
+                            
+                            <div class="alert-item" onclick="openAlert('ALT-2025-1844')">
+                                <div class="alert-severity warning"></div>
+                                <div class="alert-header">
+                                    <div class="alert-icon-title">
+                                        <div class="alert-icon warning">🔧</div>
+                                        <div class="alert-title">Maintenance Due</div>
+                                    </div>
+                                    <div class="alert-time">1 hr ago</div>
+                                </div>
+                                <div class="alert-message">
+                                    Cart GCA-003 has reached 1000km service interval. Schedule maintenance.
+                                </div>
+                                <div class="alert-meta">
+                                    <div class="alert-meta-item">Cart: GCA-003</div>
+                                    <div class="alert-meta-item">Mileage: 1,002km</div>
+                                    <div class="alert-meta-item">Type: PM-1000</div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert-item" onclick="openAlert('ALT-2025-1843')">
+                                <div class="alert-severity info"></div>
+                                <div class="alert-header">
+                                    <div class="alert-icon-title">
+                                        <div class="alert-icon info">🌡️</div>
+                                        <div class="alert-title">High Temperature Warning</div>
+                                    </div>
+                                    <div class="alert-time">2 hr ago</div>
+                                </div>
+                                <div class="alert-message">
+                                    Cart GCA-018 motor temperature exceeding normal range (42°C).
+                                </div>
+                                <div class="alert-meta">
+                                    <div class="alert-meta-item">Cart: GCA-018</div>
+                                    <div class="alert-meta-item">Temp: 42°C</div>
+                                    <div class="alert-meta-item">Threshold: 40°C</div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert-item" onclick="openAlert('ALT-2025-1842')">
+                                <div class="alert-severity success"></div>
+                                <div class="alert-header">
+                                    <div class="alert-icon-title">
+                                        <div class="alert-icon success">✓</div>
+                                        <div class="alert-title">Maintenance Completed</div>
+                                    </div>
+                                    <div class="alert-time">3 hr ago</div>
+                                </div>
+                                <div class="alert-message">
+                                    Work order WO-2025-0843 completed successfully for GCA-011.
+                                </div>
+                                <div class="alert-meta">
+                                    <div class="alert-meta-item">Cart: GCA-011</div>
+                                    <div class="alert-meta-item">WO: WO-2025-0843</div>
+                                    <div class="alert-meta-item">Tech: H. Choi</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Alert Detail Modal -->
+                <div class="alert-modal" id="alertModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-title" id="modalTitle">ALT-2025-1847</div>
+                            <div class="modal-close" onclick="closeAlert()">×</div>
+                        </div>
+                        
+                        <div class="modal-section">
+                            <div class="modal-section-title">Alert Details</div>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">Type</div>
+                                    <div class="detail-value">Emergency Stop</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Severity</div>
+                                    <div class="detail-value" style="color: #ff3b30;">CRITICAL</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Cart ID</div>
+                                    <div class="detail-value">GCA-015</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Location</div>
+                                    <div class="detail-value">Hole 15</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Triggered</div>
+                                    <div class="detail-value">09:39:15</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Status</div>
+                                    <div class="detail-value">Active</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="modal-section">
+                            <div class="modal-section-title">Escalation Path</div>
+                            <div class="escalation-path">
+                                <div class="escalation-step">
+                                    <div class="step-label">L1</div>
+                                    <div class="step-value">Operator</div>
+                                </div>
+                                <div class="escalation-arrow">→</div>
+                                <div class="escalation-step">
+                                    <div class="step-label">L2</div>
+                                    <div class="step-value">Supervisor</div>
+                                </div>
+                                <div class="escalation-arrow">→</div>
+                                <div class="escalation-step">
+                                    <div class="step-label">L3</div>
+                                    <div class="step-value">Manager</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="modal-section">
+                            <div class="modal-section-title">Action History</div>
+                            <div style="font-size: 12px; color: #999; line-height: 1.6;">
+                                09:39:15 - Alert triggered<br>
+                                09:39:18 - Notification sent to operator<br>
+                                09:40:00 - Escalated to supervisor<br>
+                                09:41:00 - Awaiting acknowledgment
+                            </div>
+                        </div>
+                        
+                        <div class="modal-actions">
+                            <button class="modal-btn primary" onclick="acknowledgeAndClose()">Acknowledge</button>
+                            <button class="modal-btn" onclick="escalateAlert()">Escalate</button>
+                            <button class="modal-btn full" onclick="createIncidentReport()">Create Incident Report</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Settings Panel -->
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-item" onclick="openAlertRules()">Alert Rules</div>
+                    <div class="settings-item" onclick="openNotificationSettings()">Notifications</div>
+                    <div class="settings-item" onclick="openEscalationMatrix()">Escalation Matrix</div>
+                    <div class="settings-divider"></div>
+                    <div class="settings-item" onclick="exportAlerts()">Export Alerts</div>
+                    <div class="settings-item" onclick="clearResolved()">Clear Resolved</div>
+                </div>
+                
+                <!-- Bottom Navigation -->
+                <div class="bottom-nav">
+                    <div class="nav-item" onclick="navigateTo('GCA-HM-001')">
+                        <div class="nav-icon">▦</div>
+                        <div class="nav-label">Home</div>
+                        <div class="nav-badge">3</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-RT-001')">
+                        <div class="nav-icon">◉</div>
+                        <div class="nav-label">Monitor</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-CM-001')">
+                        <div class="nav-icon">▣</div>
+                        <div class="nav-label">Fleet</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-MM-001')">
+                        <div class="nav-icon">⚙</div>
+                        <div class="nav-label">Service</div>
+                    </div>
+                    <div class="nav-item active" onclick="navigateTo('GCA-ST-001')">
+                        <div class="nav-icon">☰</div>
+                        <div class="nav-label">System</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // GCA-AL-001 Alert Center Controller
+        class AlertCenterController {
+            constructor() {
+                this.alerts = [];
+                this.filters = {
+                    severity: 'all',
+                    type: 'all',
+                    status: 'all'
+                };
+                this.selectedAlert = null;
+                this.muteStatus = false;
+                this.init();
+            }
+            
+            init() {
+                this.loadAlerts();
+                this.startRealTimeMonitoring();
+                this.setupEventListeners();
+                this.updateSummary();
+            }
+            
+            loadAlerts() {
+                // Simulate loading alerts
+                this.alerts = [
+                    {
+                        id: 'ALT-2025-1847',
+                        type: 'emergency_stop',
+                        severity: 'critical',
+                        title: 'Emergency Stop Activated',
+                        message: 'Cart GCA-015 has triggered emergency stop at Hole 15.',
+                        cart: 'GCA-015',
+                        location: 'Hole 15',
+                        timestamp: new Date(Date.now() - 2 * 60000),
+                        status: 'active',
+                        unread: true,
+                        priority: 'P1'
+                    },
+                    {
+                        id: 'ALT-2025-1846',
+                        type: 'battery',
+                        severity: 'critical',
+                        title: 'Battery Critical Level',
+                        message: 'Cart GCA-007 battery at 8%. Risk of complete discharge.',
+                        cart: 'GCA-007',
+                        battery: 8,
+                        timestamp: new Date(Date.now() - 18 * 60000),
+                        status: 'active',
+                        unread: true
+                    },
+                    {
+                        id: 'ALT-2025-1845',
+                        type: 'geofence',
+                        severity: 'warning',
+                        title: 'Geofence Violation',
+                        message: 'Cart GCA-012 has exited authorized zone.',
+                        cart: 'GCA-012',
+                        distance: 150,
+                        timestamp: new Date(Date.now() - 25 * 60000),
+                        status: 'active',
+                        unread: false
+                    }
+                ];
+            }
+            
+            startRealTimeMonitoring() {
+                // Simulate real-time alert updates
+                setInterval(() => {
+                    this.checkForNewAlerts();
+                }, 10000); // Check every 10 seconds
+                
+                // Simulate alert status updates
+                setInterval(() => {
+                    this.updateAlertStatuses();
+                }, 5000); // Update every 5 seconds
+            }
+            
+            checkForNewAlerts() {
+                // Simulate checking for new alerts
+                const random = Math.random();
+                if (random > 0.7) {
+                    this.createNewAlert();
+                }
+            }
+            
+            createNewAlert() {
+                const alertTypes = [
+                    { type: 'battery', severity: 'warning', title: 'Low Battery' },
+                    { type: 'maintenance', severity: 'info', title: 'Maintenance Required' },
+                    { type: 'speed', severity: 'warning', title: 'Speed Limit Exceeded' },
+                    { type: 'temperature', severity: 'warning', title: 'High Temperature' }
+                ];
+                
+                const randomAlert = alertTypes[Math.floor(Math.random() * alertTypes.length)];
+                const cartNumber = Math.floor(Math.random() * 28) + 1;
+                
+                const newAlert = {
+                    id: `ALT-2025-${Date.now()}`,
+                    ...randomAlert,
+                    message: `Alert for Cart GCA-${cartNumber.toString().padStart(3, '0')}`,
+                    cart: `GCA-${cartNumber.toString().padStart(3, '0')}`,
+                    timestamp: new Date(),
+                    status: 'active',
+                    unread: true
+                };
+                
+                this.alerts.unshift(newAlert);
+                this.showNotification(newAlert);
+                this.updateSummary();
+            }
+            
+            showNotification(alert) {
+                if (!this.muteStatus) {
+                    showToast(`New Alert: ${alert.title} - ${alert.cart}`);
+                }
+            }
+            
+            updateAlertStatuses() {
+                // Simulate status changes
+                this.alerts.forEach(alert => {
+                    if (alert.status === 'active' && Math.random() > 0.95) {
+                        alert.status = 'resolved';
+                    }
+                });
+            }
+            
+            setupEventListeners() {
+                // Setup filter listeners
+                document.querySelectorAll('.filter-chip').forEach(chip => {
+                    chip.addEventListener('click', (e) => {
+                        this.handleFilterClick(e.target);
+                    });
+                });
+            }
+            
+            handleFilterClick(chip) {
+                document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                // Apply filter logic
+            }
+            
+            updateSummary() {
+                const summary = {
+                    critical: this.alerts.filter(a => a.severity === 'critical' && a.status === 'active').length,
+                    warning: this.alerts.filter(a => a.severity === 'warning' && a.status === 'active').length,
+                    info: this.alerts.filter(a => a.severity === 'info' && a.status === 'active').length,
+                    resolved: this.alerts.filter(a => a.status === 'resolved').length
+                };
+                
+                document.querySelectorAll('.summary-count')[0].textContent = summary.critical;
+                document.querySelectorAll('.summary-count')[1].textContent = summary.warning;
+                document.querySelectorAll('.summary-count')[2].textContent = summary.info;
+                document.querySelectorAll('.summary-count')[3].textContent = summary.resolved;
+            }
+            
+            acknowledgeAlert(alertId) {
+                const alert = this.alerts.find(a => a.id === alertId);
+                if (alert) {
+                    alert.unread = false;
+                    alert.acknowledged = true;
+                    alert.acknowledgedAt = new Date();
+                    showToast(`Alert ${alertId} acknowledged`);
+                    this.updateSummary();
+                }
+            }
+            
+            markAllRead() {
+                this.alerts.forEach(alert => {
+                    alert.unread = false;
+                });
+                showToast('All alerts marked as read');
+                this.refreshUI();
+            }
+            
+            toggleMute() {
+                this.muteStatus = !this.muteStatus;
+                const btn = document.querySelector('.header-btn.active');
+                if (this.muteStatus) {
+                    btn.textContent = '🔕';
+                    showToast('Notifications muted');
+                } else {
+                    btn.textContent = '🔔';
+                    showToast('Notifications enabled');
+                }
+            }
+            
+            refreshUI() {
+                // Refresh the alert list UI
+                document.querySelectorAll('.alert-item').forEach(item => {
+                    item.classList.remove('unread');
+                });
+            }
+        }
+        
+        // Initialize controller
+        const alertController = new AlertCenterController();
+        
+        // Global functions
+        function filterBySeverity(severity) {
+            alertController.filters.severity = severity;
+            showToast(`Filtering by ${severity} alerts`);
+        }
+        
+        function filterAlerts(type) {
+            alertController.filters.type = type;
+            event.target.classList.add('active');
+        }
+        
+        function openAlert(alertId) {
+            alertController.selectedAlert = alertId;
+            document.getElementById('modalTitle').textContent = alertId;
+            document.getElementById('alertModal').classList.add('active');
+        }
+        
+        function closeAlert() {
+            document.getElementById('alertModal').classList.remove('active');
+            alertController.selectedAlert = null;
+        }
+        
+        function acknowledgeAlert(alertId) {
+            alertController.acknowledgeAlert(alertId);
+        }
+        
+        function acknowledgeAndClose() {
+            if (alertController.selectedAlert) {
+                alertController.acknowledgeAlert(alertController.selectedAlert);
+            }
+            closeAlert();
+        }
+        
+        function viewCart(cartId) {
+            showToast(`Opening cart GCA-${cartId} details`);
+            navigateTo('GCA-RT-002');
+        }
+        
+        function createWorkOrder(cartId) {
+            showToast(`Creating work order for GCA-${cartId}`);
+            navigateTo('GCA-MM-002');
+        }
+        
+        function sendReturnCommand(cartId) {
+            showToast(`Return command sent to GCA-${cartId}`);
+        }
+        
+        function viewLocation(cartId) {
+            showToast(`Opening location for GCA-${cartId}`);
+            navigateTo('GCA-RT-001');
+        }
+        
+        function sendAlert(cartId) {
+            showToast(`Alert sent to GCA-${cartId} operator`);
+        }
+        
+        function escalateAlert() {
+            showToast('Alert escalated to next level');
+            closeAlert();
+        }
+        
+        function createIncidentReport() {
+            showToast('Navigate to GCA-AL-004: Incident Report');
+            navigateTo('GCA-AL-004');
+        }
+        
+        function markAllRead() {
+            alertController.markAllRead();
+        }
+        
+        function toggleSettings() {
+            const panel = document.getElementById('settingsPanel');
+            panel.classList.toggle('active');
+        }
+        
+        function toggleMute() {
+            alertController.toggleMute();
+        }
+        
+        function openAlertRules() {
+            showToast('Navigate to GCA-AL-003: Alert Rules');
+            navigateTo('GCA-AL-003');
+            toggleSettings();
+        }
+        
+        function openNotificationSettings() {
+            showToast('Opening notification settings');
+            toggleSettings();
+        }
+        
+        function openEscalationMatrix() {
+            showToast('Navigate to GCA-AL-005: Escalation Matrix');
+            navigateTo('GCA-AL-005');
+            toggleSettings();
+        }
+        
+        function exportAlerts() {
+            showToast('Exporting alerts to CSV');
+            toggleSettings();
+        }
+        
+        function clearResolved() {
+            const resolved = alertController.alerts.filter(a => a.status === 'resolved').length;
+            showToast(`Cleared ${resolved} resolved alerts`);
+            toggleSettings();
+        }
+        
+        function navigateTo(pageId) {
+            console.log(`Navigate to ${pageId}`);
+        }
+        
+        // Toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(255,255,255,0.1);
+                backdrop-filter: blur(20px);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-size: 13px;
+                z-index: 200;
+                animation: fadeInOut 2s ease-in-out;
+                border: 1px solid rgba(255,255,255,0.1);
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 2000);
+        }
+        
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInOut {
+                0% { opacity: 0; transform: translate(-50%, 20px); }
+                20% { opacity: 1; transform: translate(-50%, 0); }
+                80% { opacity: 1; transform: translate(-50%, 0); }
+                100% { opacity: 0; transform: translate(-50%, -20px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

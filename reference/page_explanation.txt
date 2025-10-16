@@ -1,0 +1,969 @@
+1. 디자인 개선
+
+이모지 최소화, SVG 아이콘 사용
+올블랙 배경에 모노톤 컬러 스킴
+얇은 보더와 미묘한 투명도로 레이어 구분
+전문적인 타이포그래피 (uppercase, letter-spacing)
+
+2. 전문 코드 체계 적용
+
+INC-2025-XXXX: Incident (사고/고장)
+ALT-2025-XXXX: Alert (경고)
+MNT-2025-XXXX: Maintenance (정비)
+WO-XXXX: Work Order (작업 지시)
+
+3. 우선순위 큐 시스템
+
+P1 (Critical): 빨강 - 즉시 대응
+P2 (High): 주황 - 1시간 내
+P3 (Normal): 초록 - 당일 처리
+P4 (Low): 회색 - 계획된 작업
+
+4. KPI 메트릭
+
+Availability Rate (가동률)
+MTTR (평균 수리 시간)
+Utilization (활용률)
+Daily Distance (일일 주행거리)
+
+5. 시스템 아키텍처
+
+WebSocket 실시간 통신 시뮬레이션
+Telemetry 데이터 스트리밍
+Incident Management System
+페이지 코드 기반 네비게이션
+
+
+
+
+
+
+
+Format: GCA-[MODULE]-[PAGE_NUMBER]
+Modules:
+- HM: Home Module (대시보드)
+- RT: Real-Time Module (실시간 모니터링)
+- CM: Cart Management (카트 관리)
+- MM: Maintenance Module (정비 관리)
+- AR: Analytics & Reports (분석/보고)
+- AL: Alert Management (알림 관리)
+- ST: System Settings (시스템 설정)
+```
+
+---
+
+## 1️⃣ HOME MODULE (HM)
+
+| Page ID | Page Name | Purpose | Priority |
+|---------|-----------|---------|----------|
+| **GCA-HM-001** | Main Dashboard | 통합 대시보드, TODO 관리 | P1 |
+| **GCA-HM-002** | Quick Actions | 빠른 작업 실행 패널 | P2 |
+| **GCA-HM-003** | Shift Handover | 교대 인수인계 체크리스트 | P2 |
+
+---
+
+## 2️⃣ REAL-TIME MODULE (RT)
+
+| Page ID | Page Name | Purpose | Priority |
+|---------|-----------|---------|----------|
+| **GCA-RT-001** | Live Map View | 전체 카트 위치 맵 | P1 |
+| **GCA-RT-002** | Cart Detail Monitor | 개별 카트 상세 모니터링 | P1 |
+| **GCA-RT-003** | Telemetry Dashboard | 실시간 텔레메트리 데이터 | P1 |
+| **GCA-RT-004** | Route Tracking | 경로 추적 및 재생 | P2 |
+| **GCA-RT-005** | Geofence Manager | 지오펜스 설정/모니터링 | P2 |
+| **GCA-RT-006** | Heat Map Analysis | 구역별 혼잡도 분석 | P3 |
+
+---
+
+## 3️⃣ CART MANAGEMENT MODULE (CM)
+
+| Page ID | Page Name | Purpose | Priority |
+|---------|-----------|---------|----------|
+| **GCA-CM-001** | Cart Inventory List | 전체 카트 목록 | P1 |
+| **GCA-CM-002** | Cart Registration | 신규 카트 등록 | P1 |
+| **GCA-CM-003** | Cart Profile | 카트 상세 정보 | P1 |
+| **GCA-CM-004** | Parts Lifecycle | 부품 수명 관리 | P1 |
+| **GCA-CM-005** | Battery Management | 배터리 상태 관리 | P1 |
+| **GCA-CM-006** | Cart Assignment | 카트 할당/스케줄 | P2 |
+| **GCA-CM-007** | QR Code Scanner | QR 코드 스캔/조회 | P2 |
+
+---
+
+## 4️⃣ MAINTENANCE MODULE (MM)
+
+| Page ID | Page Name | Purpose | Priority |
+|---------|-----------|---------|----------|
+| **GCA-MM-001** | Work Order List | 작업 지시 목록 | P1 |
+| **GCA-MM-002** | Create Work Order | 작업 지시 생성 | P1 |
+| **GCA-MM-003** | Work Order Detail | 작업 상세/진행상황 | P1 |
+| **GCA-MM-004** | Maintenance Calendar | 정비 일정 캘린더 | P1 |
+| **GCA-MM-005** | Service History | 정비 이력 조회 | P1 |
+| **GCA-MM-006** | Parts Inventory | 부품 재고 관리 | P2 |
+| **GCA-MM-007** | Technician Assignment | 기술자 배정 | P2 |
+| **GCA-MM-008** | Maintenance Checklist | 점검 체크리스트 | P2 |
+| **GCA-MM-009** | Cost Tracking | 정비 비용 추적 | P3 |
+
+---
+
+## 5️⃣ ANALYTICS & REPORTS MODULE (AR)
+
+| Page ID | Page Name | Purpose | Priority |
+|---------|-----------|---------|----------|
+| **GCA-AR-001** | Analytics Dashboard | 운영 분석 대시보드 | P1 |
+| **GCA-AR-002** | Performance Metrics | 성능 지표 상세 | P2 |
+| **GCA-AR-003** | Report Generator | 보고서 생성 | P1 |
+| **GCA-AR-004** | Trend Analysis | 추세 분석 | P2 |
+| **GCA-AR-005** | Predictive Analytics | 예측 분석 | P3 |
+| **GCA-AR-006** | Export Center | 데이터 내보내기 | P2 |
+
+---
+
+## 6️⃣ ALERT MANAGEMENT MODULE (AL)
+
+| Page ID | Page Name | Purpose | Priority |
+|---------|-----------|---------|----------|
+| **GCA-AL-001** | Alert Center | 알림 센터 | P1 |
+| **GCA-AL-002** | Alert History | 알림 이력 | P2 |
+| **GCA-AL-003** | Alert Rules | 알림 규칙 설정 | P1 |
+| **GCA-AL-004** | Incident Report | 사고 보고서 작성 | P1 |
+| **GCA-AL-005** | Escalation Matrix | 에스컬레이션 설정 | P2 |
+
+---
+
+## 7️⃣ SYSTEM SETTINGS MODULE (ST)
+
+| Page ID | Page Name | Purpose | Priority |
+|---------|-----------|---------|----------|
+| **GCA-ST-001** | System Configuration | 시스템 설정 | P1 |
+| **GCA-ST-002** | User Management | 사용자 관리 | P1 |
+| **GCA-ST-003** | Role Permissions | 권한 관리 | P1 |
+| **GCA-ST-004** | API Configuration | API 연동 설정 | P2 |
+| **GCA-ST-005** | Backup & Recovery | 백업/복구 | P2 |
+| **GCA-ST-006** | System Logs | 시스템 로그 | P3 |
+| **GCA-ST-007** | About & Support | 정보/지원 | P3 |
+
+---
+
+## 🔄 페이지 플로우 매트릭스
+
+### Critical User Flows
+
+#### Flow 1: 긴급 대응 (Emergency Response)
+```
+GCA-HM-001 (Alert) 
+→ GCA-RT-002 (Monitor) 
+→ GCA-MM-002 (Create WO) 
+→ GCA-MM-003 (Track Progress)
+```
+
+#### Flow 2: 정기 점검 (Scheduled Maintenance)
+```
+GCA-MM-004 (Calendar) 
+→ GCA-CM-001 (Select Cart) 
+→ GCA-MM-008 (Checklist) 
+→ GCA-MM-005 (Update History)
+```
+
+#### Flow 3: 배터리 관리 (Battery Management)
+```
+GCA-CM-005 (Battery Status) 
+→ GCA-RT-001 (Location) 
+→ GCA-CM-006 (Reassign) 
+→ GCA-AL-001 (Notify)
+```
+
+#### Flow 4: 보고서 생성 (Report Generation)
+```
+GCA-AR-001 (Analytics) 
+→ GCA-AR-002 (Metrics) 
+→ GCA-AR-003 (Generate) 
+→ GCA-AR-006 (Export)
+
+
+
+
+Global state requirements
+
+interface GlobalState {
+  user: UserProfile;
+  carts: Map<string, CartData>;
+  alerts: PriorityQueue<Alert>;
+  telemetry: RealtimeStream;
+  workOrders: WorkOrder[];
+  settings: SystemConfig;
+}
+
+
+Shared Components
+
+// 모든 페이지에서 재사용되는 컴포넌트
+- NavigationBar      // 하단 네비게이션
+- HeaderBar         // 상단 헤더
+- AlertBadge        // 알림 배지
+- CartStatusChip    // 카트 상태 표시
+- PriorityIndicator // 우선순위 표시
+- TelemetryWidget   // 텔레메트리 위젯
+- ActionButton      // 액션 버튼
+- DataGrid          // 데이터 그리드
+- Modal            // 모달 다이얼로그
+- Toast            // 토스트 메시지
+
+
+
+
+
+
+
+GCA-RT-001: Live Map View 페이지를 구현했습니다.
+📍 구현된 주요 기능
+1. 실시간 카트 위치 표시
+
+골프 코스 맵 위에 12대의 카트 실시간 위치
+상태별 색상 구분:
+
+🟢 Active (운행중) - 초록색
+🟠 Idle (대기중) - 주황색
+🔵 Charging (충전중) - 파란색
+🔴 Maintenance (정비중) - 빨간색
+⚫ Offline (오프라인) - 회색
+
+
+
+2. 검색 및 필터링
+
+상단 검색바: 카트 ID 또는 위치로 검색
+필터 패널: 상태별 카트 표시/숨김
+Geofence 필터 옵션
+
+3. 카트 상세 정보 팝업
+
+카트 마커 클릭 시 상세 정보 표시
+실시간 텔레메트리 데이터:
+
+Battery 잔량
+현재 속도
+위치 정보
+운행 시간
+
+
+Quick Actions: Detail / Track 버튼
+
+4. 맵 컨트롤
+
+Zoom In/Out 기능
+9개 홀 표시
+격자 배경으로 거리감 표현
+
+5. 실시간 상태 패널
+
+하단 상태바에 전체 카트 현황
+상태별 카트 대수 실시간 업데이트
+
+6. 시뮬레이션 기능
+
+3초마다 카트 위치 미세 이동
+1초마다 텔레메트리 데이터 업데이트
+Active 카트의 배터리 소모 시뮬레이션
+
+🔄 페이지 간 연결
+
+카트 팝업 → Detail 버튼: GCA-RT-002 (Cart Detail Monitor)로 이동
+하단 네비게이션: 다른 주요 모듈로 빠른 이동
+Track 버튼: 개별 카트 추적 모드 활성화
+
+💡 기술적 특징
+typescriptclass LiveMapController {
+  - 카트 데이터 관리 (Map 구조)
+  - 필터 상태 관리
+  - 실시간 위치 업데이트
+  - WebSocket 시뮬레이션
+  - 줌 레벨 제어
+}
+
+
+
+
+GCA-RT-002: Cart Detail Monitor 페이지를 구현했습니다.
+📊 구현된 주요 기능
+1. 실시간 텔레메트리 모니터링
+
+Primary Telemetry
+
+Battery: 실시간 배터리 잔량 및 시각화 (색상 변화: 정상/경고/위험)
+Speed: 속도계 게이지 및 평균 속도 표시
+Position: 미니맵에서 실시간 위치 추적
+
+
+
+2. 시스템 메트릭스
+
+상단 행: Motor Temperature, Voltage, Current
+하단 행: Runtime, Distance, Efficiency
+1초마다 실시간 업데이트
+
+3. 상태 표시
+
+LIVE 인디케이터 (빨간 점 애니메이션)
+상태 배지: ACTIVE / IDLE / CHARGING / MAINTENANCE / OFFLINE
+카트 정보: Model, Location, Operator
+
+4. 알림 시스템
+
+배터리 50% 이하 시 경고 표시
+임계값 기반 자동 알림
+시간 표시와 함께 상세 메시지
+
+5. 원격 제어 기능
+
+Speed Limit: 속도 제한 설정
+Message: 운전자에게 메시지 전송
+Return to Base: 기지 복귀 명령
+Lock Cart: 카트 원격 잠금
+EMERGENCY STOP: 긴급 정지 (확인 다이얼로그)
+
+6. 데이터 시뮬레이션
+javascriptclass CartDetailMonitor {
+  - 실시간 텔레메트리 스트림 (1초 간격)
+  - 위치 업데이트 (3초 간격)
+  - 배터리 소모 시뮬레이션
+  - 속도 변화 시뮬레이션
+  - 알림 임계값 체크
+}
+🔗 페이지 연결
+
+← 버튼: GCA-RT-001 (Live Map View)로 복귀
+하단 네비게이션: 다른 모듈로 이동
+Emergency Stop: 상태 변경 및 즉시 반영
+
+💡 기술적 특징
+
+실시간 데이터 스트리밍: 1초 간격 업데이트
+동적 UI 업데이트: DOM 조작을 통한 부드러운 전환
+시각적 피드백: 게이지, 프로그레스 바, 색상 변화
+안전 기능: Emergency Stop 확인 다이얼로그
+
+
+
+GCA-CM-001: Cart Inventory List 페이지를 구현했습니다.
+📋 구현된 주요 기능
+1. 검색 및 필터링
+
+실시간 검색: ID, 모델명, 위치로 카트 검색
+고급 필터:
+
+Status: Active, Idle, Charging, Maintenance, Offline
+Model: EZ-GO, Club Car, Yamaha
+Battery Level: <20%, 20-50%, 50-80%, >80%
+
+
+필터 적용 개수 표시
+
+2. 뷰 모드 전환
+
+List View: 상세 정보와 액션 버튼이 포함된 리스트
+Grid View: 2열 그리드로 간략한 정보 표시
+Select Mode: 다중 선택 모드
+
+3. 통계 바
+
+Total: 전체 카트 수
+Active: 운행 중
+Service: 정비 중
+Charging: 충전 중
+
+4. 카트 아이템 표시
+
+상태별 색상 코드:
+
+🟢 Active - 초록색
+🟠 Idle - 주황색
+🔵 Charging - 파란색
+🔴 Maintenance - 빨간색
+⚫ Offline - 회색
+
+
+
+5. 개별 카트 액션
+
+Details: 상세 정보 페이지 (GCA-CM-003)
+Track: 실시간 추적 (GCA-RT-002)
+Service: 정비 요청 (GCA-MM-002)
+
+6. 일괄 작업 (Selection Mode)
+
+다중 선택 기능
+선택된 카트 수 표시
+일괄 작업 버튼:
+
+Assign: 일괄 배정
+Service: 일괄 정비 요청
+Export: 데이터 내보내기
+
+
+
+7. 필터 모달
+
+슬라이드업 애니메이션
+다중 필터 조합 가능
+활성 필터 수 표시
+
+🔗 페이지 연결
+
++ 버튼: GCA-CM-002 (Cart Registration) - 신규 카트 등록
+Details: GCA-CM-003 (Cart Profile) - 카트 상세 정보
+Track: GCA-RT-002 (Cart Detail Monitor) - 실시간 모니터링
+Service: GCA-MM-002 (Create Work Order) - 작업 지시 생성
+
+💡 기술적 특징
+javascriptclass CartInventoryController {
+  - 카트 데이터 관리
+  - 필터 상태 관리
+  - 선택 모드 토글
+  - 뷰 모드 전환
+  - 검색 기능
+  - 통계 업데이트
+}
+📊 데이터 구조
+
+8대의 샘플 카트 데이터
+다양한 상태 시뮬레이션
+배터리 레벨 표시
+실시간 위치 정보
+
+
+
+GCA-MM-001: Work Order List 페이지를 구현했습니다.
+🔧 구현된 주요 기능
+1. 작업 지시 통계
+
+Urgent: 긴급 작업 (빨간색)
+Pending: 대기 중 (주황색)
+In Progress: 진행 중 (파란색)
+Today: 오늘 완료 (초록색)
+
+2. 필터 탭
+
+All (전체)
+Urgent (긴급)
+Pending (대기)
+In Progress (진행중)
+Completed (완료)
+Timeline (타임라인 뷰)
+
+3. 작업 지시 우선순위
+
+P1 (Critical): 빨간색 - 긴급 대응
+P2 (High): 주황색 - 높은 우선순위
+P3 (Normal): 파란색 - 일반 작업
+P4 (Low): 초록색 - 낮은 우선순위
+
+4. 작업 지시 카드 정보
+
+WO 번호 (WO-YYYY-XXXX)
+작업 유형 및 설명
+카트 ID
+위치
+담당 기술자
+생성/진행 시간
+상태 배지
+
+5. 타임라인 뷰
+
+시간순 작업 이력
+날짜별 그룹핑
+상태별 색상 점 표시
+
+6. 작업 지시 상세 모달
+
+작업 상세 정보
+정비 체크리스트
+사용 부품 목록
+상태 업데이트
+완료 처리
+
+7. 기술자 정보
+
+아바타 (이니셜)
+담당자명
+미배정 상태 표시
+
+📋 작업 지시 유형
+
+Emergency Repair: 긴급 수리
+Battery Replacement: 배터리 교체
+Preventive Maintenance: 예방 정비
+Brake System Failure: 브레이크 고장
+Tire Replacement: 타이어 교체
+
+🔗 페이지 연결
+
++ 버튼: GCA-MM-002 (Create Work Order)
+작업 지시 클릭: 상세 모달 열기
+Update Status: 상태 업데이트
+Mark Complete: 완료 처리
+
+💡 기술적 특징
+javascriptclass WorkOrderController {
+  - 작업 지시 데이터 관리
+  - 필터링 기능
+  - 뷰 전환 (List/Timeline)
+  - 실시간 업데이트 시뮬레이션
+  - 체크리스트 관리
+  - 기술자 배정
+}
+📊 샘플 데이터
+
+5개의 다양한 상태 작업 지시
+실시간 시간 표시
+진행률 표시
+예상 소요 시간
+
+
+
+GCA-AL-001: Alert Center 페이지를 구현했습니다.
+🚨 구현된 주요 기능
+1. 알림 요약 대시보드
+
+Critical: 긴급 알림 (빨간색)
+Warning: 경고 알림 (주황색)
+Info: 정보 알림 (파란색)
+Resolved: 해결됨 (초록색)
+
+2. 알림 필터
+
+All (전체)
+Unread (읽지 않음)
+Cart (카트 관련)
+Battery (배터리)
+Maintenance (정비)
+Geofence (지오펜스)
+System (시스템)
+
+3. 알림 유형 및 심각도
+
+Critical 🛑: Emergency Stop, Critical Battery
+Warning ⚠️: Geofence Violation, Maintenance Due
+Info ℹ️: Temperature Warning, System Updates
+Success ✅: Completed Tasks
+
+4. 알림 카드 구성
+
+심각도 색상 바
+아이콘과 제목
+상세 메시지
+메타 정보 (Cart ID, Location, Priority)
+액션 버튼 (Acknowledge, View Cart, Create WO)
+
+5. 알림 상세 모달
+
+알림 상세 정보
+에스컬레이션 경로 (L1→L2→L3)
+액션 히스토리
+관리 버튼
+
+6. 헤더 액션 버튼
+
+✓ 모두 읽음 처리
+⚙ 설정 메뉴
+🔔/🔕 알림 음소거 토글
+
+7. 설정 패널
+
+Alert Rules (알림 규칙)
+Notifications (알림 설정)
+Escalation Matrix (에스컬레이션)
+Export Alerts (내보내기)
+Clear Resolved (해결된 알림 삭제)
+
+8. 실시간 기능
+
+10초마다 새 알림 체크
+5초마다 알림 상태 업데이트
+실시간 알림 배지
+토스트 알림
+
+📊 알림 분류
+긴급도별
+
+P1 (Critical): 즉시 대응
+P2 (High): 1시간 내 처리
+P3 (Normal): 당일 처리
+P4 (Low): 계획된 작업
+
+유형별
+
+Emergency (비상)
+Battery (배터리)
+Maintenance (정비)
+Geofence (위치)
+Temperature (온도)
+System (시스템)
+
+🔗 페이지 연결
+
+View Cart: GCA-RT-002 (Cart Detail Monitor)
+Create WO: GCA-MM-002 (Create Work Order)
+Alert Rules: GCA-AL-003 (Alert Rules Settings)
+Incident Report: GCA-AL-004 (Create Incident)
+Escalation Matrix: GCA-AL-005 (Escalation Settings)
+
+💡 기술적 특징
+javascriptclass AlertCenterController {
+  - 알림 데이터 관리
+  - 실시간 모니터링
+  - 필터링 시스템
+  - 알림 확인 처리
+  - 에스컬레이션 관리
+  - 음소거 토글
+  - 자동 알림 생성 시뮬레이션
+}
+🔔 알림 상태 흐름
+
+Triggered: 알림 발생
+Notified: 담당자 알림
+Acknowledged: 확인됨
+Escalated: 상위 보고 (필요시)
+Resolved: 해결됨
+
+
+
+GCA-AR-001: Analytics Dashboard 페이지를 구현했습니다.
+📊 구현된 주요 기능
+1. 기간 선택
+
+Today (오늘)
+This Week (이번 주)
+This Month (이번 달)
+Quarter (분기)
+Year (연도)
+Custom (사용자 정의)
+
+2. 핵심 KPI 카드
+
+Availability Rate: 가동률 (94.8%)
+MTTR: 평균 수리 시간 (18분)
+Daily Utilization: 일일 활용도 (847km)
+트렌드 표시 (↑↓)
+미니 스파크라인 차트
+
+3. 차트 시각화
+Fleet Performance (막대 차트)
+
+요일별 성능 표시
+호버 효과
+클릭 상호작용
+
+Battery Health Trend (라인 차트)
+
+SVG 기반 그래프
+그라디언트 영역
+데이터 포인트 표시
+
+Maintenance Distribution (파이 차트)
+
+예방정비 (Preventive)
+배터리 (Battery)
+타이어 (Tire)
+긴급 (Emergency)
+중앙 총계 표시
+
+Cost Analysis (비교 그리드)
+
+총 비용
+인건비
+부품비
+
+4. 헤더 액션 버튼
+
+↻ 데이터 새로고침
+↓ 내보내기
+⛶ 전체화면
+
+5. 내보내기 모달
+
+PDF Report (차트 포함 보고서)
+Excel Spreadsheet (원시 데이터)
+CSV Data (단순 데이터)
+
+6. 실시간 기능
+
+30초마다 메트릭 업데이트
+차트 로드 애니메이션
+동적 데이터 업데이트
+
+📈 분석 지표
+운영 지표
+
+가동률: 목표 대비 실제 가동 시간
+MTTR: 고장 발생 후 복구까지 시간
+활용도: 일일 총 주행거리
+
+정비 지표
+
+정비 유형별 분포
+예방정비 vs 사후정비 비율
+부품별 교체 빈도
+
+비용 지표
+
+총 운영 비용
+인건비 vs 부품비 비율
+카트당 평균 비용
+
+🔗 페이지 연결
+
+Details →: 각 섹션별 상세 분석 (GCA-AR-002)
+Export: 데이터 내보내기
+Custom Range: 사용자 정의 기간 선택
+
+💡 기술적 특징
+javascriptclass AnalyticsController {
+  - 데이터 로드 및 관리
+  - 실시간 업데이트
+  - 차트 애니메이션
+  - 날짜 범위 필터링
+  - 예측 분석
+  - 트렌드 계산
+  - 데이터 내보내기
+}
+🎨 시각화 특징
+
+SVG 기반 차트: 깔끔한 벡터 그래픽
+그라디언트 효과: 시각적 깊이감
+애니메이션: 부드러운 전환 효과
+인터랙티브: 호버 및 클릭 상호작용
+
+지금까지 구현된 8개 페이지:
+
+
+
+
+
+GCA-MM-002: Create Work Order 페이지를 구현했습니다.
+📝 구현된 주요 기능
+1. 진행 상태 표시
+
+4단계 프로그레스 바
+단계별 완료 상태 시각화
+
+2. 작업 지시 정보
+
+Work Order Type: 작업 유형 선택
+
+Emergency Repair
+Preventive Maintenance
+Battery Service
+Tire Service
+Safety Inspection
+Other
+
+
+Priority Level: 우선순위 선택
+
+P1 (Critical) - 빨간색
+P2 (High) - 주황색
+P3 (Normal) - 파란색
+P4 (Low) - 초록색
+
+
+
+3. 카트 선택
+
+카트 ID 자동완성 검색
+QR 코드 스캔 버튼
+실시간 카트 제안
+위치 자동 입력
+
+4. 일정 관리
+
+날짜/시간 선택
+예상 소요 시간 (30분 ~ 종일)
+기본값 자동 설정
+
+5. 기술자 배정
+
+기술자 목록 표시
+가용 상태 표시
+현재 작업량 표시 (Active WO)
+자격/등급 표시
+
+6. 부품 관리
+
+작업 유형별 자동 부품 제안
+부품 추가/삭제
+수량 관리
+
+7. 폼 유효성 검증
+
+필수 필드 표시 (*)
+실시간 유효성 검사
+Save Draft 버튼 활성화 조건
+
+8. 성공 모달
+
+작업 지시 번호 생성 (WO-YYYY-XXXX)
+View Work Order 옵션
+Create Another 옵션
+
+🎯 스마트 기능
+자동화
+
+작업 유형에 따른 우선순위 자동 설정
+작업 유형별 부품 자동 제안
+카트 선택 시 위치 자동 입력
+현재 날짜/시간 기본값 설정
+
+검색 및 제안
+
+카트 ID 실시간 검색
+카트 상태 정보 표시
+기술자 추천
+
+🔗 페이지 연결
+
+← 버튼: GCA-MM-001로 복귀
+Save Draft: 임시 저장
+Create Work Order: 작업 지시 생성
+View Work Order: GCA-MM-003으로 이동
+QR Scanner: 카메라 스캔 기능
+
+💡 기술적 특징
+javascriptclass CreateWOController {
+  - 작업 지시 데이터 관리
+  - 폼 유효성 검증
+  - 자동완성 기능
+  - 부품 목록 관리
+  - 기술자 선택
+  - WO 번호 생성
+}
+📋 데이터 구조
+javascriptworkOrder: {
+  type: string,
+  priority: string,
+  description: string,
+  cartId: string,
+  location: string,
+  scheduleDate: date,
+  scheduleTime: time,
+  duration: number,
+  technician: string,
+  parts: array,
+  notes: string,
+  status: string
+}
+
+
+
+GCA-CM-002: Cart Registration 페이지를 구현했습니다.
+🚗 구현된 주요 기능
+1. 단계별 등록 프로세스
+
+Step 1: Basic (기본 정보)
+Step 2: Technical (기술 사양)
+Step 3: Components (구성품)
+Step 4: Review (검토)
+
+2. 기본 정보 입력
+
+Cart ID: 자동 생성 (GCA-029)
+VIN Number: 차량 식별 번호
+Manufacturer: 제조사 선택
+
+E-Z-GO
+Club Car
+Yamaha
+Cushman
+
+
+Model: 제조사별 모델 자동 로드
+Year: 제조년도
+Color: 차량 색상
+
+3. QR 코드 생성
+
+카트별 고유 QR 코드 생성
+프린트 라벨 기능
+QR 코드 다운로드
+
+4. 기술 사양
+
+Battery Type: Lead Acid / Lithium Ion / AGM
+Voltage: 36V / 48V / 72V
+Seating Capacity: 2/4/6/8 인승
+Max Speed: 최대 속도
+GPS Tracker ID: GPS 장치 ID
+Telemetry Device ID: 텔레메트리 장치 ID
+
+5. 구성품 등록
+
+Battery Pack
+Motor Controller
+GPS Module
+Front/Rear Tires
+각 구성품별 시리얼 번호
+
+6. 이미지 업로드
+
+카트 사진 촬영/업로드
+전면, 측면, 시리얼 번호 사진
+이미지 삭제 기능
+
+7. 추가 정보
+
+Purchase Date (구매일)
+Warranty Expiry (보증 만료일)
+Insurance Policy Number (보험 번호)
+Initial Odometer Reading (초기 주행거리)
+
+🎯 스마트 기능
+자동화 기능
+
+Cart ID 자동 생성 (순차 번호)
+제조사 선택 시 모델 목록 자동 로드
+구성품 시리얼 번호 자동 포맷
+
+유효성 검증
+
+필수 필드 검증
+실시간 입력 확인
+저장 전 검증
+
+🔗 페이지 연결
+
+← 버튼: GCA-CM-001 (Cart Inventory)로 복귀
+Save Draft: 임시 저장
+Register Cart: 카트 등록 완료
+View Cart Profile: GCA-CM-003으로 이동
+Register Another: 추가 등록
+
+💡 기술적 특징
+javascriptclass CartRegistrationController {
+  - Cart ID 자동 생성
+  - 제조사별 모델 관리
+  - 구성품 체크리스트
+  - QR 코드 생성
+  - 이미지 업로드
+  - 폼 데이터 수집
+  - 유효성 검증
+}
+📊 데이터 구조
+javascriptcartData: {
+  cartId: string,
+  vin: string,
+  manufacturer: string,
+  model: string,
+  year: string,
+  color: string,
+  batteryType: string,
+  voltage: number,
+  seating: number,
+  maxSpeed: string,
+  gpsId: string,
+  telemetryId: string,
+  components: array,
+  images: array,
+  purchaseDate: date,
+  warrantyExpiry: date,
+  insuranceNumber: string,
+  odometerReading: number
+}

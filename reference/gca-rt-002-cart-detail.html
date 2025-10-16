@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCA-RT-002: Cart Detail Monitor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        /* iPhone 16 Pro Frame */
+        .iphone-frame {
+            width: 393px;
+            height: 852px;
+            background: #000;
+            border-radius: 55px;
+            padding: 12px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 
+                        0 0 0 1px rgba(255,255,255,0.1);
+            position: relative;
+        }
+        
+        .dynamic-island {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background: #000;
+            border-radius: 22px;
+            z-index: 10;
+        }
+        
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 43px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .app-container {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            background: #000;
+            padding: 55px 24px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+        }
+        
+        /* Header */
+        .header {
+            background: #000;
+            padding: 12px 24px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .back-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #fff;
+            font-size: 18px;
+            transition: all 0.2s;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .header-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.3px;
+        }
+        
+        .status-badge {
+            margin-left: auto;
+            padding: 4px 12px;
+            background: rgba(52, 199, 89, 0.2);
+            border: 1px solid #34c759;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #34c759;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-badge.idle {
+            background: rgba(255, 149, 0, 0.2);
+            border-color: #ff9500;
+            color: #ff9500;
+        }
+        
+        .status-badge.charging {
+            background: rgba(0, 122, 255, 0.2);
+            border-color: #007aff;
+            color: #007aff;
+        }
+        
+        .status-badge.maintenance {
+            background: rgba(255, 59, 48, 0.2);
+            border-color: #ff3b30;
+            color: #ff3b30;
+        }
+        
+        .status-badge.offline {
+            background: rgba(102, 102, 102, 0.2);
+            border-color: #666;
+            color: #666;
+        }
+        
+        .cart-info {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .cart-info-item {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .cart-info-label {
+            color: #666;
+        }
+        
+        .cart-info-value {
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        /* Content */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 80px;
+        }
+        
+        /* Telemetry Grid */
+        .telemetry-section {
+            padding: 16px 24px;
+        }
+        
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+        
+        .telemetry-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        
+        .telemetry-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .telemetry-card.large {
+            grid-column: span 2;
+        }
+        
+        .telemetry-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        .telemetry-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+        }
+        
+        .telemetry-unit {
+            font-size: 14px;
+            font-weight: 400;
+            color: #666;
+            margin-left: 4px;
+        }
+        
+        .telemetry-change {
+            font-size: 11px;
+            color: #34c759;
+            margin-top: 4px;
+        }
+        
+        .telemetry-change.negative {
+            color: #ff3b30;
+        }
+        
+        /* Battery Visual */
+        .battery-visual {
+            margin-top: 12px;
+        }
+        
+        .battery-bar {
+            width: 100%;
+            height: 28px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .battery-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #34c759, #30d158);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+        }
+        
+        .battery-fill.warning {
+            background: linear-gradient(90deg, #ff9500, #ffb340);
+        }
+        
+        .battery-fill.critical {
+            background: linear-gradient(90deg, #ff3b30, #ff6b6b);
+        }
+        
+        .battery-percentage {
+            font-size: 11px;
+            font-weight: 600;
+            color: #000;
+            text-shadow: 0 0 2px rgba(255,255,255,0.5);
+        }
+        
+        /* Speed Gauge */
+        .speed-gauge {
+            position: relative;
+            height: 80px;
+            margin-top: 12px;
+        }
+        
+        .gauge-background {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            border-radius: 60px 60px 0 0;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            overflow: hidden;
+        }
+        
+        .gauge-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, #007aff, #0051d5);
+            transform-origin: bottom center;
+            transition: transform 0.3s ease;
+        }
+        
+        .gauge-marks {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        
+        .gauge-mark {
+            font-size: 9px;
+            color: #666;
+        }
+        
+        /* Map Preview */
+        .map-preview {
+            height: 120px;
+            background: linear-gradient(135deg, #0a1f0a 0%, #061506 100%);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+        
+        .map-grid-small {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .cart-trail {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .trail-path {
+            stroke: #34c759;
+            stroke-width: 2;
+            fill: none;
+            opacity: 0.5;
+        }
+        
+        .cart-position {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #34c759;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(52, 199, 89, 0.5);
+        }
+        
+        /* System Metrics */
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        
+        .metric-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .metric-label {
+            font-size: 9px;
+            color: #666;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        /* Alert Section */
+        .alert-section {
+            padding: 0 24px 16px;
+        }
+        
+        .alert-card {
+            background: rgba(255, 59, 48, 0.05);
+            border: 1px solid rgba(255, 59, 48, 0.2);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .alert-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 59, 48, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff3b30;
+            font-size: 16px;
+        }
+        
+        .alert-content {
+            flex: 1;
+        }
+        
+        .alert-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #ff3b30;
+            margin-bottom: 2px;
+        }
+        
+        .alert-message {
+            font-size: 11px;
+            color: #999;
+        }
+        
+        .alert-time {
+            font-size: 10px;
+            color: #666;
+        }
+        
+        /* Control Actions */
+        .control-section {
+            padding: 16px 24px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        
+        .control-btn {
+            padding: 14px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .control-btn:hover {
+            background: rgba(255,255,255,0.06);
+            transform: translateY(-1px);
+        }
+        
+        .control-btn.primary {
+            background: rgba(52, 199, 89, 0.2);
+            border-color: #34c759;
+            color: #34c759;
+        }
+        
+        .control-btn.danger {
+            background: rgba(255, 59, 48, 0.1);
+            border-color: rgba(255, 59, 48, 0.3);
+            color: #ff3b30;
+        }
+        
+        .control-btn.full {
+            grid-column: span 2;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            padding: 12px 0 28px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            z-index: 20;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .nav-item.active .nav-icon {
+            color: #fff;
+        }
+        
+        .nav-item.active .nav-label {
+            color: #fff;
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            color: #666;
+        }
+        
+        .nav-label {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 500;
+        }
+        
+        /* Live Indicator */
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            background: rgba(255, 59, 48, 0.1);
+            border-radius: 4px;
+            margin-left: 8px;
+        }
+        
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            background: #ff3b30;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .live-text {
+            font-size: 10px;
+            color: #ff3b30;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-frame">
+        <div class="dynamic-island"></div>
+        <div class="screen">
+            <div class="app-container">
+                <!-- Status Bar -->
+                <div class="status-bar">
+                    <div class="time">09:41</div>
+                    <div class="status-icons">
+                        <span>5G</span>
+                        <span>━━━</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+                
+                <!-- Header -->
+                <div class="header">
+                    <div class="header-nav">
+                        <div class="back-btn" onclick="goBack()">←</div>
+                        <div class="header-title">
+                            GCA-015
+                            <span class="live-indicator">
+                                <span class="live-dot"></span>
+                                <span class="live-text">Live</span>
+                            </span>
+                        </div>
+                        <div class="status-badge active" id="statusBadge">ACTIVE</div>
+                    </div>
+                    <div class="cart-info">
+                        <div class="cart-info-item">
+                            <span class="cart-info-label">Model:</span>
+                            <span class="cart-info-value">EZ-GO RXV</span>
+                        </div>
+                        <div class="cart-info-item">
+                            <span class="cart-info-label">Location:</span>
+                            <span class="cart-info-value" id="locationInfo">Hole 15</span>
+                        </div>
+                        <div class="cart-info-item">
+                            <span class="cart-info-label">Operator:</span>
+                            <span class="cart-info-value">Guest-247</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content -->
+                <div class="content">
+                    <!-- Primary Telemetry -->
+                    <div class="telemetry-section">
+                        <div class="section-title">Primary Telemetry</div>
+                        <div class="telemetry-grid">
+                            <div class="telemetry-card">
+                                <div class="telemetry-label">Battery</div>
+                                <div class="telemetry-value" id="batteryValue">45<span class="telemetry-unit">%</span></div>
+                                <div class="telemetry-change negative">↓ -12% last hour</div>
+                                <div class="battery-visual">
+                                    <div class="battery-bar">
+                                        <div class="battery-fill warning" id="batteryFill" style="width: 45%;">
+                                            <span class="battery-percentage">45%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="telemetry-card">
+                                <div class="telemetry-label">Speed</div>
+                                <div class="telemetry-value" id="speedValue">18<span class="telemetry-unit">km/h</span></div>
+                                <div class="telemetry-change">Avg: 15 km/h</div>
+                                <div class="speed-gauge">
+                                    <div class="gauge-background">
+                                        <div class="gauge-fill" id="speedGauge" style="height: 60%; transform: scaleY(0.6);"></div>
+                                    </div>
+                                    <div class="gauge-marks">
+                                        <span class="gauge-mark">0</span>
+                                        <span class="gauge-mark">15</span>
+                                        <span class="gauge-mark">30</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="telemetry-card large">
+                                <div class="telemetry-label">Current Position</div>
+                                <div class="map-preview">
+                                    <div class="map-grid-small"></div>
+                                    <svg class="cart-trail" viewBox="0 0 200 120">
+                                        <path class="trail-path" d="M 20 60 Q 50 40, 80 50 T 120 45 T 160 60 T 180 55" />
+                                    </svg>
+                                    <div class="cart-position"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- System Metrics -->
+                    <div class="telemetry-section">
+                        <div class="section-title">System Metrics</div>
+                        <div class="metrics-row">
+                            <div class="metric-item">
+                                <div class="metric-value" id="tempValue">38°C</div>
+                                <div class="metric-label">Motor Temp</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value" id="voltageValue">48.2V</div>
+                                <div class="metric-label">Voltage</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value" id="currentValue">12.5A</div>
+                                <div class="metric-label">Current</div>
+                            </div>
+                        </div>
+                        <div class="metrics-row" style="margin-top: 8px;">
+                            <div class="metric-item">
+                                <div class="metric-value" id="runtimeValue">4.2h</div>
+                                <div class="metric-label">Runtime</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value" id="distanceValue">42.7km</div>
+                                <div class="metric-label">Distance</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value" id="efficiencyValue">92%</div>
+                                <div class="metric-label">Efficiency</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Active Alerts -->
+                    <div class="alert-section" id="alertSection" style="display: none;">
+                        <div class="section-title">Active Alerts</div>
+                        <div class="alert-card">
+                            <div class="alert-icon">⚠</div>
+                            <div class="alert-content">
+                                <div class="alert-title">Low Battery Warning</div>
+                                <div class="alert-message">Battery below 50%. Return to charging station recommended.</div>
+                            </div>
+                            <div class="alert-time">2 min ago</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Control Actions -->
+                    <div class="control-section">
+                        <div class="section-title">Remote Control</div>
+                        <div class="control-grid">
+                            <button class="control-btn primary" onclick="setSpeedLimit()">
+                                <span>⚡</span> Speed Limit
+                            </button>
+                            <button class="control-btn" onclick="sendMessage()">
+                                <span>💬</span> Message
+                            </button>
+                            <button class="control-btn" onclick="requestReturn()">
+                                <span>↩</span> Return to Base
+                            </button>
+                            <button class="control-btn" onclick="lockCart()">
+                                <span>🔒</span> Lock Cart
+                            </button>
+                            <button class="control-btn danger full" onclick="emergencyStop()">
+                                <span>🛑</span> EMERGENCY STOP
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Navigation -->
+                <div class="bottom-nav">
+                    <div class="nav-item" onclick="navigateTo('GCA-HM-001')">
+                        <div class="nav-icon">▦</div>
+                        <div class="nav-label">Home</div>
+                    </div>
+                    <div class="nav-item active" onclick="navigateTo('GCA-RT-001')">
+                        <div class="nav-icon">◉</div>
+                        <div class="nav-label">Monitor</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-CM-001')">
+                        <div class="nav-icon">▣</div>
+                        <div class="nav-label">Fleet</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-MM-001')">
+                        <div class="nav-icon">⚙</div>
+                        <div class="nav-label">Service</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-ST-001')">
+                        <div class="nav-icon">☰</div>
+                        <div class="nav-label">System</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // GCA-RT-002 Cart Detail Monitor Controller
+        class CartDetailMonitor {
+            constructor(cartId = '015') {
+                this.cartId = cartId;
+                this.telemetryData = {
+                    battery: 45,
+                    speed: 18,
+                    temperature: 38,
+                    voltage: 48.2,
+                    current: 12.5,
+                    runtime: 4.2,
+                    distance: 42.7,
+                    efficiency: 92,
+                    location: 'Hole 15',
+                    status: 'active'
+                };
+                this.alertThresholds = {
+                    battery: 20,
+                    temperature: 45,
+                    speed: 25
+                };
+                this.init();
+            }
+            
+            init() {
+                this.startTelemetryStream();
+                this.checkAlerts();
+                this.initializeControls();
+                console.log(`Cart Detail Monitor initialized for GCA-${this.cartId}`);
+            }
+            
+            startTelemetryStream() {
+                // Update telemetry data every second
+                this.telemetryInterval = setInterval(() => {
+                    this.updateTelemetry();
+                    this.updateDisplay();
+                    this.checkAlerts();
+                }, 1000);
+                
+                // Update position every 3 seconds
+                this.positionInterval = setInterval(() => {
+                    this.updatePosition();
+                }, 3000);
+            }
+            
+            updateTelemetry() {
+                // Simulate telemetry data changes
+                if (this.telemetryData.status === 'active') {
+                    // Battery drain
+                    this.telemetryData.battery = Math.max(0, this.telemetryData.battery - Math.random() * 0.1);
+                    
+                    // Speed variation
+                    this.telemetryData.speed = Math.max(0, Math.min(30, 
+                        this.telemetryData.speed + (Math.random() - 0.5) * 3));
+                    
+                    // Temperature fluctuation
+                    this.telemetryData.temperature = 35 + Math.random() * 8;
+                    
+                    // Voltage and current
+                    this.telemetryData.voltage = 48 + Math.random() * 2;
+                    this.telemetryData.current = this.telemetryData.speed > 0 ? 10 + Math.random() * 5 : 0;
+                    
+                    // Runtime and distance
+                    this.telemetryData.runtime += 0.0003;
+                    this.telemetryData.distance += (this.telemetryData.speed / 3600) * 0.001;
+                    
+                    // Efficiency calculation
+                    this.telemetryData.efficiency = Math.min(100, 85 + Math.random() * 15);
+                }
+            }
+            
+            updateDisplay() {
+                // Update battery
+                const batteryValue = document.getElementById('batteryValue');
+                const batteryFill = document.getElementById('batteryFill');
+                const battery = Math.round(this.telemetryData.battery);
+                
+                if (batteryValue) {
+                    batteryValue.innerHTML = `${battery}<span class="telemetry-unit">%</span>`;
+                }
+                
+                if (batteryFill) {
+                    batteryFill.style.width = `${battery}%`;
+                    batteryFill.querySelector('.battery-percentage').textContent = `${battery}%`;
+                    
+                    // Update battery color based on level
+                    batteryFill.className = 'battery-fill';
+                    if (battery < 20) {
+                        batteryFill.classList.add('critical');
+                    } else if (battery < 50) {
+                        batteryFill.classList.add('warning');
+                    }
+                }
+                
+                // Update speed
+                const speedValue = document.getElementById('speedValue');
+                const speedGauge = document.getElementById('speedGauge');
+                const speed = Math.round(this.telemetryData.speed);
+                
+                if (speedValue) {
+                    speedValue.innerHTML = `${speed}<span class="telemetry-unit">km/h</span>`;
+                }
+                
+                if (speedGauge) {
+                    const percentage = (speed / 30) * 100;
+                    speedGauge.style.transform = `scaleY(${percentage / 100})`;
+                }
+                
+                // Update other metrics
+                this.updateMetric('tempValue', `${Math.round(this.telemetryData.temperature)}°C`);
+                this.updateMetric('voltageValue', `${this.telemetryData.voltage.toFixed(1)}V`);
+                this.updateMetric('currentValue', `${this.telemetryData.current.toFixed(1)}A`);
+                this.updateMetric('runtimeValue', `${this.telemetryData.runtime.toFixed(1)}h`);
+                this.updateMetric('distanceValue', `${this.telemetryData.distance.toFixed(1)}km`);
+                this.updateMetric('efficiencyValue', `${Math.round(this.telemetryData.efficiency)}%`);
+            }
+            
+            updateMetric(elementId, value) {
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.textContent = value;
+                }
+            }
+            
+            updatePosition() {
+                // Simulate position updates
+                const position = document.querySelector('.cart-position');
+                if (position && this.telemetryData.status === 'active') {
+                    const currentLeft = parseFloat(position.style.left || '50');
+                    const currentTop = parseFloat(position.style.top || '50');
+                    
+                    const newLeft = currentLeft + (Math.random() - 0.5) * 5;
+                    const newTop = currentTop + (Math.random() - 0.5) * 5;
+                    
+                    position.style.left = `${Math.max(10, Math.min(90, newLeft))}%`;
+                    position.style.top = `${Math.max(10, Math.min(90, newTop))}%`;
+                }
+                
+                // Update location text
+                const holes = ['Hole 1', 'Hole 2', 'Hole 3', 'Hole 4', 'Hole 5', 
+                               'Hole 6', 'Hole 7', 'Hole 8', 'Hole 9', 'Hole 10',
+                               'Hole 11', 'Hole 12', 'Hole 13', 'Hole 14', 'Hole 15',
+                               'Hole 16', 'Hole 17', 'Hole 18'];
+                
+                if (Math.random() > 0.8 && this.telemetryData.status === 'active') {
+                    this.telemetryData.location = holes[Math.floor(Math.random() * holes.length)];
+                    const locationInfo = document.getElementById('locationInfo');
+                    if (locationInfo) {
+                        locationInfo.textContent = this.telemetryData.location;
+                    }
+                }
+            }
+            
+            checkAlerts() {
+                const alertSection = document.getElementById('alertSection');
+                
+                if (this.telemetryData.battery < 50) {
+                    if (alertSection) {
+                        alertSection.style.display = 'block';
+                    }
+                } else {
+                    if (alertSection) {
+                        alertSection.style.display = 'none';
+                    }
+                }
+            }
+            
+            initializeControls() {
+                // Initialize control button states
+                console.log('Controls initialized');
+            }
+            
+            // Control Actions
+            setSpeedLimit(limit = 15) {
+                console.log(`Setting speed limit to ${limit} km/h`);
+                showToast(`Speed limit set to ${limit} km/h`);
+            }
+            
+            sendMessage(message = 'Please return to charging station') {
+                console.log(`Sending message: ${message}`);
+                showToast('Message sent to operator');
+            }
+            
+            requestReturn() {
+                console.log('Requesting return to base');
+                showToast('Return to base requested');
+            }
+            
+            lockCart() {
+                console.log('Locking cart');
+                showToast('Cart locked remotely');
+                this.telemetryData.status = 'locked';
+            }
+            
+            emergencyStop() {
+                if (confirm('Execute emergency stop? This will immediately halt the cart.')) {
+                    console.log('EMERGENCY STOP EXECUTED');
+                    this.telemetryData.speed = 0;
+                    this.telemetryData.status = 'emergency_stop';
+                    showToast('EMERGENCY STOP ACTIVATED');
+                    
+                    // Update status badge
+                    const statusBadge = document.getElementById('statusBadge');
+                    if (statusBadge) {
+                        statusBadge.textContent = 'EMERGENCY';
+                        statusBadge.className = 'status-badge maintenance';
+                    }
+                }
+            }
+            
+            destroy() {
+                clearInterval(this.telemetryInterval);
+                clearInterval(this.positionInterval);
+            }
+        }
+        
+        // Initialize monitor
+        const monitor = new CartDetailMonitor('015');
+        
+        // Global control functions
+        function goBack() {
+            showToast('Returning to map view');
+            navigateTo('GCA-RT-001');
+        }
+        
+        function navigateTo(pageId) {
+            console.log(`Navigate to ${pageId}`);
+        }
+        
+        function setSpeedLimit() {
+            monitor.setSpeedLimit();
+        }
+        
+        function sendMessage() {
+            monitor.sendMessage();
+        }
+        
+        function requestReturn() {
+            monitor.requestReturn();
+        }
+        
+        function lockCart() {
+            monitor.lockCart();
+        }
+        
+        function emergencyStop() {
+            monitor.emergencyStop();
+        }
+        
+        // Toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(255,255,255,0.1);
+                backdrop-filter: blur(20px);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-size: 13px;
+                z-index: 200;
+                animation: fadeInOut 2s ease-in-out;
+                border: 1px solid rgba(255,255,255,0.1);
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 2000);
+        }
+        
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInOut {
+                0% { opacity: 0; transform: translate(-50%, 20px); }
+                20% { opacity: 1; transform: translate(-50%, 0); }
+                80% { opacity: 1; transform: translate(-50%, 0); }
+                100% { opacity: 0; transform: translate(-50%, -20px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+[
+  {
+    "id": "ALT-2025-0001",
+    "code": "ALT-2025-0001",
+    "severity": "critical",
+    "priority": "p1",
+    "state": "acknowledged",
+    "title": "Critical Battery Level",
+    "message": "Cart GCA-003 battery level critical at 18%",
+    "cartId": "GCA-003",
+    "location": "Hole 3 - Fairway",
+    "createdAt": "2025-01-15T08:30:00Z",
+    "updatedAt": "2025-01-15T09:15:00Z",
+    "escalationLevel": 1,
+    "acknowledgedAt": "2025-01-15T09:00:00Z",
+    "acknowledgedBy": "John Smith",
+    "actions": [
+      {
+        "type": "acknowledge",
+        "timestamp": "2025-01-15T09:00:00Z",
+        "userId": "John Smith",
+        "note": "Sending technician to replace battery"
+      }
+    ]
+  },
+  {
+    "id": "ALT-2025-0002",
+    "code": "ALT-2025-0002",
+    "severity": "warning",
+    "priority": "p2",
+    "state": "notified",
+    "title": "Geofence Violation",
+    "message": "Cart GCA-007 has exited designated area",
+    "cartId": "GCA-007",
+    "location": "Outside Course Boundary",
+    "createdAt": "2025-01-15T10:15:00Z",
+    "updatedAt": "2025-01-15T10:15:00Z",
+    "escalationLevel": 0
+  },
+  {
+    "id": "ALT-2025-0003",
+    "code": "ALT-2025-0003",
+    "severity": "info",
+    "priority": "p3",
+    "state": "triggered",
+    "title": "Maintenance Due",
+    "message": "Cart GCA-011 scheduled maintenance overdue by 2 days",
+    "cartId": "GCA-011",
+    "location": "Maintenance Bay 1",
+    "createdAt": "2025-01-15T11:00:00Z",
+    "updatedAt": "2025-01-15T11:00:00Z",
+    "escalationLevel": 0
+  },
+  {
+    "id": "ALT-2025-0004",
+    "code": "ALT-2025-0004",
+    "severity": "critical",
+    "priority": "p1",
+    "state": "escalated",
+    "title": "Emergency Stop Activated",
+    "message": "Emergency stop activated on Cart GCA-001",
+    "cartId": "GCA-001",
+    "location": "Hole 1 - Tee Box",
+    "createdAt": "2025-01-15T13:45:00Z",
+    "updatedAt": "2025-01-15T14:30:00Z",
+    "escalationLevel": 2,
+    "acknowledgedAt": "2025-01-15T14:00:00Z",
+    "acknowledgedBy": "Sarah Johnson",
+    "actions": [
+      {
+        "type": "acknowledge",
+        "timestamp": "2025-01-15T14:00:00Z",
+        "userId": "Sarah Johnson",
+        "note": "Emergency response team dispatched"
+      },
+      {
+        "type": "escalate",
+        "timestamp": "2025-01-15T14:30:00Z",
+        "userId": "Sarah Johnson",
+        "note": "Escalated to L2 - Manager notified"
+      }
+    ]
+  },
+  {
+    "id": "ALT-2025-0005",
+    "code": "ALT-2025-0005",
+    "severity": "warning",
+    "priority": "p2",
+    "state": "resolved",
+    "title": "High Temperature Warning",
+    "message": "Cart GCA-005 motor temperature exceeded 75°C",
+    "cartId": "GCA-005",
+    "location": "Hole 7 - Cart Path",
+    "createdAt": "2025-01-14T14:30:00Z",
+    "updatedAt": "2025-01-14T16:30:00Z",
+    "escalationLevel": 0,
+    "acknowledgedAt": "2025-01-14T15:00:00Z",
+    "acknowledgedBy": "Lisa Wang",
+    "resolvedAt": "2025-01-14T16:30:00Z",
+    "resolvedBy": "Lisa Wang",
+    "actions": [
+      {
+        "type": "acknowledge",
+        "timestamp": "2025-01-14T15:00:00Z",
+        "userId": "Lisa Wang",
+        "note": "Temperature returned to normal range"
+      },
+      {
+        "type": "resolve",
+        "timestamp": "2025-01-14T16:30:00Z",
+        "userId": "Lisa Wang",
+        "note": "Issue resolved - motor cooling system functioning"
+      }
+    ]
+  },
+  {
+    "id": "ALT-2025-0006",
+    "code": "ALT-2025-0006",
+    "severity": "info",
+    "priority": "p4",
+    "state": "triggered",
+    "title": "System Update Available",
+    "message": "GPS tracking system update available for Cart GCA-009",
+    "cartId": "GCA-009",
+    "location": "Charging Station A",
+    "createdAt": "2025-01-15T12:00:00Z",
+    "updatedAt": "2025-01-15T12:00:00Z",
+    "escalationLevel": 0
+  },
+  {
+    "id": "ALT-2025-0007",
+    "code": "ALT-2025-0007",
+    "severity": "warning",
+    "priority": "p2",
+    "state": "acknowledged",
+    "title": "Battery Charging Issue",
+    "message": "Cart GCA-012 slow charging rate detected",
+    "cartId": "GCA-012",
+    "location": "Charging Station B",
+    "createdAt": "2025-01-15T09:30:00Z",
+    "updatedAt": "2025-01-15T10:00:00Z",
+    "escalationLevel": 0,
+    "acknowledgedAt": "2025-01-15T10:00:00Z",
+    "acknowledgedBy": "Mike Chen",
+    "actions": [
+      {
+        "type": "acknowledge",
+        "timestamp": "2025-01-15T10:00:00Z",
+        "userId": "Mike Chen",
+        "note": "Investigating charging port connection"
+      }
+    ]
+  },
+  {
+    "id": "ALT-2025-0008",
+    "code": "ALT-2025-0008",
+    "severity": "success",
+    "priority": "p4",
+    "state": "resolved",
+    "title": "Maintenance Completed",
+    "message": "Scheduled maintenance completed for Cart GCA-004",
+    "cartId": "GCA-004",
+    "location": "Maintenance Bay 2",
+    "createdAt": "2025-01-14T16:00:00Z",
+    "updatedAt": "2025-01-14T17:00:00Z",
+    "escalationLevel": 0,
+    "resolvedAt": "2025-01-14T17:00:00Z",
+    "resolvedBy": "David Kim",
+    "actions": [
+      {
+        "type": "resolve",
+        "timestamp": "2025-01-14T17:00:00Z",
+        "userId": "David Kim",
+        "note": "All maintenance tasks completed successfully"
+      }
+    ]
+  }
+]

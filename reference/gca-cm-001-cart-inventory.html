@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCA-CM-001: Cart Inventory List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        /* iPhone 16 Pro Frame */
+        .iphone-frame {
+            width: 393px;
+            height: 852px;
+            background: #000;
+            border-radius: 55px;
+            padding: 12px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 
+                        0 0 0 1px rgba(255,255,255,0.1);
+            position: relative;
+        }
+        
+        .dynamic-island {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background: #000;
+            border-radius: 22px;
+            z-index: 10;
+        }
+        
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 43px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .app-container {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            background: #000;
+            padding: 55px 24px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+        }
+        
+        /* Header */
+        .header {
+            background: #000;
+            padding: 12px 24px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .header-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        
+        .add-btn {
+            width: 36px;
+            height: 36px;
+            background: rgba(52, 199, 89, 0.2);
+            border: 1px solid #34c759;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #34c759;
+            font-size: 20px;
+            transition: all 0.2s;
+        }
+        
+        .add-btn:hover {
+            background: rgba(52, 199, 89, 0.3);
+        }
+        
+        /* Search and Filter Bar */
+        .search-filter-bar {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .search-container {
+            flex: 1;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 10px 12px 10px 36px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        
+        .search-input::placeholder {
+            color: #666;
+        }
+        
+        .search-input:focus {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .filter-btn {
+            padding: 10px 16px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            color: #666;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .filter-btn.active {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        
+        .filter-count {
+            background: #ff3b30;
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        
+        /* Stats Bar */
+        .stats-bar {
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.02);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .stat-label {
+            font-size: 10px;
+            color: #666;
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        .stat-item.active .stat-value { color: #34c759; }
+        .stat-item.maintenance .stat-value { color: #ff3b30; }
+        .stat-item.charging .stat-value { color: #007aff; }
+        
+        /* Content */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 80px;
+        }
+        
+        /* List View Toggle */
+        .view-toggle {
+            padding: 8px 24px;
+            display: flex;
+            gap: 8px;
+            background: #000;
+        }
+        
+        .view-option {
+            padding: 6px 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 6px;
+            color: #666;
+            font-size: 11px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            transition: all 0.2s;
+        }
+        
+        .view-option.active {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        
+        /* Cart List */
+        .cart-list {
+            padding: 8px 24px;
+        }
+        
+        .cart-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        .cart-item:hover {
+            background: rgba(255,255,255,0.05);
+            transform: translateX(2px);
+        }
+        
+        .cart-item.selected {
+            background: rgba(52, 199, 89, 0.05);
+            border-color: rgba(52, 199, 89, 0.3);
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .cart-id {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .cart-status {
+            padding: 3px 8px;
+            background: rgba(52, 199, 89, 0.2);
+            border: 1px solid #34c759;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: 600;
+            color: #34c759;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        .cart-status.idle {
+            background: rgba(255, 149, 0, 0.2);
+            border-color: #ff9500;
+            color: #ff9500;
+        }
+        
+        .cart-status.charging {
+            background: rgba(0, 122, 255, 0.2);
+            border-color: #007aff;
+            color: #007aff;
+        }
+        
+        .cart-status.maintenance {
+            background: rgba(255, 59, 48, 0.2);
+            border-color: #ff3b30;
+            color: #ff3b30;
+        }
+        
+        .cart-status.offline {
+            background: rgba(102, 102, 102, 0.2);
+            border-color: #666;
+            color: #666;
+        }
+        
+        .cart-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .detail-label {
+            font-size: 9px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 2px;
+        }
+        
+        .detail-value {
+            font-size: 13px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .cart-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 8px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        
+        .action-btn:hover {
+            background: rgba(255,255,255,0.06);
+        }
+        
+        .action-btn.primary {
+            background: rgba(52, 199, 89, 0.1);
+            border-color: rgba(52, 199, 89, 0.3);
+            color: #34c759;
+        }
+        
+        /* Grid View */
+        .cart-grid {
+            display: none;
+            padding: 8px 24px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        
+        .cart-grid.active {
+            display: grid;
+        }
+        
+        .cart-list.grid-active {
+            display: none;
+        }
+        
+        .cart-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .cart-card:hover {
+            background: rgba(255,255,255,0.05);
+            transform: scale(1.02);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .card-id {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .card-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #34c759;
+        }
+        
+        .card-status-dot.idle { background: #ff9500; }
+        .card-status-dot.charging { background: #007aff; }
+        .card-status-dot.maintenance { background: #ff3b30; }
+        .card-status-dot.offline { background: #666; }
+        
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .card-info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+        }
+        
+        .card-info-label {
+            color: #666;
+        }
+        
+        .card-info-value {
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        /* Selection Mode */
+        .selection-bar {
+            position: absolute;
+            bottom: 80px;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 24px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 15;
+        }
+        
+        .selection-bar.active {
+            display: flex;
+        }
+        
+        .selection-count {
+            font-size: 14px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .selection-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .selection-btn {
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .selection-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        /* Filter Modal */
+        .filter-modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px);
+            z-index: 100;
+            display: none;
+        }
+        
+        .filter-modal.active {
+            display: block;
+        }
+        
+        .filter-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #111;
+            border-radius: 24px 24px 0 0;
+            padding: 24px;
+            max-height: 70%;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .filter-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .filter-close {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .filter-section {
+            margin-bottom: 24px;
+        }
+        
+        .filter-section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .filter-option {
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            color: #666;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .filter-option.active {
+            background: rgba(255,255,255,0.1);
+            border-color: #fff;
+            color: #fff;
+        }
+        
+        .apply-filter-btn {
+            width: 100%;
+            padding: 14px;
+            background: #fff;
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            padding: 12px 0 28px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            z-index: 20;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .nav-item.active .nav-icon {
+            color: #fff;
+        }
+        
+        .nav-item.active .nav-label {
+            color: #fff;
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            color: #666;
+        }
+        
+        .nav-label {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 500;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-frame">
+        <div class="dynamic-island"></div>
+        <div class="screen">
+            <div class="app-container">
+                <!-- Status Bar -->
+                <div class="status-bar">
+                    <div class="time">09:41</div>
+                    <div class="status-icons">
+                        <span>5G</span>
+                        <span>━━━</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+                
+                <!-- Header -->
+                <div class="header">
+                    <div class="header-top">
+                        <div class="header-title">Fleet Inventory</div>
+                        <div class="add-btn" onclick="addNewCart()">+</div>
+                    </div>
+                    <div class="search-filter-bar">
+                        <div class="search-container">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" class="search-input" placeholder="Search by ID, model, or location..." id="searchInput" oninput="searchCarts(this.value)">
+                        </div>
+                        <div class="filter-btn" onclick="openFilterModal()" id="filterBtn">
+                            Filter
+                            <span class="filter-count" id="filterCount" style="display: none;">0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stats Bar -->
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <div class="stat-value">28</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                    <div class="stat-item active">
+                        <div class="stat-value">20</div>
+                        <div class="stat-label">Active</div>
+                    </div>
+                    <div class="stat-item maintenance">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Service</div>
+                    </div>
+                    <div class="stat-item charging">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Charging</div>
+                    </div>
+                </div>
+                
+                <!-- View Toggle -->
+                <div class="view-toggle">
+                    <div class="view-option active" onclick="switchView('list')">List</div>
+                    <div class="view-option" onclick="switchView('grid')">Grid</div>
+                    <div class="view-option" onclick="toggleSelection()">Select</div>
+                </div>
+                
+                <!-- Content -->
+                <div class="content">
+                    <!-- List View -->
+                    <div class="cart-list" id="listView">
+                        <div class="cart-item" onclick="selectCart('001')">
+                            <div class="cart-header">
+                                <div class="cart-id">GCA-001</div>
+                                <div class="cart-status">Active</div>
+                            </div>
+                            <div class="cart-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">Model</div>
+                                    <div class="detail-value">EZ-GO RXV</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Battery</div>
+                                    <div class="detail-value">87%</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Location</div>
+                                    <div class="detail-value">Hole 3</div>
+                                </div>
+                            </div>
+                            <div class="cart-actions">
+                                <div class="action-btn primary" onclick="event.stopPropagation(); viewDetails('001')">Details</div>
+                                <div class="action-btn" onclick="event.stopPropagation(); trackCart('001')">Track</div>
+                                <div class="action-btn" onclick="event.stopPropagation(); serviceRequest('001')">Service</div>
+                            </div>
+                        </div>
+                        
+                        <div class="cart-item" onclick="selectCart('002')">
+                            <div class="cart-header">
+                                <div class="cart-id">GCA-002</div>
+                                <div class="cart-status idle">Idle</div>
+                            </div>
+                            <div class="cart-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">Model</div>
+                                    <div class="detail-value">Club Car DS</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Battery</div>
+                                    <div class="detail-value">92%</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Location</div>
+                                    <div class="detail-value">Clubhouse</div>
+                                </div>
+                            </div>
+                            <div class="cart-actions">
+                                <div class="action-btn primary" onclick="event.stopPropagation(); viewDetails('002')">Details</div>
+                                <div class="action-btn" onclick="event.stopPropagation(); trackCart('002')">Track</div>
+                                <div class="action-btn" onclick="event.stopPropagation(); serviceRequest('002')">Service</div>
+                            </div>
+                        </div>
+                        
+                        <div class="cart-item" onclick="selectCart('003')">
+                            <div class="cart-header">
+                                <div class="cart-id">GCA-003</div>
+                                <div class="cart-status charging">Charging</div>
+                            </div>
+                            <div class="cart-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">Model</div>
+                                    <div class="detail-value">Yamaha Drive2</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Battery</div>
+                                    <div class="detail-value">45%</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Location</div>
+                                    <div class="detail-value">Station A</div>
+                                </div>
+                            </div>
+                            <div class="cart-actions">
+                                <div class="action-btn primary" onclick="event.stopPropagation(); viewDetails('003')">Details</div>
+                                <div class="action-btn" onclick="event.stopPropagation(); trackCart('003')">Track</div>
+                                <div class="action-btn" onclick="event.stopPropagation(); serviceRequest('003')">Service</div>
+                            </div>
+                        </div>
+                        
+                        <div class="cart-item" onclick="selectCart('004')">
+                            <div class="cart-header">
+                                <div class="cart-id">GCA-004</div>
+                                <div class="cart-status maintenance">Maintenance</div>
+                            </div>
+                            <div class="cart-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">Model</div>
+                                    <div class="detail-value">EZ-GO TXT</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Battery</div>
+                                    <div class="detail-value">100%</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Location</div>
+                                    <div class="detail-value">Service Bay</div>
+                                </div>
+                            </div>
+                            <div class="cart-actions">
+                                <div class="action-btn primary" onclick="event.stopPropagation(); viewDetails('004')">Details</div>
+                                <div class="action-btn" onclick="event.stopPropagation(); trackCart('004')">Track</div>
+                                <div class="action-btn" onclick="event.stopPropagation(); serviceRequest('004')">Service</div>
+                            </div>
+                        </div>
+                        
+                        <div class="cart-item" onclick="selectCart('005')">
+                            <div class="cart-header">
+                                <div class="cart-id">GCA-005</div>
+                                <div class="cart-status offline">Offline</div>
+                            </div>
+                            <div class="cart-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">Model</div>
+                                    <div class="detail-value">Club Car Onward</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Battery</div>
+                                    <div class="detail-value">--</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Location</div>
+                                    <div class="detail-value">Unknown</div>
+                                </div>
+                            </div>
+                            <div class="cart-actions">
+                                <div class="action-btn primary" onclick="event.stopPropagation(); viewDetails('005')">Details</div>
+                                <div class="action-btn" onclick="event.stopPropagation(); trackCart('005')">Track</div>
+                                <div class="action-btn" onclick="event.stopPropagation(); serviceRequest('005')">Service</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Grid View -->
+                    <div class="cart-grid" id="gridView">
+                        <div class="cart-card" onclick="selectCart('001')">
+                            <div class="card-header">
+                                <div class="card-id">GCA-001</div>
+                                <div class="card-status-dot"></div>
+                            </div>
+                            <div class="card-info">
+                                <div class="card-info-row">
+                                    <span class="card-info-label">Model</span>
+                                    <span class="card-info-value">EZ-GO</span>
+                                </div>
+                                <div class="card-info-row">
+                                    <span class="card-info-label">Battery</span>
+                                    <span class="card-info-value">87%</span>
+                                </div>
+                                <div class="card-info-row">
+                                    <span class="card-info-label">Location</span>
+                                    <span class="card-info-value">Hole 3</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cart-card" onclick="selectCart('002')">
+                            <div class="card-header">
+                                <div class="card-id">GCA-002</div>
+                                <div class="card-status-dot idle"></div>
+                            </div>
+                            <div class="card-info">
+                                <div class="card-info-row">
+                                    <span class="card-info-label">Model</span>
+                                    <span class="card-info-value">Club Car</span>
+                                </div>
+                                <div class="card-info-row">
+                                    <span class="card-info-label">Battery</span>
+                                    <span class="card-info-value">92%</span>
+                                </div>
+                                <div class="card-info-row">
+                                    <span class="card-info-label">Location</span>
+                                    <span class="card-info-value">Clubhouse</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cart-card" onclick="selectCart('003')">
+                            <div class="card-header">
+                                <div class="card-id">GCA-003</div>
+                                <div class="card-status-dot charging"></div>
+                            </div>
+                            <div class="card-info">
+                                <div class="card-info-row">
+                                    <span class="card-info-label">Model</span>
+                                    <span class="card-info-value">Yamaha</span>
+                                </div>
+                                <div class="card-info-row">
+                                    <span class="card-info-label">Battery</span>
+                                    <span class="card-info-value">45%</span>
+                                </div>
+                                <div class="card-info-row">
+                                    <span class="card-info-label">Location</span>
+                                    <span class="card-info-value">Station A</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cart-card" onclick="selectCart('004')">
+                            <div class="card-header">
+                                <div class="card-id">GCA-004</div>
+                                <div class="card-status-dot maintenance"></div>
+                            </div>
+                            <div class="card-info">
+                                <div class="card-info-row">
+                                    <span class="card-info-label">Model</span>
+                                    <span class="card-info-value">EZ-GO</span>
+                                </div>
+                                <div class="card-info-row">
+                                    <span class="card-info-label">Battery</span>
+                                    <span class="card-info-value">100%</span>
+                                </div>
+                                <div class="card-info-row">
+                                    <span class="card-info-label">Location</span>
+                                    <span class="card-info-value">Service</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Selection Bar -->
+                <div class="selection-bar" id="selectionBar">
+                    <div class="selection-count"><span id="selectedCount">0</span> selected</div>
+                    <div class="selection-actions">
+                        <button class="selection-btn" onclick="bulkAssign()">Assign</button>
+                        <button class="selection-btn" onclick="bulkService()">Service</button>
+                        <button class="selection-btn" onclick="exportSelected()">Export</button>
+                    </div>
+                </div>
+                
+                <!-- Filter Modal -->
+                <div class="filter-modal" id="filterModal">
+                    <div class="filter-content">
+                        <div class="filter-header">
+                            <div class="filter-title">Filter Options</div>
+                            <div class="filter-close" onclick="closeFilterModal()">×</div>
+                        </div>
+                        
+                        <div class="filter-section">
+                            <div class="filter-section-title">Status</div>
+                            <div class="filter-options">
+                                <div class="filter-option active" data-filter="active">Active</div>
+                                <div class="filter-option active" data-filter="idle">Idle</div>
+                                <div class="filter-option active" data-filter="charging">Charging</div>
+                                <div class="filter-option active" data-filter="maintenance">Maintenance</div>
+                                <div class="filter-option" data-filter="offline">Offline</div>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-section">
+                            <div class="filter-section-title">Model</div>
+                            <div class="filter-options">
+                                <div class="filter-option active" data-filter="ezgo">EZ-GO</div>
+                                <div class="filter-option active" data-filter="clubcar">Club Car</div>
+                                <div class="filter-option active" data-filter="yamaha">Yamaha</div>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-section">
+                            <div class="filter-section-title">Battery Level</div>
+                            <div class="filter-options">
+                                <div class="filter-option" data-filter="critical">< 20%</div>
+                                <div class="filter-option" data-filter="low">20-50%</div>
+                                <div class="filter-option active" data-filter="medium">50-80%</div>
+                                <div class="filter-option active" data-filter="high">> 80%</div>
+                            </div>
+                        </div>
+                        
+                        <button class="apply-filter-btn" onclick="applyFilters()">Apply Filters</button>
+                    </div>
+                </div>
+                
+                <!-- Bottom Navigation -->
+                <div class="bottom-nav">
+                    <div class="nav-item" onclick="navigateTo('GCA-HM-001')">
+                        <div class="nav-icon">▦</div>
+                        <div class="nav-label">Home</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-RT-001')">
+                        <div class="nav-icon">◉</div>
+                        <div class="nav-label">Monitor</div>
+                    </div>
+                    <div class="nav-item active" onclick="navigateTo('GCA-CM-001')">
+                        <div class="nav-icon">▣</div>
+                        <div class="nav-label">Fleet</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-MM-001')">
+                        <div class="nav-icon">⚙</div>
+                        <div class="nav-label">Service</div>
+                    </div>
+                    <div class="nav-item" onclick="navigateTo('GCA-ST-001')">
+                        <div class="nav-icon">☰</div>
+                        <div class="nav-label">System</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // GCA-CM-001 Cart Inventory Controller
+        class CartInventoryController {
+            constructor() {
+                this.carts = [];
+                this.filters = {
+                    status: ['active', 'idle', 'charging', 'maintenance'],
+                    model: ['ezgo', 'clubcar', 'yamaha'],
+                    battery: ['medium', 'high']
+                };
+                this.selectedCarts = new Set();
+                this.currentView = 'list';
+                this.selectionMode = false;
+                this.init();
+            }
+            
+            init() {
+                this.loadCartData();
+                this.setupEventListeners();
+                this.updateStats();
+            }
+            
+            loadCartData() {
+                // Simulate loading cart inventory
+                this.carts = [
+                    { id: '001', model: 'EZ-GO RXV', status: 'active', battery: 87, location: 'Hole 3' },
+                    { id: '002', model: 'Club Car DS', status: 'idle', battery: 92, location: 'Clubhouse' },
+                    { id: '003', model: 'Yamaha Drive2', status: 'charging', battery: 45, location: 'Station A' },
+                    { id: '004', model: 'EZ-GO TXT', status: 'maintenance', battery: 100, location: 'Service Bay' },
+                    { id: '005', model: 'Club Car Onward', status: 'offline', battery: null, location: 'Unknown' },
+                    { id: '006', model: 'EZ-GO RXV', status: 'active', battery: 72, location: 'Hole 7' },
+                    { id: '007', model: 'Yamaha Drive2', status: 'active', battery: 65, location: 'Hole 12' },
+                    { id: '008', model: 'Club Car DS', status: 'charging', battery: 33, location: 'Station B' }
+                ];
+            }
+            
+            setupEventListeners() {
+                // Filter options
+                document.querySelectorAll('.filter-option').forEach(option => {
+                    option.addEventListener('click', () => {
+                        option.classList.toggle('active');
+                        this.updateFilterCount();
+                    });
+                });
+            }
+            
+            updateStats() {
+                // Update statistics
+                const stats = {
+                    total: this.carts.length,
+                    active: this.carts.filter(c => c.status === 'active').length,
+                    maintenance: this.carts.filter(c => c.status === 'maintenance').length,
+                    charging: this.carts.filter(c => c.status === 'charging').length
+                };
+                
+                // Update UI with stats
+                console.log('Stats updated:', stats);
+            }
+            
+            searchCarts(query) {
+                const lowerQuery = query.toLowerCase();
+                const items = this.currentView === 'list' 
+                    ? document.querySelectorAll('.cart-item')
+                    : document.querySelectorAll('.cart-card');
+                
+                items.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(lowerQuery)) {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+            
+            switchView(view) {
+                this.currentView = view;
+                const listView = document.getElementById('listView');
+                const gridView = document.getElementById('gridView');
+                const viewOptions = document.querySelectorAll('.view-option');
+                
+                viewOptions.forEach(option => {
+                    option.classList.remove('active');
+                });
+                
+                if (view === 'list') {
+                    listView.classList.remove('grid-active');
+                    gridView.classList.remove('active');
+                    viewOptions[0].classList.add('active');
+                } else if (view === 'grid') {
+                    listView.classList.add('grid-active');
+                    gridView.classList.add('active');
+                    viewOptions[1].classList.add('active');
+                }
+            }
+            
+            toggleSelection() {
+                this.selectionMode = !this.selectionMode;
+                const selectionBar = document.getElementById('selectionBar');
+                const viewOptions = document.querySelectorAll('.view-option');
+                
+                if (this.selectionMode) {
+                    selectionBar.classList.add('active');
+                    viewOptions[2].classList.add('active');
+                } else {
+                    selectionBar.classList.remove('active');
+                    viewOptions[2].classList.remove('active');
+                    this.clearSelection();
+                }
+            }
+            
+            selectCart(cartId) {
+                if (this.selectionMode) {
+                    if (this.selectedCarts.has(cartId)) {
+                        this.selectedCarts.delete(cartId);
+                    } else {
+                        this.selectedCarts.add(cartId);
+                    }
+                    this.updateSelectionUI();
+                }
+            }
+            
+            updateSelectionUI() {
+                const count = document.getElementById('selectedCount');
+                count.textContent = this.selectedCarts.size;
+                
+                // Update visual selection state
+                document.querySelectorAll('.cart-item, .cart-card').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                
+                this.selectedCarts.forEach(id => {
+                    // Add selected class to matching items
+                });
+            }
+            
+            clearSelection() {
+                this.selectedCarts.clear();
+                this.updateSelectionUI();
+            }
+            
+            updateFilterCount() {
+                const activeFilters = document.querySelectorAll('.filter-option.active').length;
+                const totalFilters = document.querySelectorAll('.filter-option').length;
+                const filterCount = document.getElementById('filterCount');
+                const filterBtn = document.getElementById('filterBtn');
+                
+                if (activeFilters < totalFilters) {
+                    filterCount.textContent = activeFilters;
+                    filterCount.style.display = 'inline-block';
+                    filterBtn.classList.add('active');
+                } else {
+                    filterCount.style.display = 'none';
+                    filterBtn.classList.remove('active');
+                }
+            }
+            
+            applyFilters() {
+                // Apply selected filters
+                console.log('Filters applied');
+                this.closeFilterModal();
+                showToast('Filters applied');
+            }
+            
+            openFilterModal() {
+                document.getElementById('filterModal').classList.add('active');
+            }
+            
+            closeFilterModal() {
+                document.getElementById('filterModal').classList.remove('active');
+            }
+        }
+        
+        // Initialize controller
+        const inventoryController = new CartInventoryController();
+        
+        // Global functions
+        function addNewCart() {
+            showToast('Navigate to GCA-CM-002: Cart Registration');
+            navigateTo('GCA-CM-002');
+        }
+        
+        function searchCarts(query) {
+            inventoryController.searchCarts(query);
+        }
+        
+        function switchView(view) {
+            inventoryController.switchView(view);
+        }
+        
+        function toggleSelection() {
+            inventoryController.toggleSelection();
+        }
+        
+        function selectCart(cartId) {
+            inventoryController.selectCart(cartId);
+        }
+        
+        function viewDetails(cartId) {
+            showToast(`Opening details for GCA-${cartId}`);
+            navigateTo('GCA-CM-003');
+        }
+        
+        function trackCart(cartId) {
+            showToast(`Tracking GCA-${cartId}`);
+            navigateTo('GCA-RT-002');
+        }
+        
+        function serviceRequest(cartId) {
+            showToast(`Service request for GCA-${cartId}`);
+            navigateTo('GCA-MM-002');
+        }
+        
+        function bulkAssign() {
+            showToast(`Assigning ${inventoryController.selectedCarts.size} carts`);
+        }
+        
+        function bulkService() {
+            showToast(`Service request for ${inventoryController.selectedCarts.size} carts`);
+        }
+        
+        function exportSelected() {
+            showToast(`Exporting ${inventoryController.selectedCarts.size} carts data`);
+        }
+        
+        function openFilterModal() {
+            inventoryController.openFilterModal();
+        }
+        
+        function closeFilterModal() {
+            inventoryController.closeFilterModal();
+        }
+        
+        function applyFilters() {
+            inventoryController.applyFilters();
+        }
+        
+        function navigateTo(pageId) {
+            console.log(`Navigate to ${pageId}`);
+        }
+        
+        // Toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(255,255,255,0.1);
+                backdrop-filter: blur(20px);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-size: 13px;
+                z-index: 200;
+                animation: fadeInOut 2s ease-in-out;
+                border: 1px solid rgba(255,255,255,0.1);
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 2000);
+        }
+        
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInOut {
+                0% { opacity: 0; transform: translate(-50%, 20px); }
+                20% { opacity: 1; transform: translate(-50%, 0); }
+                80% { opacity: 1; transform: translate(-50%, 0); }
+                100% { opacity: 0; transform: translate(-50%, -20px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

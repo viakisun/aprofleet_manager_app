@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCA System - Golf Cart Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        /* iPhone 16 Pro Frame */
+        .iphone-frame {
+            width: 393px;
+            height: 852px;
+            background: #000;
+            border-radius: 55px;
+            padding: 12px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 
+                        0 0 0 1px rgba(255,255,255,0.1);
+            position: relative;
+        }
+        
+        .dynamic-island {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background: #000;
+            border-radius: 22px;
+            z-index: 10;
+        }
+        
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 43px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .app-container {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            background: #000;
+            padding: 55px 24px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+        }
+        
+        .status-icons {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            font-size: 12px;
+        }
+        
+        /* Header */
+        .header {
+            background: #000;
+            padding: 12px 24px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .system-id {
+            font-size: 11px;
+            color: #666;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        
+        .notification-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
+        }
+        
+        .notification-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .notification-indicator {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 6px;
+            height: 6px;
+            background: #ff3b30;
+            border-radius: 50%;
+        }
+        
+        .header-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        
+        .header-subtitle {
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px;
+        }
+        
+        /* Content */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 80px;
+            background: #000;
+        }
+        
+        /* Priority Queue Section */
+        .section {
+            padding: 16px 24px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .section-count {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .priority-queue {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .queue-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 14px 16px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .queue-item:hover {
+            background: rgba(255,255,255,0.06);
+            transform: translateX(2px);
+        }
+        
+        .priority-level {
+            width: 3px;
+            height: 32px;
+            border-radius: 2px;
+        }
+        
+        .p1 { background: #ff3b30; }
+        .p2 { background: #ff9500; }
+        .p3 { background: #34c759; }
+        .p4 { background: #666; }
+        
+        .queue-content {
+            flex: 1;
+        }
+        
+        .queue-code {
+            font-size: 11px;
+            color: #666;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .queue-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+        
+        .queue-meta {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .queue-time {
+            font-size: 11px;
+            color: #666;
+            text-align: right;
+        }
+        
+        /* KPI Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        
+        .kpi-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .kpi-card:hover {
+            background: rgba(255,255,255,0.06);
+        }
+        
+        .kpi-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .kpi-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        
+        .kpi-unit {
+            font-size: 14px;
+            font-weight: 400;
+            color: #666;
+            margin-left: 2px;
+        }
+        
+        .kpi-change {
+            font-size: 11px;
+            color: #34c759;
+        }
+        
+        .kpi-change.negative {
+            color: #ff3b30;
+        }
+        
+        /* Status Grid */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 16px;
+            border-radius: 12px;
+        }
+        
+        .status-item {
+            text-align: center;
+        }
+        
+        .status-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .status-label {
+            font-size: 10px;
+            color: #666;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            padding: 12px 0 28px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .nav-item.active .nav-icon {
+            color: #fff;
+        }
+        
+        .nav-item.active .nav-label {
+            color: #fff;
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            color: #666;
+            transition: all 0.2s;
+        }
+        
+        .nav-label {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        /* Detail Panel (Modal) */
+        .detail-panel {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px);
+            z-index: 100;
+        }
+        
+        .detail-panel.active {
+            display: block;
+        }
+        
+        .detail-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #111;
+            border-radius: 24px 24px 0 0;
+            padding: 24px;
+            max-height: 85%;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .detail-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .close-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.2s;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        
+        .detail-section {
+            margin-bottom: 20px;
+        }
+        
+        .detail-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .detail-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+        }
+        
+        .telemetry-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .telemetry-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 12px;
+            border-radius: 8px;
+        }
+        
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 24px;
+        }
+        
+        .action-btn {
+            padding: 14px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .action-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .action-btn.primary {
+            background: #fff;
+            color: #000;
+        }
+        
+        .action-btn.primary:hover {
+            background: #f0f0f0;
+        }
+        
+        .action-btn.danger {
+            background: rgba(255, 59, 48, 0.1);
+            border-color: rgba(255, 59, 48, 0.3);
+            color: #ff3b30;
+        }
+        
+        .action-btn.danger:hover {
+            background: rgba(255, 59, 48, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-frame">
+        <div class="dynamic-island"></div>
+        <div class="screen">
+            <div class="app-container">
+                <!-- Status Bar -->
+                <div class="status-bar">
+                    <div class="time">09:41</div>
+                    <div class="status-icons">
+                        <span>5G</span>
+                        <span>━━━</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+                
+                <!-- Header -->
+                <div class="header">
+                    <div class="header-top">
+                        <div class="system-id">GCA-SYSTEM-v2.1.0</div>
+                        <div class="notification-btn" onclick="gcaSystem.showNotifications()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #fff;">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
+                            <div class="notification-indicator"></div>
+                        </div>
+                    </div>
+                    <div class="header-title">Dashboard</div>
+                    <div class="header-subtitle">ADMIN_01 | Level 3 Access</div>
+                </div>
+                
+                <!-- Content -->
+                <div class="content">
+                    <!-- Priority Queue -->
+                    <div class="section">
+                        <div class="section-header">
+                            <div class="section-title">Priority Queue</div>
+                            <div class="section-count">7 Active</div>
+                        </div>
+                        <div class="priority-queue">
+                            <div class="queue-item" onclick="gcaSystem.showDetail('INC-2025-0847')">
+                                <div class="priority-level p1"></div>
+                                <div class="queue-content">
+                                    <div class="queue-code">INC-2025-0847</div>
+                                    <div class="queue-title">Emergency Stop Activated</div>
+                                    <div class="queue-meta">GCA-015 | Hole 15 | GPS: 37.2431, 127.0857</div>
+                                </div>
+                                <div class="queue-time">
+                                    <div>2 min</div>
+                                </div>
+                            </div>
+                            
+                            <div class="queue-item" onclick="gcaSystem.showDetail('ALT-2025-3291')">
+                                <div class="priority-level p2"></div>
+                                <div class="queue-content">
+                                    <div class="queue-code">ALT-2025-3291</div>
+                                    <div class="queue-title">Battery Critical Level</div>
+                                    <div class="queue-meta">GCA-007 | SoC: 12% | Est. 15 min remaining</div>
+                                </div>
+                                <div class="queue-time">
+                                    <div>18 min</div>
+                                </div>
+                            </div>
+                            
+                            <div class="queue-item" onclick="gcaSystem.showDetail('MNT-2025-1102')">
+                                <div class="priority-level p3"></div>
+                                <div class="queue-content">
+                                    <div class="queue-code">MNT-2025-1102</div>
+                                    <div class="queue-title">Scheduled Maintenance</div>
+                                    <div class="queue-meta">3 units | PM-1000km Service</div>
+                                </div>
+                                <div class="queue-time">
+                                    <div>14:00</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- KPI Metrics -->
+                    <div class="section">
+                        <div class="section-header">
+                            <div class="section-title">Key Performance Indicators</div>
+                        </div>
+                        <div class="kpi-grid">
+                            <div class="kpi-card">
+                                <div class="kpi-label">Availability</div>
+                                <div class="kpi-value">92.8<span class="kpi-unit">%</span></div>
+                                <div class="kpi-change">+2.3%</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">MTTR</div>
+                                <div class="kpi-value">18<span class="kpi-unit">min</span></div>
+                                <div class="kpi-change negative">-3 min</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Utilization</div>
+                                <div class="kpi-value">78.4<span class="kpi-unit">%</span></div>
+                                <div class="kpi-change">+5.1%</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Daily Distance</div>
+                                <div class="kpi-value">847<span class="kpi-unit">km</span></div>
+                                <div class="kpi-change">+12%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Fleet Status -->
+                    <div class="section">
+                        <div class="section-header">
+                            <div class="section-title">Fleet Status</div>
+                        </div>
+                        <div class="status-grid">
+                            <div class="status-item">
+                                <div class="status-value">28</div>
+                                <div class="status-label">Total</div>
+                            </div>
+                            <div class="status-item">
+                                <div class="status-value">20</div>
+                                <div class="status-label">Active</div>
+                            </div>
+                            <div class="status-item">
+                                <div class="status-value">6</div>
+                                <div class="status-label">Charging</div>
+                            </div>
+                            <div class="status-item">
+                                <div class="status-value">2</div>
+                                <div class="status-label">Service</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Navigation -->
+                <div class="bottom-nav">
+                    <div class="nav-item active" onclick="gcaSystem.navigate('GCA-HM-001')">
+                        <div class="nav-icon">▦</div>
+                        <div class="nav-label">Home</div>
+                    </div>
+                    <div class="nav-item" onclick="gcaSystem.navigate('GCA-RT-001')">
+                        <div class="nav-icon">◉</div>
+                        <div class="nav-label">Monitor</div>
+                    </div>
+                    <div class="nav-item" onclick="gcaSystem.navigate('GCA-CM-001')">
+                        <div class="nav-icon">▣</div>
+                        <div class="nav-label">Fleet</div>
+                    </div>
+                    <div class="nav-item" onclick="gcaSystem.navigate('GCA-MM-001')">
+                        <div class="nav-icon">⚙</div>
+                        <div class="nav-label">Service</div>
+                    </div>
+                    <div class="nav-item" onclick="gcaSystem.navigate('GCA-ST-001')">
+                        <div class="nav-icon">☰</div>
+                        <div class="nav-label">System</div>
+                    </div>
+                </div>
+                
+                <!-- Detail Panel -->
+                <div class="detail-panel" id="detailPanel">
+                    <div class="detail-content">
+                        <div class="detail-header">
+                            <div class="detail-title" id="detailTitle">INC-2025-0847</div>
+                            <div class="close-btn" onclick="gcaSystem.closeDetail()">×</div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="detail-label">Unit Identification</div>
+                            <div class="detail-value" id="unitId">GCA-015</div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="detail-label">Current Location</div>
+                            <div class="detail-value">Hole 15 | GPS: 37.2431, 127.0857</div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="detail-label">Status</div>
+                            <div class="detail-value" style="color: #ff3b30;">EMERGENCY STOP</div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="detail-label">Telemetry Data</div>
+                            <div class="telemetry-grid">
+                                <div class="telemetry-item">
+                                    <div class="detail-label">Battery</div>
+                                    <div class="detail-value">45%</div>
+                                </div>
+                                <div class="telemetry-item">
+                                    <div class="detail-label">Speed</div>
+                                    <div class="detail-value">0 km/h</div>
+                                </div>
+                                <div class="telemetry-item">
+                                    <div class="detail-label">Temperature</div>
+                                    <div class="detail-value">38°C</div>
+                                </div>
+                                <div class="telemetry-item">
+                                    <div class="detail-label">Runtime</div>
+                                    <div class="detail-value">4.2 hrs</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="action-grid">
+                            <button class="action-btn primary" onclick="gcaSystem.remoteControl()">Remote Control</button>
+                            <button class="action-btn" onclick="gcaSystem.createWorkOrder()">Create Work Order</button>
+                            <button class="action-btn" onclick="gcaSystem.viewHistory()">View History</button>
+                            <button class="action-btn danger" onclick="gcaSystem.emergencyStop()">Force Stop</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // GCA System Controller
+        class GCASystem {
+            constructor() {
+                this.currentPage = 'GCA-HM-001';
+                this.incidents = new Map();
+                this.telemetryData = new Map();
+                this.init();
+            }
+            
+            init() {
+                this.setupWebSocket();
+                this.loadIncidents();
+                this.startTelemetryStream();
+            }
+            
+            setupWebSocket() {
+                // Simulated WebSocket connection
+                console.log('WebSocket: Connecting to wss://realtime.golfcart-admin.com');
+                this.simulateRealtimeEvents();
+            }
+            
+            loadIncidents() {
+                // Load active incidents
+                this.incidents.set('INC-2025-0847', {
+                    id: 'INC-2025-0847',
+                    cartId: 'GCA-015',
+                    type: 'EMERGENCY_STOP',
+                    priority: 'P1',
+                    location: 'Hole 15',
+                    gps: [37.2431, 127.0857],
+                    timestamp: Date.now() - 120000
+                });
+                
+                this.incidents.set('ALT-2025-3291', {
+                    id: 'ALT-2025-3291',
+                    cartId: 'GCA-007',
+                    type: 'LOW_BATTERY',
+                    priority: 'P2',
+                    battery: 12,
+                    timestamp: Date.now() - 1080000
+                });
+            }
+            
+            startTelemetryStream() {
+                setInterval(() => {
+                    this.updateTelemetry();
+                }, 1000);
+            }
+            
+            updateTelemetry() {
+                // Simulate telemetry updates
+                const carts = ['GCA-001', 'GCA-002', 'GCA-003'];
+                carts.forEach(cartId => {
+                    this.telemetryData.set(cartId, {
+                        battery: Math.random() * 100,
+                        speed: Math.random() * 25,
+                        temperature: 35 + Math.random() * 10,
+                        runtime: Math.random() * 8
+                    });
+                });
+            }
+            
+            simulateRealtimeEvents() {
+                setInterval(() => {
+                    const eventTypes = ['cart.location.updated', 'cart.battery.low', 'system.alert.new'];
+                    const event = eventTypes[Math.floor(Math.random() * eventTypes.length)];
+                    console.log(`WebSocket Event: ${event}`);
+                }, 10000);
+            }
+            
+            navigate(pageId) {
+                this.currentPage = pageId;
+                console.log(`Navigation: ${pageId}`);
+                this.showToast(`Navigating to ${pageId}`);
+                this.updateNavigation(pageId);
+            }
+            
+            updateNavigation(pageId) {
+                const navItems = document.querySelectorAll('.nav-item');
+                navItems.forEach(item => item.classList.remove('active'));
+                // Update active state based on pageId
+            }
+            
+            showDetail(incidentId) {
+                const incident = this.incidents.get(incidentId);
+                if (incident) {
+                    document.getElementById('detailTitle').textContent = incident.id;
+                    document.getElementById('unitId').textContent = incident.cartId;
+                    document.getElementById('detailPanel').classList.add('active');
+                }
+            }
+            
+            closeDetail() {
+                document.getElementById('detailPanel').classList.remove('active');
+            }
+            
+            showNotifications() {
+                this.showToast('Opening notification center');
+            }
+            
+            remoteControl() {
+                this.showToast('Initiating remote control session');
+                this.closeDetail();
+            }
+            
+            createWorkOrder() {
+                const orderId = `WO-${Date.now()}`;
+                this.showToast(`Work order created: ${orderId}`);
+                this.closeDetail();
+            }
+            
+            viewHistory() {
+                this.showToast('Loading maintenance history');
+            }
+            
+            emergencyStop() {
+                if (confirm('Execute emergency stop command?')) {
+                    this.showToast('Emergency stop executed');
+                    this.closeDetail();
+                }
+            }
+            
+            showToast(message) {
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position: fixed;
+                    bottom: 100px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: rgba(255,255,255,0.1);
+                    backdrop-filter: blur(20px);
+                    color: white;
+                    padding: 12px 24px;
+                    border-radius: 8px;
+                    font-size: 13px;
+                    z-index: 200;
+                    animation: fadeInOut 2s ease-in-out;
+                    border: 1px solid rgba(255,255,255,0.1);
+                `;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 2000);
+            }
+        }
+        
+        // Initialize GCA System
+        const gcaSystem = new GCASystem();
+        
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInOut {
+                0% { opacity: 0; transform: translate(-50%, 20px); }
+                20% { opacity: 1; transform: translate(-50%, 0); }
+                80% { opacity: 1; transform: translate(-50%, 0); }
+                100% { opacity: 0; transform: translate(-50%, -20px); }
+            }
+            
+            ::-webkit-scrollbar {
+                width: 4px;
+            }
+            
+            ::-webkit-scrollbar-track {
+                background: rgba(255,255,255,0.02);
+            }
+            
+            ::-webkit-scrollbar-thumb {
+                background: rgba(255,255,255,0.1);
+                border-radius: 2px;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
