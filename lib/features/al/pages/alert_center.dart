@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../domain/models/alert.dart';
+import '../../../domain/models/work_order.dart';
 import '../../../core/services/providers.dart';
 import '../../../core/localization/app_localizations.dart';
 import '../../../core/widgets/shared_widgets.dart';

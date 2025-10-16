@@ -14,8 +14,8 @@ class AnalyticsController extends StateNotifier<AnalyticsState> {
 
   void _initialize() {
     // Load initial KPIs
-    ref.read(kpisProvider.future).then((kpis) {
-      state = state.copyWith(kpis: AsyncValue.data(kpis), isLoading: false);
+    ref.read(kpiProvider.future).then((kpi) {
+      state = state.copyWith(kpis: AsyncValue.data(kpi), isLoading: false);
     });
 
     // Start periodic updates every 30 seconds

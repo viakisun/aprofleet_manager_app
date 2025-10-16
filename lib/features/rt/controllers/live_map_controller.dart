@@ -89,7 +89,7 @@ class LiveMapController extends StateNotifier<LiveMapState> {
       carts = carts.where((cart) {
         return cart.id.toLowerCase().contains(query) ||
             cart.model.toLowerCase().contains(query) ||
-            (cart.location?.toLowerCase().contains(query) ?? false);
+            (cart.location?.toString().toLowerCase().contains(query) ?? false);
       }).toList();
     }
 

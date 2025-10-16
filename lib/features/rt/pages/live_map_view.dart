@@ -254,7 +254,7 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      cart.location ?? 'Unknown Location',
+                      cart.location?.toString() ?? 'Unknown Location',
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.white.withOpacity(0.7),
@@ -275,11 +275,11 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
               Expanded(
                 child: TelemetryWidget(
                   label: 'Battery',
-                  value: cart.batteryPct,
+                  value: cart.batteryPct ?? 0.0,
                   unit: '%',
-                  color: cart.batteryPct > 50
+                  color: (cart.batteryPct ?? 0) > 50
                       ? Colors.green
-                      : cart.batteryPct > 20
+                      : (cart.batteryPct ?? 0) > 20
                           ? Colors.orange
                           : Colors.red,
                   isCompact: true,
@@ -289,7 +289,7 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
               Expanded(
                 child: TelemetryWidget(
                   label: 'Speed',
-                  value: cart.speedKph,
+                  value: cart.speedKph ?? 0.0,
                   unit: 'km/h',
                   isCompact: true,
                 ),

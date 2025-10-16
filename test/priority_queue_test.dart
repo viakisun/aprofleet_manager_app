@@ -53,7 +53,8 @@ void main() {
       expect(alerts[2].id, 'ALT-2025-0001'); // P4, oldest
     });
 
-    test('Acknowledged/Resolved remain in queue with preserved ordering rules', () {
+    test('Acknowledged/Resolved remain in queue with preserved ordering rules',
+        () {
       final alerts = [
         Alert(
           id: 'ALT-2025-0001',

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:aprofleet_manager/features/mm/pages/create_work_order.dart';
-import 'package:aprofleet_manager/domain/models/work_order.dart';
 import 'package:aprofleet_manager/domain/models/cart.dart';
 import 'package:aprofleet_manager/core/services/providers.dart';
 import 'package:latlong2/latlong.dart';
@@ -114,7 +113,8 @@ void main() {
       expect(find.text('WORK ORDER SUMMARY'), findsOneWidget);
 
       // Verify Create Work Order button is enabled
-      final createButton = tester.widget<ActionButton>(find.text('Create Work Order'));
+      final createButton =
+          tester.widget<ActionButton>(find.text('Create Work Order'));
       expect(createButton.onPressed, isNotNull);
     });
 
@@ -164,7 +164,7 @@ void main() {
       // Fill in basic information
       await tester.tap(find.text('PREVENTIVE'));
       await tester.pump();
-      
+
       await tester.enterText(
         find.byType(TextFormField).first,
         'Test work order description',
@@ -172,7 +172,8 @@ void main() {
       await tester.pump();
 
       // Save Draft button should be enabled
-      final saveDraftButton = tester.widget<TextButton>(find.text('Save Draft'));
+      final saveDraftButton =
+          tester.widget<TextButton>(find.text('Save Draft'));
       expect(saveDraftButton.onPressed, isNotNull);
 
       // Tap Save Draft

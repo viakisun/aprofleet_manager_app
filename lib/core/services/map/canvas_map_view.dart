@@ -2,9 +2,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 
-import '../../domain/models/cart.dart';
+import '../../../domain/models/cart.dart';
 import '../../constants/app_constants.dart';
-import '../../theme/app_theme.dart';
+import '../../../theme/app_theme.dart';
 
 class CanvasMapView extends StatefulWidget {
   final List<Cart> carts;
@@ -30,7 +30,6 @@ class CanvasMapView extends StatefulWidget {
 
 class _CanvasMapViewState extends State<CanvasMapView> {
   late Offset _panOffset;
-  bool _isPanning = false;
   Offset? _lastPanPosition;
 
   @override
@@ -50,27 +49,11 @@ class _CanvasMapViewState extends State<CanvasMapView> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onPanStart: (details) {
-        _isPanning = true;
-        _lastPanPosition = details.localPosition;
-      },
-      onPanUpdate: (details) {
-        if (_isPanning && _lastPanPosition != null) {
-          setState(() {
-            _panOffset += details.localPosition - _lastPanPosition!;
-            _lastPanPosition = details.localPosition;
-          });
-          widget.onCenterChanged(_panOffset);
-        }
-      },
-      onPanEnd: (details) {
-        _isPanning = false;
-        _lastPanPosition = null;
-      },
       onScaleStart: (details) {
         _lastPanPosition = details.localFocalPoint;
       },
       onScaleUpdate: (details) {
+        // Handle zoom
         if (details.scale != 1.0) {
           final newZoom = (widget.zoom * details.scale).clamp(
             AppConstants.mapZoomMin,
@@ -79,6 +62,7 @@ class _CanvasMapViewState extends State<CanvasMapView> {
           widget.onZoomChanged(newZoom);
         }
 
+        // Handle pan (when scale is 1.0, it's just panning)
         if (details.focalPoint != _lastPanPosition) {
           setState(() {
             _panOffset += details.focalPoint - _lastPanPosition!;
@@ -282,7 +266,7 @@ class GolfCourseMapPainter extends CustomPainter {
     canvas.drawRect(carRect, iconPaint);
 
     // Draw battery indicator
-    if (cart.batteryPct < 20) {
+    if ((cart.batteryPct ?? 0) < 20) {
       final batteryPaint = Paint()
         ..color = Colors.red
         ..style = PaintingStyle.fill;

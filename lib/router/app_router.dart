@@ -48,7 +48,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: '/cm/register',
             name: 'cart-registration',
-            builder: (context, state) => const CartRegistration(),
+            builder: (context, state) => const CartRegistrationPage(),
           ),
 
           // Maintenance Module

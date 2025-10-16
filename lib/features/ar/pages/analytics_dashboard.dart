@@ -67,7 +67,7 @@ class _AnalyticsDashboardState extends ConsumerState<AnalyticsDashboard> {
                     Text('Error loading analytics: $error'),
                     const SizedBox(height: 16),
                     ElevatedButton(
-                      onPressed: () => ref.invalidate(kpisProvider),
+                      onPressed: () => ref.invalidate(kpiProvider),
                       child: const Text('Retry'),
                     ),
                   ],
@@ -483,38 +483,4 @@ class _AnalyticsDashboardState extends ConsumerState<AnalyticsDashboard> {
       ),
     );
   }
-}
-
-enum AnalyticsRange {
-  today,
-  week,
-  month,
-  quarter,
-  year,
-  custom,
-}
-
-extension AnalyticsRangeExtension on AnalyticsRange {
-  String get displayName {
-    switch (this) {
-      case AnalyticsRange.today:
-        return 'Today';
-      case AnalyticsRange.week:
-        return 'This Week';
-      case AnalyticsRange.month:
-        return 'This Month';
-      case AnalyticsRange.quarter:
-        return 'This Quarter';
-      case AnalyticsRange.year:
-        return 'This Year';
-      case AnalyticsRange.custom:
-        return 'Custom';
-    }
-  }
-}
-
-enum ExportFormat {
-  csv,
-  pdf,
-  excel,
 }

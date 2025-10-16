@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/models/alert.dart';
+import '../../../domain/models/work_order.dart';
 import '../../../core/widgets/shared_widgets.dart';
 import '../../../core/constants/app_constants.dart';
 
@@ -83,7 +84,7 @@ class AlertFilters extends StatelessWidget {
           // State filters
           _buildFilterSection(
             'STATE',
-            AlertState.values.map((state) {
+            AlertStatus.values.map((state) {
               final isActive = activeFilter.states?.contains(state) ?? false;
               final color = _getStateColor(state);
 
@@ -205,8 +206,8 @@ class AlertFilters extends StatelessWidget {
     onFilterChanged(activeFilter.copyWith(severities: severities));
   }
 
-  void _toggleStateFilter(AlertState state) {
-    final states = Set<AlertState>.from(activeFilter.states ?? {});
+  void _toggleStateFilter(AlertStatus state) {
+    final states = Set<AlertStatus>.from(activeFilter.states ?? {});
     if (states.contains(state)) {
       states.remove(state);
     } else {
@@ -225,17 +226,17 @@ class AlertFilters extends StatelessWidget {
     onFilterChanged(activeFilter.copyWith(priorities: priorities));
   }
 
-  Color _getStateColor(AlertState state) {
+  Color _getStateColor(AlertStatus state) {
     switch (state) {
-      case AlertState.triggered:
+      case AlertStatus.triggered:
         return Colors.red;
-      case AlertState.notified:
+      case AlertStatus.notified:
         return Colors.orange;
-      case AlertState.acknowledged:
+      case AlertStatus.acknowledged:
         return Colors.blue;
-      case AlertState.escalated:
+      case AlertStatus.escalated:
         return Colors.purple;
-      case AlertState.resolved:
+      case AlertStatus.resolved:
         return Colors.green;
     }
   }

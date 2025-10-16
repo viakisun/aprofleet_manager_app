@@ -11,7 +11,7 @@ class Alert with _$Alert {
     required String code,
     required AlertSeverity severity,
     required Priority priority,
-    required AlertState state,
+    required AlertStatus state,
     required String title,
     required String message,
     String? cartId,
@@ -48,7 +48,7 @@ class AlertAction with _$AlertAction {
 class AlertFilter with _$AlertFilter {
   const factory AlertFilter({
     Set<AlertSeverity>? severities,
-    Set<AlertState>? states,
+    Set<AlertStatus>? states,
     Set<Priority>? priorities,
     Set<AlertSource>? sources,
     String? cartId,
@@ -99,7 +99,7 @@ enum AlertSeverity {
   success,
 }
 
-enum AlertState {
+enum AlertStatus {
   @JsonValue('triggered')
   triggered,
   @JsonValue('notified')
@@ -142,18 +142,18 @@ extension AlertSeverityExtension on AlertSeverity {
   }
 }
 
-extension AlertStateExtension on AlertState {
+extension AlertStatusExtension on AlertStatus {
   String get displayName {
     switch (this) {
-      case AlertState.triggered:
+      case AlertStatus.triggered:
         return 'TRIGGERED';
-      case AlertState.notified:
+      case AlertStatus.notified:
         return 'NOTIFIED';
-      case AlertState.acknowledged:
+      case AlertStatus.acknowledged:
         return 'ACKNOWLEDGED';
-      case AlertState.escalated:
+      case AlertStatus.escalated:
         return 'ESCALATED';
-      case AlertState.resolved:
+      case AlertStatus.resolved:
         return 'RESOLVED';
     }
   }

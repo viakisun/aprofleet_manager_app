@@ -10,7 +10,9 @@ import '../../../domain/models/cart.dart';
 import '../../../core/services/providers.dart';
 import '../../../core/localization/app_localizations.dart';
 import '../../../core/widgets/shared_widgets.dart';
-import '../../../core/widgets/steps/stepper.dart';
+import '../../../core/widgets/steps/stepper.dart' as custom;
+import 'package:intl/intl.dart';
+import 'package:flutter/material.dart' hide Stepper;
 import '../../../core/constants/app_constants.dart';
 import '../../../core/utils/code_formatters.dart';
 import '../controllers/create_wo_controller.dart';
@@ -103,7 +105,7 @@ class _CreateWorkOrderState extends ConsumerState<CreateWorkOrder> {
       body: Column(
         children: [
           // Stepper
-          Stepper(
+          custom.Stepper(
             currentStep: _currentStep,
             totalSteps: 4,
             stepTitles: const [
@@ -504,7 +506,7 @@ class _CreateWorkOrderState extends ConsumerState<CreateWorkOrder> {
             dropdownColor: const Color(0xFF1A1A1A),
             style: const TextStyle(color: Colors.white),
             items: AppConstants.technicians.map((tech) {
-              return DropdownMenuItem(
+              return DropdownMenuItem<String>(
                 value: tech['name'],
                 child: Text('${tech['name']} (${tech['skill']})'),
               );
@@ -1080,7 +1082,7 @@ class _CreateWorkOrderState extends ConsumerState<CreateWorkOrder> {
 
   String _generateWorkOrderId() {
     final now = DateTime.now();
-    return formatWorkOrderId(
+    return CodeFormatters.formatWorkOrderId(
         1, now.year); // This would be the next sequential number
   }
 

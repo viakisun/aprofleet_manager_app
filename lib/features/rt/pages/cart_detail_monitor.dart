@@ -9,7 +9,7 @@ import '../../../core/localization/app_localizations.dart';
 import '../../../core/widgets/shared_widgets.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/utils/code_formatters.dart';
-import 'controllers/cart_detail_controller.dart';
+import '../controllers/cart_detail_controller.dart';
 
 class CartDetailMonitor extends ConsumerStatefulWidget {
   final String cartId;
@@ -87,7 +87,8 @@ class _CartDetailMonitorState extends ConsumerState<CartDetailMonitor> {
         ],
       ),
       body: cartAsync.when(
-        data: (cart) => _buildCartDetail(context, cart),
+        data: (cart) =>
+            cart != null ? _buildCartDetail(context, cart) : Container(),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => Center(
           child: Column(
@@ -221,12 +222,12 @@ class _CartDetailMonitorState extends ConsumerState<CartDetailMonitor> {
             children: [
               // Battery Gauge
               Expanded(
-                child: _buildBatteryGauge(cart.batteryPct),
+                child: _buildBatteryGauge(cart.batteryPct ?? 0.0),
               ),
               const SizedBox(width: 16),
               // Speed Gauge
               Expanded(
-                child: _buildSpeedGauge(cart.speedKph),
+                child: _buildSpeedGauge(cart.speedKph ?? 0.0),
               ),
             ],
           ),
@@ -458,7 +459,7 @@ class _CartDetailMonitorState extends ConsumerState<CartDetailMonitor> {
             ),
           ),
           const SizedBox(height: 12),
-          if (cart.batteryPct < AppConstants.batteryWarningThreshold)
+          if ((cart.batteryPct ?? 0) < AppConstants.batteryWarningThreshold)
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -475,7 +476,7 @@ class _CartDetailMonitorState extends ConsumerState<CartDetailMonitor> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Battery level critical: ${cart.batteryPct.toStringAsFixed(1)}%',
+                      'Battery level critical: ${(cart.batteryPct ?? 0).toStringAsFixed(1)}%',
                       style: const TextStyle(
                         color: Colors.red,
                         fontSize: 14,

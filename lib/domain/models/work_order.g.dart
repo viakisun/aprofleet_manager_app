@@ -11,6 +11,7 @@ _$WoPartImpl _$$WoPartImplFromJson(Map<String, dynamic> json) => _$WoPartImpl(
       name: json['name'] as String,
       quantity: (json['quantity'] as num).toInt(),
       notes: json['notes'] as String?,
+      serialNumber: json['serialNumber'] as String?,
     );
 
 Map<String, dynamic> _$$WoPartImplToJson(_$WoPartImpl instance) =>
@@ -19,6 +20,7 @@ Map<String, dynamic> _$$WoPartImplToJson(_$WoPartImpl instance) =>
       'name': instance.name,
       'quantity': instance.quantity,
       'notes': instance.notes,
+      'serialNumber': instance.serialNumber,
     };
 
 _$WorkOrderImpl _$$WorkOrderImplFromJson(Map<String, dynamic> json) =>
@@ -42,6 +44,9 @@ _$WorkOrderImpl _$$WorkOrderImplFromJson(Map<String, dynamic> json) =>
           .toList(),
       location: json['location'] as String?,
       notes: json['notes'] as String?,
+      checklist: (json['checklist'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as bool),
+      ),
     );
 
 Map<String, dynamic> _$$WorkOrderImplToJson(_$WorkOrderImpl instance) =>
@@ -59,6 +64,7 @@ Map<String, dynamic> _$$WorkOrderImplToJson(_$WorkOrderImpl instance) =>
       'parts': instance.parts,
       'location': instance.location,
       'notes': instance.notes,
+      'checklist': instance.checklist,
     };
 
 const _$WorkOrderTypeEnumMap = {

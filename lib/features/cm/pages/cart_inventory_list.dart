@@ -6,6 +6,7 @@ import '../../../domain/models/cart.dart';
 import '../../../core/services/providers.dart';
 import '../../../core/localization/app_localizations.dart';
 import '../../../core/widgets/shared_widgets.dart';
+import '../../../core/widgets/filter_sheet.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/utils/code_formatters.dart';
 import '../controllers/cart_inventory_controller.dart';
@@ -301,7 +302,7 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
               ),
               const SizedBox(height: 4),
               Text(
-                cart.location ?? 'Unknown Location',
+                cart.location?.toString() ?? 'Unknown Location',
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.white.withOpacity(0.7),
@@ -316,11 +317,11 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
                   Expanded(
                     child: TelemetryWidget(
                       label: 'Battery',
-                      value: cart.batteryPct,
+                      value: cart.batteryPct ?? 0.0,
                       unit: '%',
-                      color: cart.batteryPct > 50
+                      color: (cart.batteryPct ?? 0) > 50
                           ? Colors.green
-                          : cart.batteryPct > 20
+                          : (cart.batteryPct ?? 0) > 20
                               ? Colors.orange
                               : Colors.red,
                       isCompact: true,
@@ -330,7 +331,7 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
                   Expanded(
                     child: TelemetryWidget(
                       label: 'Speed',
-                      value: cart.speedKph,
+                      value: cart.speedKph ?? 0.0,
                       unit: 'km/h',
                       isCompact: true,
                     ),
@@ -463,21 +464,21 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
                   Icon(
                     Icons.battery_std,
                     size: 12,
-                    color: cart.batteryPct > 50
+                    color: (cart.batteryPct ?? 0) > 50
                         ? Colors.green
-                        : cart.batteryPct > 20
+                        : (cart.batteryPct ?? 0) > 20
                             ? Colors.orange
                             : Colors.red,
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    '${cart.batteryPct.toStringAsFixed(0)}%',
+                    '${(cart.batteryPct ?? 0).toStringAsFixed(0)}%',
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w600,
-                      color: cart.batteryPct > 50
+                      color: (cart.batteryPct ?? 0) > 50
                           ? Colors.green
-                          : cart.batteryPct > 20
+                          : (cart.batteryPct ?? 0) > 20
                               ? Colors.orange
                               : Colors.red,
                     ),

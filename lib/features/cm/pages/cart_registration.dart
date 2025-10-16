@@ -10,20 +10,23 @@ import '../../../domain/models/cart.dart';
 import '../../../core/services/providers.dart';
 import '../../../core/localization/app_localizations.dart';
 import '../../../core/widgets/shared_widgets.dart';
-import '../../../core/widgets/steps/stepper.dart';
+import '../../../core/widgets/steps/stepper.dart' as custom;
+import 'package:intl/intl.dart';
+import 'package:flutter/material.dart' hide Stepper;
 import '../../../core/widgets/qr/qr_label.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/utils/code_formatters.dart';
 import '../controllers/cart_registration_controller.dart';
 
-class CartRegistration extends ConsumerStatefulWidget {
-  const CartRegistration({super.key});
+class CartRegistrationPage extends ConsumerStatefulWidget {
+  const CartRegistrationPage({super.key});
 
   @override
-  ConsumerState<CartRegistration> createState() => _CartRegistrationState();
+  ConsumerState<CartRegistrationPage> createState() =>
+      _CartRegistrationPageState();
 }
 
-class _CartRegistrationState extends ConsumerState<CartRegistration> {
+class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
   late CartRegistrationController _controller;
   final PageController _pageController = PageController();
   int _currentStep = 0;
@@ -59,7 +62,7 @@ class _CartRegistrationState extends ConsumerState<CartRegistration> {
       body: Column(
         children: [
           // Stepper
-          Stepper(
+          custom.Stepper(
             currentStep: _currentStep,
             totalSteps: 4,
             stepTitles: const [
@@ -175,7 +178,7 @@ class _CartRegistrationState extends ConsumerState<CartRegistration> {
                     if (manufacturer != null) {
                       _controller.setManufacturer(manufacturer);
                       _controller.setModel(
-                          null); // Reset model when manufacturer changes
+                          ''); // Reset model when manufacturer changes
                     }
                   },
                 ),
@@ -197,7 +200,7 @@ class _CartRegistrationState extends ConsumerState<CartRegistration> {
                               []
                           : [])
                       .map((model) {
-                    return DropdownMenuItem(
+                    return DropdownMenuItem<String>(
                       value: model,
                       child: Text(model),
                     );
@@ -971,9 +974,9 @@ class _CartRegistrationState extends ConsumerState<CartRegistration> {
         }
 
         final fileName = '$photoKey.jpg';
-        final savedFile = await image.saveTo('${cartDir.path}/$fileName');
-
-        _controller.setImagePath(photoKey, savedFile.path);
+        final filePath = '${cartDir.path}/$fileName';
+        await image.saveTo(filePath);
+        _controller.setImagePath(photoKey, filePath);
 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

@@ -7,8 +7,9 @@ import '../../domain/models/alert.dart';
 import '../../domain/models/telemetry.dart';
 import '../../domain/models/kpi.dart';
 import '../../domain/models/user_profile.dart';
-import '../mock/mock_api.dart';
-import '../mock/mock_ws_hub.dart';
+import 'mock/mock_api.dart';
+import 'mock/mock_ws_hub.dart';
+import 'repositories/cart_repository.dart';
 
 part 'providers.g.dart';
 
@@ -22,6 +23,22 @@ MockApi mockApi(MockApiRef ref) {
 @riverpod
 MockWsHub mockWsHub(MockWsHubRef ref) {
   return MockWsHub();
+}
+
+// Repository Providers
+@riverpod
+CartRepository cartRepository(CartRepositoryRef ref) {
+  return CartRepositoryImpl(ref.watch(mockApiProvider));
+}
+
+@riverpod
+WorkOrderRepository workOrderRepository(WorkOrderRepositoryRef ref) {
+  return WorkOrderRepositoryImpl(ref.watch(mockApiProvider));
+}
+
+@riverpod
+AlertRepository alertRepository(AlertRepositoryRef ref) {
+  return AlertRepositoryImpl(ref.watch(mockApiProvider));
 }
 
 // Cart Repository Provider

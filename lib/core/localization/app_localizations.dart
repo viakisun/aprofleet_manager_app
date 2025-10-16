@@ -32,7 +32,8 @@ class AppLocalizations {
   ];
 
   // App Name
-  String get appName => _getLocalizedValue('appName');
+  String get registerCart => _getLocalizedValue('registerCart');
+  String get createWorkOrder => _getLocalizedValue('createWorkOrder');
 
   // Navigation
   String get navRealTime => _getLocalizedValue('navRealTime');

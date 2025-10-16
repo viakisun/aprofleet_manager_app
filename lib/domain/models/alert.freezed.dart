@@ -24,7 +24,7 @@ mixin _$Alert {
   String get code => throw _privateConstructorUsedError;
   AlertSeverity get severity => throw _privateConstructorUsedError;
   Priority get priority => throw _privateConstructorUsedError;
-  AlertState get state => throw _privateConstructorUsedError;
+  AlertStatus get state => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   String? get cartId => throw _privateConstructorUsedError;
@@ -58,7 +58,7 @@ abstract class $AlertCopyWith<$Res> {
       String code,
       AlertSeverity severity,
       Priority priority,
-      AlertState state,
+      AlertStatus state,
       String title,
       String message,
       String? cartId,
@@ -128,7 +128,7 @@ class _$AlertCopyWithImpl<$Res, $Val extends Alert>
       state: null == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
-              as AlertState,
+              as AlertStatus,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -197,7 +197,7 @@ abstract class _$$AlertImplCopyWith<$Res> implements $AlertCopyWith<$Res> {
       String code,
       AlertSeverity severity,
       Priority priority,
-      AlertState state,
+      AlertStatus state,
       String title,
       String message,
       String? cartId,
@@ -265,7 +265,7 @@ class __$$AlertImplCopyWithImpl<$Res>
       state: null == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
-              as AlertState,
+              as AlertStatus,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -358,7 +358,7 @@ class _$AlertImpl implements _Alert {
   @override
   final Priority priority;
   @override
-  final AlertState state;
+  final AlertStatus state;
   @override
   final String title;
   @override
@@ -479,7 +479,7 @@ abstract class _Alert implements Alert {
       required final String code,
       required final AlertSeverity severity,
       required final Priority priority,
-      required final AlertState state,
+      required final AlertStatus state,
       required final String title,
       required final String message,
       final String? cartId,
@@ -505,7 +505,7 @@ abstract class _Alert implements Alert {
   @override
   Priority get priority;
   @override
-  AlertState get state;
+  AlertStatus get state;
   @override
   String get title;
   @override
@@ -791,7 +791,7 @@ AlertFilter _$AlertFilterFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$AlertFilter {
   Set<AlertSeverity>? get severities => throw _privateConstructorUsedError;
-  Set<AlertState>? get states => throw _privateConstructorUsedError;
+  Set<AlertStatus>? get states => throw _privateConstructorUsedError;
   Set<Priority>? get priorities => throw _privateConstructorUsedError;
   Set<AlertSource>? get sources => throw _privateConstructorUsedError;
   String? get cartId => throw _privateConstructorUsedError;
@@ -817,7 +817,7 @@ abstract class $AlertFilterCopyWith<$Res> {
   @useResult
   $Res call(
       {Set<AlertSeverity>? severities,
-      Set<AlertState>? states,
+      Set<AlertStatus>? states,
       Set<Priority>? priorities,
       Set<AlertSource>? sources,
       String? cartId,
@@ -858,7 +858,7 @@ class _$AlertFilterCopyWithImpl<$Res, $Val extends AlertFilter>
       states: freezed == states
           ? _value.states
           : states // ignore: cast_nullable_to_non_nullable
-              as Set<AlertState>?,
+              as Set<AlertStatus>?,
       priorities: freezed == priorities
           ? _value.priorities
           : priorities // ignore: cast_nullable_to_non_nullable
@@ -897,7 +897,7 @@ abstract class _$$AlertFilterImplCopyWith<$Res>
   @useResult
   $Res call(
       {Set<AlertSeverity>? severities,
-      Set<AlertState>? states,
+      Set<AlertStatus>? states,
       Set<Priority>? priorities,
       Set<AlertSource>? sources,
       String? cartId,
@@ -936,7 +936,7 @@ class __$$AlertFilterImplCopyWithImpl<$Res>
       states: freezed == states
           ? _value._states
           : states // ignore: cast_nullable_to_non_nullable
-              as Set<AlertState>?,
+              as Set<AlertStatus>?,
       priorities: freezed == priorities
           ? _value._priorities
           : priorities // ignore: cast_nullable_to_non_nullable
@@ -970,7 +970,7 @@ class __$$AlertFilterImplCopyWithImpl<$Res>
 class _$AlertFilterImpl implements _AlertFilter {
   const _$AlertFilterImpl(
       {final Set<AlertSeverity>? severities,
-      final Set<AlertState>? states,
+      final Set<AlertStatus>? states,
       final Set<Priority>? priorities,
       final Set<AlertSource>? sources,
       this.cartId,
@@ -995,9 +995,9 @@ class _$AlertFilterImpl implements _AlertFilter {
     return EqualUnmodifiableSetView(value);
   }
 
-  final Set<AlertState>? _states;
+  final Set<AlertStatus>? _states;
   @override
-  Set<AlertState>? get states {
+  Set<AlertStatus>? get states {
     final value = _states;
     if (value == null) return null;
     if (_states is EqualUnmodifiableSetView) return _states;
@@ -1090,7 +1090,7 @@ class _$AlertFilterImpl implements _AlertFilter {
 abstract class _AlertFilter implements AlertFilter {
   const factory _AlertFilter(
       {final Set<AlertSeverity>? severities,
-      final Set<AlertState>? states,
+      final Set<AlertStatus>? states,
       final Set<Priority>? priorities,
       final Set<AlertSource>? sources,
       final String? cartId,
@@ -1104,7 +1104,7 @@ abstract class _AlertFilter implements AlertFilter {
   @override
   Set<AlertSeverity>? get severities;
   @override
-  Set<AlertState>? get states;
+  Set<AlertStatus>? get states;
   @override
   Set<Priority>? get priorities;
   @override

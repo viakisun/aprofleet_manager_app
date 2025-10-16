@@ -102,8 +102,8 @@ class AlertController extends StateNotifier<AlertState> {
     if (state.filter.unreadOnly == true) {
       filtered = filtered
           .where((alert) =>
-              alert.state == AlertState.triggered ||
-              alert.state == AlertState.notified)
+              alert.state == AlertStatus.triggered ||
+              alert.state == AlertStatus.notified)
           .toList();
     }
 
@@ -135,7 +135,7 @@ class AlertController extends StateNotifier<AlertState> {
       'warning':
           alerts.where((a) => a.severity == AlertSeverity.warning).length,
       'info': alerts.where((a) => a.severity == AlertSeverity.info).length,
-      'resolved': alerts.where((a) => a.state == AlertState.resolved).length,
+      'resolved': alerts.where((a) => a.state == AlertStatus.resolved).length,
     };
     return summary;
   }
@@ -144,8 +144,8 @@ class AlertController extends StateNotifier<AlertState> {
     final alerts = state.alerts.valueOrNull ?? [];
     return alerts
         .where((alert) =>
-            alert.state == AlertState.triggered ||
-            alert.state == AlertState.notified)
+            alert.state == AlertStatus.triggered ||
+            alert.state == AlertStatus.notified)
         .length;
   }
 
@@ -158,7 +158,7 @@ class AlertController extends StateNotifier<AlertState> {
       final updatedAlerts = currentAlerts
           .map((alert) => alert.id == alertId
               ? alert.copyWith(
-                  state: AlertState.acknowledged,
+                  state: AlertStatus.acknowledged,
                   acknowledgedAt: DateTime.now(),
                   acknowledgedBy: 'Current User',
                   updatedAt: DateTime.now(),
@@ -183,7 +183,7 @@ class AlertController extends StateNotifier<AlertState> {
       final updatedAlerts = currentAlerts
           .map((alert) => alert.id == alertId
               ? alert.copyWith(
-                  state: AlertState.escalated,
+                  state: AlertStatus.escalated,
                   escalationLevel: toLevel,
                   updatedAt: DateTime.now(),
                 )
@@ -205,7 +205,7 @@ class AlertController extends StateNotifier<AlertState> {
       final updatedAlerts = currentAlerts
           .map((alert) => alert.id == alertId
               ? alert.copyWith(
-                  state: AlertState.resolved,
+                  state: AlertStatus.resolved,
                   resolvedAt: DateTime.now(),
                   resolvedBy: 'Current User',
                   updatedAt: DateTime.now(),
@@ -226,10 +226,10 @@ class AlertController extends StateNotifier<AlertState> {
       // Update local state - mark all triggered/notified as acknowledged
       final currentAlerts = state.alerts.valueOrNull ?? [];
       final updatedAlerts = currentAlerts
-          .map((alert) => (alert.state == AlertState.triggered ||
-                  alert.state == AlertState.notified)
+          .map((alert) => (alert.state == AlertStatus.triggered ||
+                  alert.state == AlertStatus.notified)
               ? alert.copyWith(
-                  state: AlertState.acknowledged,
+                  state: AlertStatus.acknowledged,
                   acknowledgedAt: DateTime.now(),
                   acknowledgedBy: 'Current User',
                   updatedAt: DateTime.now(),
@@ -248,7 +248,7 @@ class AlertController extends StateNotifier<AlertState> {
       // Remove resolved alerts from local state
       final currentAlerts = state.alerts.valueOrNull ?? [];
       final updatedAlerts = currentAlerts
-          .where((alert) => alert.state != AlertState.resolved)
+          .where((alert) => alert.state != AlertStatus.resolved)
           .toList();
 
       state = state.copyWith(alerts: AsyncValue.data(updatedAlerts));

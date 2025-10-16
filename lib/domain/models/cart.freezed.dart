@@ -14,6 +14,720 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+Cart _$CartFromJson(Map<String, dynamic> json) {
+  return _Cart.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Cart {
+  String get id => throw _privateConstructorUsedError;
+  String get vin => throw _privateConstructorUsedError;
+  String get manufacturer => throw _privateConstructorUsedError;
+  String get model => throw _privateConstructorUsedError;
+  int get year => throw _privateConstructorUsedError;
+  String? get color => throw _privateConstructorUsedError;
+  String get batteryType => throw _privateConstructorUsedError;
+  int get voltage => throw _privateConstructorUsedError;
+  int get seating => throw _privateConstructorUsedError;
+  double? get maxSpeed => throw _privateConstructorUsedError;
+  String? get gpsTrackerId => throw _privateConstructorUsedError;
+  String? get telemetryDeviceId => throw _privateConstructorUsedError;
+  Map<String, String>? get componentSerials =>
+      throw _privateConstructorUsedError;
+  Map<String, String>? get imagePaths => throw _privateConstructorUsedError;
+  DateTime? get purchaseDate => throw _privateConstructorUsedError;
+  DateTime? get warrantyExpiry => throw _privateConstructorUsedError;
+  String? get insuranceNumber => throw _privateConstructorUsedError;
+  double? get odometer => throw _privateConstructorUsedError;
+  CartStatus get status => throw _privateConstructorUsedError;
+  LatLng get position => throw _privateConstructorUsedError;
+  double? get batteryLevel => throw _privateConstructorUsedError;
+  double? get speed => throw _privateConstructorUsedError;
+  DateTime? get lastSeen =>
+      throw _privateConstructorUsedError; // Additional fields for compatibility
+  double? get batteryPct => throw _privateConstructorUsedError;
+  double? get speedKph => throw _privateConstructorUsedError;
+  LatLng? get location => throw _privateConstructorUsedError;
+
+  /// Serializes this Cart to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of Cart
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $CartCopyWith<Cart> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CartCopyWith<$Res> {
+  factory $CartCopyWith(Cart value, $Res Function(Cart) then) =
+      _$CartCopyWithImpl<$Res, Cart>;
+  @useResult
+  $Res call(
+      {String id,
+      String vin,
+      String manufacturer,
+      String model,
+      int year,
+      String? color,
+      String batteryType,
+      int voltage,
+      int seating,
+      double? maxSpeed,
+      String? gpsTrackerId,
+      String? telemetryDeviceId,
+      Map<String, String>? componentSerials,
+      Map<String, String>? imagePaths,
+      DateTime? purchaseDate,
+      DateTime? warrantyExpiry,
+      String? insuranceNumber,
+      double? odometer,
+      CartStatus status,
+      LatLng position,
+      double? batteryLevel,
+      double? speed,
+      DateTime? lastSeen,
+      double? batteryPct,
+      double? speedKph,
+      LatLng? location});
+}
+
+/// @nodoc
+class _$CartCopyWithImpl<$Res, $Val extends Cart>
+    implements $CartCopyWith<$Res> {
+  _$CartCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Cart
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? vin = null,
+    Object? manufacturer = null,
+    Object? model = null,
+    Object? year = null,
+    Object? color = freezed,
+    Object? batteryType = null,
+    Object? voltage = null,
+    Object? seating = null,
+    Object? maxSpeed = freezed,
+    Object? gpsTrackerId = freezed,
+    Object? telemetryDeviceId = freezed,
+    Object? componentSerials = freezed,
+    Object? imagePaths = freezed,
+    Object? purchaseDate = freezed,
+    Object? warrantyExpiry = freezed,
+    Object? insuranceNumber = freezed,
+    Object? odometer = freezed,
+    Object? status = null,
+    Object? position = null,
+    Object? batteryLevel = freezed,
+    Object? speed = freezed,
+    Object? lastSeen = freezed,
+    Object? batteryPct = freezed,
+    Object? speedKph = freezed,
+    Object? location = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      vin: null == vin
+          ? _value.vin
+          : vin // ignore: cast_nullable_to_non_nullable
+              as String,
+      manufacturer: null == manufacturer
+          ? _value.manufacturer
+          : manufacturer // ignore: cast_nullable_to_non_nullable
+              as String,
+      model: null == model
+          ? _value.model
+          : model // ignore: cast_nullable_to_non_nullable
+              as String,
+      year: null == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as int,
+      color: freezed == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String?,
+      batteryType: null == batteryType
+          ? _value.batteryType
+          : batteryType // ignore: cast_nullable_to_non_nullable
+              as String,
+      voltage: null == voltage
+          ? _value.voltage
+          : voltage // ignore: cast_nullable_to_non_nullable
+              as int,
+      seating: null == seating
+          ? _value.seating
+          : seating // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxSpeed: freezed == maxSpeed
+          ? _value.maxSpeed
+          : maxSpeed // ignore: cast_nullable_to_non_nullable
+              as double?,
+      gpsTrackerId: freezed == gpsTrackerId
+          ? _value.gpsTrackerId
+          : gpsTrackerId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      telemetryDeviceId: freezed == telemetryDeviceId
+          ? _value.telemetryDeviceId
+          : telemetryDeviceId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      componentSerials: freezed == componentSerials
+          ? _value.componentSerials
+          : componentSerials // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
+      imagePaths: freezed == imagePaths
+          ? _value.imagePaths
+          : imagePaths // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
+      purchaseDate: freezed == purchaseDate
+          ? _value.purchaseDate
+          : purchaseDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      warrantyExpiry: freezed == warrantyExpiry
+          ? _value.warrantyExpiry
+          : warrantyExpiry // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      insuranceNumber: freezed == insuranceNumber
+          ? _value.insuranceNumber
+          : insuranceNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      odometer: freezed == odometer
+          ? _value.odometer
+          : odometer // ignore: cast_nullable_to_non_nullable
+              as double?,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as CartStatus,
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as LatLng,
+      batteryLevel: freezed == batteryLevel
+          ? _value.batteryLevel
+          : batteryLevel // ignore: cast_nullable_to_non_nullable
+              as double?,
+      speed: freezed == speed
+          ? _value.speed
+          : speed // ignore: cast_nullable_to_non_nullable
+              as double?,
+      lastSeen: freezed == lastSeen
+          ? _value.lastSeen
+          : lastSeen // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      batteryPct: freezed == batteryPct
+          ? _value.batteryPct
+          : batteryPct // ignore: cast_nullable_to_non_nullable
+              as double?,
+      speedKph: freezed == speedKph
+          ? _value.speedKph
+          : speedKph // ignore: cast_nullable_to_non_nullable
+              as double?,
+      location: freezed == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as LatLng?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$CartImplCopyWith<$Res> implements $CartCopyWith<$Res> {
+  factory _$$CartImplCopyWith(
+          _$CartImpl value, $Res Function(_$CartImpl) then) =
+      __$$CartImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String vin,
+      String manufacturer,
+      String model,
+      int year,
+      String? color,
+      String batteryType,
+      int voltage,
+      int seating,
+      double? maxSpeed,
+      String? gpsTrackerId,
+      String? telemetryDeviceId,
+      Map<String, String>? componentSerials,
+      Map<String, String>? imagePaths,
+      DateTime? purchaseDate,
+      DateTime? warrantyExpiry,
+      String? insuranceNumber,
+      double? odometer,
+      CartStatus status,
+      LatLng position,
+      double? batteryLevel,
+      double? speed,
+      DateTime? lastSeen,
+      double? batteryPct,
+      double? speedKph,
+      LatLng? location});
+}
+
+/// @nodoc
+class __$$CartImplCopyWithImpl<$Res>
+    extends _$CartCopyWithImpl<$Res, _$CartImpl>
+    implements _$$CartImplCopyWith<$Res> {
+  __$$CartImplCopyWithImpl(_$CartImpl _value, $Res Function(_$CartImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Cart
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? vin = null,
+    Object? manufacturer = null,
+    Object? model = null,
+    Object? year = null,
+    Object? color = freezed,
+    Object? batteryType = null,
+    Object? voltage = null,
+    Object? seating = null,
+    Object? maxSpeed = freezed,
+    Object? gpsTrackerId = freezed,
+    Object? telemetryDeviceId = freezed,
+    Object? componentSerials = freezed,
+    Object? imagePaths = freezed,
+    Object? purchaseDate = freezed,
+    Object? warrantyExpiry = freezed,
+    Object? insuranceNumber = freezed,
+    Object? odometer = freezed,
+    Object? status = null,
+    Object? position = null,
+    Object? batteryLevel = freezed,
+    Object? speed = freezed,
+    Object? lastSeen = freezed,
+    Object? batteryPct = freezed,
+    Object? speedKph = freezed,
+    Object? location = freezed,
+  }) {
+    return _then(_$CartImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      vin: null == vin
+          ? _value.vin
+          : vin // ignore: cast_nullable_to_non_nullable
+              as String,
+      manufacturer: null == manufacturer
+          ? _value.manufacturer
+          : manufacturer // ignore: cast_nullable_to_non_nullable
+              as String,
+      model: null == model
+          ? _value.model
+          : model // ignore: cast_nullable_to_non_nullable
+              as String,
+      year: null == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as int,
+      color: freezed == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String?,
+      batteryType: null == batteryType
+          ? _value.batteryType
+          : batteryType // ignore: cast_nullable_to_non_nullable
+              as String,
+      voltage: null == voltage
+          ? _value.voltage
+          : voltage // ignore: cast_nullable_to_non_nullable
+              as int,
+      seating: null == seating
+          ? _value.seating
+          : seating // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxSpeed: freezed == maxSpeed
+          ? _value.maxSpeed
+          : maxSpeed // ignore: cast_nullable_to_non_nullable
+              as double?,
+      gpsTrackerId: freezed == gpsTrackerId
+          ? _value.gpsTrackerId
+          : gpsTrackerId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      telemetryDeviceId: freezed == telemetryDeviceId
+          ? _value.telemetryDeviceId
+          : telemetryDeviceId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      componentSerials: freezed == componentSerials
+          ? _value._componentSerials
+          : componentSerials // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
+      imagePaths: freezed == imagePaths
+          ? _value._imagePaths
+          : imagePaths // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
+      purchaseDate: freezed == purchaseDate
+          ? _value.purchaseDate
+          : purchaseDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      warrantyExpiry: freezed == warrantyExpiry
+          ? _value.warrantyExpiry
+          : warrantyExpiry // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      insuranceNumber: freezed == insuranceNumber
+          ? _value.insuranceNumber
+          : insuranceNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      odometer: freezed == odometer
+          ? _value.odometer
+          : odometer // ignore: cast_nullable_to_non_nullable
+              as double?,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as CartStatus,
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as LatLng,
+      batteryLevel: freezed == batteryLevel
+          ? _value.batteryLevel
+          : batteryLevel // ignore: cast_nullable_to_non_nullable
+              as double?,
+      speed: freezed == speed
+          ? _value.speed
+          : speed // ignore: cast_nullable_to_non_nullable
+              as double?,
+      lastSeen: freezed == lastSeen
+          ? _value.lastSeen
+          : lastSeen // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      batteryPct: freezed == batteryPct
+          ? _value.batteryPct
+          : batteryPct // ignore: cast_nullable_to_non_nullable
+              as double?,
+      speedKph: freezed == speedKph
+          ? _value.speedKph
+          : speedKph // ignore: cast_nullable_to_non_nullable
+              as double?,
+      location: freezed == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as LatLng?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CartImpl implements _Cart {
+  const _$CartImpl(
+      {required this.id,
+      required this.vin,
+      required this.manufacturer,
+      required this.model,
+      required this.year,
+      this.color,
+      required this.batteryType,
+      required this.voltage,
+      required this.seating,
+      this.maxSpeed,
+      this.gpsTrackerId,
+      this.telemetryDeviceId,
+      final Map<String, String>? componentSerials,
+      final Map<String, String>? imagePaths,
+      this.purchaseDate,
+      this.warrantyExpiry,
+      this.insuranceNumber,
+      this.odometer,
+      required this.status,
+      required this.position,
+      this.batteryLevel,
+      this.speed,
+      this.lastSeen,
+      this.batteryPct,
+      this.speedKph,
+      this.location})
+      : _componentSerials = componentSerials,
+        _imagePaths = imagePaths;
+
+  factory _$CartImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CartImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String vin;
+  @override
+  final String manufacturer;
+  @override
+  final String model;
+  @override
+  final int year;
+  @override
+  final String? color;
+  @override
+  final String batteryType;
+  @override
+  final int voltage;
+  @override
+  final int seating;
+  @override
+  final double? maxSpeed;
+  @override
+  final String? gpsTrackerId;
+  @override
+  final String? telemetryDeviceId;
+  final Map<String, String>? _componentSerials;
+  @override
+  Map<String, String>? get componentSerials {
+    final value = _componentSerials;
+    if (value == null) return null;
+    if (_componentSerials is EqualUnmodifiableMapView) return _componentSerials;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
+  final Map<String, String>? _imagePaths;
+  @override
+  Map<String, String>? get imagePaths {
+    final value = _imagePaths;
+    if (value == null) return null;
+    if (_imagePaths is EqualUnmodifiableMapView) return _imagePaths;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
+  @override
+  final DateTime? purchaseDate;
+  @override
+  final DateTime? warrantyExpiry;
+  @override
+  final String? insuranceNumber;
+  @override
+  final double? odometer;
+  @override
+  final CartStatus status;
+  @override
+  final LatLng position;
+  @override
+  final double? batteryLevel;
+  @override
+  final double? speed;
+  @override
+  final DateTime? lastSeen;
+// Additional fields for compatibility
+  @override
+  final double? batteryPct;
+  @override
+  final double? speedKph;
+  @override
+  final LatLng? location;
+
+  @override
+  String toString() {
+    return 'Cart(id: $id, vin: $vin, manufacturer: $manufacturer, model: $model, year: $year, color: $color, batteryType: $batteryType, voltage: $voltage, seating: $seating, maxSpeed: $maxSpeed, gpsTrackerId: $gpsTrackerId, telemetryDeviceId: $telemetryDeviceId, componentSerials: $componentSerials, imagePaths: $imagePaths, purchaseDate: $purchaseDate, warrantyExpiry: $warrantyExpiry, insuranceNumber: $insuranceNumber, odometer: $odometer, status: $status, position: $position, batteryLevel: $batteryLevel, speed: $speed, lastSeen: $lastSeen, batteryPct: $batteryPct, speedKph: $speedKph, location: $location)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CartImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.vin, vin) || other.vin == vin) &&
+            (identical(other.manufacturer, manufacturer) ||
+                other.manufacturer == manufacturer) &&
+            (identical(other.model, model) || other.model == model) &&
+            (identical(other.year, year) || other.year == year) &&
+            (identical(other.color, color) || other.color == color) &&
+            (identical(other.batteryType, batteryType) ||
+                other.batteryType == batteryType) &&
+            (identical(other.voltage, voltage) || other.voltage == voltage) &&
+            (identical(other.seating, seating) || other.seating == seating) &&
+            (identical(other.maxSpeed, maxSpeed) ||
+                other.maxSpeed == maxSpeed) &&
+            (identical(other.gpsTrackerId, gpsTrackerId) ||
+                other.gpsTrackerId == gpsTrackerId) &&
+            (identical(other.telemetryDeviceId, telemetryDeviceId) ||
+                other.telemetryDeviceId == telemetryDeviceId) &&
+            const DeepCollectionEquality()
+                .equals(other._componentSerials, _componentSerials) &&
+            const DeepCollectionEquality()
+                .equals(other._imagePaths, _imagePaths) &&
+            (identical(other.purchaseDate, purchaseDate) ||
+                other.purchaseDate == purchaseDate) &&
+            (identical(other.warrantyExpiry, warrantyExpiry) ||
+                other.warrantyExpiry == warrantyExpiry) &&
+            (identical(other.insuranceNumber, insuranceNumber) ||
+                other.insuranceNumber == insuranceNumber) &&
+            (identical(other.odometer, odometer) ||
+                other.odometer == odometer) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.position, position) ||
+                other.position == position) &&
+            (identical(other.batteryLevel, batteryLevel) ||
+                other.batteryLevel == batteryLevel) &&
+            (identical(other.speed, speed) || other.speed == speed) &&
+            (identical(other.lastSeen, lastSeen) ||
+                other.lastSeen == lastSeen) &&
+            (identical(other.batteryPct, batteryPct) ||
+                other.batteryPct == batteryPct) &&
+            (identical(other.speedKph, speedKph) ||
+                other.speedKph == speedKph) &&
+            (identical(other.location, location) ||
+                other.location == location));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        vin,
+        manufacturer,
+        model,
+        year,
+        color,
+        batteryType,
+        voltage,
+        seating,
+        maxSpeed,
+        gpsTrackerId,
+        telemetryDeviceId,
+        const DeepCollectionEquality().hash(_componentSerials),
+        const DeepCollectionEquality().hash(_imagePaths),
+        purchaseDate,
+        warrantyExpiry,
+        insuranceNumber,
+        odometer,
+        status,
+        position,
+        batteryLevel,
+        speed,
+        lastSeen,
+        batteryPct,
+        speedKph,
+        location
+      ]);
+
+  /// Create a copy of Cart
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CartImplCopyWith<_$CartImpl> get copyWith =>
+      __$$CartImplCopyWithImpl<_$CartImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CartImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Cart implements Cart {
+  const factory _Cart(
+      {required final String id,
+      required final String vin,
+      required final String manufacturer,
+      required final String model,
+      required final int year,
+      final String? color,
+      required final String batteryType,
+      required final int voltage,
+      required final int seating,
+      final double? maxSpeed,
+      final String? gpsTrackerId,
+      final String? telemetryDeviceId,
+      final Map<String, String>? componentSerials,
+      final Map<String, String>? imagePaths,
+      final DateTime? purchaseDate,
+      final DateTime? warrantyExpiry,
+      final String? insuranceNumber,
+      final double? odometer,
+      required final CartStatus status,
+      required final LatLng position,
+      final double? batteryLevel,
+      final double? speed,
+      final DateTime? lastSeen,
+      final double? batteryPct,
+      final double? speedKph,
+      final LatLng? location}) = _$CartImpl;
+
+  factory _Cart.fromJson(Map<String, dynamic> json) = _$CartImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get vin;
+  @override
+  String get manufacturer;
+  @override
+  String get model;
+  @override
+  int get year;
+  @override
+  String? get color;
+  @override
+  String get batteryType;
+  @override
+  int get voltage;
+  @override
+  int get seating;
+  @override
+  double? get maxSpeed;
+  @override
+  String? get gpsTrackerId;
+  @override
+  String? get telemetryDeviceId;
+  @override
+  Map<String, String>? get componentSerials;
+  @override
+  Map<String, String>? get imagePaths;
+  @override
+  DateTime? get purchaseDate;
+  @override
+  DateTime? get warrantyExpiry;
+  @override
+  String? get insuranceNumber;
+  @override
+  double? get odometer;
+  @override
+  CartStatus get status;
+  @override
+  LatLng get position;
+  @override
+  double? get batteryLevel;
+  @override
+  double? get speed;
+  @override
+  DateTime? get lastSeen; // Additional fields for compatibility
+  @override
+  double? get batteryPct;
+  @override
+  double? get speedKph;
+  @override
+  LatLng? get location;
+
+  /// Create a copy of Cart
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CartImplCopyWith<_$CartImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 CartRegistration _$CartRegistrationFromJson(Map<String, dynamic> json) {
   return _CartRegistration.fromJson(json);
 }

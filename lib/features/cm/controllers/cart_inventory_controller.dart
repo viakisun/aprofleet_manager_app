@@ -64,7 +64,7 @@ class CartInventoryController extends StateNotifier<CartInventoryState> {
       filteredCarts = filteredCarts.where((cart) {
         return cart.id.toLowerCase().contains(query) ||
             cart.model.toLowerCase().contains(query) ||
-            (cart.location?.toLowerCase().contains(query) ?? false);
+            (cart.location?.toString().toLowerCase().contains(query) ?? false);
       }).toList();
     }
 
@@ -81,7 +81,7 @@ class CartInventoryController extends StateNotifier<CartInventoryState> {
         final battery = cart.batteryPct;
         final minBattery = state.minBatteryFilter ?? 0.0;
         final maxBattery = state.maxBatteryFilter ?? 100.0;
-        return battery >= minBattery && battery <= maxBattery;
+        return (battery ?? 0) >= minBattery && (battery ?? 0) <= maxBattery;
       }).toList();
     }
 

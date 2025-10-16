@@ -34,6 +34,59 @@ final mockWsHubProvider = AutoDisposeProvider<MockWsHub>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef MockWsHubRef = AutoDisposeProviderRef<MockWsHub>;
+String _$cartRepositoryHash() => r'52d540c105b977fb353a8ece668a0ef1b6143832';
+
+/// See also [cartRepository].
+@ProviderFor(cartRepository)
+final cartRepositoryProvider = AutoDisposeProvider<CartRepository>.internal(
+  cartRepository,
+  name: r'cartRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$cartRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef CartRepositoryRef = AutoDisposeProviderRef<CartRepository>;
+String _$workOrderRepositoryHash() =>
+    r'5cfb6ef5c697af7fe30fd093d2f4cb202a7f02be';
+
+/// See also [workOrderRepository].
+@ProviderFor(workOrderRepository)
+final workOrderRepositoryProvider =
+    AutoDisposeProvider<WorkOrderRepository>.internal(
+  workOrderRepository,
+  name: r'workOrderRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$workOrderRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef WorkOrderRepositoryRef = AutoDisposeProviderRef<WorkOrderRepository>;
+String _$alertRepositoryHash() => r'9b81b627c4530207812e9e777617ed05dc1aaf04';
+
+/// See also [alertRepository].
+@ProviderFor(alertRepository)
+final alertRepositoryProvider = AutoDisposeProvider<AlertRepository>.internal(
+  alertRepository,
+  name: r'alertRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$alertRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef AlertRepositoryRef = AutoDisposeProviderRef<AlertRepository>;
 String _$cartsHash() => r'c6df05031cf51e1a1648d3b0d76cda3d03124da6';
 
 /// See also [carts].

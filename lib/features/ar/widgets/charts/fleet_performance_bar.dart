@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
+import 'package:fl_chart/fl_chart.dart';
+import '../../../../domain/models/kpi.dart';
 
 class FleetPerformanceBar extends StatelessWidget {
   final List<Map<String, dynamic>> data;

@@ -27,8 +27,8 @@ class AlertCard extends StatelessWidget {
         AppConstants.alertColors[alert.severity] ?? Colors.grey;
     final priorityColor =
         AppConstants.priorityColors[alert.priority] ?? Colors.grey;
-    final isUnread = alert.state == AlertState.triggered ||
-        alert.state == AlertState.notified;
+    final isUnread = alert.state == AlertStatus.triggered ||
+        alert.state == AlertStatus.notified;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),

@@ -3,6 +3,24 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'kpi.freezed.dart';
 part 'kpi.g.dart';
 
+enum AnalyticsRange {
+  @JsonValue('week')
+  week,
+  @JsonValue('month')
+  month,
+}
+
+extension AnalyticsRangeExtension on AnalyticsRange {
+  String get displayName {
+    switch (this) {
+      case AnalyticsRange.week:
+        return 'Week';
+      case AnalyticsRange.month:
+        return 'Month';
+    }
+  }
+}
+
 @freezed
 class Kpi with _$Kpi {
   const factory Kpi({

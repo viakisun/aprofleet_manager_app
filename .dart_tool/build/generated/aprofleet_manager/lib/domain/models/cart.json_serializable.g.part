@@ -2,6 +2,86 @@
 // JsonSerializableGenerator
 // **************************************************************************
 
+_$CartImpl _$$CartImplFromJson(Map<String, dynamic> json) => _$CartImpl(
+      id: json['id'] as String,
+      vin: json['vin'] as String,
+      manufacturer: json['manufacturer'] as String,
+      model: json['model'] as String,
+      year: (json['year'] as num).toInt(),
+      color: json['color'] as String?,
+      batteryType: json['batteryType'] as String,
+      voltage: (json['voltage'] as num).toInt(),
+      seating: (json['seating'] as num).toInt(),
+      maxSpeed: (json['maxSpeed'] as num?)?.toDouble(),
+      gpsTrackerId: json['gpsTrackerId'] as String?,
+      telemetryDeviceId: json['telemetryDeviceId'] as String?,
+      componentSerials:
+          (json['componentSerials'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      imagePaths: (json['imagePaths'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      purchaseDate: json['purchaseDate'] == null
+          ? null
+          : DateTime.parse(json['purchaseDate'] as String),
+      warrantyExpiry: json['warrantyExpiry'] == null
+          ? null
+          : DateTime.parse(json['warrantyExpiry'] as String),
+      insuranceNumber: json['insuranceNumber'] as String?,
+      odometer: (json['odometer'] as num?)?.toDouble(),
+      status: $enumDecode(_$CartStatusEnumMap, json['status']),
+      position: LatLng.fromJson(json['position'] as Map<String, dynamic>),
+      batteryLevel: (json['batteryLevel'] as num?)?.toDouble(),
+      speed: (json['speed'] as num?)?.toDouble(),
+      lastSeen: json['lastSeen'] == null
+          ? null
+          : DateTime.parse(json['lastSeen'] as String),
+      batteryPct: (json['batteryPct'] as num?)?.toDouble(),
+      speedKph: (json['speedKph'] as num?)?.toDouble(),
+      location: json['location'] == null
+          ? null
+          : LatLng.fromJson(json['location'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$CartImplToJson(_$CartImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'vin': instance.vin,
+      'manufacturer': instance.manufacturer,
+      'model': instance.model,
+      'year': instance.year,
+      'color': instance.color,
+      'batteryType': instance.batteryType,
+      'voltage': instance.voltage,
+      'seating': instance.seating,
+      'maxSpeed': instance.maxSpeed,
+      'gpsTrackerId': instance.gpsTrackerId,
+      'telemetryDeviceId': instance.telemetryDeviceId,
+      'componentSerials': instance.componentSerials,
+      'imagePaths': instance.imagePaths,
+      'purchaseDate': instance.purchaseDate?.toIso8601String(),
+      'warrantyExpiry': instance.warrantyExpiry?.toIso8601String(),
+      'insuranceNumber': instance.insuranceNumber,
+      'odometer': instance.odometer,
+      'status': _$CartStatusEnumMap[instance.status]!,
+      'position': instance.position,
+      'batteryLevel': instance.batteryLevel,
+      'speed': instance.speed,
+      'lastSeen': instance.lastSeen?.toIso8601String(),
+      'batteryPct': instance.batteryPct,
+      'speedKph': instance.speedKph,
+      'location': instance.location,
+    };
+
+const _$CartStatusEnumMap = {
+  CartStatus.active: 'active',
+  CartStatus.idle: 'idle',
+  CartStatus.charging: 'charging',
+  CartStatus.maintenance: 'maintenance',
+  CartStatus.offline: 'offline',
+};
+
 _$CartRegistrationImpl _$$CartRegistrationImplFromJson(
         Map<String, dynamic> json) =>
     _$CartRegistrationImpl(
@@ -77,11 +157,3 @@ Map<String, dynamic> _$$CartFilterImplToJson(_$CartFilterImpl instance) =>
       'maxBattery': instance.maxBattery,
       'searchQuery': instance.searchQuery,
     };
-
-const _$CartStatusEnumMap = {
-  CartStatus.active: 'active',
-  CartStatus.idle: 'idle',
-  CartStatus.charging: 'charging',
-  CartStatus.maintenance: 'maintenance',
-  CartStatus.offline: 'offline',
-};

@@ -5,6 +5,41 @@ part 'cart.freezed.dart';
 part 'cart.g.dart';
 
 @freezed
+class Cart with _$Cart {
+  const factory Cart({
+    required String id,
+    required String vin,
+    required String manufacturer,
+    required String model,
+    required int year,
+    String? color,
+    required String batteryType,
+    required int voltage,
+    required int seating,
+    double? maxSpeed,
+    String? gpsTrackerId,
+    String? telemetryDeviceId,
+    Map<String, String>? componentSerials,
+    Map<String, String>? imagePaths,
+    DateTime? purchaseDate,
+    DateTime? warrantyExpiry,
+    String? insuranceNumber,
+    double? odometer,
+    required CartStatus status,
+    required LatLng position,
+    double? batteryLevel,
+    double? speed,
+    DateTime? lastSeen,
+    // Additional fields for compatibility
+    double? batteryPct,
+    double? speedKph,
+    LatLng? location,
+  }) = _Cart;
+
+  factory Cart.fromJson(Map<String, dynamic> json) => _$CartFromJson(json);
+}
+
+@freezed
 class CartRegistration with _$CartRegistration {
   const factory CartRegistration({
     required String vin,

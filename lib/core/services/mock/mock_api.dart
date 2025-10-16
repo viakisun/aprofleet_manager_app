@@ -3,12 +3,12 @@ import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:latlong2/latlong.dart';
 
-import '../../domain/models/cart.dart';
-import '../../domain/models/work_order.dart';
-import '../../domain/models/alert.dart';
-import '../../domain/models/telemetry.dart';
-import '../../domain/models/kpi.dart';
-import '../../domain/models/user_profile.dart';
+import '../../../domain/models/cart.dart';
+import '../../../domain/models/work_order.dart';
+import '../../../domain/models/alert.dart';
+import '../../../domain/models/telemetry.dart';
+import '../../../domain/models/kpi.dart';
+import '../../../domain/models/user_profile.dart';
 import '../../constants/app_constants.dart';
 
 class MockApi {
@@ -134,12 +134,8 @@ class MockApi {
       mttr: 18.0 + Random().nextDouble() * 10, // 18-28 minutes
       utilization: 800.0 + Random().nextDouble() * 200, // 800-1000 km
       dailyDistance: 15.0 + Random().nextDouble() * 10, // 15-25 km per cart
-      trend: KpiTrend(
-        availabilityChange: Random().nextDouble() * 4 - 2, // -2 to +2
-        mttrChange: Random().nextDouble() * 6 - 3, // -3 to +3
-        utilizationChange: Random().nextDouble() * 40 - 20, // -20 to +20
-        distanceChange: Random().nextDouble() * 2 - 1, // -1 to +1
-      ),
+      trend: KpiTrendDirection
+          .values[Random().nextInt(KpiTrendDirection.values.length)],
       lastUpdated: DateTime.now(),
     );
   }

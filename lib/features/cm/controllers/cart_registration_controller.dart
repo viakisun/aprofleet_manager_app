@@ -14,10 +14,14 @@ class CartRegistrationController extends StateNotifier<CartRegistrationState> {
   void generateCartId() {
     // This would typically get the next available ID from the repository
     // For now, we'll generate a simple sequential ID
-    final now = DateTime.now();
-    final cartId =
-        formatCartId(1, now.year); // This would be the next sequential number
+    final cartId = formatCartId();
     state = state.copyWith(cartId: cartId);
+  }
+
+  String formatCartId() {
+    final now = DateTime.now();
+    return CodeFormatters.formatCartId(
+        1); // This would be the next sequential number
   }
 
   void setVin(String vin) {

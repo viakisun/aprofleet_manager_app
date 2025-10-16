@@ -24,6 +24,7 @@ mixin _$WoPart {
   String get name => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError;
   String? get notes => throw _privateConstructorUsedError;
+  String? get serialNumber => throw _privateConstructorUsedError;
 
   /// Serializes this WoPart to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +40,12 @@ abstract class $WoPartCopyWith<$Res> {
   factory $WoPartCopyWith(WoPart value, $Res Function(WoPart) then) =
       _$WoPartCopyWithImpl<$Res, WoPart>;
   @useResult
-  $Res call({String id, String name, int quantity, String? notes});
+  $Res call(
+      {String id,
+      String name,
+      int quantity,
+      String? notes,
+      String? serialNumber});
 }
 
 /// @nodoc
@@ -61,6 +67,7 @@ class _$WoPartCopyWithImpl<$Res, $Val extends WoPart>
     Object? name = null,
     Object? quantity = null,
     Object? notes = freezed,
+    Object? serialNumber = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -79,6 +86,10 @@ class _$WoPartCopyWithImpl<$Res, $Val extends WoPart>
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String?,
+      serialNumber: freezed == serialNumber
+          ? _value.serialNumber
+          : serialNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -90,7 +101,12 @@ abstract class _$$WoPartImplCopyWith<$Res> implements $WoPartCopyWith<$Res> {
       __$$WoPartImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, int quantity, String? notes});
+  $Res call(
+      {String id,
+      String name,
+      int quantity,
+      String? notes,
+      String? serialNumber});
 }
 
 /// @nodoc
@@ -110,6 +126,7 @@ class __$$WoPartImplCopyWithImpl<$Res>
     Object? name = null,
     Object? quantity = null,
     Object? notes = freezed,
+    Object? serialNumber = freezed,
   }) {
     return _then(_$WoPartImpl(
       id: null == id
@@ -128,6 +145,10 @@ class __$$WoPartImplCopyWithImpl<$Res>
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String?,
+      serialNumber: freezed == serialNumber
+          ? _value.serialNumber
+          : serialNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -139,7 +160,8 @@ class _$WoPartImpl implements _WoPart {
       {required this.id,
       required this.name,
       required this.quantity,
-      this.notes});
+      this.notes,
+      this.serialNumber});
 
   factory _$WoPartImpl.fromJson(Map<String, dynamic> json) =>
       _$$WoPartImplFromJson(json);
@@ -152,10 +174,12 @@ class _$WoPartImpl implements _WoPart {
   final int quantity;
   @override
   final String? notes;
+  @override
+  final String? serialNumber;
 
   @override
   String toString() {
-    return 'WoPart(id: $id, name: $name, quantity: $quantity, notes: $notes)';
+    return 'WoPart(id: $id, name: $name, quantity: $quantity, notes: $notes, serialNumber: $serialNumber)';
   }
 
   @override
@@ -167,12 +191,15 @@ class _$WoPartImpl implements _WoPart {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
-            (identical(other.notes, notes) || other.notes == notes));
+            (identical(other.notes, notes) || other.notes == notes) &&
+            (identical(other.serialNumber, serialNumber) ||
+                other.serialNumber == serialNumber));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, quantity, notes);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, quantity, notes, serialNumber);
 
   /// Create a copy of WoPart
   /// with the given fields replaced by the non-null parameter values.
@@ -195,7 +222,8 @@ abstract class _WoPart implements WoPart {
       {required final String id,
       required final String name,
       required final int quantity,
-      final String? notes}) = _$WoPartImpl;
+      final String? notes,
+      final String? serialNumber}) = _$WoPartImpl;
 
   factory _WoPart.fromJson(Map<String, dynamic> json) = _$WoPartImpl.fromJson;
 
@@ -207,6 +235,8 @@ abstract class _WoPart implements WoPart {
   int get quantity;
   @override
   String? get notes;
+  @override
+  String? get serialNumber;
 
   /// Create a copy of WoPart
   /// with the given fields replaced by the non-null parameter values.
@@ -235,6 +265,7 @@ mixin _$WorkOrder {
   List<WoPart>? get parts => throw _privateConstructorUsedError;
   String? get location => throw _privateConstructorUsedError;
   String? get notes => throw _privateConstructorUsedError;
+  Map<String, bool>? get checklist => throw _privateConstructorUsedError;
 
   /// Serializes this WorkOrder to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -264,7 +295,8 @@ abstract class $WorkOrderCopyWith<$Res> {
       String? technician,
       List<WoPart>? parts,
       String? location,
-      String? notes});
+      String? notes,
+      Map<String, bool>? checklist});
 }
 
 /// @nodoc
@@ -295,6 +327,7 @@ class _$WorkOrderCopyWithImpl<$Res, $Val extends WorkOrder>
     Object? parts = freezed,
     Object? location = freezed,
     Object? notes = freezed,
+    Object? checklist = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -349,6 +382,10 @@ class _$WorkOrderCopyWithImpl<$Res, $Val extends WorkOrder>
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String?,
+      checklist: freezed == checklist
+          ? _value.checklist
+          : checklist // ignore: cast_nullable_to_non_nullable
+              as Map<String, bool>?,
     ) as $Val);
   }
 }
@@ -374,7 +411,8 @@ abstract class _$$WorkOrderImplCopyWith<$Res>
       String? technician,
       List<WoPart>? parts,
       String? location,
-      String? notes});
+      String? notes,
+      Map<String, bool>? checklist});
 }
 
 /// @nodoc
@@ -403,6 +441,7 @@ class __$$WorkOrderImplCopyWithImpl<$Res>
     Object? parts = freezed,
     Object? location = freezed,
     Object? notes = freezed,
+    Object? checklist = freezed,
   }) {
     return _then(_$WorkOrderImpl(
       id: null == id
@@ -457,6 +496,10 @@ class __$$WorkOrderImplCopyWithImpl<$Res>
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String?,
+      checklist: freezed == checklist
+          ? _value._checklist
+          : checklist // ignore: cast_nullable_to_non_nullable
+              as Map<String, bool>?,
     ));
   }
 }
@@ -477,8 +520,10 @@ class _$WorkOrderImpl implements _WorkOrder {
       this.technician,
       final List<WoPart>? parts,
       this.location,
-      this.notes})
-      : _parts = parts;
+      this.notes,
+      final Map<String, bool>? checklist})
+      : _parts = parts,
+        _checklist = checklist;
 
   factory _$WorkOrderImpl.fromJson(Map<String, dynamic> json) =>
       _$$WorkOrderImplFromJson(json);
@@ -517,10 +562,19 @@ class _$WorkOrderImpl implements _WorkOrder {
   final String? location;
   @override
   final String? notes;
+  final Map<String, bool>? _checklist;
+  @override
+  Map<String, bool>? get checklist {
+    final value = _checklist;
+    if (value == null) return null;
+    if (_checklist is EqualUnmodifiableMapView) return _checklist;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
 
   @override
   String toString() {
-    return 'WorkOrder(id: $id, type: $type, priority: $priority, cartId: $cartId, description: $description, status: $status, createdAt: $createdAt, startedAt: $startedAt, completedAt: $completedAt, technician: $technician, parts: $parts, location: $location, notes: $notes)';
+    return 'WorkOrder(id: $id, type: $type, priority: $priority, cartId: $cartId, description: $description, status: $status, createdAt: $createdAt, startedAt: $startedAt, completedAt: $completedAt, technician: $technician, parts: $parts, location: $location, notes: $notes, checklist: $checklist)';
   }
 
   @override
@@ -547,7 +601,9 @@ class _$WorkOrderImpl implements _WorkOrder {
             const DeepCollectionEquality().equals(other._parts, _parts) &&
             (identical(other.location, location) ||
                 other.location == location) &&
-            (identical(other.notes, notes) || other.notes == notes));
+            (identical(other.notes, notes) || other.notes == notes) &&
+            const DeepCollectionEquality()
+                .equals(other._checklist, _checklist));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -566,7 +622,8 @@ class _$WorkOrderImpl implements _WorkOrder {
       technician,
       const DeepCollectionEquality().hash(_parts),
       location,
-      notes);
+      notes,
+      const DeepCollectionEquality().hash(_checklist));
 
   /// Create a copy of WorkOrder
   /// with the given fields replaced by the non-null parameter values.
@@ -598,7 +655,8 @@ abstract class _WorkOrder implements WorkOrder {
       final String? technician,
       final List<WoPart>? parts,
       final String? location,
-      final String? notes}) = _$WorkOrderImpl;
+      final String? notes,
+      final Map<String, bool>? checklist}) = _$WorkOrderImpl;
 
   factory _WorkOrder.fromJson(Map<String, dynamic> json) =
       _$WorkOrderImpl.fromJson;
@@ -629,6 +687,8 @@ abstract class _WorkOrder implements WorkOrder {
   String? get location;
   @override
   String? get notes;
+  @override
+  Map<String, bool>? get checklist;
 
   /// Create a copy of WorkOrder
   /// with the given fields replaced by the non-null parameter values.

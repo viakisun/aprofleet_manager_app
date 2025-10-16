@@ -7,7 +7,7 @@ _$AlertImpl _$$AlertImplFromJson(Map<String, dynamic> json) => _$AlertImpl(
       code: json['code'] as String,
       severity: $enumDecode(_$AlertSeverityEnumMap, json['severity']),
       priority: $enumDecode(_$PriorityEnumMap, json['priority']),
-      state: $enumDecode(_$AlertStateEnumMap, json['state']),
+      state: $enumDecode(_$AlertStatusEnumMap, json['state']),
       title: json['title'] as String,
       message: json['message'] as String,
       cartId: json['cartId'] as String?,
@@ -35,7 +35,7 @@ Map<String, dynamic> _$$AlertImplToJson(_$AlertImpl instance) =>
       'code': instance.code,
       'severity': _$AlertSeverityEnumMap[instance.severity]!,
       'priority': _$PriorityEnumMap[instance.priority]!,
-      'state': _$AlertStateEnumMap[instance.state]!,
+      'state': _$AlertStatusEnumMap[instance.state]!,
       'title': instance.title,
       'message': instance.message,
       'cartId': instance.cartId,
@@ -65,12 +65,12 @@ const _$PriorityEnumMap = {
   Priority.p4: 'p4',
 };
 
-const _$AlertStateEnumMap = {
-  AlertState.triggered: 'triggered',
-  AlertState.notified: 'notified',
-  AlertState.acknowledged: 'acknowledged',
-  AlertState.escalated: 'escalated',
-  AlertState.resolved: 'resolved',
+const _$AlertStatusEnumMap = {
+  AlertStatus.triggered: 'triggered',
+  AlertStatus.notified: 'notified',
+  AlertStatus.acknowledged: 'acknowledged',
+  AlertStatus.escalated: 'escalated',
+  AlertStatus.resolved: 'resolved',
 };
 
 _$AlertActionImpl _$$AlertActionImplFromJson(Map<String, dynamic> json) =>
@@ -97,7 +97,7 @@ _$AlertFilterImpl _$$AlertFilterImplFromJson(Map<String, dynamic> json) =>
           ?.map((e) => $enumDecode(_$AlertSeverityEnumMap, e))
           .toSet(),
       states: (json['states'] as List<dynamic>?)
-          ?.map((e) => $enumDecode(_$AlertStateEnumMap, e))
+          ?.map((e) => $enumDecode(_$AlertStatusEnumMap, e))
           .toSet(),
       priorities: (json['priorities'] as List<dynamic>?)
           ?.map((e) => $enumDecode(_$PriorityEnumMap, e))
@@ -119,7 +119,7 @@ Map<String, dynamic> _$$AlertFilterImplToJson(_$AlertFilterImpl instance) =>
     <String, dynamic>{
       'severities':
           instance.severities?.map((e) => _$AlertSeverityEnumMap[e]!).toList(),
-      'states': instance.states?.map((e) => _$AlertStateEnumMap[e]!).toList(),
+      'states': instance.states?.map((e) => _$AlertStatusEnumMap[e]!).toList(),
       'priorities':
           instance.priorities?.map((e) => _$PriorityEnumMap[e]!).toList(),
       'sources':

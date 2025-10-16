@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 import '../../../core/constants/app_constants.dart';
+import '../../../domain/models/kpi.dart';
 
 class KpiCard extends StatelessWidget {
   final String title;

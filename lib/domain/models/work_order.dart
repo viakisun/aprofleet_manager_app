@@ -27,6 +27,19 @@ extension PriorityExtension on Priority {
         return 'P4 (Low)';
     }
   }
+
+  String get fullName {
+    switch (this) {
+      case Priority.p1:
+        return 'P1 - Critical';
+      case Priority.p2:
+        return 'P2 - High';
+      case Priority.p3:
+        return 'P3 - Normal';
+      case Priority.p4:
+        return 'P4 - Low';
+    }
+  }
 }
 
 @freezed
@@ -36,6 +49,7 @@ class WoPart with _$WoPart {
     required String name,
     required int quantity,
     String? notes,
+    String? serialNumber,
   }) = _WoPart;
 
   factory WoPart.fromJson(Map<String, dynamic> json) => _$WoPartFromJson(json);
@@ -57,6 +71,7 @@ class WorkOrder with _$WorkOrder {
     List<WoPart>? parts,
     String? location,
     String? notes,
+    Map<String, bool>? checklist,
   }) = _WorkOrder;
 
   factory WorkOrder.fromJson(Map<String, dynamic> json) =>

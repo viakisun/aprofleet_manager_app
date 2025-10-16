@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';
 
 import '../../../domain/models/alert.dart';
 import '../../../core/widgets/shared_widgets.dart';
@@ -288,8 +289,8 @@ class _AlertDetailModalState extends State<AlertDetailModal> {
                 Expanded(
                   child: ActionButton(
                     text: 'Acknowledge',
-                    onPressed: widget.alert.state == AlertState.triggered ||
-                            widget.alert.state == AlertState.notified
+                    onPressed: widget.alert.state == AlertStatus.triggered ||
+                            widget.alert.state == AlertStatus.notified
                         ? widget.onAcknowledge
                         : null,
                     type: ActionButtonType.secondary,
@@ -300,7 +301,7 @@ class _AlertDetailModalState extends State<AlertDetailModal> {
                 Expanded(
                   child: ActionButton(
                     text: 'Escalate',
-                    onPressed: widget.alert.state != AlertState.resolved
+                    onPressed: widget.alert.state != AlertStatus.resolved
                         ? () => _showEscalationDialog()
                         : null,
                     type: ActionButtonType.secondary,
@@ -311,7 +312,7 @@ class _AlertDetailModalState extends State<AlertDetailModal> {
                 Expanded(
                   child: ActionButton(
                     text: 'Resolve',
-                    onPressed: widget.alert.state != AlertState.resolved
+                    onPressed: widget.alert.state != AlertStatus.resolved
                         ? widget.onResolve
                         : null,
                     type: ActionButtonType.primary,

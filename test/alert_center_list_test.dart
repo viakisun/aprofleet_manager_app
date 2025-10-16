@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:aprofleet_manager/features/al/pages/alert_center.dart';
 import 'package:aprofleet_manager/domain/models/alert.dart';
+import 'package:aprofleet_manager/domain/models/work_order.dart';
 import 'package:aprofleet_manager/core/services/providers.dart';
 
 void main() {
@@ -15,7 +16,7 @@ void main() {
           code: 'ALT-2025-0001',
           severity: AlertSeverity.critical,
           priority: Priority.p1,
-          state: AlertState.triggered,
+          state: AlertStatus.triggered,
           title: 'Critical Battery Alert',
           message: 'Cart GCA-003 battery level critical at 18%',
           cartId: 'GCA-003',
@@ -28,7 +29,7 @@ void main() {
           code: 'ALT-2025-0002',
           severity: AlertSeverity.warning,
           priority: Priority.p2,
-          state: AlertState.notified,
+          state: AlertStatus.notified,
           title: 'Geofence Violation',
           message: 'Cart GCA-007 has exited designated area',
           cartId: 'GCA-007',
@@ -85,7 +86,7 @@ void main() {
           code: 'ALT-2025-0001',
           severity: AlertSeverity.critical,
           priority: Priority.p1,
-          state: AlertState.triggered,
+          state: AlertStatus.triggered,
           title: 'Critical Battery Alert',
           message: 'Cart GCA-003 battery level critical at 18%',
           cartId: 'GCA-003',
@@ -110,7 +111,8 @@ void main() {
 
       // Verify alert card content
       expect(find.text('Critical Battery Alert'), findsOneWidget);
-      expect(find.text('Cart GCA-003 battery level critical at 18%'), findsOneWidget);
+      expect(find.text('Cart GCA-003 battery level critical at 18%'),
+          findsOneWidget);
       expect(find.text('GCA-003'), findsOneWidget);
       expect(find.text('Hole 3 - Fairway'), findsOneWidget);
 
