@@ -1,0 +1,82 @@
+[
+  {
+    "id": "TECH-001",
+    "name": "John Smith",
+    "grade": "Senior",
+    "skills": ["emergencyRepair", "battery", "motor"],
+    "activeWoCount": 2,
+    "isAvailable": true,
+    "specialties": ["Emergency Repairs", "Motor Systems"],
+    "experience": "8 years"
+  },
+  {
+    "id": "TECH-002",
+    "name": "Sarah Johnson",
+    "grade": "Intermediate",
+    "skills": ["battery", "preventive", "safety"],
+    "activeWoCount": 1,
+    "isAvailable": true,
+    "specialties": ["Battery Systems", "Preventive Maintenance"],
+    "experience": "5 years"
+  },
+  {
+    "id": "TECH-003",
+    "name": "Mike Chen",
+    "grade": "Senior",
+    "skills": ["preventive", "tire", "other"],
+    "activeWoCount": 3,
+    "isAvailable": false,
+    "specialties": ["Preventive Maintenance", "Tire Service"],
+    "experience": "10 years"
+  },
+  {
+    "id": "TECH-004",
+    "name": "Lisa Wang",
+    "grade": "Junior",
+    "skills": ["tire", "preventive"],
+    "activeWoCount": 0,
+    "isAvailable": true,
+    "specialties": ["Tire Service", "Basic Maintenance"],
+    "experience": "2 years"
+  },
+  {
+    "id": "TECH-005",
+    "name": "David Kim",
+    "grade": "Intermediate",
+    "skills": ["safety", "other", "preventive"],
+    "activeWoCount": 1,
+    "isAvailable": true,
+    "specialties": ["Safety Inspections", "Electronics"],
+    "experience": "4 years"
+  },
+  {
+    "id": "TECH-006",
+    "name": "Alex Rodriguez",
+    "grade": "Senior",
+    "skills": ["emergencyRepair", "battery", "motor", "safety"],
+    "activeWoCount": 1,
+    "isAvailable": true,
+    "specialties": ["Emergency Response", "Complex Repairs"],
+    "experience": "12 years"
+  },
+  {
+    "id": "TECH-007",
+    "name": "Emma Thompson",
+    "grade": "Intermediate",
+    "skills": ["preventive", "tire", "other"],
+    "activeWoCount": 2,
+    "isAvailable": true,
+    "specialties": ["Preventive Care", "Component Replacement"],
+    "experience": "6 years"
+  },
+  {
+    "id": "TECH-008",
+    "name": "James Wilson",
+    "grade": "Junior",
+    "skills": ["preventive", "tire"],
+    "activeWoCount": 0,
+    "isAvailable": true,
+    "specialties": ["Basic Maintenance", "Tire Service"],
+    "experience": "1 year"
+  }
+]

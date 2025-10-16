@@ -1,6 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../core/utils/json_converters.dart';
+
 part 'cart.freezed.dart';
 part 'cart.g.dart';
 
@@ -26,14 +28,14 @@ class Cart with _$Cart {
     String? insuranceNumber,
     double? odometer,
     required CartStatus status,
-    required LatLng position,
+    @LatLngConverter() required LatLng position,
     double? batteryLevel,
     double? speed,
     DateTime? lastSeen,
     // Additional fields for compatibility
     double? batteryPct,
     double? speedKph,
-    LatLng? location,
+    String? location,
   }) = _Cart;
 
   factory Cart.fromJson(Map<String, dynamic> json) => _$CartFromJson(json);

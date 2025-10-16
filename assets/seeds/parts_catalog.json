@@ -1,0 +1,122 @@
+[
+  {
+    "sku": "BAT-001",
+    "name": "Battery Pack 48V",
+    "category": "battery",
+    "unit": "each",
+    "defaultQty": 1,
+    "compatibleTypes": ["battery", "emergencyRepair"],
+    "description": "48V Lithium Ion Battery Pack for golf carts",
+    "price": 1200.00
+  },
+  {
+    "sku": "BAT-002",
+    "name": "Battery Pack 36V",
+    "category": "battery",
+    "unit": "each",
+    "defaultQty": 1,
+    "compatibleTypes": ["battery", "emergencyRepair"],
+    "description": "36V Lead Acid Battery Pack",
+    "price": 800.00
+  },
+  {
+    "sku": "TIR-001",
+    "name": "Front Tire 18x8.5",
+    "category": "tire",
+    "unit": "each",
+    "defaultQty": 1,
+    "compatibleTypes": ["tire", "preventive"],
+    "description": "Front tire for golf cart",
+    "price": 85.00
+  },
+  {
+    "sku": "TIR-002",
+    "name": "Rear Tire 18x8.5",
+    "category": "tire",
+    "unit": "each",
+    "defaultQty": 1,
+    "compatibleTypes": ["tire", "preventive"],
+    "description": "Rear tire for golf cart",
+    "price": 85.00
+  },
+  {
+    "sku": "BRK-001",
+    "name": "Brake Pad Set",
+    "category": "brake",
+    "unit": "set",
+    "defaultQty": 1,
+    "compatibleTypes": ["emergencyRepair", "preventive", "safety"],
+    "description": "Complete brake pad set (front and rear)",
+    "price": 120.00
+  },
+  {
+    "sku": "MOT-001",
+    "name": "Motor Controller",
+    "category": "motor",
+    "unit": "each",
+    "defaultQty": 1,
+    "compatibleTypes": ["emergencyRepair", "other"],
+    "description": "Electronic motor controller unit",
+    "price": 450.00
+  },
+  {
+    "sku": "GPS-001",
+    "name": "GPS Module",
+    "category": "electronics",
+    "unit": "each",
+    "defaultQty": 1,
+    "compatibleTypes": ["other", "preventive"],
+    "description": "GPS tracking and telemetry module",
+    "price": 200.00
+  },
+  {
+    "sku": "FIL-001",
+    "name": "Air Filter",
+    "category": "filter",
+    "unit": "each",
+    "defaultQty": 1,
+    "compatibleTypes": ["preventive", "other"],
+    "description": "Engine air filter replacement",
+    "price": 25.00
+  },
+  {
+    "sku": "LUB-001",
+    "name": "Grease Cartridge",
+    "category": "lubricant",
+    "unit": "cartridge",
+    "defaultQty": 2,
+    "compatibleTypes": ["preventive"],
+    "description": "High-temperature grease for joints",
+    "price": 15.00
+  },
+  {
+    "sku": "BUL-001",
+    "name": "LED Light Bulb Set",
+    "category": "lighting",
+    "unit": "set",
+    "defaultQty": 1,
+    "compatibleTypes": ["preventive", "safety", "other"],
+    "description": "LED headlight and taillight bulbs",
+    "price": 35.00
+  },
+  {
+    "sku": "BEL-001",
+    "name": "Drive Belt",
+    "category": "drive",
+    "unit": "each",
+    "defaultQty": 1,
+    "compatibleTypes": ["preventive", "emergencyRepair"],
+    "description": "Main drive belt replacement",
+    "price": 45.00
+  },
+  {
+    "sku": "SOL-001",
+    "name": "Solenoid",
+    "category": "electrical",
+    "unit": "each",
+    "defaultQty": 1,
+    "compatibleTypes": ["emergencyRepair", "other"],
+    "description": "Starter solenoid replacement",
+    "price": 75.00
+  }
+]

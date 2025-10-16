@@ -1,0 +1,223 @@
+[
+  {
+    "id": "WO-2025-0001",
+    "type": "emergencyRepair",
+    "priority": "p1",
+    "cartId": "APRO-003",
+    "description": "Emergency brake failure - immediate attention required",
+    "status": "in_progress",
+    "createdAt": "2025-01-15T08:30:00.000Z",
+    "startedAt": "2025-01-15T09:00:00.000Z",
+    "technician": "John Smith",
+    "location": "Hole 3 - Fairway",
+    "parts": [
+      {"id": "BRK-001", "name": "Brake Pad Set", "quantity": 1, "serialNumber": "BRK-2025-001"}
+    ],
+    "checklist": {
+      "inspect_brakes": true,
+      "replace_pads": true,
+      "test_braking": false,
+      "safety_check": false
+    },
+    "notes": "Customer reported complete brake failure while driving"
+  },
+  {
+    "id": "WO-2025-0002",
+    "type": "battery",
+    "priority": "p2",
+    "cartId": "APRO-007",
+    "description": "Battery replacement - low capacity detected",
+    "status": "pending",
+    "createdAt": "2025-01-15T10:15:00.000Z",
+    "technician": "Sarah Johnson",
+    "location": "Hole 5 - Charging Station",
+    "parts": [
+      {"id": "BAT-001", "name": "Lithium-ion Battery Pack", "quantity": 1, "serialNumber": "BAT-2025-001"}
+    ],
+    "checklist": {
+      "test_battery": false,
+      "remove_old_battery": false,
+      "install_new_battery": false,
+      "test_charging": false
+    },
+    "notes": "Battery capacity dropped to 45% after 2 years of use"
+  },
+  {
+    "id": "WO-2025-0003",
+    "type": "preventive",
+    "priority": "p3",
+    "cartId": "APRO-001",
+    "description": "Monthly preventive maintenance check",
+    "status": "completed",
+    "createdAt": "2025-01-14T09:00:00.000Z",
+    "startedAt": "2025-01-14T09:30:00.000Z",
+    "completedAt": "2025-01-14T11:00:00.000Z",
+    "technician": "Mike Wilson",
+    "location": "Maintenance Bay",
+    "parts": [
+      {"id": "FIL-001", "name": "Air Filter", "quantity": 1, "serialNumber": "FIL-2025-001"},
+      {"id": "OIL-001", "name": "Motor Oil", "quantity": 2, "serialNumber": "OIL-2025-001"}
+    ],
+    "checklist": {
+      "check_tires": true,
+      "check_brakes": true,
+      "check_battery": true,
+      "check_lights": true,
+      "lubricate_joints": true,
+      "clean_interior": true
+    },
+    "notes": "All systems functioning normally"
+  },
+  {
+    "id": "WO-2025-0004",
+    "type": "tire",
+    "priority": "p2",
+    "cartId": "APRO-005",
+    "description": "Front tire replacement - worn tread",
+    "status": "in_progress",
+    "createdAt": "2025-01-15T11:00:00Z",
+    "startedAt": "2025-01-15T11:30:00Z",
+    "technician": "David Brown",
+    "location": "Maintenance Bay",
+    "parts": [
+      {"id": "TIR-001", "name": "Front Tire", "quantity": 1, "serialNumber": "TIR-2025-001"}
+    ],
+    "checklist": {
+      "remove_old_tire": true,
+      "install_new_tire": false,
+      "balance_wheel": false,
+      "test_drive": false
+    },
+    "notes": "Tire tread depth below safety threshold"
+  },
+  {
+    "id": "WO-2025-0005",
+    "type": "safety",
+    "priority": "p1",
+    "cartId": "APRO-012",
+    "description": "Safety inspection - headlight malfunction",
+    "status": "pending",
+    "createdAt": "2025-01-15T12:00:00Z",
+    "technician": "Lisa Davis",
+    "location": "Hole 8 - Maintenance Bay",
+    "parts": [
+      {"id": "LGT-001", "name": "LED Headlight Assembly", "quantity": 1, "serialNumber": "LGT-2025-001"}
+    ],
+    "checklist": {
+      "test_headlights": false,
+      "check_wiring": false,
+      "replace_assembly": false,
+      "test_all_lights": false
+    },
+    "notes": "Driver reported intermittent headlight failure"
+  },
+  {
+    "id": "WO-2025-0006",
+    "type": "other",
+    "priority": "p4",
+    "cartId": "APRO-008",
+    "description": "Seat adjustment mechanism repair",
+    "status": "draft",
+    "createdAt": "2025-01-15T13:00:00Z",
+    "technician": "Tom Anderson",
+    "location": "Maintenance Bay",
+    "parts": [
+      {"id": "SEAT-001", "name": "Seat Adjustment Mechanism", "quantity": 1, "serialNumber": "SEAT-2025-001"}
+    ],
+    "checklist": {
+      "inspect_mechanism": false,
+      "order_parts": false,
+      "replace_mechanism": false,
+      "test_adjustment": false
+    },
+    "notes": "Customer complaint about seat not staying in position"
+  },
+  {
+    "id": "WO-2025-0007",
+    "type": "battery",
+    "priority": "p3",
+    "cartId": "APRO-010",
+    "description": "Battery charging system check",
+    "status": "completed",
+    "createdAt": "2025-01-14T14:00:00Z",
+    "startedAt": "2025-01-14T14:30:00Z",
+    "completedAt": "2025-01-14T15:30:00Z",
+    "technician": "Jennifer Lee",
+    "location": "Charging Station",
+    "parts": [
+      {"id": "CHG-001", "name": "Charging Port", "quantity": 1, "serialNumber": "CHG-2025-001"}
+    ],
+    "checklist": {
+      "test_charging_port": true,
+      "check_charging_cable": true,
+      "test_battery_connection": true,
+      "verify_charging_speed": true
+    },
+    "notes": "Charging system working properly"
+  },
+  {
+    "id": "WO-2025-0008",
+    "type": "preventive",
+    "priority": "p3",
+    "cartId": "APRO-002",
+    "description": "Quarterly maintenance - comprehensive check",
+    "status": "on_hold",
+    "createdAt": "2025-01-15T15:00:00Z",
+    "technician": "Robert Taylor",
+    "location": "Maintenance Bay",
+    "parts": [
+      {"id": "FIL-002", "name": "Cabin Air Filter", "quantity": 1, "serialNumber": "FIL-2025-002"},
+      {"id": "FLU-001", "name": "Brake Fluid", "quantity": 1, "serialNumber": "FLU-2025-001"}
+    ],
+    "checklist": {
+      "check_all_systems": false,
+      "replace_filters": false,
+      "check_fluid_levels": false,
+      "test_performance": false
+    },
+    "notes": "Waiting for parts delivery"
+  },
+  {
+    "id": "WO-2025-0009",
+    "type": "tire",
+    "priority": "p2",
+    "cartId": "APRO-006",
+    "description": "Rear tire pressure adjustment",
+    "status": "completed",
+    "createdAt": "2025-01-14T16:00:00Z",
+    "startedAt": "2025-01-14T16:15:00Z",
+    "completedAt": "2025-01-14T16:45:00Z",
+    "technician": "Mark Johnson",
+    "location": "Maintenance Bay",
+    "parts": [],
+    "checklist": {
+      "check_tire_pressure": true,
+      "adjust_pressure": true,
+      "check_for_leaks": true,
+      "test_drive": true
+    },
+    "notes": "Tire pressure corrected to manufacturer specifications"
+  },
+  {
+    "id": "WO-2025-0010",
+    "type": "emergencyRepair",
+    "priority": "p1",
+    "cartId": "APRO-009",
+    "description": "Steering wheel alignment issue",
+    "status": "in_progress",
+    "createdAt": "2025-01-15T17:00:00Z",
+    "startedAt": "2025-01-15T17:30:00Z",
+    "technician": "Chris Martinez",
+    "location": "Hole 7 - Fairway",
+    "parts": [
+      {"id": "STR-001", "name": "Steering Column Assembly", "quantity": 1, "serialNumber": "STR-2025-001"}
+    ],
+    "checklist": {
+      "inspect_steering": true,
+      "check_alignment": true,
+      "replace_assembly": false,
+      "test_steering": false
+    },
+    "notes": "Driver reported difficulty steering, safety concern"
+  }
+]

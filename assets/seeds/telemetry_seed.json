@@ -1,0 +1,122 @@
+{
+  "APRO-001": {
+    "cartId": "APRO-001",
+    "battery": 85.2,
+    "speed": 12.5,
+    "temperature": 45.0,
+    "voltage": 48.2,
+    "current": 15.3,
+    "runtime": 120.5,
+    "distance": 8.7
+  },
+  "APRO-002": {
+    "cartId": "APRO-002",
+    "battery": 92.1,
+    "speed": 0.0,
+    "temperature": 42.0,
+    "voltage": 48.5,
+    "current": 0.0,
+    "runtime": 95.2,
+    "distance": 6.2
+  },
+  "APRO-003": {
+    "cartId": "APRO-003",
+    "battery": 45.8,
+    "speed": 0.0,
+    "temperature": 38.5,
+    "voltage": 46.8,
+    "current": 8.2,
+    "runtime": 180.3,
+    "distance": 12.1
+  },
+  "APRO-004": {
+    "cartId": "APRO-004",
+    "battery": 78.3,
+    "speed": 0.0,
+    "temperature": 41.2,
+    "voltage": 47.9,
+    "current": 0.0,
+    "runtime": 150.7,
+    "distance": 9.8
+  },
+  "APRO-005": {
+    "cartId": "APRO-005",
+    "battery": 67.4,
+    "speed": 15.2,
+    "temperature": 48.7,
+    "voltage": 47.2,
+    "current": 18.5,
+    "runtime": 200.1,
+    "distance": 15.3
+  },
+  "APRO-006": {
+    "cartId": "APRO-006",
+    "battery": 89.7,
+    "speed": 0.0,
+    "temperature": 43.8,
+    "voltage": 48.1,
+    "current": 0.0,
+    "runtime": 110.4,
+    "distance": 7.6
+  },
+  "APRO-007": {
+    "cartId": "APRO-007",
+    "battery": 73.1,
+    "speed": 18.7,
+    "temperature": 52.3,
+    "voltage": 47.5,
+    "current": 22.1,
+    "runtime": 175.9,
+    "distance": 13.4
+  },
+  "APRO-008": {
+    "cartId": "APRO-008",
+    "battery": 34.2,
+    "speed": 0.0,
+    "temperature": 39.1,
+    "voltage": 45.2,
+    "current": 12.8,
+    "runtime": 220.6,
+    "distance": 18.9
+  },
+  "APRO-009": {
+    "cartId": "APRO-009",
+    "battery": 91.5,
+    "speed": 14.3,
+    "temperature": 44.6,
+    "voltage": 48.3,
+    "current": 16.7,
+    "runtime": 85.3,
+    "distance": 5.9
+  },
+  "APRO-010": {
+    "cartId": "APRO-010",
+    "battery": 56.8,
+    "speed": 0.0,
+    "temperature": 40.9,
+    "voltage": 46.5,
+    "current": 0.0,
+    "runtime": 195.2,
+    "distance": 14.7
+  },
+  "APRO-011": {
+    "cartId": "APRO-011",
+    "battery": 82.4,
+    "speed": 0.0,
+    "temperature": 42.7,
+    "voltage": 47.8,
+    "current": 0.0,
+    "runtime": 125.8,
+    "distance": 8.3
+  },
+  "APRO-012": {
+    "cartId": "APRO-012",
+    "battery": 23.7,
+    "speed": 0.0,
+    "temperature": 35.4,
+    "voltage": 44.1,
+    "current": 0.0,
+    "runtime": 250.3,
+    "distance": 22.1
+  }
+}

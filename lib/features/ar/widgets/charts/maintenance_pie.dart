@@ -58,7 +58,7 @@ class MaintenancePie extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: data.map((item) {
                 final type = item['type'] as String;
                 final count = item['count'] as int;

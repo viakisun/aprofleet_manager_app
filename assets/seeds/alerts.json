@@ -1,0 +1,211 @@
+[
+  {
+    "id": "ALT-2025-0001",
+    "code": "ALT-2025-0001",
+    "severity": "critical",
+    "priority": "p1",
+    "state": "acknowledged",
+    "title": "Critical Battery Level",
+    "message": "Cart APRO-003 battery level critical at 18%",
+    "cartId": "APRO-003",
+    "location": "Hole 3 - Fairway",
+    "createdAt": "2025-01-15T08:30:00.000Z",
+    "updatedAt": "2025-01-15T09:15:00.000Z",
+    "escalationLevel": 1,
+    "acknowledgedAt": "2025-01-15T09:00:00.000Z",
+    "acknowledgedBy": "John Smith",
+    "actions": [
+      {
+        "type": "acknowledge",
+        "timestamp": "2025-01-15T09:00:00Z",
+        "userId": "John Smith",
+        "note": "Sending technician to replace battery"
+      }
+    ]
+  },
+  {
+    "id": "ALT-2025-0002",
+    "code": "ALT-2025-0002",
+    "severity": "warning",
+    "priority": "p2",
+    "state": "notified",
+    "title": "Geofence Violation",
+    "message": "Cart APRO-007 has exited designated area",
+    "cartId": "APRO-007",
+    "location": "Hole 5 - Outside Course",
+    "createdAt": "2025-01-15T10:15:00Z",
+    "updatedAt": "2025-01-15T10:15:00Z",
+    "escalationLevel": 0,
+    "actions": []
+  },
+  {
+    "id": "ALT-2025-0003",
+    "code": "ALT-2025-0003",
+    "severity": "info",
+    "priority": "p3",
+    "state": "triggered",
+    "title": "Maintenance Due",
+    "message": "Cart APRO-001 scheduled maintenance is due",
+    "cartId": "APRO-001",
+    "location": "Hole 1 - Parking Area",
+    "createdAt": "2025-01-15T11:00:00Z",
+    "updatedAt": "2025-01-15T11:00:00Z",
+    "escalationLevel": 0,
+    "actions": []
+  },
+  {
+    "id": "ALT-2025-0004",
+    "code": "ALT-2025-0004",
+    "severity": "critical",
+    "priority": "p1",
+    "state": "escalated",
+    "title": "Emergency Stop Activated",
+    "message": "Cart APRO-005 emergency stop button activated",
+    "cartId": "APRO-005",
+    "location": "Hole 4 - Emergency Stop",
+    "createdAt": "2025-01-15T12:30:00Z",
+    "updatedAt": "2025-01-15T12:45:00Z",
+    "escalationLevel": 2,
+    "acknowledgedAt": "2025-01-15T12:35:00Z",
+    "acknowledgedBy": "Sarah Johnson",
+    "actions": [
+      {
+        "type": "acknowledge",
+        "timestamp": "2025-01-15T12:35:00Z",
+        "userId": "Sarah Johnson",
+        "note": "Emergency response team dispatched"
+      },
+      {
+        "type": "escalate",
+        "timestamp": "2025-01-15T12:45:00Z",
+        "userId": "Manager",
+        "note": "Escalated to management level"
+      }
+    ]
+  },
+  {
+    "id": "ALT-2025-0005",
+    "code": "ALT-2025-0005",
+    "severity": "warning",
+    "priority": "p2",
+    "state": "resolved",
+    "title": "Low Tire Pressure",
+    "message": "Cart APRO-008 rear tire pressure below threshold",
+    "cartId": "APRO-008",
+    "location": "Hole 6 - Maintenance Bay",
+    "createdAt": "2025-01-15T13:00:00Z",
+    "updatedAt": "2025-01-15T14:30:00Z",
+    "escalationLevel": 0,
+    "acknowledgedAt": "2025-01-15T13:15:00Z",
+    "acknowledgedBy": "Mike Wilson",
+    "resolvedAt": "2025-01-15T14:30:00.000Z",
+    "resolvedBy": "Mike Wilson",
+    "actions": [
+      {
+        "type": "acknowledge",
+        "timestamp": "2025-01-15T13:15:00Z",
+        "userId": "Mike Wilson",
+        "note": "Checking tire pressure"
+      },
+      {
+        "type": "resolve",
+        "timestamp": "2025-01-15T14:30:00Z",
+        "userId": "Mike Wilson",
+        "note": "Tire pressure corrected"
+      }
+    ]
+  },
+  {
+    "id": "ALT-2025-0006",
+    "code": "ALT-2025-0006",
+    "severity": "info",
+    "priority": "p3",
+    "state": "triggered",
+    "title": "Charging Complete",
+    "message": "Cart APRO-010 charging cycle completed",
+    "cartId": "APRO-010",
+    "location": "Charging Station",
+    "createdAt": "2025-01-15T15:00:00Z",
+    "updatedAt": "2025-01-15T15:00:00Z",
+    "escalationLevel": 0,
+    "actions": []
+  },
+  {
+    "id": "ALT-2025-0007",
+    "code": "ALT-2025-0007",
+    "severity": "warning",
+    "priority": "p2",
+    "state": "notified",
+    "title": "Speed Limit Exceeded",
+    "message": "Cart APRO-011 exceeded speed limit of 25 km/h",
+    "cartId": "APRO-011",
+    "location": "Hole 8 - Fairway",
+    "createdAt": "2025-01-15T16:00:00Z",
+    "updatedAt": "2025-01-15T16:00:00Z",
+    "escalationLevel": 0,
+    "actions": []
+  },
+  {
+    "id": "ALT-2025-0008",
+    "code": "ALT-2025-0008",
+    "severity": "critical",
+    "priority": "p1",
+    "state": "acknowledged",
+    "title": "Brake System Failure",
+    "message": "Cart APRO-004 brake system malfunction detected",
+    "cartId": "APRO-004",
+    "location": "Hole 3 - Emergency Stop",
+    "createdAt": "2025-01-15T17:00:00Z",
+    "updatedAt": "2025-01-15T17:15:00Z",
+    "escalationLevel": 1,
+    "acknowledgedAt": "2025-01-15T17:10:00Z",
+    "acknowledgedBy": "David Brown",
+    "actions": [
+      {
+        "type": "acknowledge",
+        "timestamp": "2025-01-15T17:10:00Z",
+        "userId": "David Brown",
+        "note": "Emergency brake repair in progress"
+      }
+    ]
+  },
+  {
+    "id": "ALT-2025-0009",
+    "code": "ALT-2025-0009",
+    "severity": "success",
+    "priority": "p4",
+    "state": "resolved",
+    "title": "Maintenance Completed",
+    "message": "Cart APRO-002 preventive maintenance completed successfully",
+    "cartId": "APRO-002",
+    "location": "Maintenance Bay",
+    "createdAt": "2025-01-15T18:00:00Z",
+    "updatedAt": "2025-01-15T18:30:00Z",
+    "escalationLevel": 0,
+    "resolvedAt": "2025-01-15T18:30:00Z",
+    "resolvedBy": "Lisa Davis",
+    "actions": [
+      {
+        "type": "resolve",
+        "timestamp": "2025-01-15T18:30:00Z",
+        "userId": "Lisa Davis",
+        "note": "All maintenance tasks completed"
+      }
+    ]
+  },
+  {
+    "id": "ALT-2025-0010",
+    "code": "ALT-2025-0010",
+    "severity": "info",
+    "priority": "p3",
+    "state": "triggered",
+    "title": "Daily Inspection Due",
+    "message": "Cart APRO-009 daily safety inspection is due",
+    "cartId": "APRO-009",
+    "location": "Hole 7 - Parking Area",
+    "createdAt": "2025-01-15T19:00:00Z",
+    "updatedAt": "2025-01-15T19:00:00Z",
+    "escalationLevel": 0,
+    "actions": []
+  }
+]

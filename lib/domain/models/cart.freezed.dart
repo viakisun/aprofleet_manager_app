@@ -40,6 +40,7 @@ mixin _$Cart {
   String? get insuranceNumber => throw _privateConstructorUsedError;
   double? get odometer => throw _privateConstructorUsedError;
   CartStatus get status => throw _privateConstructorUsedError;
+  @LatLngConverter()
   LatLng get position => throw _privateConstructorUsedError;
   double? get batteryLevel => throw _privateConstructorUsedError;
   double? get speed => throw _privateConstructorUsedError;
@@ -47,7 +48,7 @@ mixin _$Cart {
       throw _privateConstructorUsedError; // Additional fields for compatibility
   double? get batteryPct => throw _privateConstructorUsedError;
   double? get speedKph => throw _privateConstructorUsedError;
-  LatLng? get location => throw _privateConstructorUsedError;
+  String? get location => throw _privateConstructorUsedError;
 
   /// Serializes this Cart to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -83,13 +84,13 @@ abstract class $CartCopyWith<$Res> {
       String? insuranceNumber,
       double? odometer,
       CartStatus status,
-      LatLng position,
+      @LatLngConverter() LatLng position,
       double? batteryLevel,
       double? speed,
       DateTime? lastSeen,
       double? batteryPct,
       double? speedKph,
-      LatLng? location});
+      String? location});
 }
 
 /// @nodoc
@@ -238,7 +239,7 @@ class _$CartCopyWithImpl<$Res, $Val extends Cart>
       location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
-              as LatLng?,
+              as String?,
     ) as $Val);
   }
 }
@@ -270,13 +271,13 @@ abstract class _$$CartImplCopyWith<$Res> implements $CartCopyWith<$Res> {
       String? insuranceNumber,
       double? odometer,
       CartStatus status,
-      LatLng position,
+      @LatLngConverter() LatLng position,
       double? batteryLevel,
       double? speed,
       DateTime? lastSeen,
       double? batteryPct,
       double? speedKph,
-      LatLng? location});
+      String? location});
 }
 
 /// @nodoc
@@ -422,7 +423,7 @@ class __$$CartImplCopyWithImpl<$Res>
       location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
-              as LatLng?,
+              as String?,
     ));
   }
 }
@@ -450,7 +451,7 @@ class _$CartImpl implements _Cart {
       this.insuranceNumber,
       this.odometer,
       required this.status,
-      required this.position,
+      @LatLngConverter() required this.position,
       this.batteryLevel,
       this.speed,
       this.lastSeen,
@@ -518,6 +519,7 @@ class _$CartImpl implements _Cart {
   @override
   final CartStatus status;
   @override
+  @LatLngConverter()
   final LatLng position;
   @override
   final double? batteryLevel;
@@ -531,7 +533,7 @@ class _$CartImpl implements _Cart {
   @override
   final double? speedKph;
   @override
-  final LatLng? location;
+  final String? location;
 
   @override
   String toString() {
@@ -657,13 +659,13 @@ abstract class _Cart implements Cart {
       final String? insuranceNumber,
       final double? odometer,
       required final CartStatus status,
-      required final LatLng position,
+      @LatLngConverter() required final LatLng position,
       final double? batteryLevel,
       final double? speed,
       final DateTime? lastSeen,
       final double? batteryPct,
       final double? speedKph,
-      final LatLng? location}) = _$CartImpl;
+      final String? location}) = _$CartImpl;
 
   factory _Cart.fromJson(Map<String, dynamic> json) = _$CartImpl.fromJson;
 
@@ -706,6 +708,7 @@ abstract class _Cart implements Cart {
   @override
   CartStatus get status;
   @override
+  @LatLngConverter()
   LatLng get position;
   @override
   double? get batteryLevel;
@@ -718,7 +721,7 @@ abstract class _Cart implements Cart {
   @override
   double? get speedKph;
   @override
-  LatLng? get location;
+  String? get location;
 
   /// Create a copy of Cart
   /// with the given fields replaced by the non-null parameter values.

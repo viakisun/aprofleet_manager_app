@@ -30,11 +30,32 @@ class MockApi {
 
   // Initialize with seed data
   Future<void> initialize() async {
-    await _loadCarts();
-    await _loadWorkOrders();
-    await _loadAlerts();
-    await _loadTelemetry();
-    await _loadUsers();
+    try {
+      await _loadCarts();
+      await _loadWorkOrders();
+      await _loadAlerts();
+      await _loadTelemetry();
+      await _loadUsers();
+      
+      // Add fallback data if loading failed
+      if (_carts.isEmpty) {
+        _addFallbackCarts();
+      }
+      if (_workOrders.isEmpty) {
+        _addFallbackWorkOrders();
+      }
+      if (_alerts.isEmpty) {
+        _addFallbackAlerts();
+      }
+      
+      print('Mock API initialized with ${_carts.length} carts, ${_workOrders.length} work orders, ${_alerts.length} alerts');
+    } catch (e) {
+      print('Error during Mock API initialization: $e');
+      // Add fallback data
+      _addFallbackCarts();
+      _addFallbackWorkOrders();
+      _addFallbackAlerts();
+    }
   }
 
   // Cart operations
@@ -149,27 +170,43 @@ class MockApi {
   Future<void> _loadCarts() async {
     try {
       final String jsonString = await rootBundle
-          .loadString('lib/core/services/mock/seeds/carts.json');
-      final List<dynamic> jsonList = json.decode(jsonString);
-
-      for (final json in jsonList) {
-        final cart = Cart.fromJson(json);
-        _carts[cart.id] = cart;
+          .loadString('assets/seeds/carts.json');
+      print('Loaded JSON string length: ${jsonString.length}');
+      
+      final dynamic jsonData = json.decode(jsonString);
+      print('Parsed JSON type: ${jsonData.runtimeType}');
+      
+      if (jsonData is List) {
+        print('JSON is List with ${jsonData.length} items');
+        for (int i = 0; i < jsonData.length; i++) {
+          try {
+            final cart = Cart.fromJson(jsonData[i]);
+            _carts[cart.id] = cart;
+            print('Loaded cart: ${cart.id}');
+          } catch (e) {
+            print('Error parsing cart at index $i: $e');
+          }
+        }
+      } else {
+        print('JSON is not a List, it is: ${jsonData.runtimeType}');
       }
     } catch (e) {
       print('Error loading carts: $e');
+      print('Stack trace: ${StackTrace.current}');
     }
   }
 
   Future<void> _loadWorkOrders() async {
     try {
       final String jsonString = await rootBundle
-          .loadString('lib/core/services/mock/seeds/work_orders.json');
-      final List<dynamic> jsonList = json.decode(jsonString);
+          .loadString('assets/seeds/work_orders.json');
+      final dynamic jsonData = json.decode(jsonString);
 
-      for (final json in jsonList) {
-        final workOrder = WorkOrder.fromJson(json);
-        _workOrders[workOrder.id] = workOrder;
+      if (jsonData is List && jsonData.isNotEmpty) {
+        for (final json in jsonData) {
+          final workOrder = WorkOrder.fromJson(json);
+          _workOrders[workOrder.id] = workOrder;
+        }
       }
     } catch (e) {
       print('Error loading work orders: $e');
@@ -179,7 +216,7 @@ class MockApi {
   Future<void> _loadAlerts() async {
     try {
       final String jsonString = await rootBundle
-          .loadString('lib/core/services/mock/seeds/alerts.json');
+          .loadString('assets/seeds/alerts.json');
       final List<dynamic> jsonList = json.decode(jsonString);
 
       for (final json in jsonList) {
@@ -194,7 +231,7 @@ class MockApi {
   Future<void> _loadTelemetry() async {
     try {
       final String jsonString = await rootBundle
-          .loadString('lib/core/services/mock/seeds/telemetry_seed.json');
+          .loadString('assets/seeds/telemetry_seed.json');
       final Map<String, dynamic> jsonMap = json.decode(jsonString);
 
       for (final entry in jsonMap.entries) {
@@ -247,5 +284,81 @@ class MockApi {
         department: 'Operations',
       ),
     ]);
+  }
+
+  // Fallback data methods
+  void _addFallbackCarts() {
+    print('Adding fallback cart data...');
+    final fallbackCart = Cart(
+      id: 'APRO-FALLBACK-001',
+      vin: 'APRO2025FALLBACK001',
+      manufacturer: 'DY Innovate',
+      model: 'APRO-100',
+      year: 2025,
+      color: 'White',
+      batteryType: 'Lithium-ion',
+      voltage: 48,
+      seating: 4,
+      maxSpeed: 25.0,
+      gpsTrackerId: 'GPS-FB-001',
+      telemetryDeviceId: 'TEL-FB-001',
+      componentSerials: {
+        'battery': 'BAT-FB-001',
+        'motor': 'MOT-FB-001',
+      },
+      imagePaths: {},
+      purchaseDate: DateTime(2025, 1, 1),
+      warrantyExpiry: DateTime(2027, 1, 1),
+      insuranceNumber: 'INS-FB-001',
+      odometer: 0.0,
+      status: CartStatus.active,
+      position: LatLng(37.7749, -122.4194), // San Francisco
+      batteryLevel: 85.0,
+      speed: 0.0,
+      lastSeen: DateTime.now(),
+    );
+    _carts[fallbackCart.id] = fallbackCart;
+  }
+
+  void _addFallbackWorkOrders() {
+    print('Adding fallback work order data...');
+    final fallbackWO = WorkOrder(
+      id: 'WO-FALLBACK-001',
+      type: WorkOrderType.preventive,
+      priority: Priority.p2,
+      cartId: 'APRO-FALLBACK-001',
+      description: 'Fallback preventive maintenance',
+      status: WorkOrderStatus.pending,
+      createdAt: DateTime.now(),
+      technician: 'John Smith',
+      location: 'Maintenance Bay',
+      parts: [],
+      checklist: {},
+      notes: 'Fallback work order for testing',
+    );
+    _workOrders[fallbackWO.id] = fallbackWO;
+  }
+
+  void _addFallbackAlerts() {
+    print('Adding fallback alert data...');
+    final fallbackAlert = Alert(
+      id: 'ALERT-FALLBACK-001',
+      code: 'BAT-LOW-001',
+      severity: AlertSeverity.warning,
+      priority: Priority.p2,
+      state: AlertStatus.triggered,
+      title: 'Fallback Battery Alert',
+      message: 'Battery level below 20%',
+      cartId: 'APRO-FALLBACK-001',
+      location: 'Maintenance Bay',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      acknowledgedBy: null,
+      acknowledgedAt: null,
+      resolvedBy: null,
+      resolvedAt: null,
+      notes: 'Fallback alert for testing',
+    );
+    _alerts[fallbackAlert.id] = fallbackAlert;
   }
 }

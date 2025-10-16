@@ -31,7 +31,8 @@ _$CartImpl _$$CartImplFromJson(Map<String, dynamic> json) => _$CartImpl(
       insuranceNumber: json['insuranceNumber'] as String?,
       odometer: (json['odometer'] as num?)?.toDouble(),
       status: $enumDecode(_$CartStatusEnumMap, json['status']),
-      position: LatLng.fromJson(json['position'] as Map<String, dynamic>),
+      position: const LatLngConverter()
+          .fromJson(json['position'] as Map<String, dynamic>),
       batteryLevel: (json['batteryLevel'] as num?)?.toDouble(),
       speed: (json['speed'] as num?)?.toDouble(),
       lastSeen: json['lastSeen'] == null
@@ -39,9 +40,7 @@ _$CartImpl _$$CartImplFromJson(Map<String, dynamic> json) => _$CartImpl(
           : DateTime.parse(json['lastSeen'] as String),
       batteryPct: (json['batteryPct'] as num?)?.toDouble(),
       speedKph: (json['speedKph'] as num?)?.toDouble(),
-      location: json['location'] == null
-          ? null
-          : LatLng.fromJson(json['location'] as Map<String, dynamic>),
+      location: json['location'] as String?,
     );
 
 Map<String, dynamic> _$$CartImplToJson(_$CartImpl instance) =>
@@ -65,7 +64,7 @@ Map<String, dynamic> _$$CartImplToJson(_$CartImpl instance) =>
       'insuranceNumber': instance.insuranceNumber,
       'odometer': instance.odometer,
       'status': _$CartStatusEnumMap[instance.status]!,
-      'position': instance.position,
+      'position': const LatLngConverter().toJson(instance.position),
       'batteryLevel': instance.batteryLevel,
       'speed': instance.speed,
       'lastSeen': instance.lastSeen?.toIso8601String(),
