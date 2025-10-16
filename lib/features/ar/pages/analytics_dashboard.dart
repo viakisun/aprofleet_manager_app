@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import '../../domain/models/kpi.dart';
+import '../../../domain/models/kpi.dart';
 import '../../core/services/providers.dart';
 import '../../core/localization/app_localizations.dart';
 import '../../core/widgets/shared_widgets.dart';
 import '../../core/constants/app_constants.dart';
-import 'controllers/analytics_controller.dart';
-import 'widgets/kpi_card.dart';
-import 'widgets/charts/fleet_performance_bar.dart';
-import 'widgets/charts/battery_health_line.dart';
-import 'widgets/charts/maintenance_pie.dart';
-import 'widgets/export_modal.dart';
+import '../controllers/analytics_controller.dart';
+import '../widgets/kpi_card.dart';
+import '../widgets/charts/fleet_performance_bar.dart';
+import '../widgets/charts/battery_health_line.dart';
+import '../widgets/charts/maintenance_pie.dart';
+import '../widgets/export_modal.dart';
 
 class AnalyticsDashboard extends ConsumerStatefulWidget {
   const AnalyticsDashboard({super.key});

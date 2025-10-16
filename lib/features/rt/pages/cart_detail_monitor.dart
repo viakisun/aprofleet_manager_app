@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:async';
 
-import '../../domain/models/cart.dart';
-import '../../domain/models/telemetry.dart';
+import '../../../domain/models/cart.dart';
+import '../../../domain/models/telemetry.dart';
 import '../../core/services/providers.dart';
 import '../../core/localization/app_localizations.dart';
 import '../../core/widgets/shared_widgets.dart';

@@ -1,4 +1,4 @@
-import '../domain/models/kpi.dart';
+import '../../domain/models/kpi.dart';
 
 class KpiCalculator {
   static double calculateAvailability({

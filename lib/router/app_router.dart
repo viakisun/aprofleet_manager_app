@@ -62,7 +62,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             name: 'create-work-order',
             builder: (context, state) {
               final cartId = state.uri.queryParameters['cart'];
-              return CreateWorkOrder(selectedCartId: cartId);
+              return const CreateWorkOrder();
             },
           ),
 
@@ -95,3 +95,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     ],
   );
 });
+
+// Alias for main.dart compatibility
+final routerProvider = appRouterProvider;

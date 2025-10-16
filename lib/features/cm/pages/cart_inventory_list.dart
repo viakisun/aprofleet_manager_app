@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../domain/models/cart.dart';
+import '../../../domain/models/cart.dart';
 import '../../core/services/providers.dart';
 import '../../core/localization/app_localizations.dart';
 import '../../core/widgets/shared_widgets.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/utils/code_formatters.dart';
-import 'controllers/cart_inventory_controller.dart';
+import '../controllers/cart_inventory_controller.dart';
 
 class CartInventoryList extends ConsumerStatefulWidget {
   const CartInventoryList({super.key});

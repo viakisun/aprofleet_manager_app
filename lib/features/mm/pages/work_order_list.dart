@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../domain/models/work_order.dart';
+import '../../../domain/models/work_order.dart';
 import '../../core/services/providers.dart';
 import '../../core/localization/app_localizations.dart';
 import '../../core/widgets/shared_widgets.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/utils/code_formatters.dart';
-import 'controllers/work_order_controller.dart';
-import 'widgets/wo_card.dart';
-import 'widgets/wo_timeline.dart';
-import 'widgets/wo_detail_modal.dart';
+import '../controllers/work_order_controller.dart';
+import '../widgets/wo_card.dart';
+import '../widgets/wo_timeline.dart';
+import '../widgets/wo_detail_modal.dart';
 
 class WorkOrderList extends ConsumerStatefulWidget {
   const WorkOrderList({super.key});

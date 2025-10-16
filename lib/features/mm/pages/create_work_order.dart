@@ -5,15 +5,15 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
-import '../../domain/models/work_order.dart';
-import '../../domain/models/cart.dart';
+import '../../../domain/models/work_order.dart';
+import '../../../domain/models/cart.dart';
 import '../../core/services/providers.dart';
 import '../../core/localization/app_localizations.dart';
 import '../../core/widgets/shared_widgets.dart';
 import '../../core/widgets/steps/stepper.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/utils/code_formatters.dart';
-import 'controllers/create_wo_controller.dart';
+import '../controllers/create_wo_controller.dart';
 
 class CreateWorkOrder extends ConsumerStatefulWidget {
   final String? preselectedCartId;

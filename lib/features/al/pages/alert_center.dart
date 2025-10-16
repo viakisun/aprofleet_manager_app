@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../domain/models/alert.dart';
+import '../../../domain/models/alert.dart';
 import '../../core/services/providers.dart';
 import '../../core/localization/app_localizations.dart';
 import '../../core/widgets/shared_widgets.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/utils/code_formatters.dart';
-import 'controllers/alert_controller.dart';
-import 'widgets/alert_card.dart';
-import 'widgets/alert_filters.dart';
-import 'widgets/alert_detail_modal.dart';
-import 'widgets/alert_rules_panel.dart';
+import '../controllers/alert_controller.dart';
+import '../widgets/alert_card.dart';
+import '../widgets/alert_filters.dart';
+import '../widgets/alert_detail_modal.dart';
+import '../widgets/alert_rules_panel.dart';
 
 class AlertCenter extends ConsumerStatefulWidget {
   const AlertCenter({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/models/alert.dart';
+import '../../../domain/models/alert.dart';
 import '../../core/services/providers.dart';
 
 class AlertController extends StateNotifier<AlertState> {

@@ -7,10 +7,10 @@ import '../../core/widgets/shared_widgets.dart';
 import '../../core/widgets/status_bar.dart';
 import '../../core/widgets/filter_sheet.dart';
 import '../../core/services/map/canvas_map_view.dart';
-import '../../domain/models/cart.dart';
+import '../../../domain/models/cart.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/utils/code_formatters.dart';
-import 'controllers/live_map_controller.dart';
+import '../controllers/live_map_controller.dart';
 
 class LiveMapView extends ConsumerStatefulWidget {
   const LiveMapView({super.key});

@@ -35,13 +35,13 @@ class AppTheme {
       ),
 
       // Card
-      cardTheme: CardTheme(
-        color: const Color(0xFF1A1A1A),
+      cardTheme: const CardThemeData(
+        color: Color(0xFF1A1A1A),
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.all(Radius.circular(12)),
           side: BorderSide(
-            color: Colors.white.withOpacity(0.06),
+            color: Color(0x0FFFFFFF),
             width: 1,
           ),
         ),
