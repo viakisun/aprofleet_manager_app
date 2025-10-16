@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../domain/models/cart.dart';
 import '../../../domain/models/telemetry.dart';
-import '../../core/services/providers.dart';
-import '../../core/localization/app_localizations.dart';
-import '../../core/widgets/shared_widgets.dart';
-import '../../core/services/map/canvas_map_view.dart';
+import '../../../core/services/providers.dart';
+import '../../../core/localization/app_localizations.dart';
+import '../../../core/widgets/shared_widgets.dart';
+import '../../../core/services/map/canvas_map_view.dart';
 
 class LiveMapController extends StateNotifier<LiveMapState> {
   LiveMapController(this.ref) : super(LiveMapState.initial()) {

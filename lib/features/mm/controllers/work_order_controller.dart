@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../domain/models/work_order.dart';
-import '../../core/services/providers.dart';
+import '../../../core/services/providers.dart';
 
 class WorkOrderController extends StateNotifier<WorkOrderState> {
   WorkOrderController(this.ref) : super(WorkOrderState.initial()) {

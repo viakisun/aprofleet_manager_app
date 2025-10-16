@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../domain/models/kpi.dart';
-import '../../core/services/providers.dart';
-import '../../core/utils/kpi_calculator.dart';
+import '../../../core/services/providers.dart';
+import '../../../core/utils/kpi_calculator.dart';
 
 class AnalyticsController extends StateNotifier<AnalyticsState> {
   AnalyticsController(this.ref) : super(AnalyticsState.initial()) {

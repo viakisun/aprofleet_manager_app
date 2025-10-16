@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../domain/models/cart.dart';
-import '../../core/services/providers.dart';
-import '../../core/constants/app_constants.dart';
-import '../../core/utils/code_formatters.dart';
+import '../../../core/services/providers.dart';
+import '../../../core/constants/app_constants.dart';
+import '../../../core/utils/code_formatters.dart';
 
 class CartRegistrationController extends StateNotifier<CartRegistrationState> {
   CartRegistrationController(this.ref) : super(CartRegistrationState.initial());

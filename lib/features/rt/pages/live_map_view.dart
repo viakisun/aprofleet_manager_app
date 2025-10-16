@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/localization/app_localizations.dart';
-import '../../core/widgets/shared_widgets.dart';
-import '../../core/widgets/status_bar.dart';
-import '../../core/widgets/filter_sheet.dart';
-import '../../core/services/map/canvas_map_view.dart';
+import '../../../core/localization/app_localizations.dart';
+import '../../../core/widgets/shared_widgets.dart';
+import '../../../core/widgets/status_bar.dart';
+import '../../../core/widgets/filter_sheet.dart';
+import '../../../core/services/map/canvas_map_view.dart';
 import '../../../domain/models/cart.dart';
-import '../../core/constants/app_constants.dart';
-import '../../core/utils/code_formatters.dart';
+import '../../../core/constants/app_constants.dart';
+import '../../../core/utils/code_formatters.dart';
 import '../controllers/live_map_controller.dart';
 
 class LiveMapView extends ConsumerStatefulWidget {

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../domain/models/work_order.dart';
-import '../../core/services/providers.dart';
-import '../../core/constants/app_constants.dart';
+import '../../../core/services/providers.dart';
+import '../../../core/constants/app_constants.dart';
 
 class CreateWoController extends StateNotifier<CreateWoState> {
   CreateWoController(this.ref) : super(CreateWoState.initial());

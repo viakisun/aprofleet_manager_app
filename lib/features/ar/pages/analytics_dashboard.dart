@@ -3,10 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../domain/models/kpi.dart';
-import '../../core/services/providers.dart';
-import '../../core/localization/app_localizations.dart';
-import '../../core/widgets/shared_widgets.dart';
-import '../../core/constants/app_constants.dart';
+import '../../../core/services/providers.dart';
+import '../../../core/localization/app_localizations.dart';
+import '../../../core/widgets/shared_widgets.dart';
+import '../../../core/constants/app_constants.dart';
 import '../controllers/analytics_controller.dart';
 import '../widgets/kpi_card.dart';
 import '../widgets/charts/fleet_performance_bar.dart';

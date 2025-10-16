@@ -4,11 +4,11 @@ import 'dart:async';
 
 import '../../../domain/models/cart.dart';
 import '../../../domain/models/telemetry.dart';
-import '../../core/services/providers.dart';
-import '../../core/localization/app_localizations.dart';
-import '../../core/widgets/shared_widgets.dart';
-import '../../core/constants/app_constants.dart';
-import '../../core/utils/code_formatters.dart';
+import '../../../core/services/providers.dart';
+import '../../../core/localization/app_localizations.dart';
+import '../../../core/widgets/shared_widgets.dart';
+import '../../../core/constants/app_constants.dart';
+import '../../../core/utils/code_formatters.dart';
 import 'controllers/cart_detail_controller.dart';
 
 class CartDetailMonitor extends ConsumerStatefulWidget {

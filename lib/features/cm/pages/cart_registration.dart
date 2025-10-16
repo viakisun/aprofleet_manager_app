@@ -7,13 +7,13 @@ import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
 
 import '../../../domain/models/cart.dart';
-import '../../core/services/providers.dart';
-import '../../core/localization/app_localizations.dart';
-import '../../core/widgets/shared_widgets.dart';
-import '../../core/widgets/steps/stepper.dart';
-import '../../core/widgets/qr/qr_label.dart';
-import '../../core/constants/app_constants.dart';
-import '../../core/utils/code_formatters.dart';
+import '../../../core/services/providers.dart';
+import '../../../core/localization/app_localizations.dart';
+import '../../../core/widgets/shared_widgets.dart';
+import '../../../core/widgets/steps/stepper.dart';
+import '../../../core/widgets/qr/qr_label.dart';
+import '../../../core/constants/app_constants.dart';
+import '../../../core/utils/code_formatters.dart';
 import '../controllers/cart_registration_controller.dart';
 
 class CartRegistration extends ConsumerStatefulWidget {
