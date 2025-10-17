@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../domain/models/kpi.dart';
 import '../../../core/services/providers.dart';
 import '../../../core/localization/app_localizations.dart';
+import '../../../core/theme/design_tokens.dart';
+import '../../../core/widgets/professional_app_bar.dart';
+import '../../../core/widgets/hamburger_menu.dart';
 import '../controllers/analytics_controller.dart';
 import '../widgets/export_modal.dart';
 import '../widgets/sections/kpi_cards_section.dart';
@@ -12,6 +16,8 @@ import '../widgets/sections/battery_health_section.dart';
 import '../widgets/sections/maintenance_distribution_section.dart';
 import '../widgets/sections/cost_analysis_section.dart';
 import '../widgets/sections/range_selector_widget.dart';
+import '../widgets/trend_indicator.dart';
+import '../widgets/mini_sparkline.dart';
 
 class AnalyticsDashboard extends ConsumerStatefulWidget {
   const AnalyticsDashboard({super.key});
@@ -30,19 +36,25 @@ class _AnalyticsDashboardState extends ConsumerState<AnalyticsDashboard> {
     final analyticsController = ref.read(analyticsControllerProvider.notifier);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(localizations.navAnalytics),
+      appBar: ProfessionalAppBar(
+        title: localizations.navAnalytics,
+        showBackButton: false,
+        showMenuButton: true,
+        showNotificationButton: true,
+        notificationBadgeCount: 3, // Mock count
+        onMenuPressed: () => _showHamburgerMenu(context),
+        onNotificationPressed: () => context.go('/al/center'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
+          AppBarActionButton(
+            icon: Icons.refresh,
             onPressed: () => analyticsController.refreshData(),
           ),
-          IconButton(
-            icon: const Icon(Icons.download),
+          AppBarActionButton(
+            icon: Icons.download,
             onPressed: () => _showExportModal(context, analyticsController),
           ),
-          IconButton(
-            icon: const Icon(Icons.fullscreen),
+          AppBarActionButton(
+            icon: Icons.fullscreen,
             onPressed: () => _toggleFullscreen(),
           ),
         ],
@@ -160,6 +172,15 @@ class _AnalyticsDashboardState extends ConsumerState<AnalyticsDashboard> {
         content: Text('Fullscreen mode coming soon'),
         backgroundColor: Colors.orange,
       ),
+    );
+  }
+
+  void _showHamburgerMenu(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => const HamburgerMenu(),
     );
   }
 }

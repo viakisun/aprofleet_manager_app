@@ -7,9 +7,17 @@ import '../../../core/services/providers.dart';
 import '../../../core/localization/app_localizations.dart';
 import '../../../core/widgets/shared_widgets.dart';
 import '../../../core/widgets/filter_sheet.dart';
+import '../../../core/widgets/professional_app_bar.dart';
+import '../../../core/widgets/hamburger_menu.dart';
+import '../../../core/widgets/custom_icons.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/utils/code_formatters.dart';
+import '../../../core/theme/design_tokens.dart';
 import '../controllers/cart_inventory_controller.dart';
+import '../widgets/cart_list_item.dart';
+import '../widgets/cart_grid_item.dart';
+import '../widgets/inventory_stats_bar.dart';
+import '../widgets/cart_filter_chips.dart';
 
 class CartInventoryList extends ConsumerStatefulWidget {
   const CartInventoryList({super.key});
@@ -38,21 +46,29 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
         ref.read(cartInventoryControllerProvider.notifier);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(localizations.navCartManagement),
+      backgroundColor: DesignTokens.bgPrimary,
+      appBar: ProfessionalAppBar(
+        title: localizations.navCartManagement,
+        showBackButton: false,
+        showMenuButton: true,
+        showNotificationButton: true,
+        notificationBadgeCount: 3, // Mock count
+        onMenuPressed: () => _showHamburgerMenu(context),
+        onNotificationPressed: () => context.go('/al/center'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
+          AppBarActionButton(
+            icon: CustomIcons.search,
             onPressed: () => _showSearchDialog(context, inventoryController),
           ),
-          IconButton(
-            icon: const Icon(Icons.filter_list),
+          AppBarActionButton(
+            icon: CustomIcons.filter,
             onPressed: () =>
                 _showFilterSheet(context, inventoryController, inventoryState),
           ),
-          IconButton(
-            icon:
-                Icon(_viewMode == ViewMode.list ? Icons.grid_view : Icons.list),
+          AppBarActionButton(
+            icon: _viewMode == ViewMode.list
+                ? CustomIcons.grid
+                : CustomIcons.list,
             onPressed: () {
               setState(() {
                 _viewMode =
@@ -60,8 +76,8 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
               });
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.add),
+          AppBarActionButton(
+            icon: CustomIcons.add,
             onPressed: () => context.go('/cm/register'),
           ),
         ],
@@ -102,30 +118,18 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
   }
 
   Widget _buildStatsBar(CartInventoryController controller) {
-    final stats = controller.getStats();
-
-    return Container(
-      height: 60,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1A1A1A),
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.white.withOpacity(0.06),
-            width: 1,
-          ),
-        ),
+    final inventoryState = ref.watch(cartInventoryControllerProvider);
+    return inventoryState.carts.when(
+      data: (carts) => InventoryStatsBar(carts: carts),
+      loading: () => Container(
+        height: 80,
+        padding: const EdgeInsets.all(DesignTokens.spacingMd),
+        child: const Center(child: CircularProgressIndicator()),
       ),
-      child: Row(
-        children: [
-          _buildStatChip('Total', stats['total'] ?? 0, Colors.white),
-          const SizedBox(width: 12),
-          _buildStatChip('Active', stats['active'] ?? 0, Colors.green),
-          const SizedBox(width: 12),
-          _buildStatChip('Service', stats['maintenance'] ?? 0, Colors.red),
-          const SizedBox(width: 12),
-          _buildStatChip('Charging', stats['charging'] ?? 0, Colors.blue),
-        ],
+      error: (error, stack) => Container(
+        height: 80,
+        padding: const EdgeInsets.all(DesignTokens.spacingMd),
+        child: Text('Error loading stats: $error'),
       ),
     );
   }
@@ -206,28 +210,45 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
 
   Widget _buildListView(List<Cart> carts) {
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(DesignTokens.spacingMd),
       itemCount: carts.length,
       itemBuilder: (context, index) {
         final cart = carts[index];
-        return _buildCartCard(cart, index);
+        return CartListItem(
+          cart: cart,
+          isSelected: _selectedCarts.contains(cart.id),
+          onTap: () => _handleCartTap(cart),
+          onLongPress: () => _handleCartLongPress(cart),
+          actions: [
+            if (_isSelectionMode)
+              Checkbox(
+                value: _selectedCarts.contains(cart.id),
+                onChanged: (_) => _handleCartSelection(cart),
+              ),
+          ],
+        );
       },
     );
   }
 
   Widget _buildGridView(List<Cart> carts) {
     return GridView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(DesignTokens.spacingMd),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 1.2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
+        crossAxisSpacing: DesignTokens.spacingMd,
+        mainAxisSpacing: DesignTokens.spacingMd,
       ),
       itemCount: carts.length,
       itemBuilder: (context, index) {
         final cart = carts[index];
-        return _buildCartGridCard(cart, index);
+        return CartGridItem(
+          cart: cart,
+          isSelected: _selectedCarts.contains(cart.id),
+          onTap: () => _handleCartTap(cart),
+          onLongPress: () => _handleCartLongPress(cart),
+        );
       },
     );
   }
@@ -705,6 +726,45 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
       _selectedCarts.clear();
       _isSelectionMode = false;
     });
+  }
+
+  void _handleCartTap(Cart cart) {
+    if (_isSelectionMode) {
+      _handleCartSelection(cart);
+    } else {
+      context.go('/rt/cart/${cart.id}');
+    }
+  }
+
+  void _handleCartLongPress(Cart cart) {
+    if (!_isSelectionMode) {
+      setState(() {
+        _isSelectionMode = true;
+        _selectedCarts.add(cart.id);
+      });
+    }
+  }
+
+  void _handleCartSelection(Cart cart) {
+    setState(() {
+      if (_selectedCarts.contains(cart.id)) {
+        _selectedCarts.remove(cart.id);
+        if (_selectedCarts.isEmpty) {
+          _isSelectionMode = false;
+        }
+      } else {
+        _selectedCarts.add(cart.id);
+      }
+    });
+  }
+
+  void _showHamburgerMenu(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => const HamburgerMenu(),
+    );
   }
 }
 

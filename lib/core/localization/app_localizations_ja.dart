@@ -5,7 +5,7 @@ class AppLocalizationsJa {
 
     // Navigation
     'navRealTime': 'リアルタイム',
-    'navCartManagement': 'カート管理',
+    'navCartManagement': 'カート',
     'navMaintenance': 'メンテナンス',
     'navAlerts': 'アラート',
     'navAnalytics': '分析',

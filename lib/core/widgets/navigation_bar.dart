@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../theme/app_theme.dart';
 import '../localization/app_localizations.dart';
+import '../theme/design_tokens.dart';
+import 'custom_icons.dart';
 
 class AppNavigationBar extends ConsumerWidget {
   const AppNavigationBar({super.key});
@@ -14,12 +16,12 @@ class AppNavigationBar extends ConsumerWidget {
     final currentLocation = GoRouterState.of(context).uri.path;
 
     return Container(
-      height: 80,
+      height: 75,
       decoration: BoxDecoration(
-        color: AppTheme.darkTheme.scaffoldBackgroundColor,
+        color: DesignTokens.bgPrimary,
         border: Border(
           top: BorderSide(
-            color: Colors.white.withOpacity(0.06),
+            color: DesignTokens.borderPrimary,
             width: 1,
           ),
         ),
@@ -29,32 +31,32 @@ class AppNavigationBar extends ConsumerWidget {
         children: [
           _buildNavItem(
             context,
-            icon: Icons.location_on_outlined,
-            activeIcon: Icons.location_on,
+            icon: CustomIcons.live,
+            activeIcon: CustomIcons.liveFilled,
             label: localizations.navRealTime,
             route: '/rt/map',
             isActive: currentLocation.startsWith('/rt'),
           ),
           _buildNavItem(
             context,
-            icon: Icons.directions_car_outlined,
-            activeIcon: Icons.directions_car,
+            icon: CustomIcons.carts,
+            activeIcon: CustomIcons.cartsFilled,
             label: localizations.navCartManagement,
             route: '/cm/list',
             isActive: currentLocation.startsWith('/cm'),
           ),
           _buildNavItem(
             context,
-            icon: Icons.build_outlined,
-            activeIcon: Icons.build,
+            icon: CustomIcons.work,
+            activeIcon: CustomIcons.workFilled,
             label: localizations.navMaintenance,
             route: '/mm/list',
             isActive: currentLocation.startsWith('/mm'),
           ),
           _buildNavItem(
             context,
-            icon: Icons.notifications_outlined,
-            activeIcon: Icons.notifications,
+            icon: CustomIcons.alerts,
+            activeIcon: CustomIcons.alertsFilled,
             label: localizations.navAlerts,
             route: '/al/center',
             isActive: currentLocation.startsWith('/al'),
@@ -62,8 +64,8 @@ class AppNavigationBar extends ConsumerWidget {
           ),
           _buildNavItem(
             context,
-            icon: Icons.analytics_outlined,
-            activeIcon: Icons.analytics,
+            icon: CustomIcons.analytics,
+            activeIcon: CustomIcons.analyticsFilled,
             label: localizations.navAnalytics,
             route: '/ar/dashboard',
             isActive: currentLocation.startsWith('/ar'),
@@ -84,8 +86,12 @@ class AppNavigationBar extends ConsumerWidget {
   }) {
     return GestureDetector(
       onTap: () => context.go(route),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8),
+      child: AnimatedContainer(
+        duration: DesignTokens.animationFast,
+        padding: const EdgeInsets.symmetric(
+          horizontal: DesignTokens.spacingSm,
+          vertical: DesignTokens.spacingSm,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -93,8 +99,10 @@ class AppNavigationBar extends ConsumerWidget {
               children: [
                 Icon(
                   isActive ? activeIcon : icon,
-                  color: isActive ? Colors.white : const Color(0xFF666666),
-                  size: 24,
+                  color: isActive
+                      ? DesignTokens.textPrimary
+                      : DesignTokens.textTertiary,
+                  size: CustomIcons.iconLg, // Larger icons
                 ),
                 if (badge != null && badge > 0)
                   Positioned(
@@ -103,7 +111,7 @@ class AppNavigationBar extends ConsumerWidget {
                     child: Container(
                       padding: const EdgeInsets.all(2),
                       decoration: const BoxDecoration(
-                        color: Color(0xFFEF4444),
+                        color: DesignTokens.alertCritical,
                         shape: BoxShape.circle,
                       ),
                       constraints: const BoxConstraints(
@@ -112,10 +120,10 @@ class AppNavigationBar extends ConsumerWidget {
                       ),
                       child: Text(
                         badge.toString(),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
+                        style: TextStyle(
+                          color: DesignTokens.textPrimary,
+                          fontSize: DesignTokens.fontSizeXs,
+                          fontWeight: DesignTokens.fontWeightSemibold,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -123,14 +131,15 @@ class AppNavigationBar extends ConsumerWidget {
                   ),
               ],
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: DesignTokens.spacingXs),
             Text(
               label,
-              style: TextStyle(
-                color: isActive ? Colors.white : const Color(0xFF666666),
-                fontSize: 10,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0.5,
+              style: DesignTokens.getUppercaseLabelStyle(
+                fontSize: DesignTokens.fontSizeXs,
+                fontWeight: DesignTokens.fontWeightMedium,
+                color: isActive
+                    ? DesignTokens.textPrimary
+                    : DesignTokens.textTertiary,
               ),
             ),
           ],

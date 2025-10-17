@@ -5,7 +5,7 @@ class AppLocalizationsKo {
 
     // Navigation
     'navRealTime': '실시간',
-    'navCartManagement': '카트 관리',
+    'navCartManagement': '카트',
     'navMaintenance': '정비',
     'navAlerts': '알림',
     'navAnalytics': '분석',

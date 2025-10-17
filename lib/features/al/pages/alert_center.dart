@@ -7,13 +7,18 @@ import '../../../domain/models/work_order.dart';
 import '../../../core/services/providers.dart';
 import '../../../core/localization/app_localizations.dart';
 import '../../../core/widgets/shared_widgets.dart';
+import '../../../core/widgets/professional_app_bar.dart';
+import '../../../core/widgets/hamburger_menu.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/utils/code_formatters.dart';
+import '../../../core/theme/design_tokens.dart';
 import '../controllers/alert_controller.dart';
 import '../widgets/alert_card.dart';
 import '../widgets/alert_filters.dart';
 import '../widgets/alert_detail_modal.dart';
 import '../widgets/alert_rules_panel.dart';
+import '../widgets/alert_summary_cards.dart';
+import '../widgets/escalation_path.dart';
 
 class AlertCenter extends ConsumerStatefulWidget {
   const AlertCenter({super.key});
@@ -46,55 +51,66 @@ class _AlertCenterState extends ConsumerState<AlertCenter>
     final alertController = ref.read(alertControllerProvider.notifier);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(localizations.navAlerts),
+      appBar: ProfessionalAppBar(
+        title: localizations.navAlerts,
+        showBackButton: false,
+        showMenuButton: true,
+        showNotificationButton: false, // No notification button on alerts page
+        onMenuPressed: () => _showHamburgerMenu(context),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
+          AppBarActionButton(
+            icon: Icons.search,
             onPressed: () => _showSearchDialog(context, alertController),
           ),
-          IconButton(
-            icon: const Icon(Icons.filter_list),
+          AppBarActionButton(
+            icon: Icons.filter_list,
             onPressed: () =>
                 _showFilterSheet(context, alertController, alertState),
           ),
-          IconButton(
-            icon: const Icon(Icons.done_all),
+          AppBarActionButton(
+            icon: Icons.done_all,
             onPressed: () => alertController.markAllRead(),
           ),
-          IconButton(
-            icon: Icon(alertState.isMuted
+          AppBarActionButton(
+            icon: alertState.isMuted
                 ? Icons.notifications_off
-                : Icons.notifications),
+                : Icons.notifications,
             onPressed: () => alertController.toggleMute(),
           ),
-          IconButton(
-            icon: const Icon(Icons.settings),
+          AppBarActionButton(
+            icon: Icons.settings,
             onPressed: () => _showSettingsPanel(context, alertController),
           ),
         ],
-        bottom: TabBar(
-          controller: _tabController,
-          isScrollable: true,
-          tabs: const [
-            Tab(text: 'All'),
-            Tab(text: 'Unread'),
-            Tab(text: 'Cart'),
-            Tab(text: 'Battery'),
-            Tab(text: 'Maintenance'),
-            Tab(text: 'Geofence'),
-            Tab(text: 'System'),
-          ],
-          onTap: (index) {
-            _currentFilter = AlertFilterType.values[index];
-            alertController.setFilter(_getFilterForTab(_currentFilter));
-          },
-        ),
       ),
       body: Column(
         children: [
+          // Tab Bar
+          Container(
+            color: DesignTokens.bgPrimary,
+            child: TabBar(
+              controller: _tabController,
+              isScrollable: true,
+              tabs: const [
+                Tab(text: 'All'),
+                Tab(text: 'Unread'),
+                Tab(text: 'Cart'),
+                Tab(text: 'Battery'),
+                Tab(text: 'Maintenance'),
+                Tab(text: 'Geofence'),
+                Tab(text: 'System'),
+              ],
+              onTap: (index) {
+                _currentFilter = AlertFilterType.values[index];
+                alertController.setFilter(_getFilterForTab(_currentFilter));
+              },
+            ),
+          ),
+
           // Summary Bar
-          _buildSummaryBar(alertController),
+          AlertSummaryCards(
+            alerts: alertState.alerts.valueOrNull ?? [],
+          ),
 
           // Content
           Expanded(
@@ -365,6 +381,15 @@ class _AlertCenterState extends ConsumerState<AlertCenter>
         content: Text('Export functionality coming soon'),
         backgroundColor: Colors.orange,
       ),
+    );
+  }
+
+  void _showHamburgerMenu(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => const HamburgerMenu(),
     );
   }
 }

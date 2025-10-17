@@ -5,6 +5,7 @@ import '../../domain/models/cart.dart';
 import '../../core/localization/app_localizations.dart';
 import '../../core/widgets/shared_widgets.dart';
 import '../../core/constants/app_constants.dart';
+import '../../core/theme/design_tokens.dart';
 
 class FilterSheet extends StatelessWidget {
   final Set<CartStatus> activeFilters;
@@ -22,11 +23,8 @@ class FilterSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
 
-    return Container(
-      decoration: const BoxDecoration(
-        color: Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
+    return BaseModal(
+      title: 'FILTER CARTS',
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

@@ -4,13 +4,18 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/localization/app_localizations.dart';
 import '../../../core/widgets/shared_widgets.dart';
-import '../../../core/widgets/status_bar.dart';
+import '../../../core/widgets/status_bar.dart' as status_bar;
 import '../../../core/widgets/filter_sheet.dart';
+import '../../../core/widgets/professional_app_bar.dart';
+import '../../../core/widgets/hamburger_menu.dart';
 import '../../../core/services/map/canvas_map_view.dart';
 import '../../../domain/models/cart.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/utils/code_formatters.dart';
+import '../../../core/theme/design_tokens.dart';
 import '../controllers/live_map_controller.dart';
+import '../widgets/map_cart_marker.dart';
+import '../widgets/map_controls.dart';
 
 class LiveMapView extends ConsumerStatefulWidget {
   const LiveMapView({super.key});
@@ -36,15 +41,18 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
     final mapController = ref.read(liveMapControllerProvider.notifier);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(localizations.navRealTime),
+      backgroundColor: DesignTokens.bgPrimary,
+      appBar: ProfessionalAppBar(
+        title: localizations.navRealTime,
+        showBackButton: false,
+        showMenuButton: true,
+        showNotificationButton: true,
+        notificationBadgeCount: 3, // Mock count
+        onMenuPressed: () => _showHamburgerMenu(context),
+        onNotificationPressed: () => context.go('/al/center'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () => _showSearchDialog(context, mapController),
-          ),
-          IconButton(
-            icon: const Icon(Icons.filter_list),
+          AppBarActionButton(
+            icon: Icons.filter_list,
             onPressed: () => _showFilterSheet(context, mapController, mapState),
           ),
         ],
@@ -65,10 +73,18 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
                   onCenterChanged: mapController.setCenterOffset,
                 ),
 
+                // Search Bar with Glass Morphism
+                Positioned(
+                  top: DesignTokens.spacingMd,
+                  left: DesignTokens.spacingMd,
+                  right: DesignTokens.spacingMd,
+                  child: _buildSearchBar(mapController),
+                ),
+
                 // Zoom Controls
                 Positioned(
-                  right: 16,
-                  top: 16,
+                  right: DesignTokens.spacingMd,
+                  top: 80, // Below search bar
                   child: Column(
                     children: [
                       FloatingActionButton.small(
@@ -80,10 +96,11 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
                           );
                           mapController.setZoom(newZoom);
                         },
-                        backgroundColor: const Color(0xFF1A1A1A),
-                        child: const Icon(Icons.add, color: Colors.white),
+                        backgroundColor:
+                            DesignTokens.bgSecondary.withOpacity(0.8),
+                        child: Icon(Icons.add, color: DesignTokens.textPrimary),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: DesignTokens.spacingXs),
                       FloatingActionButton.small(
                         heroTag: 'zoom_out',
                         onPressed: () {
@@ -93,8 +110,10 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
                           );
                           mapController.setZoom(newZoom);
                         },
-                        backgroundColor: const Color(0xFF1A1A1A),
-                        child: const Icon(Icons.remove, color: Colors.white),
+                        backgroundColor:
+                            DesignTokens.bgSecondary.withOpacity(0.8),
+                        child:
+                            Icon(Icons.remove, color: DesignTokens.textPrimary),
                       ),
                     ],
                   ),
@@ -114,7 +133,7 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
           ),
 
           // Status Bar
-          StatusBar(
+          status_bar.StatusBar(
             statusCounts: mapController.statusCounts,
             activeFilters: mapState.statusFilters,
             onFilterTap: mapController.toggleStatusFilter,
@@ -329,6 +348,83 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildSearchBar(LiveMapController controller) {
+    return Container(
+      decoration: BoxDecoration(
+        color: DesignTokens.bgSecondary.withOpacity(0.8),
+        borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
+        border: Border.all(
+          color: DesignTokens.borderPrimary,
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: DesignTokens.bgPrimary.withOpacity(0.3),
+            blurRadius: 10,
+            spreadRadius: 0,
+          ),
+        ],
+      ),
+      child: TextField(
+        controller: _searchController,
+        style: TextStyle(
+          color: DesignTokens.textPrimary,
+          fontSize: DesignTokens.fontSizeMd,
+        ),
+        decoration: InputDecoration(
+          hintText: 'Search carts...',
+          hintStyle: TextStyle(
+            color: DesignTokens.textTertiary,
+            fontSize: DesignTokens.fontSizeMd,
+          ),
+          prefixIcon: Icon(
+            Icons.search,
+            color: DesignTokens.textSecondary,
+            size: DesignTokens.iconMd,
+          ),
+          suffixIcon: _searchController.text.isNotEmpty
+              ? IconButton(
+                  icon: Icon(
+                    Icons.clear,
+                    color: DesignTokens.textSecondary,
+                    size: DesignTokens.iconSm,
+                  ),
+                  onPressed: () {
+                    _searchController.clear();
+                    controller.clearSearch();
+                  },
+                )
+              : IconButton(
+                  icon: Icon(
+                    Icons.filter_list,
+                    color: DesignTokens.textSecondary,
+                    size: DesignTokens.iconSm,
+                  ),
+                  onPressed: () => _showFilterSheet(context, controller,
+                      ref.watch(liveMapControllerProvider)),
+                ),
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: DesignTokens.spacingMd,
+            vertical: DesignTokens.spacingSm,
+          ),
+        ),
+        onChanged: (value) {
+          controller.searchCarts(value);
+        },
+      ),
+    );
+  }
+
+  void _showHamburgerMenu(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => const HamburgerMenu(),
     );
   }
 }

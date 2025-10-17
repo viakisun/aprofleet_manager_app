@@ -4,6 +4,7 @@ import '../../domain/models/cart.dart';
 import '../../domain/models/work_order.dart';
 import '../../domain/models/alert.dart';
 import '../constants/app_constants.dart';
+import '../theme/design_tokens.dart';
 
 class CartStatusChip extends StatelessWidget {
   final CartStatus status;
@@ -17,30 +18,58 @@ class CartStatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = AppConstants.statusColors[status] ?? Colors.grey;
+    final color = DesignTokens.getStatusColor(status.name);
     final text = status.displayName;
 
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: isCompact ? 8 : 12,
-        vertical: isCompact ? 2 : 4,
-      ),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(isCompact ? 8 : 12),
+        color: DesignTokens.bgTertiary,
+        borderRadius: BorderRadius.circular(
+          isCompact ? DesignTokens.radiusSm : DesignTokens.radiusMd,
+        ),
         border: Border.all(
-          color: color.withOpacity(0.3),
-          width: 1,
+          color: DesignTokens.borderPrimary,
+          width: 1.0,
         ),
       ),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: color,
-          fontSize: isCompact ? 10 : 12,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0.5,
-        ),
+      child: Stack(
+        children: [
+          // Colored left border
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  isCompact ? DesignTokens.radiusSm : DesignTokens.radiusMd,
+                ),
+                border: Border(
+                  left: BorderSide(
+                    color: color,
+                    width: 3.0,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          // Content
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal:
+                  isCompact ? DesignTokens.spacingSm : DesignTokens.spacingMd,
+              vertical:
+                  isCompact ? DesignTokens.spacingXs : DesignTokens.spacingXs,
+            ),
+            child: Text(
+              text.toUpperCase(),
+              style: DesignTokens.getUppercaseLabelStyle(
+                fontSize: isCompact
+                    ? DesignTokens.fontSizeXs
+                    : DesignTokens.fontSizeSm,
+                fontWeight: DesignTokens.fontWeightSemibold,
+                color: color,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -58,7 +87,7 @@ class PriorityIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = AppConstants.priorityColors[priority] ?? Colors.grey;
+    final color = DesignTokens.getPriorityColor(priority.name);
     final text = priority.displayName;
 
     return Row(
@@ -73,14 +102,13 @@ class PriorityIndicator extends StatelessWidget {
           ),
         ),
         if (showText) ...[
-          const SizedBox(width: 8),
+          SizedBox(width: DesignTokens.spacingSm),
           Text(
-            text,
-            style: TextStyle(
+            text.toUpperCase(),
+            style: DesignTokens.getUppercaseLabelStyle(
+              fontSize: DesignTokens.fontSizeSm,
+              fontWeight: DesignTokens.fontWeightSemibold,
               color: color,
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0.5,
             ),
           ),
         ],
@@ -107,16 +135,16 @@ class AlertBadge extends StatelessWidget {
       width: size,
       height: size,
       decoration: const BoxDecoration(
-        color: Color(0xFFEF4444),
+        color: DesignTokens.alertCritical,
         shape: BoxShape.circle,
       ),
       child: Center(
         child: Text(
           count > 99 ? '99+' : count.toString(),
           style: TextStyle(
-            color: Colors.white,
+            color: DesignTokens.textPrimary,
             fontSize: size * 0.5,
-            fontWeight: FontWeight.w600,
+            fontWeight: DesignTokens.fontWeightSemibold,
           ),
         ),
       ),
@@ -142,31 +170,25 @@ class TelemetryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final displayColor = color ?? Colors.white;
+    final displayColor = color ?? DesignTokens.textPrimary;
 
     return Container(
-      padding: EdgeInsets.all(isCompact ? 8 : 12),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.06),
-          width: 1,
-        ),
-      ),
+      padding: EdgeInsets.all(
+          isCompact ? DesignTokens.spacingSm : DesignTokens.spacingMd),
+      decoration: DesignTokens.getCardDecoration(),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            label,
-            style: TextStyle(
-              color: Colors.white.withOpacity(0.7),
-              fontSize: isCompact ? 10 : 12,
-              fontWeight: FontWeight.w500,
-              letterSpacing: 0.5,
+            label.toUpperCase(),
+            style: DesignTokens.getUppercaseLabelStyle(
+              fontSize:
+                  isCompact ? DesignTokens.fontSizeXs : DesignTokens.fontSizeSm,
+              fontWeight: DesignTokens.fontWeightMedium,
+              color: DesignTokens.textSecondary,
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: DesignTokens.spacingXs),
           Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -176,17 +198,21 @@ class TelemetryWidget extends StatelessWidget {
                 value.toStringAsFixed(1),
                 style: TextStyle(
                   color: displayColor,
-                  fontSize: isCompact ? 16 : 20,
-                  fontWeight: FontWeight.w700,
+                  fontSize: isCompact
+                      ? DesignTokens.fontSizeLg
+                      : DesignTokens.fontSizeXl,
+                  fontWeight: DesignTokens.fontWeightBold,
                 ),
               ),
-              const SizedBox(width: 2),
+              SizedBox(width: DesignTokens.spacingXs),
               Text(
                 unit,
                 style: TextStyle(
                   color: displayColor.withOpacity(0.7),
-                  fontSize: isCompact ? 10 : 12,
-                  fontWeight: FontWeight.w500,
+                  fontSize: isCompact
+                      ? DesignTokens.fontSizeXs
+                      : DesignTokens.fontSizeSm,
+                  fontWeight: DesignTokens.fontWeightMedium,
                 ),
               ),
             ],
@@ -197,7 +223,7 @@ class TelemetryWidget extends StatelessWidget {
   }
 }
 
-class ActionButton extends StatelessWidget {
+class ActionButton extends StatefulWidget {
   final String text;
   final VoidCallback? onPressed;
   final ActionButtonType type;
@@ -214,65 +240,120 @@ class ActionButton extends StatelessWidget {
   });
 
   @override
+  State<ActionButton> createState() => _ActionButtonState();
+}
+
+class _ActionButtonState extends State<ActionButton>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 150),
+      vsync: this,
+    );
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.95,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    ));
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Color backgroundColor;
     Color foregroundColor;
+    Color? borderColor;
 
-    switch (type) {
+    switch (widget.type) {
       case ActionButtonType.primary:
-        backgroundColor = Colors.white;
-        foregroundColor = Colors.black;
+        backgroundColor = DesignTokens.textPrimary;
+        foregroundColor = DesignTokens.bgPrimary;
         break;
       case ActionButtonType.secondary:
         backgroundColor = Colors.transparent;
-        foregroundColor = Colors.white;
+        foregroundColor = DesignTokens.textPrimary;
+        borderColor = DesignTokens.borderSecondary;
         break;
       case ActionButtonType.destructive:
-        backgroundColor = const Color(0xFFEF4444);
-        foregroundColor = Colors.white;
+        backgroundColor = DesignTokens.alertCritical;
+        foregroundColor = DesignTokens.textPrimary;
         break;
     }
 
-    return ElevatedButton(
-      onPressed: isLoading ? null : onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor,
-        foregroundColor: foregroundColor,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: type == ActionButtonType.secondary
-              ? BorderSide(color: Colors.white.withOpacity(0.2))
-              : BorderSide.none,
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      ),
-      child: isLoading
-          ? const SizedBox(
-              width: 20,
-              height: 20,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+    return AnimatedBuilder(
+      animation: _scaleAnimation,
+      builder: (context, child) {
+        return Transform.scale(
+          scale: _scaleAnimation.value,
+          child: ElevatedButton(
+            onPressed: widget.isLoading
+                ? null
+                : () {
+                    _animationController.forward().then((_) {
+                      _animationController.reverse();
+                    });
+                    widget.onPressed?.call();
+                  },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: backgroundColor,
+              foregroundColor: foregroundColor,
+              elevation: DesignTokens.elevationNone,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
+                side: borderColor != null
+                    ? BorderSide(color: borderColor)
+                    : BorderSide.none,
               ),
-            )
-          : Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (icon != null) ...[
-                  Icon(icon, size: 16),
-                  const SizedBox(width: 8),
-                ],
-                Text(
-                  text,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-              ],
+              padding: EdgeInsets.symmetric(
+                horizontal: DesignTokens.spacingLg,
+                vertical: DesignTokens.spacingMd,
+              ),
             ),
+            child: widget.isLoading
+                ? SizedBox(
+                    width: DesignTokens.iconSm,
+                    height: DesignTokens.iconSm,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        widget.type == ActionButtonType.primary
+                            ? DesignTokens.bgPrimary
+                            : DesignTokens.textPrimary,
+                      ),
+                    ),
+                  )
+                : Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (widget.icon != null) ...[
+                        Icon(widget.icon, size: DesignTokens.iconSm),
+                        SizedBox(width: DesignTokens.spacingSm),
+                      ],
+                      Text(
+                        widget.text.toUpperCase(),
+                        style: TextStyle(
+                          fontSize: DesignTokens.fontSizeMd,
+                          fontWeight: DesignTokens.fontWeightSemibold,
+                          letterSpacing: DesignTokens.letterSpacingWide,
+                        ),
+                      ),
+                    ],
+                  ),
+          ),
+        );
+      },
     );
   }
 }
@@ -281,4 +362,270 @@ enum ActionButtonType {
   primary,
   secondary,
   destructive,
+}
+
+/// Base modal widget with slide-up animation
+class BaseModal extends StatelessWidget {
+  final Widget child;
+  final String? title;
+  final List<Widget>? actions;
+
+  const BaseModal({
+    super.key,
+    required this.child,
+    this.title,
+    this.actions,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: DesignTokens.bgTertiary,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(DesignTokens.radiusLg),
+          topRight: Radius.circular(DesignTokens.radiusLg),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Handle bar
+          Container(
+            margin: const EdgeInsets.only(top: DesignTokens.spacingSm),
+            width: 40,
+            height: 4,
+            decoration: BoxDecoration(
+              color: DesignTokens.textTertiary,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+
+          // Header
+          if (title != null) ...[
+            Padding(
+              padding: const EdgeInsets.all(DesignTokens.spacingLg),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      title!,
+                      style: TextStyle(
+                        fontSize: DesignTokens.fontSizeXl,
+                        fontWeight: DesignTokens.fontWeightBold,
+                        color: DesignTokens.textPrimary,
+                      ),
+                    ),
+                  ),
+                  if (actions != null) ...actions!,
+                ],
+              ),
+            ),
+          ],
+
+          // Content
+          Flexible(child: child),
+        ],
+      ),
+    );
+  }
+}
+
+/// Status bar widget for displaying cart counts
+class StatusBar extends StatelessWidget {
+  final Map<String, int> statusCounts;
+  final VoidCallback? onTap;
+
+  const StatusBar({
+    super.key,
+    required this.statusCounts,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: DesignTokens.spacingMd,
+        vertical: DesignTokens.spacingSm,
+      ),
+      decoration: BoxDecoration(
+        color: DesignTokens.bgSecondary,
+        border: Border(
+          top: BorderSide(color: DesignTokens.borderPrimary),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _buildStatusItem(
+              'TOTAL', statusCounts['total'] ?? 0, DesignTokens.textPrimary),
+          _buildStatusItem(
+              'ACTIVE', statusCounts['active'] ?? 0, DesignTokens.statusActive),
+          _buildStatusItem('SERVICE', statusCounts['maintenance'] ?? 0,
+              DesignTokens.statusMaintenance),
+          _buildStatusItem('CHARGING', statusCounts['charging'] ?? 0,
+              DesignTokens.statusCharging),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatusItem(String label, int count, Color color) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            count.toString(),
+            style: TextStyle(
+              fontSize: DesignTokens.fontSizeLg,
+              fontWeight: DesignTokens.fontWeightBold,
+              color: color,
+            ),
+          ),
+          const SizedBox(height: DesignTokens.spacingXs),
+          Text(
+            label,
+            style: DesignTokens.getUppercaseLabelStyle(
+              fontSize: DesignTokens.fontSizeXs,
+              color: DesignTokens.textTertiary,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Progress indicator with steps
+class StepProgressIndicator extends StatelessWidget {
+  final int currentStep;
+  final int totalSteps;
+  final List<String>? stepLabels;
+
+  const StepProgressIndicator({
+    super.key,
+    required this.currentStep,
+    required this.totalSteps,
+    this.stepLabels,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: List.generate(totalSteps, (index) {
+            final isActive = index <= currentStep;
+            final isCompleted = index < currentStep;
+
+            return Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 2,
+                      decoration: BoxDecoration(
+                        color: isCompleted
+                            ? DesignTokens.statusActive
+                            : DesignTokens.borderPrimary,
+                      ),
+                    ),
+                  ),
+                  if (index < totalSteps - 1)
+                    Container(
+                      width: 2,
+                      height: 2,
+                    ),
+                ],
+              ),
+            );
+          }),
+        ),
+        if (stepLabels != null) ...[
+          const SizedBox(height: DesignTokens.spacingSm),
+          Row(
+            children: List.generate(totalSteps, (index) {
+              final isActive = index <= currentStep;
+              final label = stepLabels![index];
+
+              return Expanded(
+                child: Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: DesignTokens.getUppercaseLabelStyle(
+                    fontSize: DesignTokens.fontSizeXs,
+                    color: isActive
+                        ? DesignTokens.textPrimary
+                        : DesignTokens.textTertiary,
+                  ),
+                ),
+              );
+            }),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+/// Glass morphism search bar
+class GlassSearchBar extends StatelessWidget {
+  final String hintText;
+  final TextEditingController? controller;
+  final ValueChanged<String>? onChanged;
+  final VoidCallback? onFilterTap;
+
+  const GlassSearchBar({
+    super.key,
+    this.hintText = 'Search...',
+    this.controller,
+    this.onChanged,
+    this.onFilterTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(DesignTokens.spacingMd),
+      decoration: DesignTokens.getGlassMorphismDecoration(),
+      child: TextField(
+        controller: controller,
+        onChanged: onChanged,
+        style: TextStyle(
+          color: DesignTokens.textPrimary,
+          fontSize: DesignTokens.fontSizeMd,
+        ),
+        decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: TextStyle(
+            color: DesignTokens.textTertiary,
+            fontSize: DesignTokens.fontSizeMd,
+          ),
+          prefixIcon: Icon(
+            Icons.search,
+            color: DesignTokens.textSecondary,
+            size: DesignTokens.iconMd,
+          ),
+          suffixIcon: onFilterTap != null
+              ? IconButton(
+                  icon: Icon(
+                    Icons.tune,
+                    color: DesignTokens.textSecondary,
+                    size: DesignTokens.iconMd,
+                  ),
+                  onPressed: onFilterTap,
+                )
+              : null,
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: DesignTokens.spacingMd,
+            vertical: DesignTokens.spacingMd,
+          ),
+        ),
+      ),
+    );
+  }
 }

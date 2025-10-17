@@ -20,7 +20,7 @@ class AproFleetApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final initializeAsync = ref.watch(initializeAppProvider);
-    
+
     return initializeAsync.when(
       data: (_) => MaterialApp.router(
         title: 'AproFleet Manager',

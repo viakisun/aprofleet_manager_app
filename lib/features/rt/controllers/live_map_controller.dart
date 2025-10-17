@@ -47,6 +47,14 @@ class LiveMapController extends StateNotifier<LiveMapState> {
     state = state.copyWith(searchQuery: query);
   }
 
+  void searchCarts(String query) {
+    state = state.copyWith(searchQuery: query);
+  }
+
+  void clearSearch() {
+    state = state.copyWith(searchQuery: '');
+  }
+
   void setZoom(double zoom) {
     state = state.copyWith(zoom: zoom);
   }

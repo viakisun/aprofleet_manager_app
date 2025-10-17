@@ -6,8 +6,11 @@ import '../../../domain/models/work_order.dart';
 import '../../../core/services/providers.dart';
 import '../../../core/localization/app_localizations.dart';
 import '../../../core/widgets/shared_widgets.dart';
+import '../../../core/widgets/professional_app_bar.dart';
+import '../../../core/widgets/hamburger_menu.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/utils/code_formatters.dart';
+import '../../../core/theme/design_tokens.dart';
 import '../controllers/work_order_controller.dart';
 import '../widgets/wo_card.dart';
 import '../widgets/wo_timeline.dart';
@@ -44,13 +47,19 @@ class _WorkOrderListState extends ConsumerState<WorkOrderList>
     final workOrderController = ref.read(workOrderControllerProvider.notifier);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(localizations.navMaintenance),
+      appBar: ProfessionalAppBar(
+        title: localizations.navMaintenance,
+        showBackButton: false,
+        showMenuButton: true,
+        showNotificationButton: true,
+        notificationBadgeCount: 3, // Mock count
+        onMenuPressed: () => _showHamburgerMenu(context),
+        onNotificationPressed: () => context.go('/al/center'),
         actions: [
-          IconButton(
-            icon: Icon(_viewMode == WorkOrderViewMode.list
+          AppBarActionButton(
+            icon: _viewMode == WorkOrderViewMode.list
                 ? Icons.timeline
-                : Icons.list),
+                : Icons.list,
             onPressed: () {
               setState(() {
                 _viewMode = _viewMode == WorkOrderViewMode.list
@@ -59,29 +68,34 @@ class _WorkOrderListState extends ConsumerState<WorkOrderList>
               });
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.add),
+          AppBarActionButton(
+            icon: Icons.add,
             onPressed: () => context.go('/mm/create'),
           ),
         ],
-        bottom: TabBar(
-          controller: _tabController,
-          isScrollable: true,
-          tabs: const [
-            Tab(text: 'All'),
-            Tab(text: 'Urgent'),
-            Tab(text: 'Pending'),
-            Tab(text: 'In Progress'),
-            Tab(text: 'Completed'),
-            Tab(text: 'Timeline'),
-          ],
-          onTap: (index) {
-            workOrderController.setFilter(_getFilterForTab(index));
-          },
-        ),
       ),
       body: Column(
         children: [
+          // Tab Bar
+          Container(
+            color: DesignTokens.bgPrimary,
+            child: TabBar(
+              controller: _tabController,
+              isScrollable: true,
+              tabs: const [
+                Tab(text: 'All'),
+                Tab(text: 'Urgent'),
+                Tab(text: 'Pending'),
+                Tab(text: 'In Progress'),
+                Tab(text: 'Completed'),
+                Tab(text: 'Timeline'),
+              ],
+              onTap: (index) {
+                workOrderController.setFilter(_getFilterForTab(index));
+              },
+            ),
+          ),
+
           // Stats Bar
           _buildStatsBar(workOrderController),
 
@@ -118,25 +132,30 @@ class _WorkOrderListState extends ConsumerState<WorkOrderList>
 
     return Container(
       height: 60,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(
+          horizontal: DesignTokens.spacingMd, vertical: DesignTokens.spacingSm),
       decoration: BoxDecoration(
-        color: const Color(0xFF1A1A1A),
+        color: DesignTokens.bgSecondary,
         border: Border(
           bottom: BorderSide(
-            color: Colors.white.withOpacity(0.06),
+            color: DesignTokens.borderPrimary,
             width: 1,
           ),
         ),
       ),
       child: Row(
         children: [
-          _buildStatChip('Urgent', stats['urgent'] ?? 0, Colors.red),
-          const SizedBox(width: 12),
-          _buildStatChip('Pending', stats['pending'] ?? 0, Colors.orange),
-          const SizedBox(width: 12),
-          _buildStatChip('In Progress', stats['inProgress'] ?? 0, Colors.blue),
-          const SizedBox(width: 12),
-          _buildStatChip('Today', stats['today'] ?? 0, Colors.green),
+          _buildStatChip(
+              'URGENT', stats['urgent'] ?? 0, DesignTokens.statusCritical),
+          const SizedBox(width: DesignTokens.spacingSm),
+          _buildStatChip(
+              'PENDING', stats['pending'] ?? 0, DesignTokens.statusWarning),
+          const SizedBox(width: DesignTokens.spacingSm),
+          _buildStatChip('IN PROGRESS', stats['inProgress'] ?? 0,
+              DesignTokens.statusActive),
+          const SizedBox(width: DesignTokens.spacingSm),
+          _buildStatChip(
+              'TODAY', stats['today'] ?? 0, DesignTokens.statusCharging),
         ],
       ),
     );
@@ -144,10 +163,11 @@ class _WorkOrderListState extends ConsumerState<WorkOrderList>
 
   Widget _buildStatChip(String label, int count, Color color) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(
+          horizontal: DesignTokens.spacingSm, vertical: DesignTokens.spacingXs),
       decoration: BoxDecoration(
         color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
         border: Border.all(
           color: color.withOpacity(0.3),
           width: 1,
@@ -157,29 +177,29 @@ class _WorkOrderListState extends ConsumerState<WorkOrderList>
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 8,
-            height: 8,
+            width: DesignTokens.spacingSm,
+            height: DesignTokens.spacingSm,
             decoration: BoxDecoration(
               color: color,
               shape: BoxShape.circle,
             ),
           ),
-          const SizedBox(width: 6),
+          const SizedBox(width: DesignTokens.spacingXs),
           Text(
             label,
             style: TextStyle(
               color: color,
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
+              fontSize: DesignTokens.fontSizeSm,
+              fontWeight: DesignTokens.fontWeightSemibold,
             ),
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: DesignTokens.spacingXs),
           Text(
             count.toString(),
             style: TextStyle(
               color: color,
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
+              fontSize: DesignTokens.fontSizeSm,
+              fontWeight: DesignTokens.fontWeightBold,
             ),
           ),
         ],
@@ -258,6 +278,15 @@ class _WorkOrderListState extends ConsumerState<WorkOrderList>
           controller.updateWorkOrder(updatedWorkOrder);
         },
       ),
+    );
+  }
+
+  void _showHamburgerMenu(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => const HamburgerMenu(),
     );
   }
 }

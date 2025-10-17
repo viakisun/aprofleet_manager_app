@@ -15,7 +15,12 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart' hide Stepper;
 import '../../../core/constants/app_constants.dart';
 import '../../../core/utils/code_formatters.dart';
+import '../../../core/theme/design_tokens.dart';
 import '../controllers/create_wo_controller.dart';
+import '../widgets/work_order_type_selector.dart';
+import '../widgets/priority_selector.dart';
+import '../widgets/technician_selector.dart';
+import '../widgets/parts_list.dart';
 
 class CreateWorkOrder extends ConsumerStatefulWidget {
   final String? preselectedCartId;
@@ -161,26 +166,11 @@ class _CreateWorkOrderState extends ConsumerState<CreateWorkOrder> {
           const SizedBox(height: 12),
 
           // Type Selection
-          DropdownButtonFormField<WorkOrderType>(
-            value: createWoState.draft.type,
-            decoration: const InputDecoration(
-              labelText: 'Type',
-              labelStyle: TextStyle(color: Colors.white),
-              border: OutlineInputBorder(),
-            ),
-            dropdownColor: const Color(0xFF1A1A1A),
-            style: const TextStyle(color: Colors.white),
-            items: WorkOrderType.values.map((type) {
-              return DropdownMenuItem(
-                value: type,
-                child: Text(type.displayName),
-              );
-            }).toList(),
-            onChanged: (type) {
-              if (type != null) {
-                _controller.setType(type);
-                _controller.setAutoPriority(type);
-              }
+          WorkOrderTypeSelector(
+            selectedType: createWoState.draft.type,
+            onTypeSelected: (type) {
+              _controller.setType(type);
+              _controller.setAutoPriority(type);
             },
           ),
 
@@ -198,58 +188,9 @@ class _CreateWorkOrderState extends ConsumerState<CreateWorkOrder> {
           const SizedBox(height: 12),
 
           // Priority Selection
-          Row(
-            children: Priority.values.map((priority) {
-              final isSelected = createWoState.draft.priority == priority;
-              final color =
-                  AppConstants.priorityColors[priority] ?? Colors.grey;
-
-              return Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: GestureDetector(
-                    onTap: () => _controller.setPriority(priority),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? color.withOpacity(0.2)
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: isSelected
-                              ? color
-                              : Colors.white.withOpacity(0.3),
-                          width: 1,
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            priority.displayName,
-                            style: TextStyle(
-                              color: isSelected ? color : Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            priority.fullName,
-                            style: TextStyle(
-                              color: isSelected
-                                  ? color
-                                  : Colors.white.withOpacity(0.7),
-                              fontSize: 10,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }).toList(),
+          PrioritySelector(
+            selectedPriority: createWoState.draft.priority,
+            onPrioritySelected: _controller.setPriority,
           ),
 
           const SizedBox(height: 20),
@@ -496,26 +437,11 @@ class _CreateWorkOrderState extends ConsumerState<CreateWorkOrder> {
           const SizedBox(height: 12),
 
           // Technician Selection
-          DropdownButtonFormField<String>(
-            value: createWoState.draft.technician,
-            decoration: const InputDecoration(
-              labelText: 'Technician',
-              labelStyle: TextStyle(color: Colors.white),
-              border: OutlineInputBorder(),
-            ),
-            dropdownColor: const Color(0xFF1A1A1A),
-            style: const TextStyle(color: Colors.white),
-            items: AppConstants.technicians.map((tech) {
-              return DropdownMenuItem<String>(
-                value: tech['name'],
-                child: Text('${tech['name']} (${tech['skill']})'),
-              );
-            }).toList(),
-            onChanged: (technician) {
-              if (technician != null) {
-                _controller.setTechnician(technician);
-              }
-            },
+          TechnicianSelector(
+            selectedTechnician:
+                _getTechnicianByName(createWoState.draft.technician),
+            onTechnicianSelected: (technician) =>
+                _controller.setTechnician(technician.name),
           ),
         ],
       ),
@@ -593,52 +519,12 @@ class _CreateWorkOrderState extends ConsumerState<CreateWorkOrder> {
           const SizedBox(height: 12),
 
           // Parts List
-          ..._getSuggestedParts(createWoState.draft.type).map((part) {
-            return Container(
-              margin: const EdgeInsets.only(bottom: 8),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.05),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                  color: Colors.white.withOpacity(0.1),
-                  width: 1,
-                ),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          part['name'],
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          'SKU: ${part['sku']}',
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(0.7),
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Text(
-                    'Qty: ${part['defaultQty']}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }).toList(),
+          PartsList(
+            parts: _getSuggestedParts(createWoState.draft.type),
+            onPartsChanged: (parts) {
+              // Handle parts changes if needed
+            },
+          ),
         ],
       ),
     );
@@ -1094,25 +980,94 @@ class _CreateWorkOrderState extends ConsumerState<CreateWorkOrder> {
     }
   }
 
-  List<Map<String, dynamic>> _getSuggestedParts(WorkOrderType type) {
+  List<Part> _getSuggestedParts(WorkOrderType type) {
     // This would typically come from a service/provider
     switch (type) {
       case WorkOrderType.battery:
         return [
-          {'sku': 'BAT-001', 'name': 'Battery Pack 48V', 'defaultQty': 1},
+          const Part(
+            id: 'BAT-001',
+            name: 'Battery Pack 48V',
+            description: '48V Lithium Battery Pack',
+            quantity: 1,
+            unitPrice: 1200.0,
+            category: 'Battery',
+          ),
         ];
       case WorkOrderType.tire:
         return [
-          {'sku': 'TIR-001', 'name': 'Front Tire 18x8.5', 'defaultQty': 1},
-          {'sku': 'TIR-002', 'name': 'Rear Tire 18x8.5', 'defaultQty': 1},
+          const Part(
+            id: 'TIR-001',
+            name: 'Front Tire 18x8.5',
+            description: 'Front wheel tire',
+            quantity: 1,
+            unitPrice: 85.0,
+            category: 'Tire',
+          ),
+          const Part(
+            id: 'TIR-002',
+            name: 'Rear Tire 18x8.5',
+            description: 'Rear wheel tire',
+            quantity: 1,
+            unitPrice: 85.0,
+            category: 'Tire',
+          ),
         ];
       case WorkOrderType.emergencyRepair:
         return [
-          {'sku': 'BRK-001', 'name': 'Brake Pad Set', 'defaultQty': 1},
-          {'sku': 'MOT-001', 'name': 'Motor Controller', 'defaultQty': 1},
+          const Part(
+            id: 'BRK-001',
+            name: 'Brake Pad Set',
+            description: 'Complete brake pad set',
+            quantity: 1,
+            unitPrice: 45.0,
+            category: 'Brake',
+          ),
+          const Part(
+            id: 'MOT-001',
+            name: 'Motor Controller',
+            description: 'Electric motor controller',
+            quantity: 1,
+            unitPrice: 350.0,
+            category: 'Motor',
+          ),
         ];
       default:
         return [];
     }
+  }
+
+  Technician? _getTechnicianByName(String? name) {
+    if (name == null) return null;
+
+    // Mock technician data - in real app this would come from a service
+    final technicians = [
+      Technician(
+        id: 'tech-001',
+        name: 'John Smith',
+        avatar: 'JS',
+        isAvailable: true,
+        currentWorkOrders: 2,
+      ),
+      Technician(
+        id: 'tech-002',
+        name: 'Sarah Johnson',
+        avatar: 'SJ',
+        isAvailable: false,
+        currentWorkOrders: 4,
+      ),
+      Technician(
+        id: 'tech-003',
+        name: 'Mike Chen',
+        avatar: 'MC',
+        isAvailable: true,
+        currentWorkOrders: 1,
+      ),
+    ];
+
+    return technicians.firstWhere(
+      (tech) => tech.name == name,
+      orElse: () => technicians.first,
+    );
   }
 }

@@ -5,6 +5,7 @@ import '../../../domain/models/cart.dart';
 import '../../../core/services/providers.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/utils/code_formatters.dart';
+import '../widgets/image_upload_grid.dart';
 
 class CartRegistrationController extends StateNotifier<CartRegistrationState> {
   CartRegistrationController(this.ref) : super(CartRegistrationState.initial());
@@ -90,6 +91,10 @@ class CartRegistrationController extends StateNotifier<CartRegistrationState> {
     final updatedPaths = Map<String, String>.from(state.imagePaths);
     updatedPaths.remove(photoKey);
     state = state.copyWith(imagePaths: updatedPaths);
+  }
+
+  void setImages(List<UploadedImage> images) {
+    state = state.copyWith(images: images);
   }
 
   void setPurchaseDate(DateTime purchaseDate) {
@@ -186,6 +191,7 @@ class CartRegistrationState {
   final String? telemetryDeviceId;
   final Map<String, String> componentSerials;
   final Map<String, String> imagePaths;
+  final List<UploadedImage>? images;
   final DateTime? purchaseDate;
   final DateTime? warrantyExpiry;
   final String? insuranceNumber;
@@ -208,6 +214,7 @@ class CartRegistrationState {
     this.telemetryDeviceId,
     required this.componentSerials,
     required this.imagePaths,
+    this.images,
     this.purchaseDate,
     this.warrantyExpiry,
     this.insuranceNumber,
@@ -241,6 +248,7 @@ class CartRegistrationState {
     String? telemetryDeviceId,
     Map<String, String>? componentSerials,
     Map<String, String>? imagePaths,
+    List<UploadedImage>? images,
     DateTime? purchaseDate,
     DateTime? warrantyExpiry,
     String? insuranceNumber,
@@ -263,6 +271,7 @@ class CartRegistrationState {
       telemetryDeviceId: telemetryDeviceId ?? this.telemetryDeviceId,
       componentSerials: componentSerials ?? this.componentSerials,
       imagePaths: imagePaths ?? this.imagePaths,
+      images: images ?? this.images,
       purchaseDate: purchaseDate ?? this.purchaseDate,
       warrantyExpiry: warrantyExpiry ?? this.warrantyExpiry,
       insuranceNumber: insuranceNumber ?? this.insuranceNumber,

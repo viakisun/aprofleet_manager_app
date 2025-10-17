@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'router/app_router.dart';
 import 'theme/app_theme.dart';
 import 'core/localization/app_localizations.dart';
+import 'core/controllers/language_controller.dart';
 
 void main() {
   runApp(
@@ -21,6 +22,7 @@ class AproFleetApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(appRouterProvider);
+    final currentLocale = ref.watch(languageControllerProvider);
 
     return MaterialApp.router(
       title: 'AproFleet Manager',
@@ -30,6 +32,7 @@ class AproFleetApp extends ConsumerWidget {
       theme: AppTheme.darkTheme,
 
       // Localization
+      locale: currentLocale,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

@@ -36,7 +36,7 @@ class MockApi {
       await _loadAlerts();
       await _loadTelemetry();
       await _loadUsers();
-      
+
       // Add fallback data if loading failed
       if (_carts.isEmpty) {
         _addFallbackCarts();
@@ -47,8 +47,9 @@ class MockApi {
       if (_alerts.isEmpty) {
         _addFallbackAlerts();
       }
-      
-      print('Mock API initialized with ${_carts.length} carts, ${_workOrders.length} work orders, ${_alerts.length} alerts');
+
+      print(
+          'Mock API initialized with ${_carts.length} carts, ${_workOrders.length} work orders, ${_alerts.length} alerts');
     } catch (e) {
       print('Error during Mock API initialization: $e');
       // Add fallback data
@@ -169,13 +170,13 @@ class MockApi {
   // Private methods for loading seed data
   Future<void> _loadCarts() async {
     try {
-      final String jsonString = await rootBundle
-          .loadString('assets/seeds/carts.json');
+      final String jsonString =
+          await rootBundle.loadString('assets/seeds/carts.json');
       print('Loaded JSON string length: ${jsonString.length}');
-      
+
       final dynamic jsonData = json.decode(jsonString);
       print('Parsed JSON type: ${jsonData.runtimeType}');
-      
+
       if (jsonData is List) {
         print('JSON is List with ${jsonData.length} items');
         for (int i = 0; i < jsonData.length; i++) {
@@ -198,8 +199,8 @@ class MockApi {
 
   Future<void> _loadWorkOrders() async {
     try {
-      final String jsonString = await rootBundle
-          .loadString('assets/seeds/work_orders.json');
+      final String jsonString =
+          await rootBundle.loadString('assets/seeds/work_orders.json');
       final dynamic jsonData = json.decode(jsonString);
 
       if (jsonData is List && jsonData.isNotEmpty) {
@@ -215,8 +216,8 @@ class MockApi {
 
   Future<void> _loadAlerts() async {
     try {
-      final String jsonString = await rootBundle
-          .loadString('assets/seeds/alerts.json');
+      final String jsonString =
+          await rootBundle.loadString('assets/seeds/alerts.json');
       final List<dynamic> jsonList = json.decode(jsonString);
 
       for (final json in jsonList) {
@@ -230,8 +231,8 @@ class MockApi {
 
   Future<void> _loadTelemetry() async {
     try {
-      final String jsonString = await rootBundle
-          .loadString('assets/seeds/telemetry_seed.json');
+      final String jsonString =
+          await rootBundle.loadString('assets/seeds/telemetry_seed.json');
       final Map<String, dynamic> jsonMap = json.decode(jsonString);
 
       for (final entry in jsonMap.entries) {

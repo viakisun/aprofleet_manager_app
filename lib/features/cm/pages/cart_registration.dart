@@ -16,7 +16,11 @@ import 'package:flutter/material.dart' hide Stepper;
 import '../../../core/widgets/qr/qr_label.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/utils/code_formatters.dart';
+import '../../../core/theme/design_tokens.dart';
 import '../controllers/cart_registration_controller.dart';
+import '../widgets/registration_stepper.dart';
+import '../widgets/component_checklist.dart';
+import '../widgets/image_upload_grid.dart';
 
 class CartRegistrationPage extends ConsumerStatefulWidget {
   const CartRegistrationPage({super.key});
@@ -62,15 +66,18 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
       body: Column(
         children: [
           // Stepper
-          custom.Stepper(
+          RegistrationStepper(
             currentStep: _currentStep,
-            totalSteps: 4,
-            stepTitles: const [
-              'Basic Info',
-              'Technical Specs',
-              'Components',
-              'Review',
-            ],
+            steps: RegistrationStepperBuilder.buildCartRegistrationSteps(),
+            onStepTap: (step) {
+              if (step <= _currentStep) {
+                _pageController.animateToPage(
+                  step,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+              }
+            },
           ),
 
           // Content
@@ -449,39 +456,36 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
 
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'COMPONENTS CHECKLIST',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-              letterSpacing: 0.5,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Components checklist
+            ComponentChecklist(
+              components: ComponentChecklistBuilder.buildDefaultComponents(),
+              onComponentsChanged: (components) {
+                // Handle component changes if needed
+              },
             ),
-          ),
-          const SizedBox(height: 12),
 
-          // Components checklist
-          ..._buildComponentChecklist(registrationState),
+            const SizedBox(height: DesignTokens.spacingXl),
 
-          const SizedBox(height: 20),
-
-          const Text(
-            'PHOTOGRAPHS',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-              letterSpacing: 0.5,
+            // Photo uploads
+            ImageUploadGrid(
+              images: registrationState.images ?? [],
+              onImagesChanged: (images) {
+                _controller.setImages(images);
+              },
+              maxImages: 10,
+              allowedCategories: const [
+                'General',
+                'Damage',
+                'Components',
+                'Documents'
+              ],
             ),
-          ),
-          const SizedBox(height: 12),
-
-          // Photo uploads
-          _buildPhotoUploads(registrationState),
-        ],
+          ],
+        ),
       ),
     );
   }

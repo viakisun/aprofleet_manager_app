@@ -9,7 +9,10 @@ import '../../../core/localization/app_localizations.dart';
 import '../../../core/widgets/shared_widgets.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/utils/code_formatters.dart';
+import '../../../core/theme/design_tokens.dart';
 import '../controllers/cart_detail_controller.dart';
+import '../widgets/telemetry_gauge.dart';
+import '../widgets/system_metrics_card.dart';
 
 class CartDetailMonitor extends ConsumerStatefulWidget {
   final String cartId;
@@ -71,15 +74,57 @@ class _CartDetailMonitorState extends ConsumerState<CartDetailMonitor> {
     final cartAsync = ref.watch(cartProvider(widget.cartId));
 
     return Scaffold(
+      backgroundColor: DesignTokens.bgPrimary,
       appBar: AppBar(
-        title: Text('${localizations.details} - ${widget.cartId}'),
+        backgroundColor: DesignTokens.bgPrimary,
+        foregroundColor: DesignTokens.textPrimary,
+        title: Row(
+          children: [
+            // LIVE indicator
+            Container(
+              width: 8,
+              height: 8,
+              decoration: const BoxDecoration(
+                color: DesignTokens.statusMaintenance,
+                shape: BoxShape.circle,
+              ),
+            ),
+            const SizedBox(width: DesignTokens.spacingSm),
+            Text(
+              'LIVE',
+              style: TextStyle(
+                fontSize: DesignTokens.fontSizeSm,
+                fontWeight: DesignTokens.fontWeightBold,
+                color: DesignTokens.statusMaintenance,
+                letterSpacing: DesignTokens.letterSpacingWide,
+              ),
+            ),
+            const SizedBox(width: DesignTokens.spacingMd),
+            Expanded(
+              child: Text(
+                '${widget.cartId}',
+                style: TextStyle(
+                  fontSize: DesignTokens.fontSizeLg,
+                  fontWeight: DesignTokens.fontWeightBold,
+                  color: DesignTokens.textPrimary,
+                ),
+              ),
+            ),
+          ],
+        ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: DesignTokens.textPrimary,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh),
+            icon: Icon(
+              Icons.refresh,
+              color: DesignTokens.textPrimary,
+            ),
             onPressed: () {
               ref.invalidate(cartProvider(widget.cartId));
             },
@@ -152,39 +197,20 @@ class _CartDetailMonitorState extends ConsumerState<CartDetailMonitor> {
 
   Widget _buildHeader(Cart cart, Color statusColor) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.06),
-          width: 1,
-        ),
-      ),
+      padding: const EdgeInsets.all(DesignTokens.spacingMd),
+      decoration: DesignTokens.getCardDecoration(),
       child: Row(
         children: [
-          // LIVE indicator
-          Container(
-            width: 12,
-            height: 12,
-            decoration: BoxDecoration(
-              color: Colors.red,
-              shape: BoxShape.circle,
-            ),
-            child: const AnimatedOpacity(
-              opacity: 1.0,
-              duration: Duration(milliseconds: 500),
-              child: SizedBox.expand(),
-            ),
-          ),
-          const SizedBox(width: 8),
-          const Text(
+          // LIVE indicator with pulsing animation
+          _buildLiveIndicator(),
+          const SizedBox(width: DesignTokens.spacingSm),
+          Text(
             'LIVE',
             style: TextStyle(
-              color: Colors.red,
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 1.0,
+              color: DesignTokens.statusCritical,
+              fontSize: DesignTokens.fontSizeSm,
+              fontWeight: DesignTokens.fontWeightBold,
+              letterSpacing: DesignTokens.letterSpacingWide,
             ),
           ),
           const Spacer(),
@@ -194,40 +220,68 @@ class _CartDetailMonitorState extends ConsumerState<CartDetailMonitor> {
     );
   }
 
+  Widget _buildLiveIndicator() {
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0.3, end: 1.0),
+      duration: const Duration(milliseconds: 1000),
+      builder: (context, value, child) {
+        return Container(
+          width: DesignTokens.spacingSm,
+          height: DesignTokens.spacingSm,
+          decoration: BoxDecoration(
+            color: DesignTokens.statusCritical.withOpacity(value),
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: DesignTokens.statusCritical.withOpacity(value * 0.5),
+                blurRadius: 8,
+                spreadRadius: 2,
+              ),
+            ],
+          ),
+        );
+      },
+      onEnd: () {
+        // Restart animation
+        if (mounted) {
+          setState(() {});
+        }
+      },
+    );
+  }
+
   Widget _buildPrimaryTelemetry(Cart cart) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.06),
-          width: 1,
-        ),
-      ),
+      padding: const EdgeInsets.all(DesignTokens.spacingMd),
+      decoration: DesignTokens.getCardDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'PRIMARY TELEMETRY',
             style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-              letterSpacing: 0.5,
+              fontSize: DesignTokens.fontSizeMd,
+              fontWeight: DesignTokens.fontWeightSemibold,
+              color: DesignTokens.textPrimary,
+              letterSpacing: DesignTokens.letterSpacingWide,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: DesignTokens.spacingMd),
           Row(
             children: [
               // Battery Gauge
               Expanded(
-                child: _buildBatteryGauge(cart.batteryPct ?? 0.0),
+                child: BatteryGauge(
+                  batteryLevel: cart.batteryLevel ?? 0.0,
+                ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: DesignTokens.spacingMd),
               // Speed Gauge
               Expanded(
-                child: _buildSpeedGauge(cart.speedKph ?? 0.0),
+                child: SpeedMeter(
+                  speed: cart.speed ?? 0.0,
+                  maxSpeed: 30.0, // Typical golf cart max speed
+                ),
               ),
             ],
           ),
@@ -342,93 +396,71 @@ class _CartDetailMonitorState extends ConsumerState<CartDetailMonitor> {
   Widget _buildSystemMetrics() {
     final telemetry = _currentTelemetry;
 
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.06),
-          width: 1,
-        ),
+    final metrics = [
+      TemperatureCard(
+        temperature: telemetry?.temperature ?? 0.0,
+        location: 'MOTOR',
       ),
+      VoltageCard(
+        voltage: telemetry?.voltage ?? 0.0,
+        circuit: 'MAIN',
+      ),
+      CurrentCard(
+        current: telemetry?.current ?? 0.0,
+        component: 'MOTOR',
+      ),
+      RuntimeCard(
+        runtime: telemetry?.runtime ?? 0.0,
+      ),
+      DistanceCard(
+        distance: telemetry?.distance ?? 0.0,
+        period: 'DAILY',
+      ),
+      EfficiencyCard(
+        efficiency: telemetry != null && telemetry.battery > 0
+            ? (telemetry.distance / telemetry.battery * 100)
+            : 0.0,
+        metric: 'ENERGY',
+      ),
+    ];
+
+    return Container(
+      padding: const EdgeInsets.all(DesignTokens.spacingMd),
+      decoration: DesignTokens.getCardDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'SYSTEM METRICS',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-              letterSpacing: 0.5,
+          Row(
+            children: [
+              Icon(
+                Icons.analytics_outlined,
+                color: DesignTokens.textSecondary,
+                size: DesignTokens.iconMd,
+              ),
+              const SizedBox(width: DesignTokens.spacingSm),
+              Text(
+                'SYSTEM METRICS',
+                style: TextStyle(
+                  fontSize: DesignTokens.fontSizeMd,
+                  fontWeight: DesignTokens.fontWeightSemibold,
+                  color: DesignTokens.textPrimary,
+                  letterSpacing: DesignTokens.letterSpacingWide,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: DesignTokens.spacingMd),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              crossAxisSpacing: DesignTokens.spacingMd,
+              mainAxisSpacing: DesignTokens.spacingMd,
+              childAspectRatio: 1.2,
             ),
-          ),
-          const SizedBox(height: 16),
-          // Grid of metrics
-          Row(
-            children: [
-              Expanded(
-                child: TelemetryWidget(
-                  label: 'Temperature',
-                  value: telemetry?.temperature ?? 0.0,
-                  unit: '°C',
-                  color: (telemetry?.temperature ?? 0) > 60
-                      ? Colors.red
-                      : Colors.white,
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: TelemetryWidget(
-                  label: 'Voltage',
-                  value: telemetry?.voltage ?? 0.0,
-                  unit: 'V',
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Expanded(
-                child: TelemetryWidget(
-                  label: 'Current',
-                  value: telemetry?.current ?? 0.0,
-                  unit: 'A',
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: TelemetryWidget(
-                  label: 'Runtime',
-                  value: telemetry?.runtime ?? 0.0,
-                  unit: 'h',
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Expanded(
-                child: TelemetryWidget(
-                  label: 'Distance',
-                  value: telemetry?.distance ?? 0.0,
-                  unit: 'km',
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: TelemetryWidget(
-                  label: 'Efficiency',
-                  value: telemetry != null && telemetry.battery > 0
-                      ? telemetry.distance / telemetry.battery
-                      : 0.0,
-                  unit: 'km/%',
-                ),
-              ),
-            ],
+            itemCount: metrics.length,
+            itemBuilder: (context, index) => metrics[index],
           ),
         ],
       ),
