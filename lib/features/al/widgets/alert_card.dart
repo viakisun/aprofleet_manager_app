@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../../../domain/models/alert.dart';
 import '../../../core/widgets/shared_widgets.dart';
 import '../../../core/constants/app_constants.dart';
+import '../../../core/localization/app_localizations.dart';
 
 class AlertCard extends StatelessWidget {
   final Alert alert;
@@ -148,7 +149,7 @@ class AlertCard extends StatelessWidget {
                         ],
                         const Spacer(),
                         Text(
-                          _formatTimeAgo(alert.createdAt),
+                          _formatTimeAgo(alert.createdAt, context),
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.white.withOpacity(0.5),
@@ -169,19 +170,19 @@ class AlertCard extends StatelessWidget {
                     icon: const Icon(Icons.check, size: 20),
                     color: Colors.green,
                     onPressed: onAcknowledge,
-                    tooltip: 'Acknowledge',
+                    tooltip: AppLocalizations.of(context).alertAcknowledge,
                   ),
                   IconButton(
                     icon: const Icon(Icons.directions_car, size: 20),
                     color: Colors.blue,
                     onPressed: onViewCart,
-                    tooltip: 'View Cart',
+                    tooltip: AppLocalizations.of(context).alertViewCart,
                   ),
                   IconButton(
                     icon: const Icon(Icons.build, size: 20),
                     color: Colors.orange,
                     onPressed: onCreateWorkOrder,
-                    tooltip: 'Create Work Order',
+                    tooltip: AppLocalizations.of(context).alertCreateWorkOrder,
                   ),
                 ],
               ),
@@ -192,18 +193,19 @@ class AlertCard extends StatelessWidget {
     );
   }
 
-  String _formatTimeAgo(DateTime dateTime) {
+  String _formatTimeAgo(DateTime dateTime, BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     final now = DateTime.now();
     final difference = now.difference(dateTime);
 
     if (difference.inDays > 0) {
-      return '${difference.inDays}d ago';
+      return '${difference.inDays}${localizations.alertTimeDaysAgo}';
     } else if (difference.inHours > 0) {
-      return '${difference.inHours}h ago';
+      return '${difference.inHours}${localizations.alertTimeHoursAgo}';
     } else if (difference.inMinutes > 0) {
-      return '${difference.inMinutes}m ago';
+      return '${difference.inMinutes}${localizations.alertTimeMinutesAgo}';
     } else {
-      return 'Just now';
+      return localizations.alertTimeJustNow;
     }
   }
 }

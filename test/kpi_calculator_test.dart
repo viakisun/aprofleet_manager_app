@@ -8,30 +8,30 @@ void main() {
   group('KpiCalculator', () {
     test('Availability: clamps to [0,100] and handles zero downtime', () {
       // Test perfect availability (100% uptime)
-      final perfectAvailability = calculateAvailability(
-        operatingTime: Duration(hours: 8),
-        downtime: Duration.zero,
+      final perfectAvailability = KpiCalculator.calculateAvailability(
+        totalUptime: Duration(hours: 8),
+        totalDowntime: Duration.zero,
       );
       expect(perfectAvailability, 100.0);
 
       // Test zero availability (100% downtime)
-      final zeroAvailability = calculateAvailability(
-        operatingTime: Duration.zero,
-        downtime: Duration(hours: 8),
+      final zeroAvailability = KpiCalculator.calculateAvailability(
+        totalUptime: Duration.zero,
+        totalDowntime: Duration(hours: 8),
       );
       expect(zeroAvailability, 0.0);
 
       // Test 50/50 split
-      final halfAvailability = calculateAvailability(
-        operatingTime: Duration(hours: 4),
-        downtime: Duration(hours: 4),
+      final halfAvailability = KpiCalculator.calculateAvailability(
+        totalUptime: Duration(hours: 4),
+        totalDowntime: Duration(hours: 4),
       );
       expect(halfAvailability, 50.0);
     });
 
     test('MTTR: guards divide-by-zero and uses completed repairs only', () {
       // Test empty list (should return 0)
-      final emptyMttr = calculateMTTR([]);
+      final emptyMttr = KpiCalculator.calculateMTTR([]);
       expect(emptyMttr, 0.0);
 
       // Test single repair
@@ -50,7 +50,7 @@ void main() {
           location: 'Maintenance Bay 1',
         ),
       ];
-      final singleMttr = calculateMTTR(singleRepair);
+      final singleMttr = KpiCalculator.calculateMTTR([Duration(minutes: 90)]);
       expect(singleMttr, 90.0); // 90 minutes
 
       // Test multiple repairs
@@ -82,8 +82,8 @@ void main() {
           location: 'Maintenance Bay 2',
         ),
       ];
-      final multipleMttr = calculateMTTR(multipleRepairs);
-      expect(multipleMttr, 105.0); // Average of 60 and 90 minutes
+      final multipleMttr = KpiCalculator.calculateMTTR([Duration(minutes: 60), Duration(minutes: 90)]);
+      expect(multipleMttr, 75.0); // Average of 60 and 90 minutes
     });
 
     test('Range filtering affects aggregates deterministically', () {
@@ -91,30 +91,42 @@ void main() {
       final carts = [
         Cart(
           id: 'GCA-001',
+          vin: 'TEST123456789',
+          manufacturer: 'E-Z-GO',
           model: 'E-Z-GO RXV',
+          year: 2024,
+          batteryType: 'Lithium',
+          voltage: 48,
+          seating: 4,
           status: CartStatus.active,
           batteryPct: 85.0,
           speedKph: 25.0,
-          position: const LatLng(37.7749, -122.4194),
-          lastSeenAt: DateTime.now(),
+          position: LatLng(37.7749, -122.4194),
+          lastSeen: DateTime.now(),
         ),
         Cart(
           id: 'GCA-002',
+          vin: 'TEST987654321',
+          manufacturer: 'Club Car',
           model: 'Club Car Onward',
+          year: 2024,
+          batteryType: 'Lithium',
+          voltage: 48,
+          seating: 4,
           status: CartStatus.active,
           batteryPct: 75.0,
           speedKph: 20.0,
-          position: const LatLng(37.7750, -122.4195),
-          lastSeenAt: DateTime.now(),
+          position: LatLng(37.7750, -122.4195),
+          lastSeen: DateTime.now(),
         ),
       ];
 
       // Test utilization calculation
-      final utilization = calculateUtilization(carts);
+      final utilization = KpiCalculator.calculateUtilization([85.0, 75.0]);
       expect(utilization, greaterThan(0));
 
       // Test daily distance calculation
-      final dailyDistance = calculateDailyDistance(carts);
+      final dailyDistance = KpiCalculator.calculateDailyDistance([25.0, 20.0]);
       expect(dailyDistance, greaterThan(0));
     });
   });

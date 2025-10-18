@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/design_tokens.dart';
+import '../../../core/localization/app_localizations.dart';
 import '../../../core/widgets/shared_widgets.dart';
 import '../../../core/widgets/custom_icons.dart';
 import '../../../domain/models/cart.dart';
@@ -23,6 +24,7 @@ class CartListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     final statusColor = DesignTokens.getStatusColor(cart.status.name);
 
     return Container(
@@ -117,7 +119,7 @@ class CartListItem extends StatelessWidget {
                     Expanded(
                       child: _buildMetricItem(
                         icon: CustomIcons.battery,
-                        label: 'BATTERY',
+                        label: localizations.battery,
                         value: '${(cart.batteryLevel ?? 0).toInt()}%',
                         color: _getBatteryColor(cart.batteryLevel ?? 0),
                       ),
@@ -127,7 +129,7 @@ class CartListItem extends StatelessWidget {
                     Expanded(
                       child: _buildMetricItem(
                         icon: CustomIcons.activity,
-                        label: 'SPEED',
+                        label: localizations.speed,
                         value: '${(cart.speed ?? 0).toInt()} km/h',
                         color: DesignTokens.statusIdle,
                       ),

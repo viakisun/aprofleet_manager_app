@@ -11,7 +11,7 @@ void main() {
           code: 'ALT-2025-0001',
           severity: AlertSeverity.critical,
           priority: Priority.p4,
-          state: AlertState.triggered,
+          state: AlertStatus.triggered,
           title: 'Low Priority Alert',
           message: 'This is a low priority alert',
           createdAt: DateTime(2025, 1, 1),
@@ -22,7 +22,7 @@ void main() {
           code: 'ALT-2025-0002',
           severity: AlertSeverity.critical,
           priority: Priority.p1,
-          state: AlertState.triggered,
+          state: AlertStatus.triggered,
           title: 'High Priority Alert Old',
           message: 'This is an old high priority alert',
           createdAt: DateTime(2025, 9, 1),
@@ -33,7 +33,7 @@ void main() {
           code: 'ALT-2025-0003',
           severity: AlertSeverity.critical,
           priority: Priority.p1,
-          state: AlertState.triggered,
+          state: AlertStatus.triggered,
           title: 'High Priority Alert New',
           message: 'This is a new high priority alert',
           createdAt: DateTime(2025, 10, 10),
@@ -61,7 +61,7 @@ void main() {
           code: 'ALT-2025-0001',
           severity: AlertSeverity.warning,
           priority: Priority.p2,
-          state: AlertState.acknowledged,
+          state: AlertStatus.acknowledged,
           title: 'Acknowledged Alert',
           message: 'This alert has been acknowledged',
           createdAt: DateTime(2025, 1, 15, 9, 0),
@@ -74,7 +74,7 @@ void main() {
           code: 'ALT-2025-0002',
           severity: AlertSeverity.info,
           priority: Priority.p3,
-          state: AlertState.resolved,
+          state: AlertStatus.resolved,
           title: 'Resolved Alert',
           message: 'This alert has been resolved',
           createdAt: DateTime(2025, 1, 15, 8, 0),
@@ -92,8 +92,8 @@ void main() {
       });
 
       expect(alerts[0].priority.index, lessThan(alerts[1].priority.index));
-      expect(alerts[0].state, AlertState.acknowledged);
-      expect(alerts[1].state, AlertState.resolved);
+      expect(alerts[0].state, AlertStatus.acknowledged);
+      expect(alerts[1].state, AlertStatus.resolved);
     });
 
     test('Same priority alerts ordered by newest first', () {
@@ -103,7 +103,7 @@ void main() {
           code: 'ALT-2025-0001',
           severity: AlertSeverity.critical,
           priority: Priority.p1,
-          state: AlertState.triggered,
+          state: AlertStatus.triggered,
           title: 'Old P1 Alert',
           message: 'This is an old P1 alert',
           createdAt: DateTime(2025, 1, 1),
@@ -114,7 +114,7 @@ void main() {
           code: 'ALT-2025-0002',
           severity: AlertSeverity.critical,
           priority: Priority.p1,
-          state: AlertState.triggered,
+          state: AlertStatus.triggered,
           title: 'New P1 Alert',
           message: 'This is a new P1 alert',
           createdAt: DateTime(2025, 1, 15),

@@ -91,14 +91,14 @@ class _AlertCenterState extends ConsumerState<AlertCenter>
             child: TabBar(
               controller: _tabController,
               isScrollable: true,
-              tabs: const [
-                Tab(text: 'All'),
-                Tab(text: 'Unread'),
-                Tab(text: 'Cart'),
-                Tab(text: 'Battery'),
-                Tab(text: 'Maintenance'),
-                Tab(text: 'Geofence'),
-                Tab(text: 'System'),
+              tabs: [
+                Tab(text: localizations.alertTabAll),
+                Tab(text: localizations.alertTabUnread),
+                Tab(text: localizations.alertTabCart),
+                Tab(text: localizations.alertTabBattery),
+                Tab(text: localizations.alertTabMaintenance),
+                Tab(text: localizations.alertTabGeofence),
+                Tab(text: localizations.alertTabSystem),
               ],
               onTap: (index) {
                 _currentFilter = AlertFilterType.values[index];
@@ -123,11 +123,11 @@ class _AlertCenterState extends ConsumerState<AlertCenter>
                   children: [
                     const Icon(Icons.error, size: 64, color: Colors.red),
                     const SizedBox(height: 16),
-                    Text('Error loading alerts: $error'),
+                    Text('${localizations.alertErrorLoading}: $error'),
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () => ref.invalidate(alertsProvider),
-                      child: const Text('Retry'),
+                      child: Text(localizations.alertRetry),
                     ),
                   ],
                 ),
@@ -139,7 +139,7 @@ class _AlertCenterState extends ConsumerState<AlertCenter>
     );
   }
 
-  Widget _buildSummaryBar(AlertController controller) {
+  Widget _buildSummaryBar(AlertController controller, BuildContext context) {
     final summary = controller.getSummary();
 
     return Container(
@@ -156,13 +156,13 @@ class _AlertCenterState extends ConsumerState<AlertCenter>
       ),
       child: Row(
         children: [
-          _buildSummaryChip('Critical', summary['critical'] ?? 0, Colors.red),
+          _buildSummaryChip(AlertSeverity.critical.getDisplayName(context), summary['critical'] ?? 0, Colors.red),
           const SizedBox(width: 12),
-          _buildSummaryChip('Warning', summary['warning'] ?? 0, Colors.orange),
+          _buildSummaryChip(AlertSeverity.warning.getDisplayName(context), summary['warning'] ?? 0, Colors.orange),
           const SizedBox(width: 12),
-          _buildSummaryChip('Info', summary['info'] ?? 0, Colors.blue),
+          _buildSummaryChip(AlertSeverity.info.getDisplayName(context), summary['info'] ?? 0, Colors.blue),
           const SizedBox(width: 12),
-          _buildSummaryChip('Resolved', summary['resolved'] ?? 0, Colors.green),
+          _buildSummaryChip(AlertSeverity.success.getDisplayName(context), summary['resolved'] ?? 0, Colors.green),
         ],
       ),
     );
@@ -214,18 +214,19 @@ class _AlertCenterState extends ConsumerState<AlertCenter>
   }
 
   Widget _buildAlertList(List<Alert> alerts, AlertController controller) {
+    final localizations = AppLocalizations.of(context);
     final filteredAlerts = controller.getFilteredAlerts(alerts);
 
     if (filteredAlerts.isEmpty) {
-      return const Center(
+      return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.notifications_none, size: 64, color: Colors.grey),
-            SizedBox(height: 16),
+            const Icon(Icons.notifications_none, size: 64, color: Colors.grey),
+            const SizedBox(height: 16),
             Text(
-              'No alerts found',
-              style: TextStyle(
+              localizations.alertNoAlerts,
+              style: const TextStyle(
                 fontSize: 18,
                 color: Colors.grey,
               ),

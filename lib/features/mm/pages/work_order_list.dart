@@ -82,13 +82,13 @@ class _WorkOrderListState extends ConsumerState<WorkOrderList>
             child: TabBar(
               controller: _tabController,
               isScrollable: true,
-              tabs: const [
-                Tab(text: 'All'),
-                Tab(text: 'Urgent'),
-                Tab(text: 'Pending'),
-                Tab(text: 'In Progress'),
-                Tab(text: 'Completed'),
-                Tab(text: 'Timeline'),
+              tabs: [
+                Tab(text: localizations.woFilterAll),
+                Tab(text: localizations.woFilterUrgent),
+                Tab(text: localizations.woFilterPending),
+                Tab(text: localizations.woFilterInProgress),
+                Tab(text: localizations.woFilterCompleted),
+                Tab(text: localizations.woFilterTimeline),
               ],
               onTap: (index) {
                 workOrderController.setFilter(_getFilterForTab(index));
@@ -97,13 +97,13 @@ class _WorkOrderListState extends ConsumerState<WorkOrderList>
           ),
 
           // Stats Bar
-          _buildStatsBar(workOrderController),
+          _buildStatsBar(workOrderController, context),
 
           // Content
           Expanded(
             child: workOrderState.workOrders.when(
               data: (workOrders) =>
-                  _buildContent(workOrders, workOrderController),
+                  _buildContent(workOrders, workOrderController, context),
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, stack) => Center(
                 child: Column(
@@ -111,11 +111,11 @@ class _WorkOrderListState extends ConsumerState<WorkOrderList>
                   children: [
                     const Icon(Icons.error, size: 64, color: Colors.red),
                     const SizedBox(height: 16),
-                    Text('Error loading work orders: $error'),
+                    Text('${localizations.woErrorLoading}: $error'),
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () => ref.invalidate(workOrdersProvider),
-                      child: const Text('Retry'),
+                      child: Text(localizations.woRetry),
                     ),
                   ],
                 ),
@@ -127,7 +127,8 @@ class _WorkOrderListState extends ConsumerState<WorkOrderList>
     );
   }
 
-  Widget _buildStatsBar(WorkOrderController controller) {
+  Widget _buildStatsBar(WorkOrderController controller, BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     final stats = controller.getStats();
 
     return Container(
@@ -146,16 +147,16 @@ class _WorkOrderListState extends ConsumerState<WorkOrderList>
       child: Row(
         children: [
           _buildStatChip(
-              'URGENT', stats['urgent'] ?? 0, DesignTokens.statusCritical),
+              localizations.woStatsUrgent, stats['urgent'] ?? 0, DesignTokens.statusCritical),
           const SizedBox(width: DesignTokens.spacingSm),
           _buildStatChip(
-              'PENDING', stats['pending'] ?? 0, DesignTokens.statusWarning),
+              localizations.woStatsPending, stats['pending'] ?? 0, DesignTokens.statusWarning),
           const SizedBox(width: DesignTokens.spacingSm),
-          _buildStatChip('IN PROGRESS', stats['inProgress'] ?? 0,
+          _buildStatChip(localizations.woStatsInProgress, stats['inProgress'] ?? 0,
               DesignTokens.statusActive),
           const SizedBox(width: DesignTokens.spacingSm),
           _buildStatChip(
-              'TODAY', stats['today'] ?? 0, DesignTokens.statusCharging),
+              localizations.woStatsToday, stats['today'] ?? 0, DesignTokens.statusCharging),
         ],
       ),
     );
@@ -208,19 +209,20 @@ class _WorkOrderListState extends ConsumerState<WorkOrderList>
   }
 
   Widget _buildContent(
-      List<WorkOrder> workOrders, WorkOrderController controller) {
+      List<WorkOrder> workOrders, WorkOrderController controller, BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     final filteredOrders = controller.getFilteredWorkOrders(workOrders);
 
     if (filteredOrders.isEmpty) {
-      return const Center(
+      return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.assignment_outlined, size: 64, color: Colors.grey),
-            SizedBox(height: 16),
+            const Icon(Icons.assignment_outlined, size: 64, color: Colors.grey),
+            const SizedBox(height: 16),
             Text(
-              'No work orders found',
-              style: TextStyle(
+              localizations.woNoWorkOrders,
+              style: const TextStyle(
                 fontSize: 18,
                 color: Colors.grey,
               ),

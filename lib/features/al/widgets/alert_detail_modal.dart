@@ -87,7 +87,7 @@ class _AlertDetailModalState extends State<AlertDetailModal> {
                               ),
                             ),
                             child: Text(
-                              widget.alert.severity.displayName,
+                              widget.alert.severity.getDisplayName(context),
                               style: TextStyle(
                                 color: severityColor,
                                 fontSize: 12,
@@ -125,7 +125,7 @@ class _AlertDetailModalState extends State<AlertDetailModal> {
                     [
                       _buildInfoRow('Alert ID', widget.alert.id),
                       _buildInfoRow('Code', widget.alert.code),
-                      _buildInfoRow('State', widget.alert.state.displayName),
+                      _buildInfoRow('State', widget.alert.state.getDisplayName(context)),
                       _buildInfoRow(
                           'Created',
                           DateFormat('MMM dd, yyyy HH:mm')

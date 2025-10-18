@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/controllers/language_controller.dart';
+import '../../../core/localization/app_localizations.dart';
 import '../../../core/theme/design_tokens.dart';
 import '../../../core/widgets/shared_widgets.dart';
 import '../../../core/widgets/settings_widgets.dart';
@@ -14,13 +15,14 @@ class SettingsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context);
     final currentLocale = ref.watch(languageControllerProvider);
     final languageController = ref.read(languageControllerProvider.notifier);
 
     return Scaffold(
       backgroundColor: DesignTokens.bgPrimary,
       appBar: ProfessionalAppBar(
-        title: 'SETTINGS',
+        title: localizations.settingsTitle,
         showBackButton: false,
         showMenuButton: true,
         showNotificationButton: true,
@@ -32,7 +34,7 @@ class SettingsPage extends ConsumerWidget {
             icon: Icons.search,
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Search - Coming Soon')),
+                SnackBar(content: Text('${localizations.search} - ${localizations.comingSoon}')),
               );
             },
           ),
@@ -54,12 +56,12 @@ class SettingsPage extends ConsumerWidget {
 
             // Language Section
             SettingsSection(
-              title: 'LANGUAGE & REGION',
+              title: localizations.languageAndRegion,
               children: [
                 SettingsMenuItem(
                   icon: Icons.language,
-                  title: 'English',
-                  subtitle: 'English',
+                  title: localizations.english,
+                  subtitle: localizations.english,
                   iconColor: currentLocale.languageCode == 'en'
                       ? DesignTokens.statusActive
                       : null,
@@ -73,8 +75,8 @@ class SettingsPage extends ConsumerWidget {
                 ),
                 SettingsMenuItem(
                   icon: Icons.language,
-                  title: '한국어',
-                  subtitle: 'Korean',
+                  title: localizations.korean,
+                  subtitle: localizations.korean,
                   iconColor: currentLocale.languageCode == 'ko'
                       ? DesignTokens.statusActive
                       : null,
@@ -88,8 +90,8 @@ class SettingsPage extends ConsumerWidget {
                 ),
                 SettingsMenuItem(
                   icon: Icons.language,
-                  title: '日本語',
-                  subtitle: 'Japanese',
+                  title: localizations.japanese,
+                  subtitle: localizations.japanese,
                   iconColor: currentLocale.languageCode == 'ja'
                       ? DesignTokens.statusActive
                       : null,
@@ -100,6 +102,36 @@ class SettingsPage extends ConsumerWidget {
                       : null,
                   onTap: () =>
                       _changeLanguage(languageController, 'ja', context),
+                ),
+                SettingsMenuItem(
+                  icon: Icons.language,
+                  title: localizations.chineseSimplified,
+                  subtitle: localizations.chineseSimplified,
+                  iconColor: currentLocale.languageCode == 'zh' && currentLocale.countryCode == 'CN'
+                      ? DesignTokens.statusActive
+                      : null,
+                  trailing: currentLocale.languageCode == 'zh' && currentLocale.countryCode == 'CN'
+                      ? Icon(Icons.check_circle,
+                          color: DesignTokens.statusActive,
+                          size: DesignTokens.iconMd)
+                      : null,
+                  onTap: () =>
+                      _changeLanguage(languageController, 'zh_CN', context),
+                ),
+                SettingsMenuItem(
+                  icon: Icons.language,
+                  title: localizations.chineseTraditional,
+                  subtitle: localizations.chineseTraditional,
+                  iconColor: currentLocale.languageCode == 'zh' && currentLocale.countryCode == 'TW'
+                      ? DesignTokens.statusActive
+                      : null,
+                  trailing: currentLocale.languageCode == 'zh' && currentLocale.countryCode == 'TW'
+                      ? Icon(Icons.check_circle,
+                          color: DesignTokens.statusActive,
+                          size: DesignTokens.iconMd)
+                      : null,
+                  onTap: () =>
+                      _changeLanguage(languageController, 'zh_TW', context),
                   showDivider: false,
                 ),
               ],
@@ -200,7 +232,7 @@ class SettingsPage extends ConsumerWidget {
               margin: const EdgeInsets.symmetric(
                   horizontal: DesignTokens.spacingMd),
               child: ActionButton(
-                text: 'Sign Out',
+                text: localizations.signOut,
                 type: ActionButtonType.destructive,
                 onPressed: () => _showSignOutDialog(context),
               ),
@@ -214,10 +246,11 @@ class SettingsPage extends ConsumerWidget {
   void _changeLanguage(LanguageController controller, String languageCode,
       BuildContext context) {
     controller.setLanguageByCode(languageCode);
+    final localizations = AppLocalizations.of(context);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Language changed to ${controller.currentLanguageName}'),
+        content: Text('${localizations.languageChanged} ${controller.currentLanguageName}'),
         backgroundColor: DesignTokens.statusActive,
         duration: const Duration(seconds: 2),
       ),
@@ -234,79 +267,89 @@ class SettingsPage extends ConsumerWidget {
   }
 
   void _showUserProfile(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('User Profile - Coming Soon')),
+      SnackBar(content: Text('${localizations.profileSettings} - ${localizations.comingSoon}')),
     );
   }
 
   void _showProfileSettings(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Profile Settings - Coming Soon')),
+      SnackBar(content: Text('${localizations.profileSettings} - ${localizations.comingSoon}')),
     );
   }
 
   void _showSecuritySettings(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Security Settings - Coming Soon')),
+      SnackBar(content: Text('${localizations.security} - ${localizations.comingSoon}')),
     );
   }
 
   void _showPrivacySettings(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Privacy Settings - Coming Soon')),
+      SnackBar(content: Text('${localizations.privacy} - ${localizations.comingSoon}')),
     );
   }
 
   void _showNotificationSettings(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Notification Settings - Coming Soon')),
+      SnackBar(content: Text('${localizations.notifications} - ${localizations.comingSoon}')),
     );
   }
 
   void _showThemeSettings(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Theme Settings - Coming Soon')),
+      SnackBar(content: Text('${localizations.theme} - ${localizations.comingSoon}')),
     );
   }
 
   void _showStorageSettings(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Storage Settings - Coming Soon')),
+      SnackBar(content: Text('${localizations.storage} - ${localizations.comingSoon}')),
     );
   }
 
   void _showHelp(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Help & FAQ - Coming Soon')),
+      SnackBar(content: Text('${localizations.helpFaq} - ${localizations.comingSoon}')),
     );
   }
 
   void _reportIssue(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Report Issue - Coming Soon')),
+      SnackBar(content: Text('${localizations.reportIssue} - ${localizations.comingSoon}')),
     );
   }
 
   void _showAbout(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: DesignTokens.bgSecondary,
         title: Text(
-          'About AproFleet Manager',
+          localizations.aboutAproFleetManager,
           style: TextStyle(color: DesignTokens.textPrimary),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Version: 1.0.0',
+            Text(localizations.versionInfo,
                 style: TextStyle(color: DesignTokens.textSecondary)),
             const SizedBox(height: DesignTokens.spacingSm),
-            Text('Manufacturer: DY Innovate',
+            Text(localizations.manufacturerInfo,
                 style: TextStyle(color: DesignTokens.textSecondary)),
             const SizedBox(height: DesignTokens.spacingSm),
-            Text('Product: APRO Golf Cart',
+            Text(localizations.productInfo,
                 style: TextStyle(color: DesignTokens.textSecondary)),
             const SizedBox(height: DesignTokens.spacingSm),
             Text('© 2024 DY Innovate. All rights reserved.',
@@ -317,7 +360,7 @@ class SettingsPage extends ConsumerWidget {
           TextButton(
             onPressed: () => Navigator.pop(context),
             child:
-                Text('OK', style: TextStyle(color: DesignTokens.statusActive)),
+                Text(localizations.ok, style: TextStyle(color: DesignTokens.statusActive)),
           ),
         ],
       ),
@@ -325,32 +368,33 @@ class SettingsPage extends ConsumerWidget {
   }
 
   void _showSignOutDialog(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: DesignTokens.bgSecondary,
         title: Text(
-          'Sign Out',
+          localizations.signOut,
           style: TextStyle(color: DesignTokens.textPrimary),
         ),
         content: Text(
-          'Are you sure you want to sign out?',
+          localizations.signOutConfirm,
           style: TextStyle(color: DesignTokens.textSecondary),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel',
+            child: Text(localizations.cancel,
                 style: TextStyle(color: DesignTokens.textSecondary)),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Signed out successfully')),
+                SnackBar(content: Text(localizations.signedOutSuccess)),
               );
             },
-            child: Text('Sign Out',
+            child: Text(localizations.signOut,
                 style: TextStyle(color: DesignTokens.statusCritical)),
           ),
         ],

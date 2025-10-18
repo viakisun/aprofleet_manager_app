@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../domain/models/alert.dart';
 import '../../../core/theme/design_tokens.dart';
+import '../../../core/localization/app_localizations.dart';
 
 class AlertSummaryCards extends StatelessWidget {
   final List<Alert> alerts;
@@ -12,6 +13,7 @@ class AlertSummaryCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     final stats = _calculateStats(alerts);
 
     return Container(
@@ -20,7 +22,7 @@ class AlertSummaryCards extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'ALERT SUMMARY',
+            localizations.alertSummary,
             style: DesignTokens.getUppercaseLabelStyle(
               fontSize: DesignTokens.fontSizeSm,
               fontWeight: DesignTokens.fontWeightSemibold,
@@ -32,7 +34,7 @@ class AlertSummaryCards extends StatelessWidget {
             children: [
               Expanded(
                 child: _buildSummaryCard(
-                  title: 'TOTAL ALERTS',
+                  title: localizations.totalAlerts,
                   count: stats['total'] ?? 0,
                   icon: Icons.notifications,
                   color: DesignTokens.textPrimary,
@@ -47,7 +49,7 @@ class AlertSummaryCards extends StatelessWidget {
               const SizedBox(width: DesignTokens.spacingMd),
               Expanded(
                 child: _buildSummaryCard(
-                  title: 'CRITICAL',
+                  title: localizations.critical,
                   count: stats['critical'] ?? 0,
                   icon: Icons.priority_high,
                   color: DesignTokens.alertCritical,
@@ -66,7 +68,7 @@ class AlertSummaryCards extends StatelessWidget {
             children: [
               Expanded(
                 child: _buildSummaryCard(
-                  title: 'WARNING',
+                  title: localizations.warning,
                   count: stats['warning'] ?? 0,
                   icon: Icons.warning,
                   color: DesignTokens.alertWarning,
@@ -81,7 +83,7 @@ class AlertSummaryCards extends StatelessWidget {
               const SizedBox(width: DesignTokens.spacingMd),
               Expanded(
                 child: _buildSummaryCard(
-                  title: 'INFO',
+                  title: localizations.info,
                   count: stats['info'] ?? 0,
                   icon: Icons.info,
                   color: DesignTokens.alertInfo,
@@ -101,7 +103,7 @@ class AlertSummaryCards extends StatelessWidget {
             children: [
               Expanded(
                 child: _buildSummaryCard(
-                  title: 'ACTIVE',
+                  title: localizations.active,
                   count: stats['active'] ?? 0,
                   icon: Icons.visibility,
                   color: DesignTokens.statusActive,
@@ -116,7 +118,7 @@ class AlertSummaryCards extends StatelessWidget {
               const SizedBox(width: DesignTokens.spacingMd),
               Expanded(
                 child: _buildSummaryCard(
-                  title: 'RESOLVED',
+                  title: localizations.resolved,
                   count: stats['resolved'] ?? 0,
                   icon: Icons.check_circle,
                   color: DesignTokens.alertSuccess,

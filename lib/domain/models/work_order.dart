@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../core/localization/app_localizations.dart';
 
 part 'work_order.freezed.dart';
 part 'work_order.g.dart';
@@ -25,6 +28,20 @@ extension PriorityExtension on Priority {
         return 'P3 (Normal)';
       case Priority.p4:
         return 'P4 (Low)';
+    }
+  }
+
+  String getDisplayName(BuildContext context) {
+    final loc = AppLocalizations.of(context);
+    switch (this) {
+      case Priority.p1:
+        return loc.woPriorityP1;
+      case Priority.p2:
+        return loc.woPriorityP2;
+      case Priority.p3:
+        return loc.woPriorityP3;
+      case Priority.p4:
+        return loc.woPriorityP4;
     }
   }
 
@@ -161,6 +178,24 @@ extension WorkOrderTypeExtension on WorkOrderType {
         return 'OTHER';
     }
   }
+
+  String getDisplayName(BuildContext context) {
+    final loc = AppLocalizations.of(context);
+    switch (this) {
+      case WorkOrderType.emergencyRepair:
+        return loc.woTypeEmergency;
+      case WorkOrderType.preventive:
+        return loc.woTypePreventive;
+      case WorkOrderType.battery:
+        return loc.woTypeBattery;
+      case WorkOrderType.tire:
+        return loc.woTypeTire;
+      case WorkOrderType.safety:
+        return loc.woTypeSafety;
+      case WorkOrderType.other:
+        return loc.woTypeOther;
+    }
+  }
 }
 
 extension WorkOrderStatusExtension on WorkOrderStatus {
@@ -178,6 +213,24 @@ extension WorkOrderStatusExtension on WorkOrderStatus {
         return 'COMPLETED';
       case WorkOrderStatus.cancelled:
         return 'CANCELLED';
+    }
+  }
+
+  String getDisplayName(BuildContext context) {
+    final loc = AppLocalizations.of(context);
+    switch (this) {
+      case WorkOrderStatus.draft:
+        return loc.woStatusDraft;
+      case WorkOrderStatus.pending:
+        return loc.woStatusPending;
+      case WorkOrderStatus.inProgress:
+        return loc.woStatusInProgress;
+      case WorkOrderStatus.onHold:
+        return loc.woStatusOnHold;
+      case WorkOrderStatus.completed:
+        return loc.woStatusCompleted;
+      case WorkOrderStatus.cancelled:
+        return loc.woStatusCancelled;
     }
   }
 }

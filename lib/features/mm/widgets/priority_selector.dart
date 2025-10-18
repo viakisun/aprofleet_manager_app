@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../domain/models/work_order.dart';
 import '../../../core/theme/design_tokens.dart';
+import '../../../core/localization/app_localizations.dart';
 
 class PrioritySelector extends StatelessWidget {
   final Priority? selectedPriority;
@@ -14,11 +15,13 @@ class PrioritySelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'PRIORITY LEVEL',
+          localizations.priorityLevel,
           style: DesignTokens.getUppercaseLabelStyle(
             fontSize: DesignTokens.fontSizeSm,
             fontWeight: DesignTokens.fontWeightSemibold,
@@ -29,7 +32,7 @@ class PrioritySelector extends StatelessWidget {
         Row(
           children: Priority.values.map((priority) {
             final isSelected = selectedPriority == priority;
-            final priorityInfo = _getPriorityInfo(priority);
+            final priorityInfo = _getPriorityInfo(priority, localizations);
 
             return Expanded(
               child: GestureDetector(
@@ -104,29 +107,29 @@ class PrioritySelector extends StatelessWidget {
     );
   }
 
-  _PriorityInfo _getPriorityInfo(Priority priority) {
+  _PriorityInfo _getPriorityInfo(Priority priority, AppLocalizations localizations) {
     switch (priority) {
       case Priority.p1:
         return _PriorityInfo(
-          label: 'CRITICAL',
+          label: localizations.critical,
           number: 'P1',
           color: DesignTokens.priorityP1,
         );
       case Priority.p2:
         return _PriorityInfo(
-          label: 'HIGH',
+          label: localizations.high,
           number: 'P2',
           color: DesignTokens.priorityP2,
         );
       case Priority.p3:
         return _PriorityInfo(
-          label: 'NORMAL',
+          label: localizations.normal,
           number: 'P3',
           color: DesignTokens.priorityP3,
         );
       case Priority.p4:
         return _PriorityInfo(
-          label: 'LOW',
+          label: localizations.low,
           number: 'P4',
           color: DesignTokens.priorityP4,
         );

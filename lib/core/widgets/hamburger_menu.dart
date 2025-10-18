@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../theme/design_tokens.dart';
 import '../controllers/language_controller.dart';
+import '../localization/app_localizations.dart';
 
 /// Hamburger menu modal for professional navigation
 class HamburgerMenu extends ConsumerWidget {
@@ -11,6 +12,7 @@ class HamburgerMenu extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context);
     final currentLocale = ref.watch(languageControllerProvider);
     final languageController = ref.read(languageControllerProvider.notifier);
 
@@ -95,13 +97,13 @@ class HamburgerMenu extends ConsumerWidget {
           // Quick Actions
           _buildMenuSection(
             context,
-            title: 'QUICK ACTIONS',
+            title: localizations.quickActions,
             items: [
               _buildMenuItem(
                 context,
                 icon: Icons.dashboard_outlined,
-                title: 'Dashboard',
-                subtitle: 'Go to main dashboard',
+                title: localizations.dashboard,
+                subtitle: localizations.dashboardSubtitle,
                 onTap: () {
                   Navigator.pop(context);
                   context.go('/ar/dashboard');
@@ -110,24 +112,24 @@ class HamburgerMenu extends ConsumerWidget {
               _buildMenuItem(
                 context,
                 icon: Icons.qr_code_scanner,
-                title: 'Scan QR Code',
-                subtitle: 'Scan cart QR code',
+                title: localizations.scanQrCode,
+                subtitle: localizations.scanQrSubtitle,
                 onTap: () {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('QR Scanner - Coming Soon')),
+                    SnackBar(content: Text('${localizations.scanQrCode} - ${localizations.comingSoon}')),
                   );
                 },
               ),
               _buildMenuItem(
                 context,
                 icon: Icons.refresh,
-                title: 'Refresh Data',
-                subtitle: 'Sync latest data',
+                title: localizations.refreshData,
+                subtitle: localizations.refreshDataSubtitle,
                 onTap: () {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Data refreshed')),
+                    SnackBar(content: Text(localizations.dataRefreshed)),
                   );
                 },
                 showDivider: false,
@@ -140,13 +142,13 @@ class HamburgerMenu extends ConsumerWidget {
           // Settings Section
           _buildMenuSection(
             context,
-            title: 'SETTINGS',
+            title: localizations.menuSettings,
             items: [
               _buildMenuItem(
                 context,
                 icon: Icons.settings_outlined,
-                title: 'Settings',
-                subtitle: 'App preferences and configuration',
+                title: localizations.menuSettingsTitle,
+                subtitle: localizations.menuSettingsSubtitle,
                 onTap: () {
                   Navigator.pop(context);
                   context.go('/settings');
@@ -161,13 +163,13 @@ class HamburgerMenu extends ConsumerWidget {
           // Language Section
           _buildMenuSection(
             context,
-            title: 'LANGUAGE',
+            title: localizations.menuLanguage,
             items: [
               _buildMenuItem(
                 context,
                 icon: Icons.language,
-                title: 'English',
-                subtitle: 'English',
+                title: localizations.menuEnglish,
+                subtitle: localizations.menuEnglish,
                 trailing: currentLocale.languageCode == 'en'
                     ? Icon(Icons.check_circle,
                         color: DesignTokens.statusActive,
@@ -181,8 +183,8 @@ class HamburgerMenu extends ConsumerWidget {
               _buildMenuItem(
                 context,
                 icon: Icons.language,
-                title: '한국어',
-                subtitle: 'Korean',
+                title: localizations.menuKorean,
+                subtitle: localizations.menuKorean,
                 trailing: currentLocale.languageCode == 'ko'
                     ? Icon(Icons.check_circle,
                         color: DesignTokens.statusActive,
@@ -196,8 +198,8 @@ class HamburgerMenu extends ConsumerWidget {
               _buildMenuItem(
                 context,
                 icon: Icons.language,
-                title: '日本語',
-                subtitle: 'Japanese',
+                title: localizations.menuJapanese,
+                subtitle: localizations.menuJapanese,
                 trailing: currentLocale.languageCode == 'ja'
                     ? Icon(Icons.check_circle,
                         color: DesignTokens.statusActive,
@@ -206,6 +208,36 @@ class HamburgerMenu extends ConsumerWidget {
                 onTap: () {
                   Navigator.pop(context);
                   languageController.setLanguageByCode('ja');
+                },
+              ),
+              _buildMenuItem(
+                context,
+                icon: Icons.language,
+                title: '简体中文',
+                subtitle: localizations.menuChineseSimplified,
+                trailing: currentLocale == const Locale('zh', 'CN')
+                    ? Icon(Icons.check_circle,
+                        color: DesignTokens.statusActive,
+                        size: DesignTokens.iconMd)
+                    : null,
+                onTap: () {
+                  Navigator.pop(context);
+                  languageController.setLanguageByCode('zh_CN');
+                },
+              ),
+              _buildMenuItem(
+                context,
+                icon: Icons.language,
+                title: '繁體中文',
+                subtitle: localizations.menuChineseTraditional,
+                trailing: currentLocale == const Locale('zh', 'TW')
+                    ? Icon(Icons.check_circle,
+                        color: DesignTokens.statusActive,
+                        size: DesignTokens.iconMd)
+                    : null,
+                onTap: () {
+                  Navigator.pop(context);
+                  languageController.setLanguageByCode('zh_TW');
                 },
                 showDivider: false,
               ),
@@ -235,7 +267,7 @@ class HamburgerMenu extends ConsumerWidget {
                   ),
                 ),
                 child: Text(
-                  'SIGN OUT',
+                  localizations.menuSignOut,
                   style: TextStyle(
                     fontSize: DesignTokens.fontSizeMd,
                     fontWeight: DesignTokens.fontWeightSemibold,
@@ -331,6 +363,7 @@ class HamburgerMenu extends ConsumerWidget {
   }
 
   void _showSignOutDialog(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -339,7 +372,7 @@ class HamburgerMenu extends ConsumerWidget {
           borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
         ),
         title: Text(
-          'Sign Out',
+          localizations.menuSignOutTitle,
           style: TextStyle(
             color: DesignTokens.textPrimary,
             fontSize: DesignTokens.fontSizeLg,
@@ -347,7 +380,7 @@ class HamburgerMenu extends ConsumerWidget {
           ),
         ),
         content: Text(
-          'Are you sure you want to sign out?',
+          localizations.menuSignOutMessage,
           style: TextStyle(
             color: DesignTokens.textSecondary,
             fontSize: DesignTokens.fontSizeMd,
@@ -357,7 +390,7 @@ class HamburgerMenu extends ConsumerWidget {
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text(
-              'Cancel',
+              localizations.cancel,
               style: TextStyle(
                 color: DesignTokens.textSecondary,
                 fontSize: DesignTokens.fontSizeMd,
@@ -369,7 +402,7 @@ class HamburgerMenu extends ConsumerWidget {
               Navigator.pop(context); // Close dialog
               Navigator.pop(context); // Close hamburger menu
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Signed out successfully')),
+                SnackBar(content: Text(localizations.menuSignOutSuccess)),
               );
             },
             style: ElevatedButton.styleFrom(
@@ -377,7 +410,7 @@ class HamburgerMenu extends ConsumerWidget {
               foregroundColor: DesignTokens.textPrimary,
             ),
             child: Text(
-              'Sign Out',
+              localizations.menuSignOut,
               style: TextStyle(
                 fontSize: DesignTokens.fontSizeMd,
                 fontWeight: DesignTokens.fontWeightSemibold,

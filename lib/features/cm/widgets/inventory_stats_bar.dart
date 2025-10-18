@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/design_tokens.dart';
+import '../../../core/localization/app_localizations.dart';
 import '../../../core/widgets/custom_icons.dart';
 import '../../../domain/models/cart.dart';
 
@@ -16,6 +17,7 @@ class InventoryStatsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     final stats = _calculateStats(carts);
 
     return Container(
@@ -33,35 +35,35 @@ class InventoryStatsBar extends StatelessWidget {
         children: [
           Expanded(
               child: _buildStatItem(
-            label: 'TOTAL',
+            label: localizations.total,
             count: stats['total'] ?? 0,
             color: DesignTokens.textPrimary,
             icon: CustomIcons.car,
           )),
           Expanded(
               child: _buildStatItem(
-            label: 'ACTIVE',
+            label: localizations.active,
             count: stats['active'] ?? 0,
             color: DesignTokens.statusActive,
             icon: CustomIcons.success,
           )),
           Expanded(
               child: _buildStatItem(
-            label: 'CHARGING',
+            label: localizations.charging,
             count: stats['charging'] ?? 0,
             color: DesignTokens.statusCharging,
             icon: CustomIcons.batteryCharging,
           )),
           Expanded(
               child: _buildStatItem(
-            label: 'MAINTENANCE',
+            label: localizations.maintenance,
             count: stats['maintenance'] ?? 0,
             color: DesignTokens.statusMaintenance,
             icon: CustomIcons.work,
           )),
           Expanded(
               child: _buildStatItem(
-            label: 'OFFLINE',
+            label: localizations.offline,
             count: stats['offline'] ?? 0,
             color: DesignTokens.statusOffline,
             icon: CustomIcons.wifiOff,

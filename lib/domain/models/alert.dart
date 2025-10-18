@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/material.dart';
 import 'work_order.dart';
+import '../../core/localization/app_localizations.dart';
 
 part 'alert.freezed.dart';
 part 'alert.g.dart';
@@ -128,52 +130,55 @@ enum AlertSource {
 }
 
 extension AlertSeverityExtension on AlertSeverity {
-  String get displayName {
+  String getDisplayName(BuildContext context) {
+    final loc = AppLocalizations.of(context);
     switch (this) {
       case AlertSeverity.critical:
-        return 'CRITICAL';
+        return loc.alertSeverityCritical;
       case AlertSeverity.warning:
-        return 'WARNING';
+        return loc.alertSeverityWarning;
       case AlertSeverity.info:
-        return 'INFO';
+        return loc.alertSeverityInfo;
       case AlertSeverity.success:
-        return 'SUCCESS';
+        return loc.alertSeveritySuccess;
     }
   }
 }
 
 extension AlertStatusExtension on AlertStatus {
-  String get displayName {
+  String getDisplayName(BuildContext context) {
+    final loc = AppLocalizations.of(context);
     switch (this) {
       case AlertStatus.triggered:
-        return 'TRIGGERED';
+        return loc.alertStatusTriggered;
       case AlertStatus.notified:
-        return 'NOTIFIED';
+        return loc.alertStatusNotified;
       case AlertStatus.acknowledged:
-        return 'ACKNOWLEDGED';
+        return loc.alertStatusAcknowledged;
       case AlertStatus.escalated:
-        return 'ESCALATED';
+        return loc.alertStatusEscalated;
       case AlertStatus.resolved:
-        return 'RESOLVED';
+        return loc.alertStatusResolved;
     }
   }
 }
 
 extension AlertSourceExtension on AlertSource {
-  String get displayName {
+  String getDisplayName(BuildContext context) {
+    final loc = AppLocalizations.of(context);
     switch (this) {
       case AlertSource.emergency:
-        return 'EMERGENCY';
+        return loc.alertSourceEmergency;
       case AlertSource.battery:
-        return 'BATTERY';
+        return loc.alertSourceBattery;
       case AlertSource.maintenance:
-        return 'MAINTENANCE';
+        return loc.alertSourceMaintenance;
       case AlertSource.geofence:
-        return 'GEOFENCE';
+        return loc.alertSourceGeofence;
       case AlertSource.temperature:
-        return 'TEMPERATURE';
+        return loc.alertSourceTemperature;
       case AlertSource.system:
-        return 'SYSTEM';
+        return loc.alertSourceSystem;
     }
   }
 }

@@ -73,7 +73,7 @@ class AlertFilters extends StatelessWidget {
               final color = AppConstants.alertColors[severity] ?? Colors.grey;
 
               return _buildFilterChip(
-                severity.displayName,
+                severity.getDisplayName(context),
                 isActive,
                 color,
                 () => _toggleSeverityFilter(severity),
@@ -89,7 +89,7 @@ class AlertFilters extends StatelessWidget {
               final color = _getStateColor(state);
 
               return _buildFilterChip(
-                state.displayName,
+                state.getDisplayName(context),
                 isActive,
                 color,
                 () => _toggleStateFilter(state),

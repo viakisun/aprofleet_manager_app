@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../domain/models/work_order.dart';
 import '../../../core/theme/design_tokens.dart';
+import '../../../core/localization/app_localizations.dart';
 
 class WorkOrderTypeSelector extends StatelessWidget {
   final WorkOrderType? selectedType;
@@ -14,11 +15,13 @@ class WorkOrderTypeSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'WORK ORDER TYPE',
+          localizations.workOrderType,
           style: DesignTokens.getUppercaseLabelStyle(
             fontSize: DesignTokens.fontSizeSm,
             fontWeight: DesignTokens.fontWeightSemibold,
@@ -31,7 +34,7 @@ class WorkOrderTypeSelector extends StatelessWidget {
           runSpacing: DesignTokens.spacingSm,
           children: WorkOrderType.values.map((type) {
             final isSelected = selectedType == type;
-            final typeInfo = _getTypeInfo(type);
+            final typeInfo = _getTypeInfo(type, localizations);
 
             return GestureDetector(
               onTap: () => onTypeSelected(type),
@@ -86,41 +89,41 @@ class WorkOrderTypeSelector extends StatelessWidget {
     );
   }
 
-  _TypeInfo _getTypeInfo(WorkOrderType type) {
+  _TypeInfo _getTypeInfo(WorkOrderType type, AppLocalizations localizations) {
     switch (type) {
       case WorkOrderType.emergencyRepair:
         return _TypeInfo(
-          label: 'EMERGENCY',
+          label: localizations.emergency,
           icon: Icons.emergency,
           color: DesignTokens.statusCritical,
         );
       case WorkOrderType.preventive:
         return _TypeInfo(
-          label: 'PREVENTIVE',
+          label: localizations.preventive,
           icon: Icons.schedule,
           color: DesignTokens.statusActive,
         );
       case WorkOrderType.battery:
         return _TypeInfo(
-          label: 'BATTERY',
+          label: localizations.battery,
           icon: Icons.battery_std,
           color: DesignTokens.statusCharging,
         );
       case WorkOrderType.tire:
         return _TypeInfo(
-          label: 'TIRE',
+          label: localizations.tire,
           icon: Icons.circle,
           color: DesignTokens.statusWarning,
         );
       case WorkOrderType.safety:
         return _TypeInfo(
-          label: 'SAFETY',
+          label: localizations.safety,
           icon: Icons.security,
           color: DesignTokens.statusMaintenance,
         );
       case WorkOrderType.other:
         return _TypeInfo(
-          label: 'OTHER',
+          label: localizations.other,
           icon: Icons.build,
           color: DesignTokens.statusIdle,
         );

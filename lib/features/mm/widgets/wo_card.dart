@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../../../domain/models/work_order.dart';
 import '../../../core/widgets/shared_widgets.dart';
 import '../../../core/constants/app_constants.dart';
+import '../../../core/localization/app_localizations.dart';
 
 class WoCard extends StatelessWidget {
   final WorkOrder workOrder;
@@ -84,7 +85,7 @@ class WoCard extends StatelessWidget {
                                 ),
                               ),
                               child: Text(
-                                workOrder.status.displayName,
+                                workOrder.status.getDisplayName(context),
                                 style: TextStyle(
                                   color: statusColor,
                                   fontSize: 10,
@@ -99,7 +100,7 @@ class WoCard extends StatelessWidget {
                   ),
 
                   // Age indicator
-                  _buildAgeIndicator(),
+                  _buildAgeIndicator(context),
                 ],
               ),
 
@@ -107,7 +108,7 @@ class WoCard extends StatelessWidget {
 
               // Type and Description
               Text(
-                workOrder.type.displayName,
+                workOrder.type.getDisplayName(context),
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -196,7 +197,7 @@ class WoCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    _formatTimeInfo(),
+                    _formatTimeInfo(context),
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.white.withOpacity(0.7),
@@ -211,7 +212,8 @@ class WoCard extends StatelessWidget {
     );
   }
 
-  Widget _buildAgeIndicator() {
+  Widget _buildAgeIndicator(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     final now = DateTime.now();
     final age = now.difference(workOrder.createdAt);
 
@@ -220,13 +222,13 @@ class WoCard extends StatelessWidget {
 
     if (age.inDays > 0) {
       color = Colors.red;
-      text = '${age.inDays}d';
+      text = '${age.inDays}${localizations.woTimeDays}';
     } else if (age.inHours > 0) {
       color = Colors.orange;
-      text = '${age.inHours}h';
+      text = '${age.inHours}${localizations.woTimeHours}';
     } else {
       color = Colors.green;
-      text = '${age.inMinutes}m';
+      text = '${age.inMinutes}${localizations.woTimeMinutes}';
     }
 
     return Container(
@@ -250,16 +252,17 @@ class WoCard extends StatelessWidget {
     );
   }
 
-  String _formatTimeInfo() {
+  String _formatTimeInfo(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     final now = DateTime.now();
     final age = now.difference(workOrder.createdAt);
 
     if (age.inDays > 0) {
-      return '${age.inDays}d ago';
+      return '${age.inDays}${localizations.woTimeDays} ${localizations.woTimeAgo}';
     } else if (age.inHours > 0) {
-      return '${age.inHours}h ago';
+      return '${age.inHours}${localizations.woTimeHours} ${localizations.woTimeAgo}';
     } else {
-      return '${age.inMinutes}m ago';
+      return '${age.inMinutes}${localizations.woTimeMinutes} ${localizations.woTimeAgo}';
     }
   }
 
