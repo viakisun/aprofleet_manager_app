@@ -14,6 +14,7 @@ _$AlertImpl _$$AlertImplFromJson(Map<String, dynamic> json) => _$AlertImpl(
       state: $enumDecode(_$AlertStatusEnumMap, json['state']),
       title: json['title'] as String,
       message: json['message'] as String,
+      category: $enumDecodeNullable(_$AlertCategoryEnumMap, json['category']),
       cartId: json['cartId'] as String?,
       location: json['location'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
@@ -42,6 +43,7 @@ Map<String, dynamic> _$$AlertImplToJson(_$AlertImpl instance) =>
       'state': _$AlertStatusEnumMap[instance.state]!,
       'title': instance.title,
       'message': instance.message,
+      'category': _$AlertCategoryEnumMap[instance.category],
       'cartId': instance.cartId,
       'location': instance.location,
       'createdAt': instance.createdAt.toIso8601String(),
@@ -75,6 +77,15 @@ const _$AlertStatusEnumMap = {
   AlertStatus.acknowledged: 'acknowledged',
   AlertStatus.escalated: 'escalated',
   AlertStatus.resolved: 'resolved',
+};
+
+const _$AlertCategoryEnumMap = {
+  AlertCategory.cart: 'cart',
+  AlertCategory.battery: 'battery',
+  AlertCategory.maintenance: 'maintenance',
+  AlertCategory.geofence: 'geofence',
+  AlertCategory.system: 'system',
+  AlertCategory.other: 'other',
 };
 
 _$AlertActionImpl _$$AlertActionImplFromJson(Map<String, dynamic> json) =>

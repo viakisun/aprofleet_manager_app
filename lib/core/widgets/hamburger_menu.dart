@@ -48,7 +48,7 @@ class HamburgerMenu extends ConsumerWidget {
                 const EdgeInsets.symmetric(horizontal: DesignTokens.spacingMd),
             child: Row(
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 25,
                   backgroundColor: DesignTokens.statusActive,
                   child: Text(
@@ -65,7 +65,7 @@ class HamburgerMenu extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         '김토스',
                         style: TextStyle(
                           fontSize: DesignTokens.fontSizeLg,
@@ -171,7 +171,7 @@ class HamburgerMenu extends ConsumerWidget {
                 title: localizations.menuEnglish,
                 subtitle: localizations.menuEnglish,
                 trailing: currentLocale.languageCode == 'en'
-                    ? Icon(Icons.check_circle,
+                    ? const Icon(Icons.check_circle,
                         color: DesignTokens.statusActive,
                         size: DesignTokens.iconMd)
                     : null,
@@ -186,7 +186,7 @@ class HamburgerMenu extends ConsumerWidget {
                 title: localizations.menuKorean,
                 subtitle: localizations.menuKorean,
                 trailing: currentLocale.languageCode == 'ko'
-                    ? Icon(Icons.check_circle,
+                    ? const Icon(Icons.check_circle,
                         color: DesignTokens.statusActive,
                         size: DesignTokens.iconMd)
                     : null,
@@ -201,7 +201,7 @@ class HamburgerMenu extends ConsumerWidget {
                 title: localizations.menuJapanese,
                 subtitle: localizations.menuJapanese,
                 trailing: currentLocale.languageCode == 'ja'
-                    ? Icon(Icons.check_circle,
+                    ? const Icon(Icons.check_circle,
                         color: DesignTokens.statusActive,
                         size: DesignTokens.iconMd)
                     : null,
@@ -216,7 +216,7 @@ class HamburgerMenu extends ConsumerWidget {
                 title: '简体中文',
                 subtitle: localizations.menuChineseSimplified,
                 trailing: currentLocale == const Locale('zh', 'CN')
-                    ? Icon(Icons.check_circle,
+                    ? const Icon(Icons.check_circle,
                         color: DesignTokens.statusActive,
                         size: DesignTokens.iconMd)
                     : null,
@@ -231,7 +231,7 @@ class HamburgerMenu extends ConsumerWidget {
                 title: '繁體中文',
                 subtitle: localizations.menuChineseTraditional,
                 trailing: currentLocale == const Locale('zh', 'TW')
-                    ? Icon(Icons.check_circle,
+                    ? const Icon(Icons.check_circle,
                         color: DesignTokens.statusActive,
                         size: DesignTokens.iconMd)
                     : null,
@@ -261,14 +261,14 @@ class HamburgerMenu extends ConsumerWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
                   ),
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: DesignTokens.spacingLg,
                     vertical: DesignTokens.spacingMd,
                   ),
                 ),
                 child: Text(
                   localizations.menuSignOut,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: DesignTokens.fontSizeMd,
                     fontWeight: DesignTokens.fontWeightSemibold,
                     letterSpacing: DesignTokens.letterSpacingWide,
@@ -330,7 +330,7 @@ class HamburgerMenu extends ConsumerWidget {
           ),
           title: Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: DesignTokens.fontSizeMd,
               fontWeight: DesignTokens.fontWeightMedium,
               color: DesignTokens.textPrimary,
@@ -373,7 +373,7 @@ class HamburgerMenu extends ConsumerWidget {
         ),
         title: Text(
           localizations.menuSignOutTitle,
-          style: TextStyle(
+          style: const TextStyle(
             color: DesignTokens.textPrimary,
             fontSize: DesignTokens.fontSizeLg,
             fontWeight: DesignTokens.fontWeightSemibold,
@@ -411,7 +411,7 @@ class HamburgerMenu extends ConsumerWidget {
             ),
             child: Text(
               localizations.menuSignOut,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: DesignTokens.fontSizeMd,
                 fontWeight: DesignTokens.fontWeightSemibold,
               ),

@@ -48,7 +48,7 @@ class ProfessionalAppBar extends StatelessWidget
       ),
       child: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: DesignTokens.spacingMd,
             vertical: DesignTokens.spacingSm,
           ),
@@ -62,12 +62,12 @@ class ProfessionalAppBar extends StatelessWidget
               else if (showMenuButton)
                 _buildMenuButton(context)
               else
-                SizedBox(width: DesignTokens.iconMd),
+                const SizedBox(width: DesignTokens.iconMd),
 
               // Title (left-aligned)
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.only(left: DesignTokens.spacingSm),
+                  padding: const EdgeInsets.only(left: DesignTokens.spacingSm),
                   child: Text(
                     title,
                     style: TextStyle(
@@ -83,13 +83,13 @@ class ProfessionalAppBar extends StatelessWidget
 
               // Notification button (if enabled)
               if (showNotificationButton) ...[
-                SizedBox(width: DesignTokens.spacingSm),
+                const SizedBox(width: DesignTokens.spacingSm),
                 _buildNotificationButton(context),
               ],
 
               // Actions (right-aligned)
               if (actions != null) ...[
-                SizedBox(width: DesignTokens.spacingSm),
+                const SizedBox(width: DesignTokens.spacingSm),
                 ...actions!,
               ],
             ],
@@ -147,7 +147,7 @@ class ProfessionalAppBar extends StatelessWidget
                 ),
                 child: Text(
                   notificationBadgeCount.toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: DesignTokens.textPrimary,
                     fontSize: DesignTokens.fontSizeXs,
                     fontWeight: DesignTokens.fontWeightSemibold,
@@ -226,7 +226,7 @@ class SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: padding ??
-          EdgeInsets.symmetric(
+          const EdgeInsets.symmetric(
             horizontal: DesignTokens.spacingMd,
             vertical: DesignTokens.spacingSm,
           ),
@@ -272,7 +272,7 @@ class ProfessionalTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 40,
-      padding: EdgeInsets.symmetric(horizontal: DesignTokens.spacingMd),
+      padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spacingMd),
       child: Row(
         children: tabs.asMap().entries.map((entry) {
           final index = entry.key;

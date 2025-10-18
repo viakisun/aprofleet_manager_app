@@ -1,10 +1,8 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../../domain/models/cart.dart';
 import '../../constants/app_constants.dart';
-import '../../../theme/app_theme.dart';
 
 class CanvasMapView extends StatefulWidget {
   final List<Cart> carts;
@@ -113,12 +111,12 @@ class GolfCourseMapPainter extends CustomPainter {
 
   void _drawGolfCourseBackground(Canvas canvas, Size size, Offset center) {
     final rect = Rect.fromLTWH(0, 0, size.width, size.height);
-    final gradient = LinearGradient(
+    const gradient = LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
       colors: [
-        const Color(0xFF0A1F0A),
-        const Color(0xFF061506),
+        Color(0xFF0A1F0A),
+        Color(0xFF061506),
       ],
     );
 
@@ -129,7 +127,7 @@ class GolfCourseMapPainter extends CustomPainter {
 
   void _drawGrid(Canvas canvas, Size size, Offset center) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.03)
+      ..color = Colors.white.withValues(alpha: 0.03)
       ..strokeWidth = 1.0;
 
     final gridSize = 50.0 * zoom;
@@ -155,11 +153,11 @@ class GolfCourseMapPainter extends CustomPainter {
 
   void _drawHoles(Canvas canvas, Size size, Offset center) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.1)
+      ..color = Colors.white.withValues(alpha: 0.1)
       ..style = PaintingStyle.fill;
 
     final strokePaint = Paint()
-      ..color = Colors.white.withOpacity(0.2)
+      ..color = Colors.white.withValues(alpha: 0.2)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0;
 
@@ -185,7 +183,7 @@ class GolfCourseMapPainter extends CustomPainter {
           text: TextSpan(
             text: holeNumber.toString(),
             style: TextStyle(
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withValues(alpha: 0.8),
               fontSize: 12.0 * zoom,
               fontWeight: FontWeight.w600,
             ),
@@ -235,7 +233,7 @@ class GolfCourseMapPainter extends CustomPainter {
 
     // Draw outer ring
     final outerPaint = Paint()
-      ..color = statusColor.withOpacity(0.3)
+      ..color = statusColor.withValues(alpha: 0.3)
       ..style = PaintingStyle.fill;
     canvas.drawCircle(position, markerRadius + 4, outerPaint);
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:aprofleet_manager/features/mm/pages/create_work_order.dart';
+import 'package:aprofleet_manager/features/maintenance_management/pages/work_order_creation_page.dart';
 import 'package:aprofleet_manager/domain/models/cart.dart';
 import 'package:aprofleet_manager/core/services/providers.dart';
 import 'package:latlong2/latlong.dart';
@@ -38,7 +38,7 @@ void main() {
               cartsProvider.overrideWith((ref) => Future.value(mockCarts)),
             ],
             child: const MaterialApp(
-              home: CreateWorkOrder(),
+              home: WorkOrderCreationPage(),
             ),
           ),
         );
@@ -46,7 +46,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the widget loads (basic smoke test)
-        expect(find.byType(CreateWorkOrder), findsOneWidget);
+        expect(find.byType(WorkOrderCreationPage), findsOneWidget);
       } finally {
         // 화면 크기 원상복구
         await tester.binding.setSurfaceSize(null);

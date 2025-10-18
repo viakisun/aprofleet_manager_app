@@ -66,7 +66,7 @@ class UserProfileWidget extends StatelessWidget {
                 children: [
                   Text(
                     userName,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: DesignTokens.fontSizeLg,
                       fontWeight: DesignTokens.fontWeightSemibold,
                       color: DesignTokens.textPrimary,
@@ -109,7 +109,7 @@ class UserProfileWidget extends StatelessWidget {
     return Center(
       child: Text(
         initials,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: DesignTokens.fontSizeLg,
           fontWeight: DesignTokens.fontWeightBold,
           color: DesignTokens.bgPrimary,
@@ -181,7 +181,7 @@ class SettingsMenuItem extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: DesignTokens.fontSizeMd,
                           fontWeight: DesignTokens.fontWeightMedium,
                           color: DesignTokens.textPrimary,
@@ -218,7 +218,7 @@ class SettingsMenuItem extends StatelessWidget {
         // Divider
         if (showDivider)
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: DesignTokens.spacingMd),
+            padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spacingMd),
             child: Divider(
               height: 1,
               color: DesignTokens.borderPrimary,
@@ -250,7 +250,7 @@ class SettingsSection extends StatelessWidget {
         // Section title
         Padding(
           padding: padding ??
-              EdgeInsets.symmetric(
+              const EdgeInsets.symmetric(
                 horizontal: DesignTokens.spacingMd,
                 vertical: DesignTokens.spacingSm,
               ),

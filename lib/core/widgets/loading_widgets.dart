@@ -82,7 +82,7 @@ class ShimmerPainter extends CustomPainter {
       ..shader = LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
-        colors: [
+        colors: const [
           DesignTokens.bgSecondary,
           DesignTokens.bgTertiary,
           DesignTokens.bgSecondary,
@@ -231,7 +231,7 @@ class EmptyState extends StatelessWidget {
             const SizedBox(height: DesignTokens.spacingLg),
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: DesignTokens.fontSizeLg,
                 fontWeight: DesignTokens.fontWeightSemibold,
                 color: DesignTokens.textPrimary,
@@ -288,12 +288,12 @@ class LoadingOverlay extends StatelessWidget {
         child,
         if (isLoading)
           Container(
-            color: DesignTokens.bgPrimary.withOpacity(0.8),
+            color: DesignTokens.bgPrimary.withValues(alpha: 0.8),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircularProgressIndicator(
+                  const CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(
                       DesignTokens.textPrimary,
                     ),
@@ -302,7 +302,7 @@ class LoadingOverlay extends StatelessWidget {
                     const SizedBox(height: DesignTokens.spacingMd),
                     Text(
                       loadingText!,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: DesignTokens.textPrimary,
                         fontSize: DesignTokens.fontSizeMd,
                       ),

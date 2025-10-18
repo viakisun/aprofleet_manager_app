@@ -9,7 +9,6 @@ import '../../../domain/models/alert.dart';
 import '../../../domain/models/telemetry.dart';
 import '../../../domain/models/kpi.dart';
 import '../../../domain/models/user_profile.dart';
-import '../../constants/app_constants.dart';
 
 class MockApi {
   static final MockApi _instance = MockApi._internal();
@@ -48,9 +47,11 @@ class MockApi {
         _addFallbackAlerts();
       }
 
+      // ignore: avoid_print
       print(
           'Mock API initialized with ${_carts.length} carts, ${_workOrders.length} work orders, ${_alerts.length} alerts');
     } catch (e) {
+      // ignore: avoid_print
       print('Error during Mock API initialization: $e');
       // Add fallback data
       _addFallbackCarts();
@@ -172,27 +173,35 @@ class MockApi {
     try {
       final String jsonString =
           await rootBundle.loadString('assets/seeds/carts.json');
+      // ignore: avoid_print
       print('Loaded JSON string length: ${jsonString.length}');
 
       final dynamic jsonData = json.decode(jsonString);
+      // ignore: avoid_print
       print('Parsed JSON type: ${jsonData.runtimeType}');
 
       if (jsonData is List) {
+        // ignore: avoid_print
         print('JSON is List with ${jsonData.length} items');
         for (int i = 0; i < jsonData.length; i++) {
           try {
             final cart = Cart.fromJson(jsonData[i]);
             _carts[cart.id] = cart;
+            // ignore: avoid_print
             print('Loaded cart: ${cart.id}');
           } catch (e) {
+            // ignore: avoid_print
             print('Error parsing cart at index $i: $e');
           }
         }
       } else {
+        // ignore: avoid_print
         print('JSON is not a List, it is: ${jsonData.runtimeType}');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error loading carts: $e');
+      // ignore: avoid_print
       print('Stack trace: ${StackTrace.current}');
     }
   }
@@ -210,6 +219,7 @@ class MockApi {
         }
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error loading work orders: $e');
     }
   }
@@ -225,6 +235,7 @@ class MockApi {
         _alerts[alert.id] = alert;
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error loading alerts: $e');
     }
   }
@@ -243,6 +254,7 @@ class MockApi {
         _telemetry[entry.key] = telemetry;
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error loading telemetry: $e');
     }
   }
@@ -289,6 +301,7 @@ class MockApi {
 
   // Fallback data methods
   void _addFallbackCarts() {
+    // ignore: avoid_print
     print('Adding fallback cart data...');
     final fallbackCart = Cart(
       id: 'APRO-FALLBACK-001',
@@ -322,6 +335,7 @@ class MockApi {
   }
 
   void _addFallbackWorkOrders() {
+    // ignore: avoid_print
     print('Adding fallback work order data...');
     final fallbackWO = WorkOrder(
       id: 'WO-FALLBACK-001',
@@ -341,6 +355,7 @@ class MockApi {
   }
 
   void _addFallbackAlerts() {
+    // ignore: avoid_print
     print('Adding fallback alert data...');
     final fallbackAlert = Alert(
       id: 'ALERT-FALLBACK-001',

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/models/cart.dart';
 import '../../core/localization/app_localizations.dart';
 import '../../core/widgets/shared_widgets.dart';
 import '../../core/constants/app_constants.dart';
-import '../../core/theme/design_tokens.dart';
 
 class FilterSheet extends StatelessWidget {
   final Set<CartStatus> activeFilters;
@@ -34,7 +32,7 @@ class FilterSheet extends StatelessWidget {
             height: 4,
             margin: const EdgeInsets.symmetric(vertical: 12),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.3),
+              color: Colors.white.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -59,7 +57,7 @@ class FilterSheet extends StatelessWidget {
                     child: Text(
                       'Clear All',
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.7),
+                        color: Colors.white.withValues(alpha: 0.7),
                         fontSize: 14,
                       ),
                     ),
@@ -86,13 +84,13 @@ class FilterSheet extends StatelessWidget {
                           horizontal: 16, vertical: 12),
                       decoration: BoxDecoration(
                         color: isActive
-                            ? color.withOpacity(0.1)
+                            ? color.withValues(alpha: 0.1)
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
                           color: isActive
-                              ? color.withOpacity(0.3)
-                              : Colors.white.withOpacity(0.1),
+                              ? color.withValues(alpha: 0.3)
+                              : Colors.white.withValues(alpha: 0.1),
                           width: 1,
                         ),
                       ),

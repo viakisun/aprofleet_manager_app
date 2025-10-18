@@ -14,13 +14,12 @@
         "flutter_localizations",
         "flutter_riverpod",
         "flutter_svg",
-        "freezed",
+        "freezed_annotation",
         "go_router",
         "google_maps_flutter",
         "image_picker",
         "intl",
         "json_annotation",
-        "json_serializable",
         "latlong2",
         "lucide_icons",
         "mobile_scanner",
@@ -329,6 +328,15 @@
       ]
     },
     {
+      "name": "freezed_annotation",
+      "version": "2.4.4",
+      "dependencies": [
+        "collection",
+        "json_annotation",
+        "meta"
+      ]
+    },
+    {
       "name": "json_annotation",
       "version": "4.9.0",
       "dependencies": [
@@ -526,15 +534,6 @@
         "source_span",
         "watcher",
         "yaml"
-      ]
-    },
-    {
-      "name": "freezed_annotation",
-      "version": "2.4.4",
-      "dependencies": [
-        "collection",
-        "json_annotation",
-        "meta"
       ]
     },
     {

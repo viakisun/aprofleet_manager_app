@@ -1,5 +1,5 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/models/cart.dart';
 import '../../domain/models/work_order.dart';
@@ -15,114 +15,114 @@ part 'providers.g.dart';
 
 // Mock API Provider
 @riverpod
-MockApi mockApi(MockApiRef ref) {
+MockApi mockApi(Ref ref) {
   return MockApi();
 }
 
 // Mock WebSocket Hub Provider
 @riverpod
-MockWsHub mockWsHub(MockWsHubRef ref) {
+MockWsHub mockWsHub(Ref ref) {
   return MockWsHub();
 }
 
 // Repository Providers
 @riverpod
-CartRepository cartRepository(CartRepositoryRef ref) {
+CartRepository cartRepository(Ref ref) {
   return CartRepositoryImpl(ref.watch(mockApiProvider));
 }
 
 @riverpod
-WorkOrderRepository workOrderRepository(WorkOrderRepositoryRef ref) {
+WorkOrderRepository workOrderRepository(Ref ref) {
   return WorkOrderRepositoryImpl(ref.watch(mockApiProvider));
 }
 
 @riverpod
-AlertRepository alertRepository(AlertRepositoryRef ref) {
+AlertRepository alertRepository(Ref ref) {
   return AlertRepositoryImpl(ref.watch(mockApiProvider));
 }
 
 // Cart Repository Provider
 @riverpod
-Future<List<Cart>> carts(CartsRef ref) async {
+Future<List<Cart>> carts(Ref ref) async {
   final mockApi = ref.watch(mockApiProvider);
   return await mockApi.getCarts();
 }
 
 @riverpod
-Future<Cart?> cart(CartRef ref, String cartId) async {
+Future<Cart?> cart(Ref ref, String cartId) async {
   final mockApi = ref.watch(mockApiProvider);
   return await mockApi.getCart(cartId);
 }
 
 // Work Order Repository Provider
 @riverpod
-Future<List<WorkOrder>> workOrders(WorkOrdersRef ref) async {
+Future<List<WorkOrder>> workOrders(Ref ref) async {
   final mockApi = ref.watch(mockApiProvider);
   return await mockApi.getWorkOrders();
 }
 
 @riverpod
-Future<WorkOrder?> workOrder(WorkOrderRef ref, String workOrderId) async {
+Future<WorkOrder?> workOrder(Ref ref, String workOrderId) async {
   final mockApi = ref.watch(mockApiProvider);
   return await mockApi.getWorkOrder(workOrderId);
 }
 
 // Alert Repository Provider
 @riverpod
-Future<List<Alert>> alerts(AlertsRef ref) async {
+Future<List<Alert>> alerts(Ref ref) async {
   final mockApi = ref.watch(mockApiProvider);
   return await mockApi.getAlerts();
 }
 
 @riverpod
-Future<Alert?> alert(AlertRef ref, String alertId) async {
+Future<Alert?> alert(Ref ref, String alertId) async {
   final mockApi = ref.watch(mockApiProvider);
   return await mockApi.getAlert(alertId);
 }
 
 // Telemetry Repository Provider
 @riverpod
-Future<Telemetry?> telemetry(TelemetryRef ref, String cartId) async {
+Future<Telemetry?> telemetry(Ref ref, String cartId) async {
   final mockApi = ref.watch(mockApiProvider);
   return await mockApi.getTelemetry(cartId);
 }
 
 // Analytics Repository Provider
 @riverpod
-Future<Kpi> kpi(KpiRef ref) async {
+Future<Kpi> kpi(Ref ref) async {
   final mockApi = ref.watch(mockApiProvider);
   return await mockApi.getKpi();
 }
 
 // User Repository Provider
 @riverpod
-Future<List<UserProfile>> users(UsersRef ref) async {
+Future<List<UserProfile>> users(Ref ref) async {
   final mockApi = ref.watch(mockApiProvider);
   return await mockApi.getUsers();
 }
 
 // Stream Providers
 @riverpod
-Stream<Telemetry> telemetryStream(TelemetryStreamRef ref, String cartId) {
+Stream<Telemetry> telemetryStream(Ref ref, String cartId) {
   final mockWsHub = ref.watch(mockWsHubProvider);
   return mockWsHub.telemetryStream.where((t) => t.cartId == cartId);
 }
 
 @riverpod
-Stream<Cart> positionStream(PositionStreamRef ref, String cartId) {
+Stream<Cart> positionStream(Ref ref, String cartId) {
   final mockWsHub = ref.watch(mockWsHubProvider);
   return mockWsHub.positionStream.where((c) => c.id == cartId);
 }
 
 @riverpod
-Stream<Alert> alertStream(AlertStreamRef ref) {
+Stream<Alert> alertStream(Ref ref) {
   final mockWsHub = ref.watch(mockWsHubProvider);
   return mockWsHub.alertStream;
 }
 
 // Initialization Provider
 @riverpod
-Future<void> initializeApp(InitializeAppRef ref) async {
+Future<void> initializeApp(Ref ref) async {
   final mockApi = ref.watch(mockApiProvider);
   final mockWsHub = ref.watch(mockWsHubProvider);
 

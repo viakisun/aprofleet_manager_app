@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/models/cart.dart';
-import '../../core/localization/app_localizations.dart';
-import '../../core/widgets/shared_widgets.dart';
 import '../../core/constants/app_constants.dart';
-import '../../core/utils/code_formatters.dart';
 
 class StatusBar extends StatelessWidget {
   final Map<CartStatus, int> statusCounts;
@@ -21,7 +17,6 @@ class StatusBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
 
     return Container(
       height: 60,
@@ -30,7 +25,7 @@ class StatusBar extends StatelessWidget {
         color: const Color(0xFF1A1A1A),
         border: Border(
           top: BorderSide(
-            color: Colors.white.withOpacity(0.06),
+            color: Colors.white.withValues(alpha: 0.06),
             width: 1,
           ),
         ),
@@ -56,13 +51,13 @@ class StatusBar extends StatelessWidget {
                             horizontal: 12, vertical: 6),
                         decoration: BoxDecoration(
                           color: isActive
-                              ? color.withOpacity(0.2)
+                              ? color.withValues(alpha: 0.2)
                               : Colors.transparent,
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
                             color: isActive
                                 ? color
-                                : Colors.white.withOpacity(0.1),
+                                : Colors.white.withValues(alpha: 0.1),
                             width: 1,
                           ),
                         ),
@@ -83,7 +78,7 @@ class StatusBar extends StatelessWidget {
                               style: TextStyle(
                                 color: isActive
                                     ? color
-                                    : Colors.white.withOpacity(0.7),
+                                    : Colors.white.withValues(alpha: 0.7),
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
                                 letterSpacing: 0.5,
@@ -95,7 +90,7 @@ class StatusBar extends StatelessWidget {
                               style: TextStyle(
                                 color: isActive
                                     ? color
-                                    : Colors.white.withOpacity(0.5),
+                                    : Colors.white.withValues(alpha: 0.5),
                                 fontSize: 12,
                                 fontWeight: FontWeight.w700,
                               ),

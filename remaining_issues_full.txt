@@ -1,0 +1,78 @@
+Analyzing aprofleet_manager_app...                              
+
+   info - Don't invoke 'print' in production code - lib\core\services\mock\mock_api.dart:50:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\services\mock\mock_api.dart:53:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\services\mock\mock_api.dart:174:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\services\mock\mock_api.dart:177:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\services\mock\mock_api.dart:180:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\services\mock\mock_api.dart:185:13 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\services\mock\mock_api.dart:187:13 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\services\mock\mock_api.dart:191:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\services\mock\mock_api.dart:194:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\services\mock\mock_api.dart:195:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\services\mock\mock_api.dart:212:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\services\mock\mock_api.dart:227:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\services\mock\mock_api.dart:245:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\services\mock\mock_api.dart:291:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\services\mock\mock_api.dart:324:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\services\mock\mock_api.dart:343:5 - avoid_print
+   info - 'PositionStreamRef' is deprecated and shouldn't be used. Will be removed in 3.0. Use Ref instead - lib\core\services\providers.dart:112:29 - deprecated_member_use_from_same_package
+   info - 'AlertStreamRef' is deprecated and shouldn't be used. Will be removed in 3.0. Use Ref instead - lib\core\services\providers.dart:118:27 - deprecated_member_use_from_same_package
+   info - 'InitializeAppRef' is deprecated and shouldn't be used. Will be removed in 3.0. Use Ref instead - lib\core\services\providers.dart:125:28 - deprecated_member_use_from_same_package
+   info - 'foregroundColor' is deprecated and shouldn't be used. use colors in eyeStyle and dataModuleStyle instead - lib\core\widgets\qr\qr_label.dart:57:13 - deprecated_member_use
+   info - 'color' is deprecated and shouldn't be used. use colors in eyeStyle and dataModuleStyle instead - lib\core\widgets\qr\qr_label.dart:106:11 - deprecated_member_use
+   info - 'emptyColor' is deprecated and shouldn't be used. You should use the background color value of your container widget - lib\core\widgets\qr\qr_label.dart:107:11 - deprecated_member_use
+warning - Unused import: '../../core/localization/app_localizations.dart' - lib\core\widgets\status_bar.dart:4:8 - unused_import
+   info - The imported package 'freezed_annotation' isn't a dependency of the importing package - lib\domain\models\alert.dart:1:8 - depend_on_referenced_packages
+   info - The imported package 'freezed_annotation' isn't a dependency of the importing package - lib\domain\models\cart.dart:1:8 - depend_on_referenced_packages
+   info - The imported package 'freezed_annotation' isn't a dependency of the importing package - lib\domain\models\kpi.dart:1:8 - depend_on_referenced_packages
+   info - The imported package 'freezed_annotation' isn't a dependency of the importing package - lib\domain\models\telemetry.dart:1:8 - depend_on_referenced_packages
+   info - The imported package 'freezed_annotation' isn't a dependency of the importing package - lib\domain\models\user_profile.dart:1:8 - depend_on_referenced_packages
+   info - The imported package 'freezed_annotation' isn't a dependency of the importing package - lib\domain\models\work_order.dart:2:8 - depend_on_referenced_packages
+warning - The value of the field '_currentFilter' isn't used - lib\features\alert_management\pages\alert_management_page.dart:28:25 - unused_field
+warning - The value of the local variable 'priorityColor' isn't used - lib\features\alert_management\widgets\alert_card.dart:28:11 - unused_local_variable
+warning - The value of the local variable 'priorityColor' isn't used - lib\features\alert_management\widgets\alert_detail_modal.dart:35:11 - unused_local_variable
+   info - 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre - lib\features\alert_management\widgets\alert_detail_modal.dart:495:15 - deprecated_member_use
+   info - 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre - lib\features\alert_management\widgets\alert_detail_modal.dart:496:15 - deprecated_member_use
+warning - The value of the local variable 'now' isn't used - lib\features\cart_management\controllers\cart_registration_controller.dart:19:11 - unused_local_variable
+warning - The declaration '_buildStatChip' isn't referenced - lib\features\cart_management\pages\cart_inventory_list.dart:135:10 - unused_element
+warning - The declaration '_buildCartCard' isn't referenced - lib\features\cart_management\pages\cart_inventory_list.dart:254:10 - unused_element
+warning - The declaration '_buildCartGridCard' isn't referenced - lib\features\cart_management\pages\cart_inventory_list.dart:403:10 - unused_element
+warning - The declaration '_buildComponentChecklist' isn't referenced - lib\features\cart_management\pages\cart_registration.dart:681:16 - unused_element
+warning - The declaration '_buildPhotoUploads' isn't referenced - lib\features\cart_management\pages\cart_registration.dart:754:10 - unused_element
+   info - Don't use 'BuildContext's across async gaps - lib\features\cart_management\pages\cart_registration.dart:889:30 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\features\cart_management\pages\cart_registration.dart:900:9 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\features\cart_management\pages\cart_registration.dart:951:28 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\features\cart_management\pages\cart_registration.dart:983:30 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\features\cart_management\pages\cart_registration.dart:991:28 - use_build_context_synchronously
+warning - The value of the local variable 'workOrderId' isn't used - lib\features\maintenance_management\controllers\work_order_creation_controller.dart:116:13 - unused_local_variable
+warning - The value of the field '_isLoading' isn't used - lib\features\maintenance_management\pages\work_order_creation_page.dart:35:8 - unused_field
+warning - The member 'state' can only be used within 'package:state_notifier/state_notifier.dart' or a test - lib\features\maintenance_management\pages\work_order_creation_page.dart:205:48 - invalid_use_of_visible_for_testing_member
+warning - The member 'state' can only be used within instance members of subclasses of 'StateNotifier' - lib\features\maintenance_management\pages\work_order_creation_page.dart:205:48 - invalid_use_of_protected_member
+warning - The value of the local variable 'workOrder' isn't used - lib\features\maintenance_management\pages\work_order_creation_page.dart:228:13 - unused_local_variable
+warning - The member 'state' can only be used within 'package:state_notifier/state_notifier.dart' or a test - lib\features\maintenance_management\pages\work_order_creation_page.dart:228:71 - invalid_use_of_visible_for_testing_member
+warning - The member 'state' can only be used within instance members of subclasses of 'StateNotifier' - lib\features\maintenance_management\pages\work_order_creation_page.dart:228:71 - invalid_use_of_protected_member
+warning - The value of the local variable 'localizations' isn't used - lib\features\maintenance_management\widgets\creation\work_order_creation_step1.dart:21:11 - unused_local_variable
+warning - The value of the local variable 'localizations' isn't used - lib\features\maintenance_management\widgets\creation\work_order_creation_step2.dart:37:11 - unused_local_variable
+warning - The value of the local variable 'localizations' isn't used - lib\features\maintenance_management\widgets\creation\work_order_creation_step3.dart:30:11 - unused_local_variable
+warning - The value of the local variable 'localizations' isn't used - lib\features\maintenance_management\widgets\creation\work_order_creation_step4.dart:26:11 - unused_local_variable
+warning - The left operand can't be null, so the right operand is never executed - lib\features\maintenance_management\widgets\creation\work_order_creation_step4.dart:55:82 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\features\maintenance_management\widgets\creation\work_order_creation_step4.dart:56:90 - dead_null_aware_expression
+warning - The value of the local variable 'priorityColor' isn't used - lib\features\maintenance_management\widgets\work_order_detail_modal.dart:37:11 - unused_local_variable
+warning - The value of the local variable 'priorityColor' isn't used - lib\features\maintenance_management\widgets\work_order_timeline.dart:65:11 - unused_local_variable
+   info - 'stream' is deprecated and shouldn't be used. .stream will be removed in 3.0.0. As a replacement, either listen to the provider itself (AsyncValue) or .future - lib\features\realtime_monitoring\pages\cart_detail_monitor.dart:42:57 - deprecated_member_use
+   info - 'stream' is deprecated and shouldn't be used. .stream will be removed in 3.0.0. As a replacement, either listen to the provider itself (AsyncValue) or .future - lib\features\realtime_monitoring\pages\cart_detail_monitor.dart:53:55 - deprecated_member_use
+warning - The value of the local variable 'localizations' isn't used - lib\features\realtime_monitoring\pages\cart_detail_monitor.dart:71:11 - unused_local_variable
+warning - The declaration '_buildBatteryGauge' isn't referenced - lib\features\realtime_monitoring\pages\cart_detail_monitor.dart:291:10 - unused_element
+warning - The declaration '_buildSpeedGauge' isn't referenced - lib\features\realtime_monitoring\pages\cart_detail_monitor.dart:350:10 - unused_element
+warning - The declaration '_showSearchDialog' isn't referenced - lib\features\realtime_monitoring\pages\live_map_view.dart:143:8 - unused_element
+warning - The value of the local variable 'angle' isn't used - lib\features\realtime_monitoring\widgets\telemetry_gauge.dart:29:11 - unused_local_variable
+warning - The value of the local variable 'angle' isn't used - lib\features\realtime_monitoring\widgets\telemetry_gauge.dart:193:11 - unused_local_variable
+warning - The value of the local variable 'cartId' isn't used - lib\router\app_router.dart:125:21 - unused_local_variable
+warning - The dev dependency on freezed is unnecessary because there is also a normal dependency on that package - pubspec.yaml:64:3 - unnecessary_dev_dependency
+warning - The dev dependency on json_serializable is unnecessary because there is also a normal dependency on that package - pubspec.yaml:65:3 - unnecessary_dev_dependency
+warning - The value of the local variable 'singleRepair' isn't used - test\kpi_calculator_test.dart:38:13 - unused_local_variable
+warning - The value of the local variable 'multipleRepairs' isn't used - test\kpi_calculator_test.dart:57:13 - unused_local_variable
+warning - The value of the local variable 'carts' isn't used - test\kpi_calculator_test.dart:91:13 - unused_local_variable
+
+74 issues found. (ran in 2.7s)

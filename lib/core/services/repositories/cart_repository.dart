@@ -3,7 +3,6 @@ import '../../../domain/models/work_order.dart';
 import '../../../domain/models/alert.dart';
 import '../../../domain/models/telemetry.dart';
 import '../../../domain/models/kpi.dart';
-import '../../../domain/models/user_profile.dart';
 import 'package:latlong2/latlong.dart';
 
 abstract class CartRepository {
@@ -81,17 +80,18 @@ class CartRepositoryImpl implements CartRepository {
     // Mock implementation
     final cart = await getCart(id);
     if (cart != null) {
-      yield* Stream.periodic(Duration(seconds: 5), (_) => cart);
+      yield* Stream.periodic(const Duration(seconds: 5), (_) => cart);
     }
   }
 
   @override
   Stream<List<Cart>> watchCarts() async* {
     // Mock implementation
-    yield* Stream.periodic(Duration(seconds: 5), (_) => <Cart>[]);
+    yield* Stream.periodic(const Duration(seconds: 5), (_) => <Cart>[]);
   }
 
   // Additional methods for cart registration
+  @override
   Future<Cart> register(CartRegistration registration) async {
     // Convert CartRegistration to Cart
     final cart = Cart(
@@ -185,7 +185,7 @@ class WorkOrderRepositoryImpl implements WorkOrderRepository {
   @override
   Stream<List<WorkOrder>> watchWorkOrders() async* {
     // Mock implementation
-    yield* Stream.periodic(Duration(seconds: 5), (_) => <WorkOrder>[]);
+    yield* Stream.periodic(const Duration(seconds: 5), (_) => <WorkOrder>[]);
   }
 }
 
@@ -224,7 +224,7 @@ class AlertRepositoryImpl implements AlertRepository {
   Stream<Alert> watchAlerts() async* {
     // Mock implementation
     yield* Stream.periodic(
-        Duration(seconds: 5),
+        const Duration(seconds: 5),
         (_) => Alert(
               id: '',
               code: '',

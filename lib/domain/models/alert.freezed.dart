@@ -27,6 +27,7 @@ mixin _$Alert {
   AlertStatus get state => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
+  AlertCategory? get category => throw _privateConstructorUsedError;
   String? get cartId => throw _privateConstructorUsedError;
   String? get location => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
@@ -61,6 +62,7 @@ abstract class $AlertCopyWith<$Res> {
       AlertStatus state,
       String title,
       String message,
+      AlertCategory? category,
       String? cartId,
       String? location,
       DateTime createdAt,
@@ -96,6 +98,7 @@ class _$AlertCopyWithImpl<$Res, $Val extends Alert>
     Object? state = null,
     Object? title = null,
     Object? message = null,
+    Object? category = freezed,
     Object? cartId = freezed,
     Object? location = freezed,
     Object? createdAt = null,
@@ -137,6 +140,10 @@ class _$AlertCopyWithImpl<$Res, $Val extends Alert>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as AlertCategory?,
       cartId: freezed == cartId
           ? _value.cartId
           : cartId // ignore: cast_nullable_to_non_nullable
@@ -200,6 +207,7 @@ abstract class _$$AlertImplCopyWith<$Res> implements $AlertCopyWith<$Res> {
       AlertStatus state,
       String title,
       String message,
+      AlertCategory? category,
       String? cartId,
       String? location,
       DateTime createdAt,
@@ -233,6 +241,7 @@ class __$$AlertImplCopyWithImpl<$Res>
     Object? state = null,
     Object? title = null,
     Object? message = null,
+    Object? category = freezed,
     Object? cartId = freezed,
     Object? location = freezed,
     Object? createdAt = null,
@@ -274,6 +283,10 @@ class __$$AlertImplCopyWithImpl<$Res>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as AlertCategory?,
       cartId: freezed == cartId
           ? _value.cartId
           : cartId // ignore: cast_nullable_to_non_nullable
@@ -333,6 +346,7 @@ class _$AlertImpl implements _Alert {
       required this.state,
       required this.title,
       required this.message,
+      this.category,
       this.cartId,
       this.location,
       required this.createdAt,
@@ -363,6 +377,8 @@ class _$AlertImpl implements _Alert {
   final String title;
   @override
   final String message;
+  @override
+  final AlertCategory? category;
   @override
   final String? cartId;
   @override
@@ -396,7 +412,7 @@ class _$AlertImpl implements _Alert {
 
   @override
   String toString() {
-    return 'Alert(id: $id, code: $code, severity: $severity, priority: $priority, state: $state, title: $title, message: $message, cartId: $cartId, location: $location, createdAt: $createdAt, updatedAt: $updatedAt, actions: $actions, escalationLevel: $escalationLevel, acknowledgedAt: $acknowledgedAt, acknowledgedBy: $acknowledgedBy, resolvedBy: $resolvedBy, resolvedAt: $resolvedAt, notes: $notes)';
+    return 'Alert(id: $id, code: $code, severity: $severity, priority: $priority, state: $state, title: $title, message: $message, category: $category, cartId: $cartId, location: $location, createdAt: $createdAt, updatedAt: $updatedAt, actions: $actions, escalationLevel: $escalationLevel, acknowledgedAt: $acknowledgedAt, acknowledgedBy: $acknowledgedBy, resolvedBy: $resolvedBy, resolvedAt: $resolvedAt, notes: $notes)';
   }
 
   @override
@@ -413,6 +429,8 @@ class _$AlertImpl implements _Alert {
             (identical(other.state, state) || other.state == state) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.message, message) || other.message == message) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
             (identical(other.cartId, cartId) || other.cartId == cartId) &&
             (identical(other.location, location) ||
                 other.location == location) &&
@@ -436,26 +454,28 @@ class _$AlertImpl implements _Alert {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      code,
-      severity,
-      priority,
-      state,
-      title,
-      message,
-      cartId,
-      location,
-      createdAt,
-      updatedAt,
-      const DeepCollectionEquality().hash(_actions),
-      escalationLevel,
-      acknowledgedAt,
-      acknowledgedBy,
-      resolvedBy,
-      resolvedAt,
-      notes);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        code,
+        severity,
+        priority,
+        state,
+        title,
+        message,
+        category,
+        cartId,
+        location,
+        createdAt,
+        updatedAt,
+        const DeepCollectionEquality().hash(_actions),
+        escalationLevel,
+        acknowledgedAt,
+        acknowledgedBy,
+        resolvedBy,
+        resolvedAt,
+        notes
+      ]);
 
   /// Create a copy of Alert
   /// with the given fields replaced by the non-null parameter values.
@@ -482,6 +502,7 @@ abstract class _Alert implements Alert {
       required final AlertStatus state,
       required final String title,
       required final String message,
+      final AlertCategory? category,
       final String? cartId,
       final String? location,
       required final DateTime createdAt,
@@ -510,6 +531,8 @@ abstract class _Alert implements Alert {
   String get title;
   @override
   String get message;
+  @override
+  AlertCategory? get category;
   @override
   String? get cartId;
   @override

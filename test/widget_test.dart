@@ -19,7 +19,7 @@ void main() {
           // MockWsHub를 테스트 모드 인스턴스로 override
           mockWsHubProvider.overrideWith((ref) => mockWsHub),
         ],
-        child: AproFleetApp(),
+        child: const AproFleetApp(),
       ),
     );
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:go_router/go_router.dart';
 
 import 'router/app_router.dart';
 import 'theme/app_theme.dart';
@@ -55,9 +54,9 @@ class AproFleetApp extends ConsumerWidget {
       // 초기화 중
       loading: () => MaterialApp(
         theme: AppTheme.darkTheme,
-        home: Scaffold(
-          backgroundColor: const Color(0xFF0A0A0A),
-          body: const Center(
+        home: const Scaffold(
+          backgroundColor: Color(0xFF0A0A0A),
+          body: Center(
             child: CircularProgressIndicator(color: Colors.white),
           ),
         ),

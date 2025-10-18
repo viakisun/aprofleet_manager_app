@@ -113,6 +113,22 @@ class WorkOrderDraft with _$WorkOrderDraft {
 
   factory WorkOrderDraft.fromJson(Map<String, dynamic> json) =>
       _$WorkOrderDraftFromJson(json);
+
+  factory WorkOrderDraft.initial() {
+    return const WorkOrderDraft(
+      type: WorkOrderType.preventive,
+      priority: Priority.p3,
+      description: '',
+      cartId: '',
+      location: null,
+      scheduledAt: null,
+      estimatedDuration: null,
+      technician: null,
+      parts: null,
+      checklist: null,
+      notes: null,
+    );
+  }
 }
 
 @freezed

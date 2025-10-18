@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../theme/app_theme.dart';
 import '../localization/app_localizations.dart';
 import '../theme/design_tokens.dart';
 import 'custom_icons.dart';
@@ -120,7 +119,7 @@ class AppNavigationBar extends ConsumerWidget {
                       ),
                       child: Text(
                         badge.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: DesignTokens.textPrimary,
                           fontSize: DesignTokens.fontSizeXs,
                           fontWeight: DesignTokens.fontWeightSemibold,

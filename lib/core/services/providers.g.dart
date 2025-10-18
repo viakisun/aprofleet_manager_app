@@ -6,7 +6,7 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$mockApiHash() => r'd87e999996cf681685c173b9ad31b426665d4e6c';
+String _$mockApiHash() => r'd1663dc2ce8725d2e11efdec8ecbbbc286e5c152';
 
 /// See also [mockApi].
 @ProviderFor(mockApi)
@@ -22,7 +22,7 @@ final mockApiProvider = AutoDisposeProvider<MockApi>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef MockApiRef = AutoDisposeProviderRef<MockApi>;
-String _$mockWsHubHash() => r'5b8d6665074bbc29ffe3546f63a533a5de6a5688';
+String _$mockWsHubHash() => r'a4e07d4f0137523946256e03972d22af89130790';
 
 /// See also [mockWsHub].
 @ProviderFor(mockWsHub)
@@ -38,7 +38,7 @@ final mockWsHubProvider = AutoDisposeProvider<MockWsHub>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef MockWsHubRef = AutoDisposeProviderRef<MockWsHub>;
-String _$cartRepositoryHash() => r'52d540c105b977fb353a8ece668a0ef1b6143832';
+String _$cartRepositoryHash() => r'4f7a1aa4ec64ea7cff1526fa2a873164aa58c9a6';
 
 /// See also [cartRepository].
 @ProviderFor(cartRepository)
@@ -56,7 +56,7 @@ final cartRepositoryProvider = AutoDisposeProvider<CartRepository>.internal(
 // ignore: unused_element
 typedef CartRepositoryRef = AutoDisposeProviderRef<CartRepository>;
 String _$workOrderRepositoryHash() =>
-    r'5cfb6ef5c697af7fe30fd093d2f4cb202a7f02be';
+    r'0ca2405ea6ae8e52f34fddcfadf1dabed741a432';
 
 /// See also [workOrderRepository].
 @ProviderFor(workOrderRepository)
@@ -74,7 +74,7 @@ final workOrderRepositoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef WorkOrderRepositoryRef = AutoDisposeProviderRef<WorkOrderRepository>;
-String _$alertRepositoryHash() => r'9b81b627c4530207812e9e777617ed05dc1aaf04';
+String _$alertRepositoryHash() => r'8378e0dfad2cc803bf4acd85490cd96d755b2295';
 
 /// See also [alertRepository].
 @ProviderFor(alertRepository)
@@ -91,7 +91,7 @@ final alertRepositoryProvider = AutoDisposeProvider<AlertRepository>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AlertRepositoryRef = AutoDisposeProviderRef<AlertRepository>;
-String _$cartsHash() => r'c6df05031cf51e1a1648d3b0d76cda3d03124da6';
+String _$cartsHash() => r'd7afe1b007f1d2b24004bdb2b8801b5fb852d80f';
 
 /// See also [carts].
 @ProviderFor(carts)
@@ -107,7 +107,7 @@ final cartsProvider = AutoDisposeFutureProvider<List<Cart>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef CartsRef = AutoDisposeFutureProviderRef<List<Cart>>;
-String _$cartHash() => r'88ee9b213bab68b927684f6ad6101f3dc94ddf7e';
+String _$cartHash() => r'1e81ac71014f20ffa30dd4664a0d34e94d69dff0';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -255,7 +255,7 @@ class _CartProviderElement extends AutoDisposeFutureProviderElement<Cart?>
   String get cartId => (origin as CartProvider).cartId;
 }
 
-String _$workOrdersHash() => r'f39514b8dd9465bed346ffb80fd2d3da4496f47a';
+String _$workOrdersHash() => r'dc89c15d8c895c3431ad49ec533691f75b8f6c02';
 
 /// See also [workOrders].
 @ProviderFor(workOrders)
@@ -271,7 +271,7 @@ final workOrdersProvider = AutoDisposeFutureProvider<List<WorkOrder>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef WorkOrdersRef = AutoDisposeFutureProviderRef<List<WorkOrder>>;
-String _$workOrderHash() => r'7c265255a2ac026b4ec36eea255c039ff4bdf9fe';
+String _$workOrderHash() => r'5c96b3ea6b3cd08f88c839b194614bd7b172942d';
 
 /// See also [workOrder].
 @ProviderFor(workOrder)
@@ -400,7 +400,7 @@ class _WorkOrderProviderElement
   String get workOrderId => (origin as WorkOrderProvider).workOrderId;
 }
 
-String _$alertsHash() => r'72e95c587b12ca93ff7f5d5cc20c75d3d1ed62c4';
+String _$alertsHash() => r'aad4392f3f2eaeca70fdbcaba3e6e3bfb3470e70';
 
 /// See also [alerts].
 @ProviderFor(alerts)
@@ -416,7 +416,7 @@ final alertsProvider = AutoDisposeFutureProvider<List<Alert>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AlertsRef = AutoDisposeFutureProviderRef<List<Alert>>;
-String _$alertHash() => r'58ab08d934a6cff01800c092649f45e464514975';
+String _$alertHash() => r'501d3e794c9be27710af50e0ebae2476565e7c62';
 
 /// See also [alert].
 @ProviderFor(alert)
@@ -545,7 +545,7 @@ class _AlertProviderElement extends AutoDisposeFutureProviderElement<Alert?>
   String get alertId => (origin as AlertProvider).alertId;
 }
 
-String _$telemetryHash() => r'e1d5ed10c6767389c3f20594f6c4a37500e5495a';
+String _$telemetryHash() => r'4bddc84438e5f426d425ef16d4b8ec93a7535610';
 
 /// See also [telemetry].
 @ProviderFor(telemetry)
@@ -674,7 +674,7 @@ class _TelemetryProviderElement
   String get cartId => (origin as TelemetryProvider).cartId;
 }
 
-String _$kpiHash() => r'973ad2d9e8294eada3412d876af714d40e33ce63';
+String _$kpiHash() => r'fc229ed815fc76091f6eef49719287ccd133b4e0';
 
 /// See also [kpi].
 @ProviderFor(kpi)
@@ -690,7 +690,7 @@ final kpiProvider = AutoDisposeFutureProvider<Kpi>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef KpiRef = AutoDisposeFutureProviderRef<Kpi>;
-String _$usersHash() => r'acac2e0eb914c52a825a09c313d135260e118c26';
+String _$usersHash() => r'139f7617698f6bf2d7278ff594b17140840dd83c';
 
 /// See also [users].
 @ProviderFor(users)
@@ -706,7 +706,7 @@ final usersProvider = AutoDisposeFutureProvider<List<UserProfile>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef UsersRef = AutoDisposeFutureProviderRef<List<UserProfile>>;
-String _$telemetryStreamHash() => r'5eee7161cb4ee91efe8fd6bb96c9d69cc09fdb99';
+String _$telemetryStreamHash() => r'0bff2bf98e0fd23cb745054ff6262ffbcc057387';
 
 /// See also [telemetryStream].
 @ProviderFor(telemetryStream)
@@ -837,7 +837,7 @@ class _TelemetryStreamProviderElement
   String get cartId => (origin as TelemetryStreamProvider).cartId;
 }
 
-String _$positionStreamHash() => r'4dfef1963051cd3ea1e816ff395396b577d307b1';
+String _$positionStreamHash() => r'67a1f70bc06e13b3e9056c497a22c37425e5a7d8';
 
 /// See also [positionStream].
 @ProviderFor(positionStream)
@@ -967,7 +967,7 @@ class _PositionStreamProviderElement
   String get cartId => (origin as PositionStreamProvider).cartId;
 }
 
-String _$alertStreamHash() => r'f5e12a715fad677ae556aa7b75d2ae52891dbca9';
+String _$alertStreamHash() => r'2d560f9828cc7422af2bc5af04b8533c7250c0a4';
 
 /// See also [alertStream].
 @ProviderFor(alertStream)
@@ -983,7 +983,7 @@ final alertStreamProvider = AutoDisposeStreamProvider<Alert>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AlertStreamRef = AutoDisposeStreamProviderRef<Alert>;
-String _$initializeAppHash() => r'3574bf6105e9f4002fd45939ba7e6709fb571a7d';
+String _$initializeAppHash() => r'f5181871c1bf7f1cf756df0a27105310ef4d6a3c';
 
 /// See also [initializeApp].
 @ProviderFor(initializeApp)

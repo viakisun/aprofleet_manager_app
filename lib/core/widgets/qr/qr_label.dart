@@ -1,7 +1,5 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -28,7 +26,7 @@ class QRLabel extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -56,7 +54,8 @@ class QRLabel extends StatelessWidget {
             version: QrVersions.auto,
             size: size,
             backgroundColor: Colors.white,
-            foregroundColor: Colors.black,
+            eyeStyle: const QrEyeStyle(color: Colors.black),
+            dataModuleStyle: const QrDataModuleStyle(color: Colors.black),
           ),
 
           const SizedBox(height: 8),
@@ -105,8 +104,8 @@ class QRLabel extends StatelessWidget {
         final qrCode = qrValidationResult.qrCode!;
         final painter = QrPainter.withQr(
           qr: qrCode,
-          color: Colors.black,
-          emptyColor: Colors.white,
+          eyeStyle: const QrEyeStyle(color: Colors.black),
+          dataModuleStyle: const QrDataModuleStyle(color: Colors.black),
         );
 
         final picData = await painter.toImageData(size);

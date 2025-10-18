@@ -60,7 +60,7 @@ class MockWsHub {
   // Start telemetry simulation (1 second intervals)
   void _startTelemetrySimulation() {
     _telemetryTimer = Timer.periodic(
-      Duration(seconds: AppConstants.telemetryInterval),
+      const Duration(seconds: AppConstants.telemetryInterval),
       (_) => _updateTelemetry(),
     );
   }
@@ -68,7 +68,7 @@ class MockWsHub {
   // Start position simulation (3 second intervals)
   void _startPositionSimulation() {
     _positionTimer = Timer.periodic(
-      Duration(seconds: AppConstants.positionInterval),
+      const Duration(seconds: AppConstants.positionInterval),
       (_) => _updatePositions(),
     );
   }
@@ -76,7 +76,7 @@ class MockWsHub {
   // Start alert simulation (10 second intervals)
   void _startAlertSimulation() {
     _alertTimer = Timer.periodic(
-      Duration(seconds: AppConstants.alertInterval),
+      const Duration(seconds: AppConstants.alertInterval),
       (_) => _generateRandomAlert(),
     );
   }

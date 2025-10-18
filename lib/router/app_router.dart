@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../features/rt/pages/live_map_view.dart';
-import '../features/rt/pages/cart_detail_monitor.dart';
-import '../features/cm/pages/cart_inventory_list.dart';
-import '../features/cm/pages/cart_registration.dart';
-import '../features/mm/pages/work_order_list.dart';
-import '../features/mm/pages/create_work_order.dart';
-import '../features/al/pages/alert_center.dart';
-import '../features/ar/pages/analytics_dashboard.dart';
+import '../features/realtime_monitoring/pages/live_map_view.dart';
+import '../features/realtime_monitoring/pages/cart_detail_monitor.dart';
+import '../features/cart_management/pages/cart_inventory_list.dart';
+import '../features/cart_management/pages/cart_registration.dart';
+import '../features/maintenance_management/pages/work_order_list.dart';
+import '../features/maintenance_management/pages/work_order_creation_page.dart';
+import '../features/alert_management/pages/alert_management_page.dart';
+import '../features/analytics_reporting/pages/analytics_dashboard.dart';
 import '../features/settings/pages/settings_page.dart';
 import '../core/widgets/navigation_bar.dart';
 
@@ -122,9 +122,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: '/mm/create',
             name: 'create-work-order',
             pageBuilder: (context, state) {
-              final cartId = state.uri.queryParameters['cart'];
               return CustomTransitionPage(
-                child: const CreateWorkOrder(),
+                child: const WorkOrderCreationPage(),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   return SlideTransition(
@@ -144,7 +143,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: '/al/center',
             name: 'alert-center',
             pageBuilder: (context, state) => CustomTransitionPage(
-              child: const AlertCenter(),
+                child: const AlertManagementPage(),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 return SlideTransition(

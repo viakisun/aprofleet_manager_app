@@ -66,7 +66,7 @@ class SettingsPage extends ConsumerWidget {
                       ? DesignTokens.statusActive
                       : null,
                   trailing: currentLocale.languageCode == 'en'
-                      ? Icon(Icons.check_circle,
+                      ? const Icon(Icons.check_circle,
                           color: DesignTokens.statusActive,
                           size: DesignTokens.iconMd)
                       : null,
@@ -81,7 +81,7 @@ class SettingsPage extends ConsumerWidget {
                       ? DesignTokens.statusActive
                       : null,
                   trailing: currentLocale.languageCode == 'ko'
-                      ? Icon(Icons.check_circle,
+                      ? const Icon(Icons.check_circle,
                           color: DesignTokens.statusActive,
                           size: DesignTokens.iconMd)
                       : null,
@@ -96,7 +96,7 @@ class SettingsPage extends ConsumerWidget {
                       ? DesignTokens.statusActive
                       : null,
                   trailing: currentLocale.languageCode == 'ja'
-                      ? Icon(Icons.check_circle,
+                      ? const Icon(Icons.check_circle,
                           color: DesignTokens.statusActive,
                           size: DesignTokens.iconMd)
                       : null,
@@ -111,7 +111,7 @@ class SettingsPage extends ConsumerWidget {
                       ? DesignTokens.statusActive
                       : null,
                   trailing: currentLocale.languageCode == 'zh' && currentLocale.countryCode == 'CN'
-                      ? Icon(Icons.check_circle,
+                      ? const Icon(Icons.check_circle,
                           color: DesignTokens.statusActive,
                           size: DesignTokens.iconMd)
                       : null,
@@ -126,7 +126,7 @@ class SettingsPage extends ConsumerWidget {
                       ? DesignTokens.statusActive
                       : null,
                   trailing: currentLocale.languageCode == 'zh' && currentLocale.countryCode == 'TW'
-                      ? Icon(Icons.check_circle,
+                      ? const Icon(Icons.check_circle,
                           color: DesignTokens.statusActive,
                           size: DesignTokens.iconMd)
                       : null,
@@ -181,7 +181,7 @@ class SettingsPage extends ConsumerWidget {
                   icon: Icons.dark_mode_outlined,
                   title: 'Theme',
                   subtitle: 'Dark mode (always on)',
-                  trailing: Icon(Icons.check_circle,
+                  trailing: const Icon(Icons.check_circle,
                       color: DesignTokens.statusActive,
                       size: DesignTokens.iconMd),
                   onTap: () => _showThemeSettings(context),
@@ -337,7 +337,7 @@ class SettingsPage extends ConsumerWidget {
         backgroundColor: DesignTokens.bgSecondary,
         title: Text(
           localizations.aboutAproFleetManager,
-          style: TextStyle(color: DesignTokens.textPrimary),
+          style: const TextStyle(color: DesignTokens.textPrimary),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -360,7 +360,7 @@ class SettingsPage extends ConsumerWidget {
           TextButton(
             onPressed: () => Navigator.pop(context),
             child:
-                Text(localizations.ok, style: TextStyle(color: DesignTokens.statusActive)),
+                Text(localizations.ok, style: const TextStyle(color: DesignTokens.statusActive)),
           ),
         ],
       ),
@@ -375,7 +375,7 @@ class SettingsPage extends ConsumerWidget {
         backgroundColor: DesignTokens.bgSecondary,
         title: Text(
           localizations.signOut,
-          style: TextStyle(color: DesignTokens.textPrimary),
+          style: const TextStyle(color: DesignTokens.textPrimary),
         ),
         content: Text(
           localizations.signOutConfirm,
@@ -395,7 +395,7 @@ class SettingsPage extends ConsumerWidget {
               );
             },
             child: Text(localizations.signOut,
-                style: TextStyle(color: DesignTokens.statusCritical)),
+                style: const TextStyle(color: DesignTokens.statusCritical)),
           ),
         ],
       ),

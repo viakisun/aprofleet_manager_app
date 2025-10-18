@@ -23,15 +23,15 @@ class DesignTokens {
   static const Color bgQuaternary = Color(0xFF2A2A2A);
 
   // Border Colors
-  static Color borderPrimary = Colors.white.withOpacity(0.06);
-  static Color borderSecondary = Colors.white.withOpacity(0.12);
-  static Color borderTertiary = Colors.white.withOpacity(0.20);
+  static Color borderPrimary = Colors.white.withValues(alpha: 0.06);
+  static Color borderSecondary = Colors.white.withValues(alpha: 0.12);
+  static Color borderTertiary = Colors.white.withValues(alpha: 0.20);
 
   // Text Colors
   static const Color textPrimary = Color(0xFFFFFFFF);
-  static Color textSecondary = Colors.white.withOpacity(0.7);
-  static Color textTertiary = Colors.white.withOpacity(0.4);
-  static Color textDisabled = Colors.white.withOpacity(0.2);
+  static Color textSecondary = Colors.white.withValues(alpha: 0.7);
+  static Color textTertiary = Colors.white.withValues(alpha: 0.4);
+  static Color textDisabled = Colors.white.withValues(alpha: 0.2);
 
   // ============================================================================
   // STATUS COLORS
@@ -86,6 +86,26 @@ class DesignTokens {
 
   /// Info alerts - Blue
   static const Color alertInfo = Color(0xFF0088FF);
+
+  // ============================================================================
+  // ALERT METHODS
+  // ============================================================================
+
+  /// Get alert color based on severity
+  static Color getAlertColor(String severity) {
+    switch (severity.toLowerCase()) {
+      case 'critical':
+        return alertCritical;
+      case 'warning':
+        return alertWarning;
+      case 'info':
+        return alertInfo;
+      default:
+        return alertInfo;
+    }
+  }
+
+  // ============================================================================
 
   /// Success alerts - Green
   static const Color alertSuccess = Color(0xFF00FF00);
@@ -276,7 +296,7 @@ class DesignTokens {
       boxShadow: elevation != null && elevation > 0
           ? [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: elevation,
                 offset: Offset(0, elevation / 2),
               ),
@@ -305,15 +325,15 @@ class DesignTokens {
     return BoxDecoration(
       borderRadius: BorderRadius.circular(borderRadius ?? radiusMd),
       border: Border.all(
-        color: Colors.white.withOpacity(0.1),
+        color: Colors.white.withValues(alpha: 0.1),
         width: 1.0,
       ),
       gradient: LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: [
-          Colors.white.withOpacity(opacity ?? 0.05),
-          Colors.white.withOpacity((opacity ?? 0.05) * 0.5),
+          Colors.white.withValues(alpha: opacity ?? 0.05),
+          Colors.white.withValues(alpha: (opacity ?? 0.05) * 0.5),
         ],
       ),
     );

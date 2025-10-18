@@ -6,6 +6,25 @@ import '../../core/localization/app_localizations.dart';
 part 'alert.freezed.dart';
 part 'alert.g.dart';
 
+enum AlertFilterType {
+  all,
+  unread,
+  cart,
+  battery,
+  maintenance,
+  geofence,
+  system,
+}
+
+enum AlertCategory {
+  cart,
+  battery,
+  maintenance,
+  geofence,
+  system,
+  other,
+}
+
 @freezed
 class Alert with _$Alert {
   const factory Alert({
@@ -16,6 +35,7 @@ class Alert with _$Alert {
     required AlertStatus state,
     required String title,
     required String message,
+    AlertCategory? category,
     String? cartId,
     String? location,
     required DateTime createdAt,
@@ -130,6 +150,19 @@ enum AlertSource {
 }
 
 extension AlertSeverityExtension on AlertSeverity {
+  String get displayName {
+    switch (this) {
+      case AlertSeverity.critical:
+        return 'Critical';
+      case AlertSeverity.warning:
+        return 'Warning';
+      case AlertSeverity.info:
+        return 'Info';
+      case AlertSeverity.success:
+        return 'Success';
+    }
+  }
+
   String getDisplayName(BuildContext context) {
     final loc = AppLocalizations.of(context);
     switch (this) {

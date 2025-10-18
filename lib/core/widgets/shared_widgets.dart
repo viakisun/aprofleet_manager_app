@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
 import '../../domain/models/cart.dart';
 import '../../domain/models/work_order.dart';
-import '../../domain/models/alert.dart';
-import '../constants/app_constants.dart';
 import '../theme/design_tokens.dart';
 
 class CartStatusChip extends StatelessWidget {
@@ -102,7 +99,7 @@ class PriorityIndicator extends StatelessWidget {
           ),
         ),
         if (showText) ...[
-          SizedBox(width: DesignTokens.spacingSm),
+          const SizedBox(width: DesignTokens.spacingSm),
           Text(
             text.toUpperCase(),
             style: DesignTokens.getUppercaseLabelStyle(
@@ -188,7 +185,7 @@ class TelemetryWidget extends StatelessWidget {
               color: DesignTokens.textSecondary,
             ),
           ),
-          SizedBox(height: DesignTokens.spacingXs),
+          const SizedBox(height: DesignTokens.spacingXs),
           Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -204,11 +201,11 @@ class TelemetryWidget extends StatelessWidget {
                   fontWeight: DesignTokens.fontWeightBold,
                 ),
               ),
-              SizedBox(width: DesignTokens.spacingXs),
+              const SizedBox(width: DesignTokens.spacingXs),
               Text(
                 unit,
                 style: TextStyle(
-                  color: displayColor.withOpacity(0.7),
+                  color: displayColor.withValues(alpha: 0.7),
                   fontSize: isCompact
                       ? DesignTokens.fontSizeXs
                       : DesignTokens.fontSizeSm,
@@ -316,7 +313,7 @@ class _ActionButtonState extends State<ActionButton>
                     ? BorderSide(color: borderColor)
                     : BorderSide.none,
               ),
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: DesignTokens.spacingLg,
                 vertical: DesignTokens.spacingMd,
               ),
@@ -339,11 +336,11 @@ class _ActionButtonState extends State<ActionButton>
                     children: [
                       if (widget.icon != null) ...[
                         Icon(widget.icon, size: DesignTokens.iconSm),
-                        SizedBox(width: DesignTokens.spacingSm),
+                        const SizedBox(width: DesignTokens.spacingSm),
                       ],
                       Text(
                         widget.text.toUpperCase(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: DesignTokens.fontSizeMd,
                           fontWeight: DesignTokens.fontWeightSemibold,
                           letterSpacing: DesignTokens.letterSpacingWide,
@@ -380,9 +377,9 @@ class BaseModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: DesignTokens.bgTertiary,
-        borderRadius: const BorderRadius.only(
+        borderRadius: BorderRadius.only(
           topLeft: Radius.circular(DesignTokens.radiusLg),
           topRight: Radius.circular(DesignTokens.radiusLg),
         ),
@@ -410,7 +407,7 @@ class BaseModal extends StatelessWidget {
                   Expanded(
                     child: Text(
                       title!,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: DesignTokens.fontSizeXl,
                         fontWeight: DesignTokens.fontWeightBold,
                         color: DesignTokens.textPrimary,
@@ -518,7 +515,6 @@ class StepProgressIndicator extends StatelessWidget {
       children: [
         Row(
           children: List.generate(totalSteps, (index) {
-            final isActive = index <= currentStep;
             final isCompleted = index < currentStep;
 
             return Expanded(
@@ -535,7 +531,7 @@ class StepProgressIndicator extends StatelessWidget {
                     ),
                   ),
                   if (index < totalSteps - 1)
-                    Container(
+                    const SizedBox(
                       width: 2,
                       height: 2,
                     ),
@@ -594,7 +590,7 @@ class GlassSearchBar extends StatelessWidget {
       child: TextField(
         controller: controller,
         onChanged: onChanged,
-        style: TextStyle(
+        style: const TextStyle(
           color: DesignTokens.textPrimary,
           fontSize: DesignTokens.fontSizeMd,
         ),

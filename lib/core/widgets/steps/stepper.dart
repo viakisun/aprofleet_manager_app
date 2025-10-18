@@ -38,14 +38,14 @@ class Stepper extends StatelessWidget {
                           ? Colors.green
                           : isActive
                               ? Colors.white
-                              : Colors.white.withOpacity(0.2),
+                              : Colors.white.withValues(alpha: 0.2),
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: isCompleted
                             ? Colors.green
                             : isActive
                                 ? Colors.white
-                                : Colors.white.withOpacity(0.3),
+                                : Colors.white.withValues(alpha: 0.3),
                         width: 2,
                       ),
                     ),
@@ -77,7 +77,7 @@ class Stepper extends StatelessWidget {
                       style: TextStyle(
                         color: isActive || isCompleted
                             ? Colors.white
-                            : Colors.white.withOpacity(0.6),
+                            : Colors.white.withValues(alpha: 0.6),
                         fontSize: 12,
                         fontWeight:
                             isActive ? FontWeight.w600 : FontWeight.w400,
@@ -98,7 +98,7 @@ class Stepper extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: isCompleted
                             ? Colors.green
-                            : Colors.white.withOpacity(0.2),
+                            : Colors.white.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(1),
                       ),
                     ),
