@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../domain/models/kpi.dart';
+import '../../../../core/localization/app_localizations.dart';
 import '../charts/battery_health_line.dart';
 import '../../controllers/analytics_controller.dart';
 
@@ -16,6 +17,8 @@ class BatteryHealthSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+    
     return Container(
       constraints: const BoxConstraints(minHeight: 200),
       padding: const EdgeInsets.all(16),
@@ -30,9 +33,9 @@ class BatteryHealthSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Battery Health Trend',
-            style: TextStyle(
+          Text(
+            localizations.analyticsBatteryHealth,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
               color: Colors.white,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../domain/models/kpi.dart';
+import '../../../../core/localization/app_localizations.dart';
 import '../kpi_card.dart';
 import '../../controllers/analytics_controller.dart';
 
@@ -16,12 +17,14 @@ class KpiCardsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'KEY PERFORMANCE INDICATORS',
-          style: TextStyle(
+        Text(
+          localizations.analyticsKpiTitle,
+          style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
             color: Colors.white,
@@ -38,7 +41,7 @@ class KpiCardsSection extends StatelessWidget {
           childAspectRatio: 1.5,
           children: [
             PerformanceMetricCard(
-              title: 'Availability Rate',
+              title: localizations.kpiAvailabilityRate,
               value: '${kpis.availabilityRate.toStringAsFixed(1)}%',
               trend: kpis.trend,
               color: Colors.green,
@@ -46,7 +49,7 @@ class KpiCardsSection extends StatelessWidget {
               sparklineData: controller.getAvailabilitySparkline(),
             ),
             PerformanceMetricCard(
-              title: 'MTTR',
+              title: localizations.kpiMTTR,
               value: '${kpis.mttr.toStringAsFixed(0)} min',
               trend: kpis.trend,
               color: Colors.blue,
@@ -54,7 +57,7 @@ class KpiCardsSection extends StatelessWidget {
               sparklineData: controller.getMTTRSparkline(),
             ),
             PerformanceMetricCard(
-              title: 'Utilization',
+              title: localizations.kpiUtilization,
               value: '${kpis.utilization.toStringAsFixed(0)} km',
               trend: kpis.trend,
               color: Colors.orange,
@@ -62,7 +65,7 @@ class KpiCardsSection extends StatelessWidget {
               sparklineData: controller.getUtilizationSparkline(),
             ),
             PerformanceMetricCard(
-              title: 'Daily Distance',
+              title: localizations.kpiDailyDistance,
               value: '${kpis.dailyDistance.toStringAsFixed(0)} km',
               trend: kpis.trend,
               color: Colors.purple,

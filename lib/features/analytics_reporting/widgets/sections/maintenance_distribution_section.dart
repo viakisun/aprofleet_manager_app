@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../charts/maintenance_pie.dart';
 import '../../controllers/analytics_controller.dart';
 
@@ -13,6 +14,8 @@ class MaintenanceDistributionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+    
     return Container(
       constraints: const BoxConstraints(minHeight: 200),
       padding: const EdgeInsets.all(16),
@@ -27,9 +30,9 @@ class MaintenanceDistributionSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Maintenance Distribution',
-            style: TextStyle(
+          Text(
+            localizations.analyticsMaintenanceDistribution,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
               color: Colors.white,
@@ -40,6 +43,7 @@ class MaintenanceDistributionSection extends StatelessWidget {
             height: 200,
             child: MaintenancePie(
               data: controller.getMaintenanceDistributionData(),
+              context: context,
             ),
           ),
         ],

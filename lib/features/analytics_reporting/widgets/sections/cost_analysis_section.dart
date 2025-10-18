@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../../controllers/analytics_controller.dart';
 
 class CostAnalysisSection extends StatelessWidget {
@@ -12,6 +13,8 @@ class CostAnalysisSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+    
     return Container(
       constraints: const BoxConstraints(minHeight: 200),
       padding: const EdgeInsets.all(16),
@@ -26,9 +29,9 @@ class CostAnalysisSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Cost Analysis',
-            style: TextStyle(
+          Text(
+            localizations.analyticsCostAnalysis,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
               color: Colors.white,
@@ -37,14 +40,14 @@ class CostAnalysisSection extends StatelessWidget {
           const SizedBox(height: 8),
           SizedBox(
             height: 200,
-            child: _buildCostAnalysisChart(controller),
+            child: _buildCostAnalysisChart(controller, localizations),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildCostAnalysisChart(AnalyticsController controller) {
+  Widget _buildCostAnalysisChart(AnalyticsController controller, AppLocalizations localizations) {
     final costData = controller.getCostAnalysisData();
 
     return Column(
@@ -52,6 +55,7 @@ class CostAnalysisSection extends StatelessWidget {
         final percentage =
             entry.value / costData.values.reduce((a, b) => a + b) * 100;
         final color = _getCostColor(entry.key);
+        final localizedLabel = _getLocalizedCostLabel(entry.key, localizations);
 
         return Container(
           margin: const EdgeInsets.only(bottom: 8),
@@ -60,7 +64,7 @@ class CostAnalysisSection extends StatelessWidget {
               SizedBox(
                 width: 80,
                 child: Text(
-                  entry.key,
+                  localizedLabel,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,
@@ -107,15 +111,30 @@ class CostAnalysisSection extends StatelessWidget {
     );
   }
 
+  String _getLocalizedCostLabel(String key, AppLocalizations localizations) {
+    switch (key) {
+      case 'costTotal':
+        return localizations.costTotal;
+      case 'costLabor':
+        return localizations.costLabor;
+      case 'costParts':
+        return localizations.costParts;
+      case 'costOther':
+        return localizations.costOther;
+      default:
+        return key;
+    }
+  }
+
   Color _getCostColor(String category) {
     switch (category.toLowerCase()) {
-      case 'total':
+      case 'costtotal':
         return Colors.blue;
-      case 'labor':
+      case 'costlabor':
         return Colors.green;
-      case 'parts':
+      case 'costparts':
         return Colors.orange;
-      case 'other':
+      case 'costother':
         return Colors.purple;
       default:
         return Colors.grey;

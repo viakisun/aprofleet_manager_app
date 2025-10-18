@@ -101,6 +101,17 @@ class AppLocalizationsZhTw {
     'manufacturerYamaha': '山葉',
     'manufacturerCushman': 'Cushman',
 
+    // Analytics Dashboard
+    'analyticsPeriod': '期間:',
+    'analyticsWeek': '週',
+    'analyticsMonth': '月',
+    'analyticsKpiTitle': '關鍵績效指標',
+    'analyticsChartsTitle': '效能圖表',
+    'analyticsFleetPerformance': '車隊效能',
+    'analyticsBatteryHealth': '電池健康趨勢',
+    'analyticsMaintenanceDistribution': '維護分布',
+    'analyticsCostAnalysis': '成本分析',
+
     // KPI Labels
     'kpiAvailability': '可用率',
     'kpiMTTR': 'MTTR',
@@ -115,6 +126,22 @@ class AppLocalizationsZhTw {
     'unitVolts': 'V',
     'unitAmperes': 'A',
     'unitCelsius': '°C',
+
+    // Maintenance Distribution
+    'maintenancePreventive': '預防性',
+    'maintenanceBattery': '電池',
+    'maintenanceTire': '輪胎',
+    'maintenanceEmergency': '緊急',
+    'maintenanceOther': '其他',
+
+    // Cost Analysis
+    'costTotal': '總計',
+    'costLabor': '人工',
+    'costParts': '零件',
+    'costOther': '其他',
+
+    // KPI Labels
+    'kpiAvailabilityRate': '可用率',
 
     // Settings & Menu (新增)
     'settingsTitle': '設定',

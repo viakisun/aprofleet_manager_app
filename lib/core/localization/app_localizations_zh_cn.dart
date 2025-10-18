@@ -101,6 +101,17 @@ class AppLocalizationsZhCn {
     'manufacturerYamaha': '雅马哈',
     'manufacturerCushman': 'Cushman',
 
+    // Analytics Dashboard
+    'analyticsPeriod': '期间:',
+    'analyticsWeek': '周',
+    'analyticsMonth': '月',
+    'analyticsKpiTitle': '关键绩效指标',
+    'analyticsChartsTitle': '性能图表',
+    'analyticsFleetPerformance': '车队性能',
+    'analyticsBatteryHealth': '电池健康趋势',
+    'analyticsMaintenanceDistribution': '维护分布',
+    'analyticsCostAnalysis': '成本分析',
+
     // KPI Labels
     'kpiAvailability': '可用率',
     'kpiMTTR': 'MTTR',
@@ -115,6 +126,22 @@ class AppLocalizationsZhCn {
     'unitVolts': 'V',
     'unitAmperes': 'A',
     'unitCelsius': '°C',
+
+    // Maintenance Distribution
+    'maintenancePreventive': '预防性',
+    'maintenanceBattery': '电池',
+    'maintenanceTire': '轮胎',
+    'maintenanceEmergency': '紧急',
+    'maintenanceOther': '其他',
+
+    // Cost Analysis
+    'costTotal': '总计',
+    'costLabor': '人工',
+    'costParts': '零件',
+    'costOther': '其他',
+
+    // KPI Labels
+    'kpiAvailabilityRate': '可用率',
 
     // Settings & Menu (新增)
     'settingsTitle': '设置',

@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
+import '../../../../core/localization/app_localizations.dart';
+
 class MaintenancePie extends StatelessWidget {
   final List<Map<String, dynamic>> data;
+  final BuildContext context;
 
   const MaintenancePie({
     super.key,
     required this.data,
+    required this.context,
   });
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     final total =
         data.fold<int>(0, (sum, item) => sum + (item['count'] as int));
 
@@ -60,10 +65,11 @@ class MaintenancePie extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: data.map((item) {
-                final type = item['type'] as String;
+                final typeKey = item['type'] as String;
                 final count = item['count'] as int;
                 final color = item['color'] as Color;
                 final percentage = (count / total * 100).toStringAsFixed(1);
+                final localizedType = _getLocalizedMaintenanceType(typeKey, localizations);
 
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 8),
@@ -83,7 +89,7 @@ class MaintenancePie extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              type,
+                              localizedType,
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 12,
@@ -109,5 +115,22 @@ class MaintenancePie extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String _getLocalizedMaintenanceType(String key, AppLocalizations localizations) {
+    switch (key) {
+      case 'maintenancePreventive':
+        return localizations.maintenancePreventive;
+      case 'maintenanceBattery':
+        return localizations.maintenanceBattery;
+      case 'maintenanceTire':
+        return localizations.maintenanceTire;
+      case 'maintenanceEmergency':
+        return localizations.maintenanceEmergency;
+      case 'maintenanceOther':
+        return localizations.maintenanceOther;
+      default:
+        return key;
+    }
   }
 }

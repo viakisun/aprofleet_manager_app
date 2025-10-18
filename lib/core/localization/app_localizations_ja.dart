@@ -101,6 +101,17 @@ class AppLocalizationsJa {
     'manufacturerYamaha': 'ヤマハ',
     'manufacturerCushman': 'Cushman',
 
+    // Analytics Dashboard
+    'analyticsPeriod': '期間:',
+    'analyticsWeek': '週間',
+    'analyticsMonth': '月間',
+    'analyticsKpiTitle': '主要業績評価指標',
+    'analyticsChartsTitle': 'パフォーマンスチャート',
+    'analyticsFleetPerformance': 'フリート性能',
+    'analyticsBatteryHealth': 'バッテリー健全性トレンド',
+    'analyticsMaintenanceDistribution': 'メンテナンス分布',
+    'analyticsCostAnalysis': 'コスト分析',
+
     // KPI Labels
     'kpiAvailability': '稼働率',
     'kpiMTTR': 'MTTR',
@@ -115,6 +126,22 @@ class AppLocalizationsJa {
     'unitVolts': 'V',
     'unitAmperes': 'A',
     'unitCelsius': '°C',
+
+    // Maintenance Distribution
+    'maintenancePreventive': '予防',
+    'maintenanceBattery': 'バッテリー',
+    'maintenanceTire': 'タイヤ',
+    'maintenanceEmergency': '緊急',
+    'maintenanceOther': 'その他',
+
+    // Cost Analysis
+    'costTotal': '合計',
+    'costLabor': '人件費',
+    'costParts': '部品',
+    'costOther': 'その他',
+
+    // KPI Labels
+    'kpiAvailabilityRate': '可用率',
 
     // Settings & Menu (新增)
     'settingsTitle': '設定',

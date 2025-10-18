@@ -129,21 +129,21 @@ class AnalyticsController extends StateNotifier<AnalyticsState> {
   List<Map<String, dynamic>> getMaintenanceDistributionData() {
     // Generate mock maintenance distribution data
     return [
-      {'type': 'Preventive', 'count': 45, 'color': Colors.blue},
-      {'type': 'Battery', 'count': 20, 'color': Colors.green},
-      {'type': 'Tire', 'count': 15, 'color': Colors.orange},
-      {'type': 'Emergency', 'count': 10, 'color': Colors.red},
-      {'type': 'Other', 'count': 10, 'color': Colors.purple},
+      {'type': 'maintenancePreventive', 'count': 45, 'color': Colors.blue},
+      {'type': 'maintenanceBattery', 'count': 20, 'color': Colors.green},
+      {'type': 'maintenanceTire', 'count': 15, 'color': Colors.orange},
+      {'type': 'maintenanceEmergency', 'count': 10, 'color': Colors.red},
+      {'type': 'maintenanceOther', 'count': 10, 'color': Colors.purple},
     ];
   }
 
   Map<String, double> getCostAnalysisData() {
     // Generate mock cost analysis data
     return {
-      'Total': 15000.0,
-      'Labor': 8000.0,
-      'Parts': 5000.0,
-      'Other': 2000.0,
+      'costTotal': 15000.0,
+      'costLabor': 8000.0,
+      'costParts': 5000.0,
+      'costOther': 2000.0,
     };
   }
 

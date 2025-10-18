@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../domain/models/kpi.dart';
+import '../../../../core/localization/app_localizations.dart';
 
 class RangeSelectorWidget extends StatelessWidget {
   final AnalyticsRange selectedRange;
@@ -14,6 +15,8 @@ class RangeSelectorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+    
     return Container(
       height: 60,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -28,9 +31,9 @@ class RangeSelectorWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Text(
-            'PERIOD:',
-            style: TextStyle(
+          Text(
+            localizations.analyticsPeriod,
+            style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
               color: Colors.white,
@@ -64,7 +67,7 @@ class RangeSelectorWidget extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          range.displayName,
+                          range.getDisplayName(context),
                           style: TextStyle(
                             color: isSelected
                                 ? Colors.white

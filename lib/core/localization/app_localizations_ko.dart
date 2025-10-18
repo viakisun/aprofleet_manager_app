@@ -101,6 +101,17 @@ class AppLocalizationsKo {
     'manufacturerYamaha': '야마하',
     'manufacturerCushman': 'Cushman',
 
+    // Analytics Dashboard
+    'analyticsPeriod': '기간:',
+    'analyticsWeek': '주간',
+    'analyticsMonth': '월간',
+    'analyticsKpiTitle': '핵심 성과 지표',
+    'analyticsChartsTitle': '성과 차트',
+    'analyticsFleetPerformance': '플릿 성능',
+    'analyticsBatteryHealth': '배터리 상태 추세',
+    'analyticsMaintenanceDistribution': '정비 분포',
+    'analyticsCostAnalysis': '비용 분석',
+
     // KPI Labels
     'kpiAvailability': '가동률',
     'kpiMTTR': 'MTTR',
@@ -115,6 +126,22 @@ class AppLocalizationsKo {
     'unitVolts': 'V',
     'unitAmperes': 'A',
     'unitCelsius': '°C',
+
+    // Maintenance Distribution
+    'maintenancePreventive': '예방',
+    'maintenanceBattery': '배터리',
+    'maintenanceTire': '타이어',
+    'maintenanceEmergency': '긴급',
+    'maintenanceOther': '기타',
+
+    // Cost Analysis
+    'costTotal': '총계',
+    'costLabor': '인건비',
+    'costParts': '부품비',
+    'costOther': '기타',
+
+    // KPI Labels
+    'kpiAvailabilityRate': '가용률',
 
     // Settings & Menu (新增)
     'settingsTitle': '설정',

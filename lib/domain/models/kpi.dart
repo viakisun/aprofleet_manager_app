@@ -1,4 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/material.dart';
+import '../../core/localization/app_localizations.dart';
 
 part 'kpi.freezed.dart';
 part 'kpi.g.dart';
@@ -11,6 +13,16 @@ enum AnalyticsRange {
 }
 
 extension AnalyticsRangeExtension on AnalyticsRange {
+  String getDisplayName(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+    switch (this) {
+      case AnalyticsRange.week:
+        return localizations.analyticsWeek;
+      case AnalyticsRange.month:
+        return localizations.analyticsMonth;
+    }
+  }
+  
   String get displayName {
     switch (this) {
       case AnalyticsRange.week:

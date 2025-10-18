@@ -83,9 +83,9 @@ class _AnalyticsDashboardState extends ConsumerState<AnalyticsDashboard> {
                     const SizedBox(height: 24),
 
                     // Charts Section
-                    const Text(
-                      'PERFORMANCE CHARTS',
-                      style: TextStyle(
+                    Text(
+                      localizations.analyticsChartsTitle,
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: Colors.white,

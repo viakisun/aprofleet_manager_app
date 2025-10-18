@@ -103,11 +103,17 @@ class AppLocalizations {
   String get manufacturerYamaha => _getLocalizedValue('manufacturerYamaha');
   String get manufacturerCushman => _getLocalizedValue('manufacturerCushman');
 
+  // Analytics Dashboard
+  String get analyticsPeriod => _getLocalizedValue('analyticsPeriod');
+  String get analyticsWeek => _getLocalizedValue('analyticsWeek');
+  String get analyticsMonth => _getLocalizedValue('analyticsMonth');
+  String get analyticsKpiTitle => _getLocalizedValue('analyticsKpiTitle');
+  String get analyticsChartsTitle => _getLocalizedValue('analyticsChartsTitle');
+  String get analyticsFleetPerformance => _getLocalizedValue('analyticsFleetPerformance');
+  String get analyticsBatteryHealth => _getLocalizedValue('analyticsBatteryHealth');
+
   // KPI Labels
   String get kpiAvailability => _getLocalizedValue('kpiAvailability');
-  String get kpiMTTR => _getLocalizedValue('kpiMTTR');
-  String get kpiUtilization => _getLocalizedValue('kpiUtilization');
-  String get kpiDailyDistance => _getLocalizedValue('kpiDailyDistance');
 
   // Units
   String get unitPercent => _getLocalizedValue('unitPercent');
@@ -118,6 +124,27 @@ class AppLocalizations {
   String get unitVolts => _getLocalizedValue('unitVolts');
   String get unitAmperes => _getLocalizedValue('unitAmperes');
   String get unitCelsius => _getLocalizedValue('unitCelsius');
+
+  // Maintenance Distribution
+  String get analyticsMaintenanceDistribution => _getLocalizedValue('analyticsMaintenanceDistribution');
+  String get maintenancePreventive => _getLocalizedValue('maintenancePreventive');
+  String get maintenanceBattery => _getLocalizedValue('maintenanceBattery');
+  String get maintenanceTire => _getLocalizedValue('maintenanceTire');
+  String get maintenanceEmergency => _getLocalizedValue('maintenanceEmergency');
+  String get maintenanceOther => _getLocalizedValue('maintenanceOther');
+
+  // Cost Analysis
+  String get analyticsCostAnalysis => _getLocalizedValue('analyticsCostAnalysis');
+  String get costTotal => _getLocalizedValue('costTotal');
+  String get costLabor => _getLocalizedValue('costLabor');
+  String get costParts => _getLocalizedValue('costParts');
+  String get costOther => _getLocalizedValue('costOther');
+
+  // KPI Labels
+  String get kpiAvailabilityRate => _getLocalizedValue('kpiAvailabilityRate');
+  String get kpiMTTR => _getLocalizedValue('kpiMTTR');
+  String get kpiUtilization => _getLocalizedValue('kpiUtilization');
+  String get kpiDailyDistance => _getLocalizedValue('kpiDailyDistance');
 
   // Settings & Menu (新增)
   String get settingsTitle => _getLocalizedValue('settingsTitle');

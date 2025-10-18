@@ -101,11 +101,16 @@ class AppLocalizationsEn {
     'manufacturerYamaha': 'Yamaha',
     'manufacturerCushman': 'Cushman',
 
-    // KPI Labels
-    'kpiAvailability': 'Availability Rate',
-    'kpiMTTR': 'MTTR',
-    'kpiUtilization': 'Daily Utilization',
-    'kpiDailyDistance': 'Daily Distance',
+    // Analytics Dashboard
+    'analyticsPeriod': 'PERIOD:',
+    'analyticsWeek': 'Week',
+    'analyticsMonth': 'Month',
+    'analyticsKpiTitle': 'KEY PERFORMANCE INDICATORS',
+    'analyticsChartsTitle': 'PERFORMANCE CHARTS',
+    'analyticsFleetPerformance': 'Fleet Performance',
+    'analyticsBatteryHealth': 'Battery Health Trend',
+    'analyticsMaintenanceDistribution': 'Maintenance Distribution',
+    'analyticsCostAnalysis': 'Cost Analysis',
 
     // Units
     'unitPercent': '%',
@@ -115,6 +120,22 @@ class AppLocalizationsEn {
     'unitVolts': 'V',
     'unitAmperes': 'A',
     'unitCelsius': '°C',
+
+    // Maintenance Distribution
+    'maintenancePreventive': 'Preventive',
+    'maintenanceBattery': 'Battery',
+    'maintenanceTire': 'Tire',
+    'maintenanceEmergency': 'Emergency',
+    'maintenanceOther': 'Other',
+
+    // Cost Analysis
+    'costTotal': 'Total',
+    'costLabor': 'Labor',
+    'costParts': 'Parts',
+    'costOther': 'Other',
+
+    // KPI Labels
+    'kpiAvailabilityRate': 'Availability Rate',
 
     // Settings & Menu (新增)
     'settingsTitle': 'SETTINGS',
