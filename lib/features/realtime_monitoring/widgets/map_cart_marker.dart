@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/design_tokens.dart';
 import '../../../core/widgets/shared_widgets.dart';
 import '../../../domain/models/cart.dart';
+import '../../auth/widgets/cart_icon.dart';
 
 class MapCartMarker extends StatelessWidget {
   final Cart cart;
@@ -59,28 +60,15 @@ class MapCartMarker extends StatelessWidget {
                 ),
               ),
 
-              // Inner circle
+              // Custom cart icon
               Center(
-                child: Container(
+                child: SizedBox(
                   width: 24,
                   height: 24,
-                  decoration: BoxDecoration(
-                    color: statusColor,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: DesignTokens.textPrimary,
-                      width: 2,
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      cart.id.split('-').last,
-                      style: const TextStyle(
-                        color: DesignTokens.textPrimary,
-                        fontSize: DesignTokens.fontSizeXs,
-                        fontWeight: DesignTokens.fontWeightBold,
-                      ),
-                    ),
+                  child: CartIcon(
+                    size: 20,
+                    color: Colors.white,
+                    showDirection: true,
                   ),
                 ),
               ),

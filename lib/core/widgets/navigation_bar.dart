@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../localization/app_localizations.dart';
 import '../theme/design_tokens.dart';
 import 'custom_icons.dart';
+import '../../features/auth/widgets/cart_icon.dart';
 
 class AppNavigationBar extends ConsumerWidget {
   const AppNavigationBar({super.key});
@@ -43,6 +44,11 @@ class AppNavigationBar extends ConsumerWidget {
             label: localizations.navCartManagement,
             route: '/cm/list',
             isActive: currentLocation.startsWith('/cm'),
+            customActiveIcon: const CartIcon(
+              size: 20,
+              color: DesignTokens.statusActive,
+              showDirection: true,
+            ),
           ),
           _buildNavItem(
             context,
@@ -82,6 +88,7 @@ class AppNavigationBar extends ConsumerWidget {
     required String route,
     required bool isActive,
     int? badge,
+    Widget? customActiveIcon,
   }) {
     return GestureDetector(
       onTap: () => context.go(route),
@@ -96,13 +103,15 @@ class AppNavigationBar extends ConsumerWidget {
           children: [
             Stack(
               children: [
-                Icon(
-                  isActive ? activeIcon : icon,
-                  color: isActive
-                      ? DesignTokens.textPrimary
-                      : DesignTokens.textTertiary,
-                  size: CustomIcons.iconLg, // Larger icons
-                ),
+                isActive && customActiveIcon != null
+                    ? customActiveIcon
+                    : Icon(
+                        isActive ? activeIcon : icon,
+                        color: isActive
+                            ? DesignTokens.textPrimary
+                            : DesignTokens.textTertiary,
+                        size: CustomIcons.iconLg, // Larger icons
+                      ),
                 if (badge != null && badge > 0)
                   Positioned(
                     right: -2,

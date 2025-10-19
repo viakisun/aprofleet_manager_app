@@ -24,12 +24,11 @@ class AproFleetApp extends ConsumerWidget {
     // 앱 초기화 상태 감시
     final initAsync = ref.watch(initializeAppProvider);
     final currentLocale = ref.watch(languageControllerProvider);
+    final router = ref.watch(appRouterProvider);
 
     return initAsync.when(
-      // 초기화 완료
+      // 초기화 완료 - 라우터 사용
       data: (_) {
-        final router = ref.watch(appRouterProvider);
-
         return MaterialApp.router(
           title: 'AproFleet Manager',
           debugShowCheckedModeBanner: false,
@@ -51,16 +50,29 @@ class AproFleetApp extends ConsumerWidget {
           routerConfig: router,
         );
       },
-      // 초기화 중
-      loading: () => MaterialApp(
-        theme: AppTheme.darkTheme,
-        home: const Scaffold(
-          backgroundColor: Color(0xFF0A0A0A),
-          body: Center(
-            child: CircularProgressIndicator(color: Colors.white),
-          ),
-        ),
-      ),
+      // 초기화 중 - 스플래시 화면이 처리
+      loading: () {
+        return MaterialApp.router(
+          title: 'AproFleet Manager',
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.darkTheme,
+          locale: currentLocale,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en', ''),
+            Locale('ja', ''),
+            Locale('ko', ''),
+            Locale('zh', 'CN'),
+            Locale('zh', 'TW'),
+          ],
+          routerConfig: router,
+        );
+      },
       // 초기화 실패
       error: (err, stack) => MaterialApp(
         theme: AppTheme.darkTheme,

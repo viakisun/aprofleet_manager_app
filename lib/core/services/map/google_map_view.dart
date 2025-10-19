@@ -10,8 +10,8 @@ import '../../constants/map_constants.dart';
 import '../../services/geojson_service.dart';
 import 'golf_course_route_provider.dart';
 import 'map_adapter.dart';
-import 'dart:html' as html show document, querySelector, Element
-    if (dart.library.io) 'dart:io';
+import 'custom_marker_icon.dart';
+// Web-only imports removed for Android compatibility
 
 /// Google Maps view widget
 class GoogleMapView extends ConsumerStatefulWidget {
@@ -100,46 +100,8 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
 
   /// Apply CSS filter to darken map tiles (Web only)
   void _applyMapTileDarkening() {
-    if (kIsWeb) {
-      // Delay to ensure map is fully loaded
-      Future.delayed(Duration(milliseconds: 1000), () {
-        try {
-          final brightness = 1.0 - widget.mapOpacity;
-
-          // Target specific map tile layers to avoid affecting polylines
-          final selectors = [
-            '.gm-style > div > div > div > div > div > div', // Map tiles layer
-            '.gm-style > div > div > div > div > div', // Tile container
-          ];
-
-          for (final selector in selectors) {
-            final elements = html.document.querySelectorAll(selector);
-            for (final element in elements) {
-              final htmlElement = element as html.Element;
-              // Only apply to elements that look like map tiles (have background images)
-              if (htmlElement.style.backgroundImage.isNotEmpty ||
-                  htmlElement.children.isNotEmpty) {
-                htmlElement.style.filter =
-                    'brightness($brightness) saturate(${1.0 - widget.mapOpacity * 0.3})';
-                // Ensure pointer events are not blocked
-                htmlElement.style.pointerEvents = 'auto';
-              }
-            }
-          }
-
-          // Ensure the main map container allows interactions
-          final mapContainer = html.document.querySelector('.gm-style');
-          if (mapContainer != null) {
-            final mapElement = mapContainer as html.Element;
-            mapElement.style.pointerEvents = 'auto';
-          }
-
-          print('Applied map darkening with brightness: $brightness');
-        } catch (e) {
-          print('Failed to apply map darkening: $e');
-        }
-      });
-    }
+    // Skip this functionality for non-web platforms
+    // This is web-specific CSS manipulation
   }
 
   /// 골프장 경로 중심으로 카메라 조정
@@ -296,7 +258,7 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
     }
   }
   
-  void _updateMarkers() {
+  void _updateMarkers() async {
     if (!_isMapReady) return;
     
     print('Updating markers: ${widget.carts.length} carts');
@@ -307,6 +269,13 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
       print('Adding marker for cart ${cart.id} at ${cart.position.latitude}, ${cart.position.longitude}');
       final statusColor = MapConstants.getStatusColor(cart.status);
       
+      // Create custom cart marker icon
+      final customIcon = await CustomMarkerIcon.createStatusCartMarkerIcon(
+        statusColor: statusColor,
+        size: 40.0,
+        showDirection: true,
+      );
+      
       markers.add(
         google.Marker(
           markerId: google.MarkerId(cart.id),
@@ -315,15 +284,21 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
             title: cart.id,
             snippet: '${cart.model} - ${cart.status.name}',
           ),
-          icon: google.BitmapDescriptor.defaultMarkerWithHue(
-            _getMarkerHue(statusColor),
-          ),
+          icon: customIcon,
           onTap: () => widget.onCartTap(cart),
         ),
       );
       
       // Add low battery indicator if needed
       if (MapConstants.isLowBattery(cart.batteryPct)) {
+        final batteryIcon = await CustomMarkerIcon.createCartMarkerIcon(
+          backgroundColor: Colors.red,
+          iconColor: Colors.white,
+          size: 30.0,
+          showDirection: false,
+          cacheKey: 'battery_warning',
+        );
+        
         markers.add(
           google.Marker(
             markerId: google.MarkerId('${cart.id}_battery'),
@@ -331,9 +306,7 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
               cart.position.latitude + 0.0001,
               cart.position.longitude + 0.0001,
             ),
-            icon: google.BitmapDescriptor.defaultMarkerWithHue(
-              google.BitmapDescriptor.hueRed,
-            ),
+            icon: batteryIcon,
             infoWindow: const google.InfoWindow(
               title: 'Low Battery',
               snippet: 'Battery level below 20%',
@@ -345,9 +318,11 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
     
     print('Total markers created: ${markers.length}');
     
-    setState(() {
-      _markers = markers;
-    });
+    if (mounted) {
+      setState(() {
+        _markers = markers;
+      });
+    }
   }
   
   @override

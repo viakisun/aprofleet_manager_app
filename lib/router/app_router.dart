@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/auth/pages/splash_screen.dart';
+import '../features/auth/pages/onboarding_screen.dart';
+import '../features/auth/pages/login_screen.dart';
 import '../features/realtime_monitoring/pages/live_map_view.dart';
 import '../features/realtime_monitoring/pages/cart_detail_monitor.dart';
 import '../features/cart_management/pages/cart_inventory_list.dart';
@@ -12,11 +15,51 @@ import '../features/alert_management/pages/alert_management_page.dart';
 import '../features/analytics_reporting/pages/analytics_dashboard.dart';
 import '../features/settings/pages/settings_page.dart';
 import '../core/widgets/navigation_bar.dart';
+import '../features/auth/controllers/auth_controller.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: '/rt/map',
+    initialLocation: '/splash',
+    redirect: (context, state) {
+      final authState = ref.read(authControllerProvider);
+      
+      // If still loading, stay on splash
+      if (authState.isLoading) {
+        return '/splash';
+      }
+      
+      // If hasn't seen onboarding, go to onboarding
+      if (!authState.hasSeenOnboarding) {
+        return '/onboarding';
+      }
+      
+      // If not logged in, go to login
+      if (!authState.isLoggedIn) {
+        return '/login';
+      }
+      
+      // If logged in, allow access to main app
+      return null;
+    },
     routes: [
+      // Auth routes
+      GoRoute(
+        path: '/splash',
+        name: 'splash',
+        builder: (context, state) => const SplashScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding',
+        name: 'onboarding',
+        builder: (context, state) => const OnboardingScreen(),
+      ),
+      GoRoute(
+        path: '/login',
+        name: 'login',
+        builder: (context, state) => const LoginScreen(),
+      ),
+      
+      // Main app shell route
       ShellRoute(
         builder: (context, state, child) {
           return Scaffold(
