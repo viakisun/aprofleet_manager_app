@@ -32,11 +32,13 @@ void main() {
       expect(emptyMttr, 0.0);
 
       // Test single repair
-      final singleMttr = KpiCalculator.calculateMTTR([const Duration(minutes: 90)]);
+      final singleMttr =
+          KpiCalculator.calculateMTTR([const Duration(minutes: 90)]);
       expect(singleMttr, 90.0); // 90 minutes
 
       // Test multiple repairs
-      final multipleMttr = KpiCalculator.calculateMTTR([const Duration(minutes: 60), const Duration(minutes: 90)]);
+      final multipleMttr = KpiCalculator.calculateMTTR(
+          [const Duration(minutes: 60), const Duration(minutes: 90)]);
       expect(multipleMttr, 75.0); // Average of 60 and 90 minutes
     });
 

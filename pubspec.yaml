@@ -73,6 +73,7 @@ flutter:
     - assets/images/
     - assets/svg/
     - assets/seeds/
+    - assets/seeds/course_playground.geojson
   
   fonts:
     - family: SF Pro Display

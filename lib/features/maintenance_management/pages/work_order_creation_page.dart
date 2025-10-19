@@ -25,7 +25,8 @@ class WorkOrderCreationPage extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<WorkOrderCreationPage> createState() => _WorkOrderCreationPageState();
+  ConsumerState<WorkOrderCreationPage> createState() =>
+      _WorkOrderCreationPageState();
 }
 
 class _WorkOrderCreationPageState extends ConsumerState<WorkOrderCreationPage> {
@@ -221,7 +222,7 @@ class _WorkOrderCreationPageState extends ConsumerState<WorkOrderCreationPage> {
   Future<void> _createWorkOrder() async {
     try {
       await _controller.createWorkOrder(_controller.currentDraft);
-      
+
       // Clear draft
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove('draft.wo.create');
@@ -300,7 +301,8 @@ class _WorkOrderCreationPageState extends ConsumerState<WorkOrderCreationPage> {
                       side: BorderSide(color: DesignTokens.borderSecondary),
                       elevation: DesignTokens.elevationNone,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
+                        borderRadius:
+                            BorderRadius.circular(DesignTokens.radiusSm),
                       ),
                     ),
                     child: const Text('Cancel'),
@@ -318,7 +320,8 @@ class _WorkOrderCreationPageState extends ConsumerState<WorkOrderCreationPage> {
                       foregroundColor: DesignTokens.bgPrimary,
                       elevation: DesignTokens.elevationNone,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
+                        borderRadius:
+                            BorderRadius.circular(DesignTokens.radiusSm),
                       ),
                     ),
                     child: const Text('Exit'),

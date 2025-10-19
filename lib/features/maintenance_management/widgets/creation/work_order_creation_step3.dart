@@ -17,10 +17,12 @@ class WorkOrderCreationStep3 extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<WorkOrderCreationStep3> createState() => _WorkOrderCreationStep3State();
+  ConsumerState<WorkOrderCreationStep3> createState() =>
+      _WorkOrderCreationStep3State();
 }
 
-class _WorkOrderCreationStep3State extends ConsumerState<WorkOrderCreationStep3> {
+class _WorkOrderCreationStep3State
+    extends ConsumerState<WorkOrderCreationStep3> {
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
 
@@ -154,7 +156,8 @@ class _WorkOrderCreationStep3State extends ConsumerState<WorkOrderCreationStep3>
                   onChanged: (value) {
                     final duration = int.tryParse(value);
                     if (duration != null) {
-                      widget.controller.setEstimatedDuration(Duration(hours: duration));
+                      widget.controller
+                          .setEstimatedDuration(Duration(hours: duration));
                     }
                   },
                   decoration: InputDecoration(
@@ -164,18 +167,23 @@ class _WorkOrderCreationStep3State extends ConsumerState<WorkOrderCreationStep3>
                       fontSize: DesignTokens.fontSizeMd,
                     ),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
+                      borderRadius:
+                          BorderRadius.circular(DesignTokens.radiusSm),
                       borderSide: BorderSide(color: DesignTokens.borderPrimary),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
+                      borderRadius:
+                          BorderRadius.circular(DesignTokens.radiusSm),
                       borderSide: BorderSide(color: DesignTokens.borderPrimary),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-                      borderSide: const BorderSide(color: DesignTokens.textPrimary),
+                      borderRadius:
+                          BorderRadius.circular(DesignTokens.radiusSm),
+                      borderSide:
+                          const BorderSide(color: DesignTokens.textPrimary),
                     ),
-                    contentPadding: const EdgeInsets.all(DesignTokens.spacingMd),
+                    contentPadding:
+                        const EdgeInsets.all(DesignTokens.spacingMd),
                   ),
                 ),
               ),
@@ -247,7 +255,7 @@ class _WorkOrderCreationStep3State extends ConsumerState<WorkOrderCreationStep3>
       setState(() {
         _selectedDate = picked;
       });
-      
+
       // Update controller with combined date and time
       if (_selectedTime != null) {
         final scheduledAt = DateTime(
@@ -272,7 +280,7 @@ class _WorkOrderCreationStep3State extends ConsumerState<WorkOrderCreationStep3>
       setState(() {
         _selectedTime = picked;
       });
-      
+
       // Update controller with combined date and time
       if (_selectedDate != null) {
         final scheduledAt = DateTime(

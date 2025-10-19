@@ -8,11 +8,13 @@ import '../../../core/widgets/status_bar.dart' as status_bar;
 import '../../../core/widgets/filter_sheet.dart';
 import '../../../core/widgets/professional_app_bar.dart';
 import '../../../core/widgets/hamburger_menu.dart';
-import '../../../core/services/map/canvas_map_view.dart';
+import '../../../core/services/map/unified_map_view.dart';
 import '../../../domain/models/cart.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/design_tokens.dart';
 import '../controllers/live_map_controller.dart';
+import '../widgets/route_info_card.dart';
+import '../../../core/services/map/golf_course_route_provider.dart';
 
 class LiveMapView extends ConsumerStatefulWidget {
   const LiveMapView({super.key});
@@ -24,6 +26,16 @@ class LiveMapView extends ConsumerStatefulWidget {
 class _LiveMapViewState extends ConsumerState<LiveMapView> {
   final TextEditingController _searchController = TextEditingController();
   Cart? _selectedCart;
+  bool _showToneSlider = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Trigger route loading
+    Future.microtask(() {
+      ref.read(golfCourseRouteProvider.notifier).loadRoute();
+    });
+  }
 
   @override
   void dispose() {
@@ -60,14 +72,13 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
           Expanded(
             child: Stack(
               children: [
-                // Canvas Map
-                CanvasMapView(
+                // Unified Map
+                UnifiedMapView(
                   carts: mapController.filteredCarts,
                   onCartTap: (cart) => _showCartPopover(context, cart),
-                  zoom: mapState.zoom,
-                  onZoomChanged: mapController.setZoom,
-                  centerOffset: mapState.centerOffset,
-                  onCenterChanged: mapController.setCenterOffset,
+                  initialCameraPosition: mapState.cameraPosition,
+                  onCameraChanged: mapController.setCameraPosition,
+                  mapOpacity: mapState.mapOpacity,
                 ),
 
                 // Search Bar with Glass Morphism
@@ -87,33 +98,104 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
                       FloatingActionButton.small(
                         heroTag: 'zoom_in',
                         onPressed: () {
-                          final newZoom = (mapState.zoom * 1.2).clamp(
-                            AppConstants.mapZoomMin,
-                            AppConstants.mapZoomMax,
-                          );
+                          final currentZoom = mapState.cameraPosition.zoom;
+                          final newZoom = (currentZoom * 1.2).clamp(10.0, 20.0);
                           mapController.setZoom(newZoom);
                         },
                         backgroundColor:
                             DesignTokens.bgSecondary.withValues(alpha: 0.8),
-                        child: const Icon(Icons.add, color: DesignTokens.textPrimary),
+                        child: const Icon(Icons.add,
+                            color: DesignTokens.textPrimary),
                       ),
                       const SizedBox(height: DesignTokens.spacingXs),
                       FloatingActionButton.small(
                         heroTag: 'zoom_out',
                         onPressed: () {
-                          final newZoom = (mapState.zoom / 1.2).clamp(
-                            AppConstants.mapZoomMin,
-                            AppConstants.mapZoomMax,
-                          );
+                          final currentZoom = mapState.cameraPosition.zoom;
+                          final newZoom = (currentZoom / 1.2).clamp(10.0, 20.0);
                           mapController.setZoom(newZoom);
                         },
                         backgroundColor:
                             DesignTokens.bgSecondary.withValues(alpha: 0.8),
-                        child:
-                            const Icon(Icons.remove, color: DesignTokens.textPrimary),
+                        child: const Icon(Icons.remove,
+                            color: DesignTokens.textPrimary),
+                      ),
+                      const SizedBox(height: DesignTokens.spacingXs),
+                      FloatingActionButton.small(
+                        heroTag: 'tone_control',
+                        onPressed: () {
+                          setState(() {
+                            _showToneSlider = !_showToneSlider;
+                          });
+                        },
+                        backgroundColor:
+                            DesignTokens.bgSecondary.withValues(alpha: 0.8),
+                        child: const Icon(Icons.palette,
+                            color: DesignTokens.textPrimary),
                       ),
                     ],
                   ),
+                ),
+
+                // Tone Control Slider
+                if (_showToneSlider)
+                  Positioned(
+                    right: 80, // To the left of the tone button
+                    top: 80,
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.8),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Tone',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          SizedBox(
+                            height: 120,
+                            width: 40,
+                            child: RotatedBox(
+                              quarterTurns: 3,
+                              child: Slider(
+                                value: mapState.mapOpacity,
+                                min: 0.0,
+                                max: 1.0,
+                                divisions: 10,
+                                onChanged: (value) {
+                                  mapController.setMapOpacity(value);
+                                },
+                                activeColor: Colors.white,
+                                inactiveColor:
+                                    Colors.white.withValues(alpha: 0.3),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            '${(mapState.mapOpacity * 100).round()}%',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                // Route Info Card
+                Positioned(
+                  top: 120, // 검색바 아래 더 여유있게 배치
+                  left: DesignTokens.spacingMd,
+                  child: RouteInfoCard(),
                 ),
 
                 // Cart Popover

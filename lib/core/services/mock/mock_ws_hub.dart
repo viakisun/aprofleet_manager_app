@@ -38,7 +38,7 @@ class MockWsHub {
   // Initialize WebSocket simulation
   Future<void> initialize() async {
     await _mockApi.initialize();
-    
+
     // 테스트 모드가 아닐 때만 타이머 시작
     if (!_testMode) {
       _startTelemetrySimulation();

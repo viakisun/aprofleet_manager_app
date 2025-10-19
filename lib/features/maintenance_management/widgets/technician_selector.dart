@@ -54,23 +54,23 @@ class TechnicianSelector extends StatelessWidget {
             contentPadding: const EdgeInsets.all(DesignTokens.spacingMd),
           ),
         ),
-        
+
         const SizedBox(height: DesignTokens.spacingMd),
-        
+
         // Technician list
         ...technicians.map((technician) {
           final isSelected = selectedTechnician == technician;
-          
+
           return Container(
             margin: const EdgeInsets.only(bottom: DesignTokens.spacingSm),
             decoration: BoxDecoration(
-              color: isSelected 
-                  ? DesignTokens.bgSecondary 
+              color: isSelected
+                  ? DesignTokens.bgSecondary
                   : DesignTokens.bgTertiary,
               borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
               border: Border.all(
-                color: isSelected 
-                    ? DesignTokens.textPrimary 
+                color: isSelected
+                    ? DesignTokens.textPrimary
                     : DesignTokens.borderPrimary,
                 width: 1,
               ),

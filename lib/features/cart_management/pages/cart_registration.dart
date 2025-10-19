@@ -936,8 +936,8 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
                         },
                       ),
                       ListTile(
-                        leading:
-                            const Icon(Icons.photo_library, color: Colors.white),
+                        leading: const Icon(Icons.photo_library,
+                            color: Colors.white),
                         title: const Text('Choose from Gallery',
                             style: TextStyle(color: Colors.white)),
                         onTap: () {

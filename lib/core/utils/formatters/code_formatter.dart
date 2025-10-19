@@ -34,18 +34,16 @@ class CodeFormatter {
 
   /// Generate next available ID based on existing IDs
   static String generateNextId(List<String> existingIds, String prefix) {
-    final numbers = existingIds
-        .where((id) => id.startsWith(prefix))
-        .map((id) {
-          final parts = id.split('-');
-          if (parts.length >= 2) {
-            return int.tryParse(parts.last) ?? 0;
-          }
-          return 0;
-        })
-        .toList();
+    final numbers = existingIds.where((id) => id.startsWith(prefix)).map((id) {
+      final parts = id.split('-');
+      if (parts.length >= 2) {
+        return int.tryParse(parts.last) ?? 0;
+      }
+      return 0;
+    }).toList();
 
-    final nextNumber = numbers.isEmpty ? 1 : (numbers.reduce((a, b) => a > b ? a : b) + 1);
+    final nextNumber =
+        numbers.isEmpty ? 1 : (numbers.reduce((a, b) => a > b ? a : b) + 1);
     return '$prefix-${nextNumber.toString().padLeft(3, '0')}';
   }
 
@@ -54,7 +52,7 @@ class CodeFormatter {
     final parts = id.split('-');
     if (parts.length < 2) return false;
     if (parts.first != expectedPrefix) return false;
-    
+
     // Check if the last part is a number
     final numberPart = parts.last;
     return int.tryParse(numberPart) != null;

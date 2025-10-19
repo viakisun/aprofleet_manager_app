@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class AlertRulesPanel extends StatelessWidget {
   final VoidCallback onExportAlerts;
   final VoidCallback onClearResolved;

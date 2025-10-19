@@ -79,9 +79,8 @@ class StatusIndicator extends StatelessWidget {
           Text(
             status.toUpperCase(),
             style: DesignTokens.getUppercaseLabelStyle(
-              fontSize: isCompact
-                  ? DesignTokens.fontSizeXs
-                  : DesignTokens.fontSizeSm,
+              fontSize:
+                  isCompact ? DesignTokens.fontSizeXs : DesignTokens.fontSizeSm,
               fontWeight: DesignTokens.fontWeightSemibold,
               color: color,
             ),

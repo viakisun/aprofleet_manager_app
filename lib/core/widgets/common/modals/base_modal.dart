@@ -53,7 +53,8 @@ class BaseModal extends StatelessWidget {
           // Header
           if (title != null) ...[
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spacingLg),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: DesignTokens.spacingLg),
               child: Row(
                 children: [
                   Expanded(

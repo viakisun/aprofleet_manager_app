@@ -11,7 +11,7 @@ void main() {
     testWidgets('Widget loads without crashing', (tester) async {
       // 더 큰 화면 크기 설정하여 오버플로우 방지
       await tester.binding.setSurfaceSize(const Size(1200, 800));
-      
+
       try {
         // Create mock alerts
         final mockAlerts = [
@@ -54,7 +54,7 @@ void main() {
     testWidgets('Empty state displays correctly', (tester) async {
       // 더 큰 화면 크기 설정
       await tester.binding.setSurfaceSize(const Size(1200, 800));
-      
+
       try {
         await tester.pumpWidget(
           ProviderScope(

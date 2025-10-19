@@ -28,18 +28,22 @@ class BaseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final cardDecoration = BoxDecoration(
       color: backgroundColor ?? DesignTokens.bgTertiary,
-      borderRadius: borderRadius ?? BorderRadius.circular(DesignTokens.radiusMd),
-      border: border ?? Border.all(
-        color: Colors.white.withValues(alpha: 0.06),
-        width: 1,
-      ),
-      boxShadow: isElevated ? [
-        BoxShadow(
-          color: Colors.black.withValues(alpha: 0.1),
-          blurRadius: 8,
-          offset: const Offset(0, 2),
-        ),
-      ] : null,
+      borderRadius:
+          borderRadius ?? BorderRadius.circular(DesignTokens.radiusMd),
+      border: border ??
+          Border.all(
+            color: Colors.white.withValues(alpha: 0.06),
+            width: 1,
+          ),
+      boxShadow: isElevated
+          ? [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ]
+          : null,
     );
 
     Widget cardContent = Container(
@@ -51,7 +55,8 @@ class BaseCard extends StatelessWidget {
     if (onTap != null) {
       cardContent = InkWell(
         onTap: onTap,
-        borderRadius: borderRadius ?? BorderRadius.circular(DesignTokens.radiusMd),
+        borderRadius:
+            borderRadius ?? BorderRadius.circular(DesignTokens.radiusMd),
         child: cardContent,
       );
     }
@@ -218,7 +223,8 @@ class StatusCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: DesignTokens.fontSizeSm,
                     fontWeight: DesignTokens.fontWeightMedium,
-                    color: (valueColor ?? DesignTokens.textPrimary).withValues(alpha: 0.7),
+                    color: (valueColor ?? DesignTokens.textPrimary)
+                        .withValues(alpha: 0.7),
                   ),
                 ),
               ],

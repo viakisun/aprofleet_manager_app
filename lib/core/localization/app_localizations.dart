@@ -109,8 +109,10 @@ class AppLocalizations {
   String get analyticsMonth => _getLocalizedValue('analyticsMonth');
   String get analyticsKpiTitle => _getLocalizedValue('analyticsKpiTitle');
   String get analyticsChartsTitle => _getLocalizedValue('analyticsChartsTitle');
-  String get analyticsFleetPerformance => _getLocalizedValue('analyticsFleetPerformance');
-  String get analyticsBatteryHealth => _getLocalizedValue('analyticsBatteryHealth');
+  String get analyticsFleetPerformance =>
+      _getLocalizedValue('analyticsFleetPerformance');
+  String get analyticsBatteryHealth =>
+      _getLocalizedValue('analyticsBatteryHealth');
 
   // KPI Labels
   String get kpiAvailability => _getLocalizedValue('kpiAvailability');
@@ -126,15 +128,18 @@ class AppLocalizations {
   String get unitCelsius => _getLocalizedValue('unitCelsius');
 
   // Maintenance Distribution
-  String get analyticsMaintenanceDistribution => _getLocalizedValue('analyticsMaintenanceDistribution');
-  String get maintenancePreventive => _getLocalizedValue('maintenancePreventive');
+  String get analyticsMaintenanceDistribution =>
+      _getLocalizedValue('analyticsMaintenanceDistribution');
+  String get maintenancePreventive =>
+      _getLocalizedValue('maintenancePreventive');
   String get maintenanceBattery => _getLocalizedValue('maintenanceBattery');
   String get maintenanceTire => _getLocalizedValue('maintenanceTire');
   String get maintenanceEmergency => _getLocalizedValue('maintenanceEmergency');
   String get maintenanceOther => _getLocalizedValue('maintenanceOther');
 
   // Cost Analysis
-  String get analyticsCostAnalysis => _getLocalizedValue('analyticsCostAnalysis');
+  String get analyticsCostAnalysis =>
+      _getLocalizedValue('analyticsCostAnalysis');
   String get costTotal => _getLocalizedValue('costTotal');
   String get costLabor => _getLocalizedValue('costLabor');
   String get costParts => _getLocalizedValue('costParts');
@@ -159,7 +164,8 @@ class AppLocalizations {
   String get privacy => _getLocalizedValue('privacy');
   String get privacyDescription => _getLocalizedValue('privacyDescription');
   String get notifications => _getLocalizedValue('notifications');
-  String get notificationsDescription => _getLocalizedValue('notificationsDescription');
+  String get notificationsDescription =>
+      _getLocalizedValue('notificationsDescription');
   String get theme => _getLocalizedValue('theme');
   String get themeDescription => _getLocalizedValue('themeDescription');
   String get storage => _getLocalizedValue('storage');
@@ -253,7 +259,8 @@ class AppLocalizations {
   String get stopCart => _getLocalizedValue('stopCart');
 
   // About Dialog (新增)
-  String get aboutAproFleetManager => _getLocalizedValue('aboutAproFleetManager');
+  String get aboutAproFleetManager =>
+      _getLocalizedValue('aboutAproFleetManager');
   String get versionInfo => _getLocalizedValue('versionInfo');
   String get manufacturerInfo => _getLocalizedValue('manufacturerInfo');
   String get productInfo => _getLocalizedValue('productInfo');
@@ -313,8 +320,10 @@ class AppLocalizations {
   String get menuEnglish => _getLocalizedValue('menuEnglish');
   String get menuKorean => _getLocalizedValue('menuKorean');
   String get menuJapanese => _getLocalizedValue('menuJapanese');
-  String get menuChineseSimplified => _getLocalizedValue('menuChineseSimplified');
-  String get menuChineseTraditional => _getLocalizedValue('menuChineseTraditional');
+  String get menuChineseSimplified =>
+      _getLocalizedValue('menuChineseSimplified');
+  String get menuChineseTraditional =>
+      _getLocalizedValue('menuChineseTraditional');
   String get menuSignOut => _getLocalizedValue('menuSignOut');
   String get menuSignOutTitle => _getLocalizedValue('menuSignOutTitle');
   String get menuSignOutMessage => _getLocalizedValue('menuSignOutMessage');
@@ -340,7 +349,8 @@ class AppLocalizations {
   String get alertTimeMinutesAgo => _getLocalizedValue('alertTimeMinutesAgo');
 
   // Alert Severity
-  String get alertSeverityCritical => _getLocalizedValue('alertSeverityCritical');
+  String get alertSeverityCritical =>
+      _getLocalizedValue('alertSeverityCritical');
   String get alertSeverityWarning => _getLocalizedValue('alertSeverityWarning');
   String get alertSeverityInfo => _getLocalizedValue('alertSeverityInfo');
   String get alertSeveritySuccess => _getLocalizedValue('alertSeveritySuccess');
@@ -348,16 +358,19 @@ class AppLocalizations {
   // Alert Status
   String get alertStatusTriggered => _getLocalizedValue('alertStatusTriggered');
   String get alertStatusNotified => _getLocalizedValue('alertStatusNotified');
-  String get alertStatusAcknowledged => _getLocalizedValue('alertStatusAcknowledged');
+  String get alertStatusAcknowledged =>
+      _getLocalizedValue('alertStatusAcknowledged');
   String get alertStatusEscalated => _getLocalizedValue('alertStatusEscalated');
   String get alertStatusResolved => _getLocalizedValue('alertStatusResolved');
 
   // Alert Source
   String get alertSourceEmergency => _getLocalizedValue('alertSourceEmergency');
   String get alertSourceBattery => _getLocalizedValue('alertSourceBattery');
-  String get alertSourceMaintenance => _getLocalizedValue('alertSourceMaintenance');
+  String get alertSourceMaintenance =>
+      _getLocalizedValue('alertSourceMaintenance');
   String get alertSourceGeofence => _getLocalizedValue('alertSourceGeofence');
-  String get alertSourceTemperature => _getLocalizedValue('alertSourceTemperature');
+  String get alertSourceTemperature =>
+      _getLocalizedValue('alertSourceTemperature');
   String get alertSourceSystem => _getLocalizedValue('alertSourceSystem');
 
   String _getLocalizedValue(String key) {

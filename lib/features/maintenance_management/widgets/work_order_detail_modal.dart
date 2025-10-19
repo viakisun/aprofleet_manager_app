@@ -33,7 +33,6 @@ class _WorkOrderDetailModalState extends State<WorkOrderDetailModal> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       height: MediaQuery.of(context).size.height * 0.8,
       decoration: const BoxDecoration(
@@ -227,7 +226,8 @@ class _WorkOrderDetailModalState extends State<WorkOrderDetailModal> {
                                     Text(
                                       'Qty: ${part.quantity}',
                                       style: TextStyle(
-                                        color: Colors.white.withValues(alpha: 0.7),
+                                        color:
+                                            Colors.white.withValues(alpha: 0.7),
                                         fontSize: 12,
                                       ),
                                     ),
@@ -235,7 +235,8 @@ class _WorkOrderDetailModalState extends State<WorkOrderDetailModal> {
                                       Text(
                                         'SN: ${part.serialNumber}',
                                         style: TextStyle(
-                                          color: Colors.white.withValues(alpha: 0.7),
+                                          color: Colors.white
+                                              .withValues(alpha: 0.7),
                                           fontSize: 12,
                                         ),
                                       ),

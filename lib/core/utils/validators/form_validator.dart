@@ -5,12 +5,12 @@ class FormValidator {
     if (email == null || email.isEmpty) {
       return 'Email is required';
     }
-    
+
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     if (!emailRegex.hasMatch(email)) {
       return 'Please enter a valid email address';
     }
-    
+
     return null;
   }
 
@@ -23,7 +23,8 @@ class FormValidator {
   }
 
   /// Validate minimum length
-  static String? validateMinLength(String? value, int minLength, String fieldName) {
+  static String? validateMinLength(
+      String? value, int minLength, String fieldName) {
     if (value == null || value.trim().length < minLength) {
       return '$fieldName must be at least $minLength characters';
     }
@@ -31,7 +32,8 @@ class FormValidator {
   }
 
   /// Validate maximum length
-  static String? validateMaxLength(String? value, int maxLength, String fieldName) {
+  static String? validateMaxLength(
+      String? value, int maxLength, String fieldName) {
     if (value != null && value.trim().length > maxLength) {
       return '$fieldName must not exceed $maxLength characters';
     }
@@ -43,12 +45,12 @@ class FormValidator {
     if (phoneNumber == null || phoneNumber.isEmpty) {
       return 'Phone number is required';
     }
-    
+
     final phoneRegex = RegExp(r'^\+?[\d\s\-\(\)]+$');
     if (!phoneRegex.hasMatch(phoneNumber)) {
       return 'Please enter a valid phone number';
     }
-    
+
     return null;
   }
 
@@ -57,11 +59,11 @@ class FormValidator {
     if (value == null || value.isEmpty) {
       return '$fieldName is required';
     }
-    
+
     if (double.tryParse(value) == null) {
       return '$fieldName must be a valid number';
     }
-    
+
     return null;
   }
 
@@ -69,12 +71,12 @@ class FormValidator {
   static String? validatePositiveNumber(String? value, String fieldName) {
     final numericError = validateNumeric(value, fieldName);
     if (numericError != null) return numericError;
-    
+
     final number = double.parse(value!);
     if (number <= 0) {
       return '$fieldName must be greater than 0';
     }
-    
+
     return null;
   }
 
@@ -83,11 +85,11 @@ class FormValidator {
     if (date == null) {
       return '$fieldName is required';
     }
-    
+
     if (date.isBefore(DateTime.now())) {
       return '$fieldName cannot be in the past';
     }
-    
+
     return null;
   }
 
@@ -96,29 +98,29 @@ class FormValidator {
     if (startDate == null || endDate == null) {
       return 'Both start and end dates are required';
     }
-    
+
     if (startDate.isAfter(endDate)) {
       return 'Start date cannot be after end date';
     }
-    
+
     return null;
   }
 
   /// Validate multiple fields at once
   static Map<String, String?> validateFields(Map<String, String?> fields) {
     final errors = <String, String?>{};
-    
+
     for (final entry in fields.entries) {
       final fieldName = entry.key;
       final value = entry.value;
-      
+
       // Basic required validation
       final requiredError = validateRequired(value, fieldName);
       if (requiredError != null) {
         errors[fieldName] = requiredError;
         continue;
       }
-      
+
       // Additional validations based on field name
       switch (fieldName.toLowerCase()) {
         case 'email':
@@ -133,7 +135,7 @@ class FormValidator {
           break;
       }
     }
-    
+
     return errors;
   }
 }

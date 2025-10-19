@@ -32,7 +32,7 @@ class WorkOrderCreationStep4 extends ConsumerWidget {
           // Parts Section
           _buildSectionHeader('REQUIRED PARTS'),
           const SizedBox(height: DesignTokens.spacingMd),
-          
+
           Expanded(
             child: PartsList(
               parts: createWoState.draft.parts ?? [],
@@ -45,21 +45,33 @@ class WorkOrderCreationStep4 extends ConsumerWidget {
           // Review Section
           _buildSectionHeader('REVIEW'),
           const SizedBox(height: DesignTokens.spacingMd),
-          
+
           BaseCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildReviewItem('Type', createWoState.draft.type.displayName),
-                _buildReviewItem('Priority', createWoState.draft.priority.displayName),
-                _buildReviewItem('Cart', createWoState.draft.cartId.isEmpty ? 'Not selected' : createWoState.draft.cartId),
-                _buildReviewItem('Description', createWoState.draft.description.isEmpty ? 'Not provided' : createWoState.draft.description),
+                _buildReviewItem(
+                    'Priority', createWoState.draft.priority.displayName),
+                _buildReviewItem(
+                    'Cart',
+                    createWoState.draft.cartId.isEmpty
+                        ? 'Not selected'
+                        : createWoState.draft.cartId),
+                _buildReviewItem(
+                    'Description',
+                    createWoState.draft.description.isEmpty
+                        ? 'Not provided'
+                        : createWoState.draft.description),
                 if (createWoState.draft.scheduledAt != null)
-                  _buildReviewItem('Scheduled', _formatDateTime(createWoState.draft.scheduledAt!)),
+                  _buildReviewItem('Scheduled',
+                      _formatDateTime(createWoState.draft.scheduledAt!)),
                 if (createWoState.draft.technician != null)
-                  _buildReviewItem('Technician', createWoState.draft.technician!),
+                  _buildReviewItem(
+                      'Technician', createWoState.draft.technician!),
                 if (createWoState.draft.parts?.isNotEmpty == true)
-                  _buildReviewItem('Parts', '${createWoState.draft.parts!.length} items'),
+                  _buildReviewItem(
+                      'Parts', '${createWoState.draft.parts!.length} items'),
               ],
             ),
           ),
@@ -72,16 +84,20 @@ class WorkOrderCreationStep4 extends ConsumerWidget {
               Expanded(
                 child: SecondaryButton(
                   text: 'Save Draft',
-                  onPressed: controller.canSaveDraft() ? () {
-                    // Save draft logic
-                  } : null,
+                  onPressed: controller.canSaveDraft()
+                      ? () {
+                          // Save draft logic
+                        }
+                      : null,
                 ),
               ),
               const SizedBox(width: DesignTokens.spacingMd),
               Expanded(
                 child: PrimaryButton(
                   text: 'Create Work Order',
-                  onPressed: controller.canProceedToNextStep(3) ? onCreateWorkOrder : null,
+                  onPressed: controller.canProceedToNextStep(3)
+                      ? onCreateWorkOrder
+                      : null,
                   isLoading: createWoState.isLoading,
                 ),
               ),

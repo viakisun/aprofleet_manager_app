@@ -21,7 +21,7 @@ class WorkOrderTypeSelector extends StatelessWidget {
       runSpacing: DesignTokens.spacingSm,
       children: WorkOrderType.values.map((type) {
         final isSelected = selectedType == type;
-        
+
         return GestureDetector(
           onTap: () => onTypeSelected(type),
           child: Container(
@@ -30,13 +30,13 @@ class WorkOrderTypeSelector extends StatelessWidget {
               vertical: DesignTokens.spacingSm,
             ),
             decoration: BoxDecoration(
-              color: isSelected 
-                  ? DesignTokens.textPrimary 
+              color: isSelected
+                  ? DesignTokens.textPrimary
                   : DesignTokens.bgSecondary,
               borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
               border: Border.all(
-                color: isSelected 
-                    ? DesignTokens.textPrimary 
+                color: isSelected
+                    ? DesignTokens.textPrimary
                     : DesignTokens.borderPrimary,
                 width: 1,
               ),
@@ -46,8 +46,8 @@ class WorkOrderTypeSelector extends StatelessWidget {
               style: TextStyle(
                 fontSize: DesignTokens.fontSizeSm,
                 fontWeight: DesignTokens.fontWeightMedium,
-                color: isSelected 
-                    ? DesignTokens.bgPrimary 
+                color: isSelected
+                    ? DesignTokens.bgPrimary
                     : DesignTokens.textPrimary,
               ),
             ),

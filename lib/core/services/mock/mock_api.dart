@@ -326,7 +326,7 @@ class MockApi {
       insuranceNumber: 'INS-FB-001',
       odometer: 0.0,
       status: CartStatus.active,
-      position: LatLng(37.7749, -122.4194), // San Francisco
+      position: LatLng(35.9558448, 127.0060949), // 웅포CC
       batteryLevel: 85.0,
       speed: 0.0,
       lastSeen: DateTime.now(),

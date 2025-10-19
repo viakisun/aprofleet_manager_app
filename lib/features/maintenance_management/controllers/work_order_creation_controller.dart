@@ -5,11 +5,13 @@ import '../../../core/services/providers.dart';
 import '../../../core/utils/validators/business_validator.dart';
 
 /// Controller for managing work order creation state and business logic
-class WorkOrderCreationController extends StateNotifier<WorkOrderCreationState> {
-  WorkOrderCreationController(this.ref) : super(WorkOrderCreationState.initial());
+class WorkOrderCreationController
+    extends StateNotifier<WorkOrderCreationState> {
+  WorkOrderCreationController(this.ref)
+      : super(WorkOrderCreationState.initial());
 
   final Ref ref;
-  
+
   /// Get current draft
   WorkOrderDraft get currentDraft => state.draft;
 
@@ -18,7 +20,7 @@ class WorkOrderCreationController extends StateNotifier<WorkOrderCreationState> 
     state = state.copyWith(
       draft: state.draft.copyWith(type: type),
     );
-    
+
     // Auto-assign priority based on work order type
     _setAutoPriority(type);
   }
@@ -115,11 +117,12 @@ class WorkOrderCreationController extends StateNotifier<WorkOrderCreationState> 
       }
 
       // Create work order
-      final workOrder = await ref.read(workOrderRepositoryProvider).create(draft);
-      
+      final workOrder =
+          await ref.read(workOrderRepositoryProvider).create(draft);
+
       // Clear any previous errors
       state = state.copyWith(error: null);
-      
+
       return workOrder;
     } catch (e) {
       state = state.copyWith(error: e.toString());
@@ -184,7 +187,6 @@ class WorkOrderCreationController extends StateNotifier<WorkOrderCreationState> 
       draft: state.draft.copyWith(priority: priority),
     );
   }
-
 }
 
 /// State class for work order creation
@@ -221,7 +223,8 @@ class WorkOrderCreationState {
 }
 
 /// Provider for work order creation controller
-final workOrderCreationControllerProvider = 
-    StateNotifierProvider<WorkOrderCreationController, WorkOrderCreationState>((ref) {
+final workOrderCreationControllerProvider =
+    StateNotifierProvider<WorkOrderCreationController, WorkOrderCreationState>(
+        (ref) {
   return WorkOrderCreationController(ref);
 });

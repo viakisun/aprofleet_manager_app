@@ -50,7 +50,8 @@ class WorkOrderCreationStep1 extends ConsumerWidget {
           _buildSectionHeader('DESCRIPTION'),
           const SizedBox(height: DesignTokens.spacingMd),
           TextField(
-            controller: TextEditingController(text: createWoState.draft.description),
+            controller:
+                TextEditingController(text: createWoState.draft.description),
             onChanged: controller.setDescription,
             maxLines: 4,
             style: const TextStyle(

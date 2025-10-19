@@ -15,7 +15,7 @@ class AlertSummaryCards extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context);
-    
+
     if (alertsAsync is AsyncData<List<Alert>>) {
       final data = alertsAsync as AsyncData<List<Alert>>;
       final stats = _calculateStats(data.value);
@@ -26,12 +26,12 @@ class AlertSummaryCards extends ConsumerWidget {
       final error = alertsAsync as AsyncError<List<Alert>>;
       return _buildErrorState(context, localizations, error.error);
     }
-    
+
     return _buildLoadingState(context, localizations);
   }
 
-  Widget _buildSummaryCards(BuildContext context, AppLocalizations localizations, Map<String, int> stats) {
-
+  Widget _buildSummaryCards(BuildContext context,
+      AppLocalizations localizations, Map<String, int> stats) {
     return Container(
       padding: const EdgeInsets.all(DesignTokens.spacingMd),
       child: Column(
@@ -293,7 +293,8 @@ class AlertSummaryCards extends ConsumerWidget {
     return stats;
   }
 
-  Widget _buildLoadingState(BuildContext context, AppLocalizations localizations) {
+  Widget _buildLoadingState(
+      BuildContext context, AppLocalizations localizations) {
     return Container(
       padding: const EdgeInsets.all(DesignTokens.spacingMd),
       child: Column(
@@ -316,7 +317,8 @@ class AlertSummaryCards extends ConsumerWidget {
     );
   }
 
-  Widget _buildErrorState(BuildContext context, AppLocalizations localizations, Object error) {
+  Widget _buildErrorState(
+      BuildContext context, AppLocalizations localizations, Object error) {
     return Container(
       padding: const EdgeInsets.all(DesignTokens.spacingMd),
       child: Column(

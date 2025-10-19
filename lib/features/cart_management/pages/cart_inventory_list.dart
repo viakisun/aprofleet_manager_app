@@ -132,7 +132,6 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
     );
   }
 
-
   Widget _buildCartList(List<Cart> carts, CartInventoryController controller) {
     final filteredCarts = controller.getFilteredCarts(carts);
 
@@ -218,7 +217,8 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
         color: const Color(0xFF1A1A1A),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isSelected ? Colors.blue : Colors.white.withValues(alpha: 0.06),
+          color:
+              isSelected ? Colors.blue : Colors.white.withValues(alpha: 0.06),
           width: isSelected ? 2 : 1,
         ),
       ),
@@ -367,7 +367,8 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
         color: const Color(0xFF1A1A1A),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isSelected ? Colors.blue : Colors.white.withValues(alpha: 0.06),
+          color:
+              isSelected ? Colors.blue : Colors.white.withValues(alpha: 0.06),
           width: isSelected ? 2 : 1,
         ),
       ),

@@ -114,7 +114,8 @@ class BusinessValidator {
       errors.add('Escalation level must be between 1 and 5');
     }
 
-    if (alert.escalationLevel != null && escalationLevel <= alert.escalationLevel!) {
+    if (alert.escalationLevel != null &&
+        escalationLevel <= alert.escalationLevel!) {
       errors.add('New escalation level must be higher than current level');
     }
 
@@ -229,7 +230,8 @@ class BusinessValidator {
       final availableQuantity = availableInventory[partId] ?? 0;
 
       if (availableQuantity < requiredQuantity) {
-        errors.add('Insufficient inventory for part $partId. Required: $requiredQuantity, Available: $availableQuantity');
+        errors.add(
+            'Insufficient inventory for part $partId. Required: $requiredQuantity, Available: $availableQuantity');
       }
     }
 

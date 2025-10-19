@@ -60,9 +60,9 @@ class _PartsListState extends State<PartsList> {
             ),
           ],
         ),
-        
+
         const SizedBox(height: DesignTokens.spacingMd),
-        
+
         // Parts list
         if (_parts.isEmpty)
           Container(
@@ -106,7 +106,7 @@ class _PartsListState extends State<PartsList> {
           ..._parts.asMap().entries.map((entry) {
             final index = entry.key;
             final part = entry.value;
-            
+
             return Container(
               margin: const EdgeInsets.only(bottom: DesignTokens.spacingSm),
               padding: const EdgeInsets.all(DesignTokens.spacingMd),
@@ -298,14 +298,14 @@ class _AddPartDialogState extends State<_AddPartDialog> {
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         name: _nameController.text.trim(),
         quantity: int.parse(_quantityController.text),
-        notes: _notesController.text.trim().isEmpty 
-            ? null 
+        notes: _notesController.text.trim().isEmpty
+            ? null
             : _notesController.text.trim(),
-        serialNumber: _serialController.text.trim().isEmpty 
-            ? null 
+        serialNumber: _serialController.text.trim().isEmpty
+            ? null
             : _serialController.text.trim(),
       );
-      
+
       widget.onPartAdded(part);
       Navigator.of(context).pop();
     }

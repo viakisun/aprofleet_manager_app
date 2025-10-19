@@ -22,7 +22,7 @@ extension AnalyticsRangeExtension on AnalyticsRange {
         return localizations.analyticsMonth;
     }
   }
-  
+
   String get displayName {
     switch (this) {
       case AnalyticsRange.week:

@@ -69,7 +69,8 @@ class MaintenancePie extends StatelessWidget {
                 final count = item['count'] as int;
                 final color = item['color'] as Color;
                 final percentage = (count / total * 100).toStringAsFixed(1);
-                final localizedType = _getLocalizedMaintenanceType(typeKey, localizations);
+                final localizedType =
+                    _getLocalizedMaintenanceType(typeKey, localizations);
 
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 8),
@@ -117,7 +118,8 @@ class MaintenancePie extends StatelessWidget {
     );
   }
 
-  String _getLocalizedMaintenanceType(String key, AppLocalizations localizations) {
+  String _getLocalizedMaintenanceType(
+      String key, AppLocalizations localizations) {
     switch (key) {
       case 'maintenancePreventive':
         return localizations.maintenancePreventive;

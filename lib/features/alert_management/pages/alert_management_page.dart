@@ -19,7 +19,8 @@ class AlertManagementPage extends ConsumerStatefulWidget {
   const AlertManagementPage({super.key});
 
   @override
-  ConsumerState<AlertManagementPage> createState() => _AlertManagementPageState();
+  ConsumerState<AlertManagementPage> createState() =>
+      _AlertManagementPageState();
 }
 
 class _AlertManagementPageState extends ConsumerState<AlertManagementPage>
@@ -58,14 +59,17 @@ class _AlertManagementPageState extends ConsumerState<AlertManagementPage>
           ),
           AppBarActionButton(
             icon: Icons.filter_list,
-            onPressed: () => _showFilterSheet(context, alertController, alertState),
+            onPressed: () =>
+                _showFilterSheet(context, alertController, alertState),
           ),
           AppBarActionButton(
             icon: Icons.done_all,
             onPressed: () => alertController.markAllRead(),
           ),
           AppBarActionButton(
-            icon: alertState.isMuted ? Icons.notifications_off : Icons.notifications,
+            icon: alertState.isMuted
+                ? Icons.notifications_off
+                : Icons.notifications,
             onPressed: () => alertController.toggleMute(),
           ),
           AppBarActionButton(
@@ -104,13 +108,20 @@ class _AlertManagementPageState extends ConsumerState<AlertManagementPage>
             child: TabBarView(
               controller: _tabController,
               children: [
-                _buildAlertList(AlertFilterType.all, alertState, alertController),
-                _buildAlertList(AlertFilterType.unread, alertState, alertController),
-                _buildAlertList(AlertFilterType.cart, alertState, alertController),
-                _buildAlertList(AlertFilterType.battery, alertState, alertController),
-                _buildAlertList(AlertFilterType.maintenance, alertState, alertController),
-                _buildAlertList(AlertFilterType.geofence, alertState, alertController),
-                _buildAlertList(AlertFilterType.system, alertState, alertController),
+                _buildAlertList(
+                    AlertFilterType.all, alertState, alertController),
+                _buildAlertList(
+                    AlertFilterType.unread, alertState, alertController),
+                _buildAlertList(
+                    AlertFilterType.cart, alertState, alertController),
+                _buildAlertList(
+                    AlertFilterType.battery, alertState, alertController),
+                _buildAlertList(
+                    AlertFilterType.maintenance, alertState, alertController),
+                _buildAlertList(
+                    AlertFilterType.geofence, alertState, alertController),
+                _buildAlertList(
+                    AlertFilterType.system, alertState, alertController),
               ],
             ),
           ),
@@ -119,7 +130,8 @@ class _AlertManagementPageState extends ConsumerState<AlertManagementPage>
     );
   }
 
-  Widget _buildAlertList(AlertFilterType filterType, alertState, alertController) {
+  Widget _buildAlertList(
+      AlertFilterType filterType, alertState, alertController) {
     if (alertState.alerts is AsyncData<List<Alert>>) {
       final data = alertState.alerts as AsyncData<List<Alert>>;
       final filteredAlerts = _getFilteredAlerts(data.value, filterType);
@@ -137,7 +149,7 @@ class _AlertManagementPageState extends ConsumerState<AlertManagementPage>
         ),
       );
     }
-    
+
     return const Center(
       child: CircularProgressIndicator(),
     );
@@ -185,31 +197,44 @@ class _AlertManagementPageState extends ConsumerState<AlertManagementPage>
           onTap: () => _showAlertDetail(alert, alertController),
           onAcknowledge: () => alertController.acknowledgeAlert(alert.id),
           onViewCart: () => context.go('/rt/cart/${alert.cartId}'),
-          onCreateWorkOrder: () => context.go('/mm/create?cart=${alert.cartId}'),
+          onCreateWorkOrder: () =>
+              context.go('/mm/create?cart=${alert.cartId}'),
         );
       },
     );
   }
 
-  List<Alert> _getFilteredAlerts(List<Alert> alerts, AlertFilterType filterType) {
+  List<Alert> _getFilteredAlerts(
+      List<Alert> alerts, AlertFilterType filterType) {
     switch (filterType) {
       case AlertFilterType.all:
         return alerts;
       case AlertFilterType.unread:
-        return alerts.where((alert) => 
-          alert.state == AlertStatus.triggered || 
-          alert.state == AlertStatus.notified
-        ).toList();
+        return alerts
+            .where((alert) =>
+                alert.state == AlertStatus.triggered ||
+                alert.state == AlertStatus.notified)
+            .toList();
       case AlertFilterType.cart:
-        return alerts.where((alert) => alert.category == AlertCategory.cart).toList();
+        return alerts
+            .where((alert) => alert.category == AlertCategory.cart)
+            .toList();
       case AlertFilterType.battery:
-        return alerts.where((alert) => alert.category == AlertCategory.battery).toList();
+        return alerts
+            .where((alert) => alert.category == AlertCategory.battery)
+            .toList();
       case AlertFilterType.maintenance:
-        return alerts.where((alert) => alert.category == AlertCategory.maintenance).toList();
+        return alerts
+            .where((alert) => alert.category == AlertCategory.maintenance)
+            .toList();
       case AlertFilterType.geofence:
-        return alerts.where((alert) => alert.category == AlertCategory.geofence).toList();
+        return alerts
+            .where((alert) => alert.category == AlertCategory.geofence)
+            .toList();
       case AlertFilterType.system:
-        return alerts.where((alert) => alert.category == AlertCategory.system).toList();
+        return alerts
+            .where((alert) => alert.category == AlertCategory.system)
+            .toList();
     }
   }
 

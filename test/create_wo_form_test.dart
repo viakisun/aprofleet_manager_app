@@ -11,7 +11,7 @@ void main() {
     testWidgets('Widget loads without crashing', (tester) async {
       // 더 큰 화면 크기 설정하여 오버플로우 방지
       await tester.binding.setSurfaceSize(const Size(1200, 800));
-      
+
       try {
         // Mock carts for the dropdown
         final mockCarts = [

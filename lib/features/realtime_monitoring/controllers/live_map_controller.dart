@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../domain/models/cart.dart';
 import '../../../core/services/providers.dart';
+import '../../../core/services/map/map_adapter.dart';
+import '../../../core/constants/map_constants.dart';
 
 class LiveMapController extends StateNotifier<LiveMapState> {
   LiveMapController(this.ref) : super(LiveMapState.initial()) {
@@ -17,11 +19,26 @@ class LiveMapController extends StateNotifier<LiveMapState> {
       state = state.copyWith(carts: carts, isLoading: false);
     });
 
+    // Load saved map opacity preference
+    _loadMapOpacityPreference();
+
     // Subscribe to position updates for all carts
     ref.listen(alertStreamProvider, (previous, next) {
       // Listen to alert stream to trigger cart updates
       // This is a simplified approach - in production you'd have a dedicated position stream
     });
+  }
+
+  Future<void> _loadMapOpacityPreference() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final savedOpacity = prefs.getDouble('map_opacity');
+      if (savedOpacity != null) {
+        state = state.copyWith(mapOpacity: savedOpacity);
+      }
+    } catch (e) {
+      // Ignore errors, use default opacity
+    }
   }
 
   void toggleStatusFilter(CartStatus status) {
@@ -50,12 +67,43 @@ class LiveMapController extends StateNotifier<LiveMapState> {
     state = state.copyWith(searchQuery: '');
   }
 
-  void setZoom(double zoom) {
-    state = state.copyWith(zoom: zoom);
+  void setCameraPosition(CameraPosition position) {
+    state = state.copyWith(cameraPosition: position);
   }
 
-  void setCenterOffset(Offset offset) {
-    state = state.copyWith(centerOffset: offset);
+  void animateToCart(String cartId) {
+    final cart = state.carts.firstWhere(
+      (cart) => cart.id == cartId,
+      orElse: () => throw StateError('Cart not found'),
+    );
+
+    final position = CameraPosition(
+      center: cart.position,
+      zoom: MapConstants.defaultZoom,
+    );
+
+    setCameraPosition(position);
+  }
+
+  void setZoom(double zoom) {
+    final currentPosition = state.cameraPosition;
+    final newPosition = currentPosition.copyWith(zoom: zoom);
+    setCameraPosition(newPosition);
+  }
+
+  void setMapOpacity(double opacity) {
+    final clampedOpacity = opacity.clamp(0.0, 1.0);
+    state = state.copyWith(mapOpacity: clampedOpacity);
+    _saveMapOpacityPreference(clampedOpacity);
+  }
+
+  Future<void> _saveMapOpacityPreference(double opacity) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setDouble('map_opacity', opacity);
+    } catch (e) {
+      // Ignore errors, preference saving is not critical
+    }
   }
 
   void selectCart(Cart cart) {
@@ -114,9 +162,9 @@ class LiveMapState {
   final String searchQuery;
   final Cart? selectedCart;
   final String? trackingCartId;
-  final double zoom;
-  final Offset centerOffset;
+  final CameraPosition cameraPosition;
   final bool isLoading;
+  final double mapOpacity;
 
   const LiveMapState({
     required this.carts,
@@ -124,18 +172,20 @@ class LiveMapState {
     required this.searchQuery,
     this.selectedCart,
     this.trackingCartId,
-    required this.zoom,
-    required this.centerOffset,
+    required this.cameraPosition,
     required this.isLoading,
+    this.mapOpacity = 0.5,
   });
 
   factory LiveMapState.initial() {
-    return const LiveMapState(
+    return LiveMapState(
       carts: [],
       statusFilters: {},
       searchQuery: '',
-      zoom: 1.5,
-      centerOffset: Offset.zero,
+      cameraPosition: CameraPosition(
+        center: MapConstants.ungpoCC,
+        zoom: 17.0, // 골프장 세부사항을 더 잘 보이게 높은 줌 레벨
+      ),
       isLoading: true,
     );
   }
@@ -146,9 +196,9 @@ class LiveMapState {
     String? searchQuery,
     Cart? selectedCart,
     String? trackingCartId,
-    double? zoom,
-    Offset? centerOffset,
+    CameraPosition? cameraPosition,
     bool? isLoading,
+    double? mapOpacity,
   }) {
     return LiveMapState(
       carts: carts ?? this.carts,
@@ -156,9 +206,9 @@ class LiveMapState {
       searchQuery: searchQuery ?? this.searchQuery,
       selectedCart: selectedCart ?? this.selectedCart,
       trackingCartId: trackingCartId ?? this.trackingCartId,
-      zoom: zoom ?? this.zoom,
-      centerOffset: centerOffset ?? this.centerOffset,
+      cameraPosition: cameraPosition ?? this.cameraPosition,
       isLoading: isLoading ?? this.isLoading,
+      mapOpacity: mapOpacity ?? this.mapOpacity,
     );
   }
 }

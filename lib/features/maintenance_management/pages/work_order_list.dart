@@ -143,17 +143,17 @@ class _WorkOrderListState extends ConsumerState<WorkOrderList>
       ),
       child: Row(
         children: [
-          _buildStatChip(
-              localizations.woStatsUrgent, stats['urgent'] ?? 0, DesignTokens.statusCritical),
+          _buildStatChip(localizations.woStatsUrgent, stats['urgent'] ?? 0,
+              DesignTokens.statusCritical),
           const SizedBox(width: DesignTokens.spacingSm),
-          _buildStatChip(
-              localizations.woStatsPending, stats['pending'] ?? 0, DesignTokens.statusWarning),
+          _buildStatChip(localizations.woStatsPending, stats['pending'] ?? 0,
+              DesignTokens.statusWarning),
           const SizedBox(width: DesignTokens.spacingSm),
-          _buildStatChip(localizations.woStatsInProgress, stats['inProgress'] ?? 0,
-              DesignTokens.statusActive),
+          _buildStatChip(localizations.woStatsInProgress,
+              stats['inProgress'] ?? 0, DesignTokens.statusActive),
           const SizedBox(width: DesignTokens.spacingSm),
-          _buildStatChip(
-              localizations.woStatsToday, stats['today'] ?? 0, DesignTokens.statusCharging),
+          _buildStatChip(localizations.woStatsToday, stats['today'] ?? 0,
+              DesignTokens.statusCharging),
         ],
       ),
     );
@@ -205,8 +205,8 @@ class _WorkOrderListState extends ConsumerState<WorkOrderList>
     );
   }
 
-  Widget _buildContent(
-      List<WorkOrder> workOrders, WorkOrderController controller, BuildContext context) {
+  Widget _buildContent(List<WorkOrder> workOrders,
+      WorkOrderController controller, BuildContext context) {
     final localizations = AppLocalizations.of(context);
     final filteredOrders = controller.getFilteredWorkOrders(workOrders);
 
@@ -230,7 +230,7 @@ class _WorkOrderListState extends ConsumerState<WorkOrderList>
     }
 
     if (_viewMode == WorkOrderViewMode.timeline) {
-        return WoTimeline(workOrders: filteredOrders);
+      return WoTimeline(workOrders: filteredOrders);
     } else {
       return ListView.builder(
         padding: const EdgeInsets.all(16),

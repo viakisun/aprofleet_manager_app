@@ -218,7 +218,8 @@ class SettingsMenuItem extends StatelessWidget {
         // Divider
         if (showDivider)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spacingMd),
+            padding:
+                const EdgeInsets.symmetric(horizontal: DesignTokens.spacingMd),
             child: Divider(
               height: 1,
               color: DesignTokens.borderPrimary,

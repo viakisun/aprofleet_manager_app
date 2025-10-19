@@ -31,5 +31,15 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        
+        <!-- Mapbox Access Token -->
+        <meta-data
+            android:name="com.mapbox.token"
+            android:value="pk.eyJ1IjoiamVvbmdldW5qaSIsImEiOiJjbGt0ZzljcW4wYWpuM2ttZ2NlOW8zYjc2In0.IbUj-eV7VBIfyBfGdAM9xA" />
+        
+        <!-- Google Maps API Key -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCVLOmZuYsc3f4olx8QhWK1YvCydBywHb8"/>
     </application>
 </manifest>

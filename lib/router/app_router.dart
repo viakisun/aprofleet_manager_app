@@ -143,7 +143,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: '/al/center',
             name: 'alert-center',
             pageBuilder: (context, state) => CustomTransitionPage(
-                child: const AlertManagementPage(),
+              child: const AlertManagementPage(),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 return SlideTransition(

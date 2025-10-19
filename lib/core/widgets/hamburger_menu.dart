@@ -117,7 +117,9 @@ class HamburgerMenu extends ConsumerWidget {
                 onTap: () {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('${localizations.scanQrCode} - ${localizations.comingSoon}')),
+                    SnackBar(
+                        content: Text(
+                            '${localizations.scanQrCode} - ${localizations.comingSoon}')),
                   );
                 },
               ),

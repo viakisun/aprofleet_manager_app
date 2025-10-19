@@ -122,7 +122,8 @@ class _AlertDetailModalState extends State<AlertDetailModal> {
                     [
                       _buildInfoRow('Alert ID', widget.alert.id),
                       _buildInfoRow('Code', widget.alert.code),
-                      _buildInfoRow('State', widget.alert.state.getDisplayName(context)),
+                      _buildInfoRow(
+                          'State', widget.alert.state.getDisplayName(context)),
                       _buildInfoRow(
                           'Created',
                           DateFormat('MMM dd, yyyy HH:mm')
@@ -204,7 +205,8 @@ class _AlertDetailModalState extends State<AlertDetailModal> {
                                     DateFormat('HH:mm')
                                         .format(action.timestamp),
                                     style: TextStyle(
-                                      color: Colors.white.withValues(alpha: 0.7),
+                                      color:
+                                          Colors.white.withValues(alpha: 0.7),
                                       fontSize: 12,
                                     ),
                                   ),

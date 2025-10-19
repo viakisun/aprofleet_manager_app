@@ -6,7 +6,8 @@ class DateFormatter {
   static final DateFormat _dateTimeFormat = DateFormat('yyyy-MM-dd HH:mm');
   static final DateFormat _timeFormat = DateFormat('HH:mm');
   static final DateFormat _displayDateFormat = DateFormat('MMM dd, yyyy');
-  static final DateFormat _displayDateTimeFormat = DateFormat('MMM dd, yyyy HH:mm');
+  static final DateFormat _displayDateTimeFormat =
+      DateFormat('MMM dd, yyyy HH:mm');
 
   /// Format date to string (yyyy-MM-dd)
   static String formatDate(DateTime date) {

@@ -14,7 +14,7 @@ class CostAnalysisSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    
+
     return Container(
       constraints: const BoxConstraints(minHeight: 200),
       padding: const EdgeInsets.all(16),
@@ -47,7 +47,8 @@ class CostAnalysisSection extends StatelessWidget {
     );
   }
 
-  Widget _buildCostAnalysisChart(AnalyticsController controller, AppLocalizations localizations) {
+  Widget _buildCostAnalysisChart(
+      AnalyticsController controller, AppLocalizations localizations) {
     final costData = controller.getCostAnalysisData();
 
     return Column(

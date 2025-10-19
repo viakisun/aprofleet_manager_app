@@ -22,7 +22,7 @@ class PrioritySelector extends StatelessWidget {
       children: Priority.values.map((priority) {
         final isSelected = selectedPriority == priority;
         final color = _getPriorityColor(priority);
-        
+
         return GestureDetector(
           onTap: () => onPrioritySelected(priority),
           child: Container(
@@ -31,14 +31,10 @@ class PrioritySelector extends StatelessWidget {
               vertical: DesignTokens.spacingSm,
             ),
             decoration: BoxDecoration(
-              color: isSelected 
-                  ? color 
-                  : DesignTokens.bgSecondary,
+              color: isSelected ? color : DesignTokens.bgSecondary,
               borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
               border: Border.all(
-                color: isSelected 
-                    ? color 
-                    : DesignTokens.borderPrimary,
+                color: isSelected ? color : DesignTokens.borderPrimary,
                 width: 1,
               ),
             ),
@@ -49,9 +45,7 @@ class PrioritySelector extends StatelessWidget {
                   width: 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color: isSelected 
-                        ? DesignTokens.textPrimary 
-                        : color,
+                    color: isSelected ? DesignTokens.textPrimary : color,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -61,8 +55,8 @@ class PrioritySelector extends StatelessWidget {
                   style: TextStyle(
                     fontSize: DesignTokens.fontSizeSm,
                     fontWeight: DesignTokens.fontWeightMedium,
-                    color: isSelected 
-                        ? DesignTokens.textPrimary 
+                    color: isSelected
+                        ? DesignTokens.textPrimary
                         : DesignTokens.textPrimary,
                   ),
                 ),

@@ -9,6 +9,8 @@ import '../../../core/widgets/shared_widgets.dart';
 import '../../../core/widgets/settings_widgets.dart';
 import '../../../core/widgets/professional_app_bar.dart';
 import '../../../core/widgets/hamburger_menu.dart';
+import '../../../core/services/map/map_provider_type.dart';
+import '../../../core/services/map/map_settings_service.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
@@ -18,6 +20,7 @@ class SettingsPage extends ConsumerWidget {
     final localizations = AppLocalizations.of(context);
     final currentLocale = ref.watch(languageControllerProvider);
     final languageController = ref.read(languageControllerProvider.notifier);
+    final currentMapProvider = ref.watch(currentMapProviderProvider);
 
     return Scaffold(
       backgroundColor: DesignTokens.bgPrimary,
@@ -34,7 +37,9 @@ class SettingsPage extends ConsumerWidget {
             icon: Icons.search,
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('${localizations.search} - ${localizations.comingSoon}')),
+                SnackBar(
+                    content: Text(
+                        '${localizations.search} - ${localizations.comingSoon}')),
               );
             },
           ),
@@ -107,10 +112,12 @@ class SettingsPage extends ConsumerWidget {
                   icon: Icons.language,
                   title: localizations.chineseSimplified,
                   subtitle: localizations.chineseSimplified,
-                  iconColor: currentLocale.languageCode == 'zh' && currentLocale.countryCode == 'CN'
+                  iconColor: currentLocale.languageCode == 'zh' &&
+                          currentLocale.countryCode == 'CN'
                       ? DesignTokens.statusActive
                       : null,
-                  trailing: currentLocale.languageCode == 'zh' && currentLocale.countryCode == 'CN'
+                  trailing: currentLocale.languageCode == 'zh' &&
+                          currentLocale.countryCode == 'CN'
                       ? const Icon(Icons.check_circle,
                           color: DesignTokens.statusActive,
                           size: DesignTokens.iconMd)
@@ -122,10 +129,12 @@ class SettingsPage extends ConsumerWidget {
                   icon: Icons.language,
                   title: localizations.chineseTraditional,
                   subtitle: localizations.chineseTraditional,
-                  iconColor: currentLocale.languageCode == 'zh' && currentLocale.countryCode == 'TW'
+                  iconColor: currentLocale.languageCode == 'zh' &&
+                          currentLocale.countryCode == 'TW'
                       ? DesignTokens.statusActive
                       : null,
-                  trailing: currentLocale.languageCode == 'zh' && currentLocale.countryCode == 'TW'
+                  trailing: currentLocale.languageCode == 'zh' &&
+                          currentLocale.countryCode == 'TW'
                       ? const Icon(Icons.check_circle,
                           color: DesignTokens.statusActive,
                           size: DesignTokens.iconMd)
@@ -171,6 +180,16 @@ class SettingsPage extends ConsumerWidget {
             SettingsSection(
               title: 'APP SETTINGS',
               children: [
+                SettingsMenuItem(
+                  icon: Icons.map_outlined,
+                  title: 'Map Provider',
+                  subtitle: currentMapProvider.when(
+                    data: (provider) => provider.name,
+                    loading: () => 'Loading...',
+                    error: (_, __) => 'Error',
+                  ),
+                  onTap: () => _showMapProviderDialog(context, ref),
+                ),
                 SettingsMenuItem(
                   icon: Icons.notifications_outlined,
                   title: 'Notifications',
@@ -250,7 +269,8 @@ class SettingsPage extends ConsumerWidget {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('${localizations.languageChanged} ${controller.currentLanguageName}'),
+        content: Text(
+            '${localizations.languageChanged} ${controller.currentLanguageName}'),
         backgroundColor: DesignTokens.statusActive,
         duration: const Duration(seconds: 2),
       ),
@@ -266,66 +286,140 @@ class SettingsPage extends ConsumerWidget {
     );
   }
 
+  void _showMapProviderDialog(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: DesignTokens.bgSecondary,
+        title: const Text(
+          'Select Map Provider',
+          style: TextStyle(color: DesignTokens.textPrimary),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: MapProviderType.values.map((provider) {
+            return ListTile(
+              leading: Icon(
+                provider.icon,
+                color: DesignTokens.textPrimary,
+              ),
+              title: Text(
+                provider.name,
+                style: const TextStyle(color: DesignTokens.textPrimary),
+              ),
+              subtitle: Text(
+                provider.description,
+                style: TextStyle(color: DesignTokens.textSecondary),
+              ),
+              onTap: () async {
+                Navigator.pop(context);
+                final service = ref.read(mapSettingsServiceProvider);
+                await service.setSelectedProvider(provider);
+
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Map provider changed to ${provider.name}'),
+                      backgroundColor: DesignTokens.statusActive,
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                }
+              },
+            );
+          }).toList(),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              'Cancel',
+              style: TextStyle(color: DesignTokens.textSecondary),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _showUserProfile(BuildContext context) {
     final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('${localizations.profileSettings} - ${localizations.comingSoon}')),
+      SnackBar(
+          content: Text(
+              '${localizations.profileSettings} - ${localizations.comingSoon}')),
     );
   }
 
   void _showProfileSettings(BuildContext context) {
     final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('${localizations.profileSettings} - ${localizations.comingSoon}')),
+      SnackBar(
+          content: Text(
+              '${localizations.profileSettings} - ${localizations.comingSoon}')),
     );
   }
 
   void _showSecuritySettings(BuildContext context) {
     final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('${localizations.security} - ${localizations.comingSoon}')),
+      SnackBar(
+          content:
+              Text('${localizations.security} - ${localizations.comingSoon}')),
     );
   }
 
   void _showPrivacySettings(BuildContext context) {
     final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('${localizations.privacy} - ${localizations.comingSoon}')),
+      SnackBar(
+          content:
+              Text('${localizations.privacy} - ${localizations.comingSoon}')),
     );
   }
 
   void _showNotificationSettings(BuildContext context) {
     final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('${localizations.notifications} - ${localizations.comingSoon}')),
+      SnackBar(
+          content: Text(
+              '${localizations.notifications} - ${localizations.comingSoon}')),
     );
   }
 
   void _showThemeSettings(BuildContext context) {
     final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('${localizations.theme} - ${localizations.comingSoon}')),
+      SnackBar(
+          content:
+              Text('${localizations.theme} - ${localizations.comingSoon}')),
     );
   }
 
   void _showStorageSettings(BuildContext context) {
     final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('${localizations.storage} - ${localizations.comingSoon}')),
+      SnackBar(
+          content:
+              Text('${localizations.storage} - ${localizations.comingSoon}')),
     );
   }
 
   void _showHelp(BuildContext context) {
     final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('${localizations.helpFaq} - ${localizations.comingSoon}')),
+      SnackBar(
+          content:
+              Text('${localizations.helpFaq} - ${localizations.comingSoon}')),
     );
   }
 
   void _reportIssue(BuildContext context) {
     final localizations = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('${localizations.reportIssue} - ${localizations.comingSoon}')),
+      SnackBar(
+          content: Text(
+              '${localizations.reportIssue} - ${localizations.comingSoon}')),
     );
   }
 
@@ -359,8 +453,8 @@ class SettingsPage extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child:
-                Text(localizations.ok, style: const TextStyle(color: DesignTokens.statusActive)),
+            child: Text(localizations.ok,
+                style: const TextStyle(color: DesignTokens.statusActive)),
           ),
         ],
       ),

@@ -5,7 +5,7 @@
   "packages": [
     {
       "name": "aprofleet_manager",
-      "version": "1.0.0+1",
+      "version": "0.1.1+1",
       "dependencies": [
         "animations",
         "cached_network_image",
@@ -646,8 +646,10 @@
     },
     {
       "name": "js",
-      "version": "0.7.2",
-      "dependencies": []
+      "version": "0.6.7",
+      "dependencies": [
+        "meta"
+      ]
     },
     {
       "name": "io",

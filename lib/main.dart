@@ -29,7 +29,7 @@ class AproFleetApp extends ConsumerWidget {
       // 초기화 완료
       data: (_) {
         final router = ref.watch(appRouterProvider);
-        
+
         return MaterialApp.router(
           title: 'AproFleet Manager',
           debugShowCheckedModeBanner: false,

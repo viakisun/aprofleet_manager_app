@@ -11,7 +11,7 @@ void main() {
     // MockWsHub를 테스트 모드로 설정하여 타이머 비활성화
     final mockWsHub = MockWsHub();
     mockWsHub.enableTestMode(); // 테스트 모드 활성화
-    
+
     // Build our app and trigger a frame.
     await tester.pumpWidget(
       ProviderScope(

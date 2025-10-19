@@ -232,7 +232,8 @@ class _CartDetailMonitorState extends ConsumerState<CartDetailMonitor> {
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: DesignTokens.statusCritical.withValues(alpha: value * 0.5),
+                color:
+                    DesignTokens.statusCritical.withValues(alpha: value * 0.5),
                 blurRadius: 8,
                 spreadRadius: 2,
               ),

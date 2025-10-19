@@ -18,10 +18,12 @@ class WorkOrderCreationStep2 extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<WorkOrderCreationStep2> createState() => _WorkOrderCreationStep2State();
+  ConsumerState<WorkOrderCreationStep2> createState() =>
+      _WorkOrderCreationStep2State();
 }
 
-class _WorkOrderCreationStep2State extends ConsumerState<WorkOrderCreationStep2> {
+class _WorkOrderCreationStep2State
+    extends ConsumerState<WorkOrderCreationStep2> {
   final TextEditingController _locationController = TextEditingController();
   bool _isScanning = false;
 
@@ -99,7 +101,8 @@ class _WorkOrderCreationStep2State extends ConsumerState<WorkOrderCreationStep2>
                   final isSelected = createWoState.draft.cartId == cart.id;
 
                   return BaseCard(
-                    margin: const EdgeInsets.only(bottom: DesignTokens.spacingSm),
+                    margin:
+                        const EdgeInsets.only(bottom: DesignTokens.spacingSm),
                     onTap: () => widget.controller.setCartId(cart.id),
                     child: Row(
                       children: [
@@ -110,13 +113,13 @@ class _WorkOrderCreationStep2State extends ConsumerState<WorkOrderCreationStep2>
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: isSelected 
-                                  ? DesignTokens.textPrimary 
+                              color: isSelected
+                                  ? DesignTokens.textPrimary
                                   : DesignTokens.borderPrimary,
                               width: 2,
                             ),
-                            color: isSelected 
-                                ? DesignTokens.textPrimary 
+                            color: isSelected
+                                ? DesignTokens.textPrimary
                                 : Colors.transparent,
                           ),
                           child: isSelected
@@ -160,8 +163,10 @@ class _WorkOrderCreationStep2State extends ConsumerState<WorkOrderCreationStep2>
                             vertical: DesignTokens.spacingXs,
                           ),
                           decoration: BoxDecoration(
-                            color: DesignTokens.getStatusColor(cart.status.name),
-                            borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
+                            color:
+                                DesignTokens.getStatusColor(cart.status.name),
+                            borderRadius:
+                                BorderRadius.circular(DesignTokens.radiusSm),
                           ),
                           child: Text(
                             cart.status.displayName.toUpperCase(),
