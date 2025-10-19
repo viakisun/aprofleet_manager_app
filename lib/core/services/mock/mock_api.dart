@@ -9,6 +9,8 @@ import '../../../domain/models/alert.dart';
 import '../../../domain/models/telemetry.dart';
 import '../../../domain/models/kpi.dart';
 import '../../../domain/models/user_profile.dart';
+import '../../../domain/models/geojson_data.dart';
+import '../geojson_service.dart';
 
 class MockApi {
   static final MockApi _instance = MockApi._internal();
@@ -247,8 +249,18 @@ class MockApi {
       final Map<String, dynamic> jsonMap = json.decode(jsonString);
 
       for (final entry in jsonMap.entries) {
+        final cartId = entry.key;
+        final cart = _carts[cartId];
+        
+        // 카트의 현재 위치를 텔레메트리 데이터에 포함
+        final position = cart?.position ?? LatLng(35.9558448, 127.0060949);
+        
         final telemetry = Telemetry.fromJson({
           ...entry.value,
+          'position': {
+            'latitude': position.latitude,
+            'longitude': position.longitude,
+          },
           'timestamp': DateTime.now().toIso8601String(),
         });
         _telemetry[entry.key] = telemetry;
@@ -376,5 +388,145 @@ class MockApi {
       notes: 'Fallback alert for testing',
     );
     _alerts[fallbackAlert.id] = fallbackAlert;
+  }
+
+  /// 카트 TL을 웅포CC 골프장 경로상에 배치
+  Future<void> updateCartPositionsAlongRoute() async {
+    try {
+      final geoJsonData = await GeoJsonService.instance.loadGolfCourseData();
+      final cartList = _carts.values.toList();
+      
+      if (cartList.isEmpty) {
+        print('No carts to update');
+        return;
+      }
+      
+      print('Updating ${cartList.length} carts to route positions');
+      
+      // 경로 좌표 추출
+      final routeCoordinates = GeoJsonService.instance.extractRouteCoordinates(geoJsonData);
+      
+      if (routeCoordinates.isEmpty) {
+        print('No route coordinates found, using fallback positions');
+        await _updateCartsWithFallbackPositions(cartList);
+        return;
+      }
+      
+      print('Found ${routeCoordinates.length} route coordinates');
+      
+      // 경로상에 카트들을 균등 분산 배치
+      final positions = <LatLng>[];
+      final step = routeCoordinates.length / cartList.length;
+      
+      for (int i = 0; i < cartList.length; i++) {
+        final index = (i * step).round();
+        if (index < routeCoordinates.length) {
+          positions.add(routeCoordinates[index]);
+        } else {
+          // 경로 끝에 도달한 경우 마지막 좌표 사용
+          positions.add(routeCoordinates.last);
+        }
+      }
+      
+      print('Generated ${positions.length} route positions');
+      
+      for (int i = 0; i < cartList.length && i < positions.length; i++) {
+        final cart = cartList[i];
+        final newPosition = positions[i];
+        
+        print('Updating cart ${cart.id} from ${cart.position.latitude}, ${cart.position.longitude} to ${newPosition.latitude}, ${newPosition.longitude}');
+        
+        final updatedCart = cart.copyWith(position: newPosition);
+        _carts[cart.id] = updatedCart;
+      }
+      
+      print('Successfully updated ${cartList.length} carts to route positions');
+    } catch (e) {
+      print('Failed to update cart positions: $e');
+      // 에러 발생 시 fallback 위치 사용
+      final cartList = _carts.values.toList();
+      await _updateCartsWithFallbackPositions(cartList);
+    }
+  }
+
+  /// Fallback 위치로 카트 업데이트 (웅포CC 주변)
+  Future<void> _updateCartsWithFallbackPositions(List<Cart> cartList) async {
+    // 웅포CC 골프장 중심 좌표 (전북 익산)
+    const baseLat = 35.9558448;
+    const baseLng = 127.0060949;
+    
+    final random = Random();
+    
+    for (int i = 0; i < cartList.length; i++) {
+      // 골프장 주변 반경 0.01도 (약 1km) 내에서 랜덤 배치
+      final latOffset = (random.nextDouble() - 0.5) * 0.01;
+      final lngOffset = (random.nextDouble() - 0.5) * 0.01;
+      
+      final newPosition = LatLng(
+        baseLat + latOffset,
+        baseLng + lngOffset,
+      );
+      
+      final cart = cartList[i];
+      print('Updating cart ${cart.id} to fallback position ${newPosition.latitude}, ${newPosition.longitude}');
+      
+      final updatedCart = cart.copyWith(position: newPosition);
+      _carts[cart.id] = updatedCart;
+    }
+  }
+
+  /// 특정 카트의 위치를 경로 상의 랜덤 위치로 업데이트
+  Future<void> updateCartPositionOnRoute(String cartId) async {
+    try {
+      final cart = _carts[cartId];
+      if (cart == null) return;
+      
+      // GeoJSON 데이터 로드
+      final geoJsonData = await GeoJsonService.instance.loadGolfCourseData();
+      final randomPosition = GeoJsonService.instance.getRandomPositionOnRoute(geoJsonData);
+      
+      if (randomPosition != null) {
+        final updatedCart = cart.copyWith(
+          position: randomPosition,
+        );
+        
+        _carts[cartId] = updatedCart;
+        
+        // 텔레메트리 데이터도 함께 업데이트
+        await _updateTelemetryForCart(cartId, randomPosition);
+        
+        print('Updated cart $cartId position to route');
+      }
+    } catch (e) {
+      print('Failed to update cart $cartId position: $e');
+    }
+  }
+
+  /// 카트의 텔레메트리 데이터를 업데이트
+  Future<void> _updateTelemetryForCart(String cartId, LatLng position) async {
+    try {
+      final existingTelemetry = _telemetry[cartId];
+      if (existingTelemetry != null) {
+        final updatedTelemetry = existingTelemetry.copyWith(
+          position: position,
+          timestamp: DateTime.now(),
+        );
+        _telemetry[cartId] = updatedTelemetry;
+      }
+    } catch (e) {
+      print('Failed to update telemetry for cart $cartId: $e');
+    }
+  }
+
+  /// 모든 카트의 텔레메트리 데이터를 현재 위치로 업데이트
+  Future<void> updateAllTelemetryPositions() async {
+    try {
+      for (final cart in _carts.values) {
+        await _updateTelemetryForCart(cart.id, cart.position);
+      }
+      print('Updated telemetry positions for all carts');
+    } catch (e) {
+      print('Failed to update telemetry positions: $e');
+    }
   }
 }

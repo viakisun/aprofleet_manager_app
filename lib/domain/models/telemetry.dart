@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:latlong2/latlong.dart';
 
 part 'telemetry.freezed.dart';
 part 'telemetry.g.dart';
@@ -14,6 +15,7 @@ class Telemetry with _$Telemetry {
     required double current,
     required double runtime,
     required double distance,
+    required LatLng position,
     required DateTime timestamp,
   }) = _Telemetry;
 

@@ -55,6 +55,10 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
         onNotificationPressed: () => context.go('/al/center'),
         actions: [
           AppBarActionButton(
+            icon: Icons.route, // 경로 아이콘
+            onPressed: () => _goToRouteView(context),
+          ),
+          AppBarActionButton(
             icon: CustomIcons.search,
             onPressed: () => _showSearchDialog(context, inventoryController),
           ),
@@ -713,6 +717,41 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
         _selectedCarts.add(cart.id);
       }
     });
+  }
+
+  void _goToRouteView(BuildContext context) async {
+    final inventoryController = ref.read(cartInventoryControllerProvider.notifier);
+    
+    // 카트들을 경로 상에 배치
+    try {
+      await inventoryController.updateCartPositionsAlongRoute();
+      
+      // 성공 메시지 표시
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('카트들이 경로 상에 배치되었습니다'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+      
+      // 라이브 맵 뷰로 이동
+      if (context.mounted) {
+        context.go('/rt/live');
+      }
+    } catch (e) {
+      // 오류 메시지 표시
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('카트 위치 업데이트 실패: $e'),
+            duration: const Duration(seconds: 3),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
   void _showHamburgerMenu(BuildContext context) {

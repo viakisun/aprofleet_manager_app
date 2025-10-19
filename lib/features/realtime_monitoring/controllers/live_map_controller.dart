@@ -124,6 +124,20 @@ class LiveMapController extends StateNotifier<LiveMapState> {
     state = state.copyWith(trackingCartId: cartId);
   }
 
+  void centerOnCart(Cart cart) {
+    if (cart.position != null) {
+      final newCameraPosition = CameraPosition(
+        center: cart.position!,
+        zoom: 16.0,
+      );
+      state = state.copyWith(cameraPosition: newCameraPosition);
+    }
+  }
+
+  void updateCarts(List<Cart> carts) {
+    state = state.copyWith(carts: carts);
+  }
+
   List<Cart> get filteredCarts {
     var carts = state.carts;
 

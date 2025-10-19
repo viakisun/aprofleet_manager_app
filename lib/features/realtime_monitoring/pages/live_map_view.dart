@@ -15,6 +15,7 @@ import '../../../core/theme/design_tokens.dart';
 import '../controllers/live_map_controller.dart';
 import '../widgets/route_info_card.dart';
 import '../../../core/services/map/golf_course_route_provider.dart';
+import '../../../core/services/mock/mock_api.dart';
 
 class LiveMapView extends ConsumerStatefulWidget {
   const LiveMapView({super.key});
@@ -31,9 +32,25 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
   @override
   void initState() {
     super.initState();
-    // Trigger route loading
-    Future.microtask(() {
+    
+    Future.microtask(() async {
+      // Load route first
       ref.read(golfCourseRouteProvider.notifier).loadRoute();
+      
+      // Update cart positions on route
+      try {
+        await MockApi().updateCartPositionsAlongRoute();
+        
+        // Update telemetry data with new positions
+        await MockApi().updateAllTelemetryPositions();
+        
+        // Refresh cart data in the controller
+        final updatedCarts = await MockApi().getCarts();
+        ref.read(liveMapControllerProvider.notifier).updateCarts(updatedCarts);
+        print('Updated ${updatedCarts.length} carts to route positions with telemetry data');
+      } catch (e) {
+        print('Failed to update cart positions: $e');
+      }
     });
   }
 
@@ -48,6 +65,9 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
     final localizations = AppLocalizations.of(context);
     final mapState = ref.watch(liveMapControllerProvider);
     final mapController = ref.read(liveMapControllerProvider.notifier);
+    
+    // Debug: Check cart count
+    print('LiveMapView - Filtered carts: ${mapController.filteredCarts.length}');
 
     return Scaffold(
       backgroundColor: DesignTokens.bgPrimary,
@@ -87,6 +107,14 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
                   left: DesignTokens.spacingMd,
                   right: DesignTokens.spacingMd,
                   child: _buildSearchBar(mapController),
+                ),
+
+                // Cart List
+                Positioned(
+                  bottom: DesignTokens.spacingMd,
+                  left: DesignTokens.spacingMd,
+                  right: DesignTokens.spacingMd,
+                  child: _buildCartList(mapController),
                 ),
 
                 // Zoom Controls
@@ -504,7 +532,184 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      builder: (context) => const HamburgerMenu(),
+      builder: (context) => const HamburgerMenu(      ),
     );
+  }
+
+  Widget _buildCartList(LiveMapController controller) {
+    final carts = controller.filteredCarts;
+    
+    return Container(
+      height: 120,
+      decoration: BoxDecoration(
+        color: DesignTokens.bgSecondary.withValues(alpha: 0.9),
+        borderRadius: BorderRadius.circular(DesignTokens.radiusLg),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(DesignTokens.spacingMd),
+            child: Text(
+              '카트 목록 (${carts.length})',
+              style: TextStyle(
+                fontSize: DesignTokens.fontSizeSm,
+                fontWeight: FontWeight.w600,
+                color: DesignTokens.textPrimary,
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spacingMd),
+              itemCount: carts.length,
+              itemBuilder: (context, index) {
+                final cart = carts[index];
+                return _buildCartCard(cart, controller);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCartCard(Cart cart, LiveMapController controller) {
+    final isSelected = _selectedCart?.id == cart.id;
+    
+    return Container(
+      width: 120,
+      margin: const EdgeInsets.only(right: DesignTokens.spacingSm),
+      decoration: BoxDecoration(
+        color: isSelected 
+          ? DesignTokens.statusActive.withValues(alpha: 0.1)
+          : DesignTokens.bgTertiary.withValues(alpha: 0.8),
+        borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+        border: isSelected 
+          ? Border.all(color: DesignTokens.statusActive, width: 2)
+          : null,
+      ),
+      child: InkWell(
+        onTap: () => _onCartSelected(cart, controller),
+        borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+        child: Padding(
+          padding: const EdgeInsets.all(DesignTokens.spacingSm),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    _getCartStatusIcon(cart.status),
+                    size: 16,
+                    color: _getCartStatusColor(cart.status),
+                  ),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: Text(
+                      cart.id,
+                      style: TextStyle(
+                        fontSize: DesignTokens.fontSizeXs,
+                        fontWeight: FontWeight.w600,
+                        color: DesignTokens.textPrimary,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Text(
+                cart.model ?? 'Unknown',
+                style: TextStyle(
+                  fontSize: DesignTokens.fontSizeXs,
+                  color: DesignTokens.textSecondary,
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+              const Spacer(),
+              Row(
+                children: [
+                  Icon(
+                    Icons.battery_std,
+                    size: 12,
+                    color: _getBatteryColor(cart.batteryPct),
+                  ),
+                  const SizedBox(width: 2),
+                  Text(
+                    '${cart.batteryPct?.toStringAsFixed(0) ?? '0'}%',
+                    style: TextStyle(
+                      fontSize: DesignTokens.fontSizeXs,
+                      color: _getBatteryColor(cart.batteryPct),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _onCartSelected(Cart cart, LiveMapController controller) {
+    setState(() {
+      _selectedCart = cart;
+    });
+    
+    // Center map on selected cart
+    if (cart.position != null) {
+      controller.centerOnCart(cart);
+    }
+  }
+
+  IconData _getCartStatusIcon(CartStatus status) {
+    switch (status) {
+      case CartStatus.active:
+        return Icons.play_circle_filled;
+      case CartStatus.idle:
+        return Icons.pause_circle_filled;
+      case CartStatus.charging:
+        return Icons.battery_charging_full;
+      case CartStatus.maintenance:
+        return Icons.build;
+      case CartStatus.offline:
+        return Icons.offline_bolt;
+      default:
+        return Icons.help_outline;
+    }
+  }
+
+  Color _getCartStatusColor(CartStatus status) {
+    switch (status) {
+      case CartStatus.active:
+        return Colors.green;
+      case CartStatus.idle:
+        return Colors.orange;
+      case CartStatus.charging:
+        return Colors.blue;
+      case CartStatus.maintenance:
+        return Colors.purple;
+      case CartStatus.offline:
+        return Colors.red;
+      default:
+        return Colors.grey;
+    }
+  }
+
+  Color _getBatteryColor(double? batteryPct) {
+    if (batteryPct == null) return Colors.grey;
+    if (batteryPct > 50) return Colors.green;
+    if (batteryPct > 20) return Colors.orange;
+    return Colors.red;
   }
 }

@@ -102,16 +102,16 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
   void _applyMapTileDarkening() {
     if (kIsWeb) {
       // Delay to ensure map is fully loaded
-      Future.delayed(Duration(milliseconds: 500), () {
+      Future.delayed(Duration(milliseconds: 1000), () {
         try {
           final brightness = 1.0 - widget.mapOpacity;
-          
+
           // Target specific map tile layers to avoid affecting polylines
           final selectors = [
             '.gm-style > div > div > div > div > div > div', // Map tiles layer
             '.gm-style > div > div > div > div > div', // Tile container
           ];
-          
+
           for (final selector in selectors) {
             final elements = html.document.querySelectorAll(selector);
             for (final element in elements) {
@@ -119,12 +119,21 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
               // Only apply to elements that look like map tiles (have background images)
               if (htmlElement.style.backgroundImage.isNotEmpty ||
                   htmlElement.children.isNotEmpty) {
-                htmlElement.style.filter = 
-                  'brightness($brightness) saturate(${1.0 - widget.mapOpacity * 0.3})';
+                htmlElement.style.filter =
+                    'brightness($brightness) saturate(${1.0 - widget.mapOpacity * 0.3})';
+                // Ensure pointer events are not blocked
+                htmlElement.style.pointerEvents = 'auto';
               }
             }
           }
-          
+
+          // Ensure the main map container allows interactions
+          final mapContainer = html.document.querySelector('.gm-style');
+          if (mapContainer != null) {
+            final mapElement = mapContainer as html.Element;
+            mapElement.style.pointerEvents = 'auto';
+          }
+
           print('Applied map darkening with brightness: $brightness');
         } catch (e) {
           print('Failed to apply map darkening: $e');
@@ -188,60 +197,57 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
   Widget build(BuildContext context) {
     final routeState = ref.watch(golfCourseRouteProvider);
     
-    // Update polylines when route data changes
+    // Update polylines when route data changes (without auto-adjusting camera)
     if (routeState.data != null && _isMapReady) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _createGolfCoursePolyline(routeState.data!);
-        _adjustCameraToRoute(routeState.data!);
+        // Camera auto-adjustment removed - user can freely navigate
       });
     }
     
-    // Force route loading if not already loaded
+    // Force route loading when in live map view
     if (!routeState.isLoading && routeState.data == null && routeState.error == null && _isMapReady) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ref.read(golfCourseRouteProvider.notifier).loadRoute();
       });
     }
 
-    return Stack(
-      children: [
-        google.GoogleMap(
-          initialCameraPosition: widget.initialCameraPosition != null
-              ? google.CameraPosition(
-                  target: google.LatLng(
-                    widget.initialCameraPosition!.center.latitude,
-                    widget.initialCameraPosition!.center.longitude,
-                  ),
-                  zoom: widget.initialCameraPosition!.zoom,
-                  bearing: widget.initialCameraPosition!.bearing,
-                  tilt: widget.initialCameraPosition!.tilt,
-                )
-              : google.CameraPosition(
-                  target: google.LatLng(
-                    MapConstants.ungpoCC.latitude,
-                    MapConstants.ungpoCC.longitude,
-                  ),
-                  zoom: MapConstants.defaultZoom,
-                ),
-          mapType: google.MapType.hybrid, // Good for golf courses
-          style: _generateMapStyle(), // 지도 톤 조정 스타일 적용
-          zoomGesturesEnabled: true,      // Enable zoom gestures
-          scrollGesturesEnabled: true,    // Enable drag/pan gestures
-          rotateGesturesEnabled: true,    // Enable rotation gestures
-          tiltGesturesEnabled: true,      // Enable tilt gestures
-          zoomControlsEnabled: false,     // Disable default controls (we have custom)
-          onMapCreated: _onMapCreated,
-          onTap: _onMapTap,
-          onCameraMove: _onCameraMove,
-          onCameraIdle: _onCameraIdle,
-          myLocationEnabled: widget.showUserLocation,
-          myLocationButtonEnabled: widget.showUserLocation,
-          compassEnabled: true,
-          mapToolbarEnabled: false,
-          markers: _markers,
-          polylines: _polylines,
-        ),
-      ],
+    return google.GoogleMap(
+      initialCameraPosition: widget.initialCameraPosition != null
+          ? google.CameraPosition(
+              target: google.LatLng(
+                widget.initialCameraPosition!.center.latitude,
+                widget.initialCameraPosition!.center.longitude,
+              ),
+              zoom: widget.initialCameraPosition!.zoom,
+              bearing: widget.initialCameraPosition!.bearing,
+              tilt: widget.initialCameraPosition!.tilt,
+            )
+          : google.CameraPosition(
+              target: google.LatLng(
+                MapConstants.ungpoCC.latitude,
+                MapConstants.ungpoCC.longitude,
+              ),
+              zoom: MapConstants.defaultZoom,
+            ),
+      mapType: google.MapType.hybrid, // Good for golf courses
+      style: _generateMapStyle(), // 지도 톤 조정 스타일 적용
+      zoomGesturesEnabled: true,      // Enable zoom gestures
+      scrollGesturesEnabled: true,    // Enable drag/pan gestures
+      rotateGesturesEnabled: true,    // Enable rotation gestures
+      tiltGesturesEnabled: true,      // Enable tilt gestures
+      zoomControlsEnabled: false,     // Disable default controls (we have custom)
+      liteModeEnabled: false,         // Disable lite mode for full interactivity
+      onMapCreated: _onMapCreated,
+      onTap: _onMapTap,
+      onCameraMove: _onCameraMove,
+      onCameraIdle: _onCameraIdle,
+      myLocationEnabled: widget.showUserLocation,
+      myLocationButtonEnabled: widget.showUserLocation,
+      compassEnabled: true,
+      mapToolbarEnabled: false,
+      markers: _markers,
+      polylines: _polylines,
     );
   }
   
@@ -258,8 +264,7 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
     // Update markers when map is ready
     _updateMarkers();
     
-    // Load route AFTER map is ready
-    ref.read(golfCourseRouteProvider.notifier).loadRoute();
+    // Route loading removed - no auto loading
   }
   
   void _onMapTap(google.LatLng point) {
@@ -294,9 +299,12 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
   void _updateMarkers() {
     if (!_isMapReady) return;
     
+    print('Updating markers: ${widget.carts.length} carts');
+    
     final markers = <google.Marker>{};
     
     for (final cart in widget.carts) {
+      print('Adding marker for cart ${cart.id} at ${cart.position.latitude}, ${cart.position.longitude}');
       final statusColor = MapConstants.getStatusColor(cart.status);
       
       markers.add(
@@ -335,6 +343,8 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
       }
     }
     
+    print('Total markers created: ${markers.length}');
+    
     setState(() {
       _markers = markers;
     });
@@ -347,6 +357,12 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
     // Update markers if cart list changed
     if (oldWidget.carts != widget.carts) {
       _updateMarkers();
+    }
+    
+    // Update camera position if it changed
+    if (oldWidget.initialCameraPosition != widget.initialCameraPosition &&
+        widget.initialCameraPosition != null) {
+      setCameraPosition(widget.initialCameraPosition!);
     }
     
     // Apply CSS darkening when opacity changes

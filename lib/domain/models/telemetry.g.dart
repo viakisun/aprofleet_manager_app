@@ -16,6 +16,7 @@ _$TelemetryImpl _$$TelemetryImplFromJson(Map<String, dynamic> json) =>
       current: (json['current'] as num).toDouble(),
       runtime: (json['runtime'] as num).toDouble(),
       distance: (json['distance'] as num).toDouble(),
+      position: LatLng.fromJson(json['position'] as Map<String, dynamic>),
       timestamp: DateTime.parse(json['timestamp'] as String),
     );
 
@@ -29,5 +30,6 @@ Map<String, dynamic> _$$TelemetryImplToJson(_$TelemetryImpl instance) =>
       'current': instance.current,
       'runtime': instance.runtime,
       'distance': instance.distance,
+      'position': instance.position,
       'timestamp': instance.timestamp.toIso8601String(),
     };

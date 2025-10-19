@@ -28,6 +28,7 @@ mixin _$Telemetry {
   double get current => throw _privateConstructorUsedError;
   double get runtime => throw _privateConstructorUsedError;
   double get distance => throw _privateConstructorUsedError;
+  LatLng get position => throw _privateConstructorUsedError;
   DateTime get timestamp => throw _privateConstructorUsedError;
 
   /// Serializes this Telemetry to a JSON map.
@@ -54,6 +55,7 @@ abstract class $TelemetryCopyWith<$Res> {
       double current,
       double runtime,
       double distance,
+      LatLng position,
       DateTime timestamp});
 }
 
@@ -80,6 +82,7 @@ class _$TelemetryCopyWithImpl<$Res, $Val extends Telemetry>
     Object? current = null,
     Object? runtime = null,
     Object? distance = null,
+    Object? position = null,
     Object? timestamp = null,
   }) {
     return _then(_value.copyWith(
@@ -115,6 +118,10 @@ class _$TelemetryCopyWithImpl<$Res, $Val extends Telemetry>
           ? _value.distance
           : distance // ignore: cast_nullable_to_non_nullable
               as double,
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as LatLng,
       timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
@@ -140,6 +147,7 @@ abstract class _$$TelemetryImplCopyWith<$Res>
       double current,
       double runtime,
       double distance,
+      LatLng position,
       DateTime timestamp});
 }
 
@@ -164,6 +172,7 @@ class __$$TelemetryImplCopyWithImpl<$Res>
     Object? current = null,
     Object? runtime = null,
     Object? distance = null,
+    Object? position = null,
     Object? timestamp = null,
   }) {
     return _then(_$TelemetryImpl(
@@ -199,6 +208,10 @@ class __$$TelemetryImplCopyWithImpl<$Res>
           ? _value.distance
           : distance // ignore: cast_nullable_to_non_nullable
               as double,
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as LatLng,
       timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
@@ -219,6 +232,7 @@ class _$TelemetryImpl implements _Telemetry {
       required this.current,
       required this.runtime,
       required this.distance,
+      required this.position,
       required this.timestamp});
 
   factory _$TelemetryImpl.fromJson(Map<String, dynamic> json) =>
@@ -241,11 +255,13 @@ class _$TelemetryImpl implements _Telemetry {
   @override
   final double distance;
   @override
+  final LatLng position;
+  @override
   final DateTime timestamp;
 
   @override
   String toString() {
-    return 'Telemetry(cartId: $cartId, battery: $battery, speed: $speed, temperature: $temperature, voltage: $voltage, current: $current, runtime: $runtime, distance: $distance, timestamp: $timestamp)';
+    return 'Telemetry(cartId: $cartId, battery: $battery, speed: $speed, temperature: $temperature, voltage: $voltage, current: $current, runtime: $runtime, distance: $distance, position: $position, timestamp: $timestamp)';
   }
 
   @override
@@ -263,6 +279,8 @@ class _$TelemetryImpl implements _Telemetry {
             (identical(other.runtime, runtime) || other.runtime == runtime) &&
             (identical(other.distance, distance) ||
                 other.distance == distance) &&
+            (identical(other.position, position) ||
+                other.position == position) &&
             (identical(other.timestamp, timestamp) ||
                 other.timestamp == timestamp));
   }
@@ -270,7 +288,7 @@ class _$TelemetryImpl implements _Telemetry {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, cartId, battery, speed,
-      temperature, voltage, current, runtime, distance, timestamp);
+      temperature, voltage, current, runtime, distance, position, timestamp);
 
   /// Create a copy of Telemetry
   /// with the given fields replaced by the non-null parameter values.
@@ -298,6 +316,7 @@ abstract class _Telemetry implements Telemetry {
       required final double current,
       required final double runtime,
       required final double distance,
+      required final LatLng position,
       required final DateTime timestamp}) = _$TelemetryImpl;
 
   factory _Telemetry.fromJson(Map<String, dynamic> json) =
@@ -319,6 +338,8 @@ abstract class _Telemetry implements Telemetry {
   double get runtime;
   @override
   double get distance;
+  @override
+  LatLng get position;
   @override
   DateTime get timestamp;
 
