@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:latlong2/latlong.dart' as latlong;
+import 'package:google_maps_flutter/google_maps_flutter.dart' as google;
 
 import '../../../domain/models/cart.dart';
 import 'map_adapter.dart';
@@ -12,12 +13,13 @@ import 'google_map_view.dart';
 class UnifiedMapView extends ConsumerStatefulWidget {
   final List<Cart> carts;
   final Function(Cart) onCartTap;
-  final Function(LatLng)? onMapTap;
+  final Function(latlong.LatLng)? onMapTap;
   final Function(CameraPosition)? onCameraChanged;
   final CameraPosition? initialCameraPosition;
   final bool showUserLocation;
   final double mapOpacity;
   final bool isSatellite;
+  final String? selectedCartId;
 
   const UnifiedMapView({
     super.key,
@@ -29,6 +31,7 @@ class UnifiedMapView extends ConsumerStatefulWidget {
     this.showUserLocation = false,
     this.mapOpacity = 0.5,
     this.isSatellite = true,
+    this.selectedCartId,
   });
 
   @override
@@ -40,6 +43,7 @@ class UnifiedMapViewState extends ConsumerState<UnifiedMapView> {
   bool _isLoading = true;
   String? _error;
   late bool _isSatellite;
+  final GlobalKey<GoogleMapViewState> _googleMapKey = GlobalKey<GoogleMapViewState>();
 
   @override
   void initState() {
@@ -116,6 +120,7 @@ class UnifiedMapViewState extends ConsumerState<UnifiedMapView> {
     switch (_currentProvider) {
       case MapProviderType.googleMaps:
         return GoogleMapView(
+          key: _googleMapKey,
           carts: widget.carts,
           onCartTap: widget.onCartTap,
           onMapTap: widget.onMapTap,
@@ -124,6 +129,7 @@ class UnifiedMapViewState extends ConsumerState<UnifiedMapView> {
           showUserLocation: widget.showUserLocation,
           mapOpacity: widget.mapOpacity,
           isSatellite: _isSatellite,
+          selectedCartId: widget.selectedCartId,
         );
 
       default:
@@ -154,6 +160,14 @@ class UnifiedMapViewState extends ConsumerState<UnifiedMapView> {
 
   /// Get current map provider
   MapProviderType? get currentProvider => _currentProvider;
+
+  /// Get GoogleMapController if available
+  google.GoogleMapController? getGoogleMapController() {
+    if (_currentProvider == MapProviderType.googleMaps) {
+      return _googleMapKey.currentState?.controller;
+    }
+    return null;
+  }
 
   void toggleLayer() {
     setState(() {

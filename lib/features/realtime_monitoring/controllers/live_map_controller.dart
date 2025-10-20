@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../../../domain/models/cart.dart';
 import '../../../core/services/providers.dart';
@@ -126,12 +127,38 @@ class LiveMapController extends StateNotifier<LiveMapState> {
 
   void centerOnCart(Cart cart) {
     if (cart.position != null) {
+      // Get current zoom level and add 2 for closer view
+      final currentZoom = state.cameraPosition.zoom;
+      final targetZoom = (currentZoom + 2).clamp(14.0, 18.0); // Clamp between reasonable bounds
+      
       final newCameraPosition = CameraPosition(
         center: cart.position!,
-        zoom: 16.0,
+        zoom: targetZoom,
       );
       state = state.copyWith(cameraPosition: newCameraPosition);
     }
+  }
+
+  Future<void> focusOn(LatLng target, {
+    double paddingTopPx = 96,
+    double paddingLeftPx = 140, // cart list width + spacing
+  }) async {
+    print('focusOn called with target: $target');
+    print('Current camera position: ${state.cameraPosition.center}, zoom: ${state.cameraPosition.zoom}');
+    
+    // For now, use the existing centerOnCart logic but with offset
+    // TODO: Implement proper screen coordinate offset calculation
+    // This would require access to GoogleMapController which is not available here
+    final currentZoom = state.cameraPosition.zoom;
+    final targetZoom = (currentZoom + 2).clamp(14.0, 18.0);
+    
+    final newCameraPosition = CameraPosition(
+      center: target,
+      zoom: targetZoom,
+    );
+    
+    print('New camera position: ${newCameraPosition.center}, zoom: ${newCameraPosition.zoom}');
+    state = state.copyWith(cameraPosition: newCameraPosition);
   }
 
   void updateCarts(List<Cart> carts) {

@@ -3,12 +3,59 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../../features/auth/widgets/cart_icon.dart';
 import '../../theme/design_tokens.dart';
 
 /// Utility class for creating custom marker icons for Google Maps
 class CustomMarkerIcon {
   static final Map<String, BitmapDescriptor> _iconCache = {};
+  static bool _initialized = false;
+
+  /// Prebuild and cache marker icons for given colors and sizes.
+  /// Call once (e.g., when map is created) to avoid runtime icon generation spikes.
+  static Future<void> initializeIconCache({
+    required List<Color> colors,
+    List<double> sizes = const [1.0],
+    bool includeSelected = true,
+  }) async {
+    final tasks = <Future<void>>[];
+    for (final color in colors) {
+      for (final size in sizes) {
+        // Normal marker
+        final normalKey = 'marker_${color.value}_normal_$size';
+        if (!_iconCache.containsKey(normalKey)) {
+          tasks.add(buildMarkerIcon(
+            color: color,
+            selected: false,
+            scale: size,
+          ).then((icon) => _iconCache[normalKey] = icon));
+        }
+        
+        // Selected marker
+        if (includeSelected) {
+          final selectedKey = 'marker_${color.value}_selected_$size';
+          if (!_iconCache.containsKey(selectedKey)) {
+            tasks.add(buildMarkerIcon(
+              color: color,
+              selected: true,
+              scale: size,
+            ).then((icon) => _iconCache[selectedKey] = icon));
+          }
+        }
+      }
+    }
+    await Future.wait(tasks);
+    _initialized = true;
+  }
+
+  /// Get a cached status icon if available. Returns null if not cached.
+  static BitmapDescriptor? getCachedStatusIcon({
+    required Color statusColor,
+    double size = 40.0,
+    bool showDirection = true,
+  }) {
+    final key = _cacheKey(color: statusColor, size: size, showDirection: showDirection);
+    return _iconCache[key];
+  }
 
   /// Create a custom cart marker icon
   static Future<BitmapDescriptor> createCartMarkerIcon({
@@ -37,19 +84,78 @@ class CustomMarkerIcon {
     return icon;
   }
 
+  /// Get a cached marker icon if available. Returns null if not cached.
+  static BitmapDescriptor? getCachedMarkerIcon({
+    required Color color,
+    bool selected = false,
+    double scale = 1.0,
+  }) {
+    final key = 'marker_${color.value}_${selected ? 'selected' : 'normal'}_$scale';
+    return _iconCache[key];
+  }
+
+  static String _cacheKey({required Color color, required double size, required bool showDirection}) {
+    return 'status_cart_${color.value}_${size}_$showDirection';
+  }
+
+  /// Create a new marker icon with dot + ring design
+  static Future<BitmapDescriptor> buildMarkerIcon({
+    required Color color,
+    bool selected = false,
+    double scale = 1.0,
+  }) async {
+    final recorder = ui.PictureRecorder();
+    final canvas = Canvas(recorder);
+    final size = 24.0 * scale;
+    final center = Offset(size/2, size/2);
+
+    // Halo (selected only)
+    if (selected) {
+      final haloPaint = Paint()
+        ..color = color.withOpacity(0.25)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
+      canvas.drawCircle(center, 12, haloPaint);
+    }
+    
+    // White ring (2px)
+    final ring = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2
+      ..color = Colors.white;
+    canvas.drawCircle(center, 8, ring);
+    
+    // Dot (16px diameter = 8px radius)
+    final dot = Paint()
+      ..style = PaintingStyle.fill
+      ..color = color;
+    canvas.drawCircle(center, 7, dot);
+
+    final img = await recorder.endRecording().toImage(size.toInt(), size.toInt());
+    final bytes = (await img.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+    return BitmapDescriptor.fromBytes(bytes);
+  }
+
   /// Create a custom marker icon with status color
   static Future<BitmapDescriptor> createStatusCartMarkerIcon({
     required Color statusColor,
     double size = 40.0,
     bool showDirection = true,
   }) async {
-    return createCartMarkerIcon(
+    final cached = getCachedStatusIcon(
+      statusColor: statusColor,
+      size: size,
+      showDirection: showDirection,
+    );
+    if (cached != null) return cached;
+    final icon = await createCartMarkerIcon(
       backgroundColor: statusColor,
       iconColor: Colors.white,
       size: size,
       showDirection: showDirection,
-      cacheKey: 'status_cart_${statusColor.value}_${size}_$showDirection',
+      cacheKey: _cacheKey(color: statusColor, size: size, showDirection: showDirection),
     );
+    _iconCache[_cacheKey(color: statusColor, size: size, showDirection: showDirection)] = icon;
+    return icon;
   }
 
   /// Internal method to create marker icon from widget
