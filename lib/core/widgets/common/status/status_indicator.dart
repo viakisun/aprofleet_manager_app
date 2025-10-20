@@ -65,13 +65,13 @@ class StatusIndicator extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Color indicator bar
+        // Color indicator bar - Sharper corners
         Container(
-          width: isCompact ? 3 : 4,
-          height: isCompact ? 16 : 20,
+          width: isCompact ? 2 : 3, // Thinner for cleaner look
+          height: isCompact ? 12 : 16, // Shorter for compact design
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(2),
+            borderRadius: BorderRadius.circular(1), // Sharper corners
           ),
         ),
         if (showText) ...[
@@ -81,7 +81,7 @@ class StatusIndicator extends StatelessWidget {
             style: DesignTokens.getUppercaseLabelStyle(
               fontSize:
                   isCompact ? DesignTokens.fontSizeXs : DesignTokens.fontSizeSm,
-              fontWeight: DesignTokens.fontWeightSemibold,
+              fontWeight: DesignTokens.fontWeightBold, // Bolder for hierarchy
               color: color,
             ),
           ),

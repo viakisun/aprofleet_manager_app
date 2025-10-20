@@ -34,14 +34,14 @@ class AppTheme {
         elevation: 0,
       ),
 
-      // Card
+      // Card - Sharper corners and more subtle borders
       cardTheme: const CardThemeData(
         color: Color(0xFF1A1A1A),
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
           side: BorderSide(
-            color: Color(0x0FFFFFFF),
+            color: Color(0x0AFFFFFF), // More subtle border
             width: 1,
           ),
         ),
@@ -52,19 +52,19 @@ class AppTheme {
         displayLarge: TextStyle(
           fontSize: 32,
           fontWeight: FontWeight.w700,
-          letterSpacing: -0.5,
+          letterSpacing: 0.0, // Tighter tracking
           color: Colors.white,
         ),
         displayMedium: TextStyle(
           fontSize: 28,
           fontWeight: FontWeight.w700,
-          letterSpacing: -0.5,
+          letterSpacing: 0.0, // Tighter tracking
           color: Colors.white,
         ),
         displaySmall: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.w600,
-          letterSpacing: -0.5,
+          letterSpacing: 0.0, // Tighter tracking
           color: Colors.white,
         ),
         headlineLarge: TextStyle(
@@ -88,19 +88,19 @@ class AppTheme {
         titleLarge: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w600,
-          letterSpacing: 0.5,
+          letterSpacing: 0.2, // Tighter tracking
           color: Colors.white,
         ),
         titleMedium: TextStyle(
           fontSize: 14,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 0.5,
+          fontWeight: FontWeight.w600, // Bolder for hierarchy
+          letterSpacing: 0.2, // Tighter tracking
           color: Colors.white,
         ),
         titleSmall: TextStyle(
           fontSize: 12,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 0.5,
+          fontWeight: FontWeight.w600, // Bolder for hierarchy
+          letterSpacing: 0.2, // Tighter tracking
           color: Colors.white,
         ),
         bodyLarge: TextStyle(
@@ -123,20 +123,20 @@ class AppTheme {
         ),
         labelLarge: TextStyle(
           fontSize: 14,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 1.2,
+          fontWeight: FontWeight.w600, // Bolder for labels
+          letterSpacing: 0.5, // Tighter tracking
           color: Colors.white,
         ),
         labelMedium: TextStyle(
           fontSize: 12,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 1.2,
+          fontWeight: FontWeight.w600, // Bolder for labels
+          letterSpacing: 0.5, // Tighter tracking
           color: Colors.white,
         ),
         labelSmall: TextStyle(
           fontSize: 10,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 1.2,
+          fontWeight: FontWeight.w600, // Bolder for labels
+          letterSpacing: 0.5, // Tighter tracking
           color: Colors.white,
         ),
       ),
@@ -146,28 +146,28 @@ class AppTheme {
         filled: true,
         fillColor: const Color(0xFF1A1A1A),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(6), // Sharper corners
           borderSide: BorderSide(
-            color: Colors.white.withValues(alpha: 0.06),
+            color: Colors.white.withValues(alpha: 0.04), // More subtle
             width: 1,
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(6), // Sharper corners
           borderSide: BorderSide(
-            color: Colors.white.withValues(alpha: 0.06),
+            color: Colors.white.withValues(alpha: 0.04), // More subtle
             width: 1,
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(6), // Sharper corners
           borderSide: const BorderSide(
             color: Colors.white,
             width: 1,
           ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(6), // Sharper corners
           borderSide: const BorderSide(
             color: Color(0xFFEF4444),
             width: 1,
@@ -183,23 +183,23 @@ class AppTheme {
         ),
       ),
 
-      // Button Theme
+      // Button Theme - Sharper corners and bolder text
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(6), // Sharper corners
           ),
           padding: const EdgeInsets.symmetric(
-            horizontal: 24,
-            vertical: 12,
+            horizontal: 20, // Tighter padding
+            vertical: 10,
           ),
           textStyle: const TextStyle(
             fontSize: 14,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.5,
+            fontWeight: FontWeight.w700, // Bolder text
+            letterSpacing: 0.2, // Tighter tracking
           ),
         ),
       ),
@@ -210,9 +210,9 @@ class AppTheme {
         size: 24,
       ),
 
-      // Divider
+      // Divider - More subtle
       dividerTheme: DividerThemeData(
-        color: Colors.white.withValues(alpha: 0.06),
+        color: Colors.white.withValues(alpha: 0.04), // More subtle
         thickness: 1,
         space: 1,
       ),
@@ -248,9 +248,9 @@ class AppTheme {
   static const double spacing32 = 32.0;
   static const double spacing48 = 48.0;
 
-  // Border Radius
-  static const double radiusSmall = 4.0;
-  static const double radiusMedium = 8.0;
-  static const double radiusLarge = 12.0;
-  static const double radiusXLarge = 16.0;
+  // Border Radius - Sharper corners for monochrome design
+  static const double radiusSmall = 2.0;
+  static const double radiusMedium = 4.0;
+  static const double radiusLarge = 6.0;
+  static const double radiusXLarge = 8.0;
 }

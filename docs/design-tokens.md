@@ -1,6 +1,25 @@
-# Design Tokens
+# Design Tokens - Monochrome Design System
 
-This document defines the design system tokens used throughout the AproFleet Manager App.
+This document defines the design system tokens used throughout the AproFleet Manager App, updated with a refined monochrome aesthetic inspired by professional administrative interfaces.
+
+## Design Principles
+
+### Monochrome-First Approach
+- **Primary**: Pure black (#000000) and white (#FFFFFF) with alpha variants
+- **Depth**: Dark grays (#0A0A0A, #1A1A1A) for visual hierarchy
+- **Status Colors**: Vibrant colors (red/orange/blue/green) only for critical information
+- **Everything else**: Grayscale with subtle borders and minimal shadows
+
+### Typography Hierarchy
+- **Tight Tracking**: Reduced letter spacing (0-0.5) for professional look
+- **Bold Contrasts**: Strong font weight differences (400/600/700)
+- **Compact Spacing**: Tighter padding and margins throughout
+
+### Visual Elements
+- **Sharper Corners**: Reduced border radius (2-8px vs previous 4-16px)
+- **Subtle Borders**: More transparent borders (0.04-0.08 alpha vs 0.06-0.12)
+- **Minimal Shadows**: Prefer flat design with reduced elevation
+- **Compact Layout**: Tighter spacing for professional density
 
 ## Color Palette
 
@@ -12,10 +31,10 @@ class AppColors {
   static const Color secondaryBackground = Color(0xFF0A0A0A);   // Dark gray
   static const Color surfaceBackground = Color(0xFF1A1A1A);     // Card background
   
-  // Border colors
-  static const Color borderPrimary = Color(0x1FFFFFFF);         // 12% opacity white
-  static const Color borderSecondary = Color(0x0DFFFFFF);      // 5% opacity white
-  static const Color borderAccent = Color(0x33FFFFFF);         // 20% opacity white
+  // Border colors - More subtle for monochrome design
+  static const Color borderPrimary = Color(0x0AFFFFFF);         // 4% opacity white
+  static const Color borderSecondary = Color(0x14FFFFFF);      // 8% opacity white
+  static const Color borderAccent = Color(0x1FFFFFFF);         // 12% opacity white
 }
 ```
 
@@ -225,16 +244,16 @@ class ComponentSpacing {
 
 ## Border Radius
 
-### Border Radius Tokens
+### Border Radius Tokens - Sharper Corners
 ```dart
 class AppBorderRadius {
   static const double none = 0.0;
-  static const double xs = 4.0;
-  static const double sm = 8.0;
-  static const double md = 12.0;
-  static const double lg = 16.0;
-  static const double xl = 20.0;
-  static const double xxl = 24.0;
+  static const double xs = 2.0;    // Sharper corners
+  static const double sm = 4.0;
+  static const double md = 6.0;
+  static const double lg = 8.0;
+  static const double xl = 12.0;
+  static const double xxl = 16.0;
   static const double full = 9999.0;
 }
 ```
@@ -242,19 +261,19 @@ class AppBorderRadius {
 ### Component Border Radius
 ```dart
 class ComponentBorderRadius {
-  // Cards
-  static const BorderRadius card = BorderRadius.all(Radius.circular(12));
-  static const BorderRadius cardSmall = BorderRadius.all(Radius.circular(8));
-  static const BorderRadius cardLarge = BorderRadius.all(Radius.circular(16));
+  // Cards - Sharper corners
+  static const BorderRadius card = BorderRadius.all(Radius.circular(8));
+  static const BorderRadius cardSmall = BorderRadius.all(Radius.circular(6));
+  static const BorderRadius cardLarge = BorderRadius.all(Radius.circular(12));
   
-  // Buttons
-  static const BorderRadius button = BorderRadius.all(Radius.circular(8));
-  static const BorderRadius buttonSmall = BorderRadius.all(Radius.circular(6));
-  static const BorderRadius buttonLarge = BorderRadius.all(Radius.circular(12));
+  // Buttons - Sharper corners
+  static const BorderRadius button = BorderRadius.all(Radius.circular(6));
+  static const BorderRadius buttonSmall = BorderRadius.all(Radius.circular(4));
+  static const BorderRadius buttonLarge = BorderRadius.all(Radius.circular(8));
   
-  // Input fields
-  static const BorderRadius input = BorderRadius.all(Radius.circular(8));
-  static const BorderRadius inputSmall = BorderRadius.all(Radius.circular(6));
+  // Input fields - Sharper corners
+  static const BorderRadius input = BorderRadius.all(Radius.circular(6));
+  static const BorderRadius inputSmall = BorderRadius.all(Radius.circular(4));
   
   // Chips/Badges
   static const BorderRadius chip = BorderRadius.all(Radius.circular(16));

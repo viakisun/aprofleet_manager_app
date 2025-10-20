@@ -18,13 +18,13 @@ class StatusBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      height: 48, // More compact height
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6), // Tighter padding
       decoration: BoxDecoration(
         color: const Color(0xFF1A1A1A),
         border: Border(
           top: BorderSide(
-            color: Colors.white.withValues(alpha: 0.06),
+            color: Colors.white.withValues(alpha: 0.04), // More subtle border
             width: 1,
           ),
         ),
@@ -42,21 +42,21 @@ class StatusBar extends StatelessWidget {
                       AppConstants.statusColors[status] ?? Colors.grey;
 
                   return Padding(
-                    padding: const EdgeInsets.only(right: 12),
+                    padding: const EdgeInsets.only(right: 8), // Tighter spacing
                     child: GestureDetector(
                       onTap: () => onFilterTap(status),
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 6),
+                            horizontal: 8, vertical: 4), // Tighter padding
                         decoration: BoxDecoration(
                           color: isActive
-                              ? color.withValues(alpha: 0.2)
+                              ? color.withValues(alpha: 0.15) // More subtle active state
                               : Colors.transparent,
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(12), // Sharper corners
                           border: Border.all(
                             color: isActive
                                 ? color
-                                : Colors.white.withValues(alpha: 0.1),
+                                : Colors.white.withValues(alpha: 0.06), // More subtle border
                             width: 1,
                           ),
                         ),
@@ -64,34 +64,35 @@ class StatusBar extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
-                              width: 8,
-                              height: 8,
+                              width: 6, // Smaller indicator
+                              height: 6,
                               decoration: BoxDecoration(
                                 color: color,
                                 shape: BoxShape.circle,
                               ),
                             ),
-                            const SizedBox(width: 6),
+                            const SizedBox(width: 4), // Tighter spacing
                             Text(
                               status.displayName,
                               style: TextStyle(
                                 color: isActive
                                     ? color
                                     : Colors.white.withValues(alpha: 0.7),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 0.5,
+                                fontSize: 11, // Smaller font
+                                fontWeight: FontWeight.w700, // Bolder
+                                letterSpacing: 0.2, // Tighter tracking
                               ),
                             ),
-                            const SizedBox(width: 4),
+                            const SizedBox(width: 3), // Tighter spacing
                             Text(
                               count.toString(),
                               style: TextStyle(
                                 color: isActive
                                     ? color
                                     : Colors.white.withValues(alpha: 0.5),
-                                fontSize: 12,
+                                fontSize: 11, // Smaller font
                                 fontWeight: FontWeight.w700,
+                                letterSpacing: 0.0, // Tighter tracking for numbers
                               ),
                             ),
                           ],

@@ -171,10 +171,10 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
                     right: 80, // To the left of the tone button
                     top: 80,
                     child: Container(
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(8), // Tighter padding
                       decoration: BoxDecoration(
                         color: Colors.black.withValues(alpha: 0.8),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(DesignTokens.radiusMd), // Sharper corners
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -183,8 +183,9 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
                             'Tone',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 11, // Smaller font
+                              fontWeight: FontWeight.w700, // Bolder
+                              letterSpacing: DesignTokens.letterSpacingNormal, // Tighter tracking
                             ),
                           ),
                           const SizedBox(height: 8),
@@ -211,7 +212,9 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
                             '${(mapState.mapOpacity * 100).round()}%',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 10,
+                              fontSize: 9, // Smaller font
+                              fontWeight: FontWeight.w700, // Bolder
+                              letterSpacing: DesignTokens.letterSpacingTight, // Tighter tracking
                             ),
                           ),
                         ],
@@ -312,19 +315,19 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
     final statusColor = AppConstants.statusColors[cart.status] ?? Colors.grey;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12), // Tighter padding
       decoration: BoxDecoration(
         color: const Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(DesignTokens.radiusLg), // Sharper corners
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.06),
+          color: DesignTokens.borderPrimary, // More subtle border
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.3),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            color: Colors.black.withValues(alpha: 0.2), // More subtle shadow
+            blurRadius: 6, // Reduced blur
+            offset: const Offset(0, 2), // Reduced offset
           ),
         ],
       ),
@@ -336,14 +339,14 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
           Row(
             children: [
               Container(
-                width: 12,
-                height: 12,
+                width: 8, // Smaller indicator
+                height: 8,
                 decoration: BoxDecoration(
                   color: statusColor,
                   shape: BoxShape.circle,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: 6), // Tighter spacing
               Expanded(
                 child: Text(
                   cart.id,
@@ -351,7 +354,7 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
-                    letterSpacing: 0.5,
+                    letterSpacing: DesignTokens.letterSpacingNormal, // Tighter tracking
                   ),
                 ),
               ),
@@ -362,7 +365,7 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
             ],
           ),
 
-          const SizedBox(height: 12),
+          const SizedBox(height: 8), // Tighter spacing
 
           // Cart Info
           Row(
@@ -375,8 +378,9 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
                       cart.model,
                       style: const TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w700, // Bolder for hierarchy
                         color: Colors.white,
+                        letterSpacing: DesignTokens.letterSpacingNormal, // Tighter tracking
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -394,7 +398,7 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
             ],
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 12), // Tighter spacing
 
           // Telemetry Info
           Row(
@@ -424,7 +428,7 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
             ],
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 12), // Tighter spacing
 
           // Action Buttons
           Row(

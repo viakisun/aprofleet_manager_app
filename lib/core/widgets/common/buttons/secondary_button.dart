@@ -74,7 +74,7 @@ class _SecondaryButtonState extends State<SecondaryButton>
                 side: BorderSide(color: DesignTokens.borderSecondary),
                 elevation: DesignTokens.elevationNone,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
+                  borderRadius: BorderRadius.circular(DesignTokens.radiusMd), // Sharper corners
                 ),
                 padding: _getPadding(),
               ),
@@ -100,8 +100,8 @@ class _SecondaryButtonState extends State<SecondaryButton>
                           widget.text.toUpperCase(),
                           style: TextStyle(
                             fontSize: _getFontSize(),
-                            fontWeight: DesignTokens.fontWeightSemibold,
-                            letterSpacing: DesignTokens.letterSpacingWide,
+                            fontWeight: DesignTokens.fontWeightBold, // Bolder text
+                            letterSpacing: DesignTokens.letterSpacingNormal, // Tighter tracking
                           ),
                         ),
                       ],
@@ -117,18 +117,18 @@ class _SecondaryButtonState extends State<SecondaryButton>
     switch (widget.size) {
       case ButtonSize.small:
         return const EdgeInsets.symmetric(
-          horizontal: DesignTokens.spacingMd,
-          vertical: DesignTokens.spacingSm,
+          horizontal: DesignTokens.spacingSm, // Tighter padding
+          vertical: DesignTokens.spacingXs,
         );
       case ButtonSize.medium:
         return const EdgeInsets.symmetric(
-          horizontal: DesignTokens.spacingLg,
-          vertical: DesignTokens.spacingMd,
+          horizontal: DesignTokens.spacingMd, // Tighter padding
+          vertical: DesignTokens.spacingSm,
         );
       case ButtonSize.large:
         return const EdgeInsets.symmetric(
-          horizontal: DesignTokens.spacingXl,
-          vertical: DesignTokens.spacingLg,
+          horizontal: DesignTokens.spacingLg, // Tighter padding
+          vertical: DesignTokens.spacingMd,
         );
     }
   }
