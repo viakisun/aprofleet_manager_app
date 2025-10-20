@@ -720,12 +720,13 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
   }
 
   void _goToRouteView(BuildContext context) async {
-    final inventoryController = ref.read(cartInventoryControllerProvider.notifier);
-    
+    final inventoryController =
+        ref.read(cartInventoryControllerProvider.notifier);
+
     // 카트들을 경로 상에 배치
     try {
       await inventoryController.updateCartPositionsAlongRoute();
-      
+
       // 성공 메시지 표시
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -735,7 +736,7 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
           ),
         );
       }
-      
+
       // 라이브 맵 뷰로 이동
       if (context.mounted) {
         context.go('/rt/live');

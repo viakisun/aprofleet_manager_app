@@ -19,7 +19,8 @@ class StatusBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 48, // More compact height
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6), // Tighter padding
+      padding: const EdgeInsets.symmetric(
+          horizontal: 12, vertical: 6), // Tighter padding
       decoration: BoxDecoration(
         color: const Color(0xFF1A1A1A),
         border: Border(
@@ -50,13 +51,16 @@ class StatusBar extends StatelessWidget {
                             horizontal: 8, vertical: 4), // Tighter padding
                         decoration: BoxDecoration(
                           color: isActive
-                              ? color.withValues(alpha: 0.15) // More subtle active state
+                              ? color.withValues(
+                                  alpha: 0.15) // More subtle active state
                               : Colors.transparent,
-                          borderRadius: BorderRadius.circular(12), // Sharper corners
+                          borderRadius:
+                              BorderRadius.circular(12), // Sharper corners
                           border: Border.all(
                             color: isActive
                                 ? color
-                                : Colors.white.withValues(alpha: 0.06), // More subtle border
+                                : Colors.white.withValues(
+                                    alpha: 0.06), // More subtle border
                             width: 1,
                           ),
                         ),
@@ -92,7 +96,8 @@ class StatusBar extends StatelessWidget {
                                     : Colors.white.withValues(alpha: 0.5),
                                 fontSize: 11, // Smaller font
                                 fontWeight: FontWeight.w700,
-                                letterSpacing: 0.0, // Tighter tracking for numbers
+                                letterSpacing:
+                                    0.0, // Tighter tracking for numbers
                               ),
                             ),
                           ],

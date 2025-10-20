@@ -28,8 +28,8 @@ class BaseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final cardDecoration = BoxDecoration(
       color: backgroundColor ?? DesignTokens.bgTertiary,
-      borderRadius:
-          borderRadius ?? BorderRadius.circular(DesignTokens.radiusLg), // Sharper corners
+      borderRadius: borderRadius ??
+          BorderRadius.circular(DesignTokens.radiusLg), // Sharper corners
       border: border ??
           Border.all(
             color: DesignTokens.borderPrimary, // More subtle border
@@ -38,7 +38,8 @@ class BaseCard extends StatelessWidget {
       boxShadow: isElevated
           ? [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05), // More subtle shadow
+                color:
+                    Colors.black.withValues(alpha: 0.05), // More subtle shadow
                 blurRadius: 4, // Reduced blur
                 offset: const Offset(0, 1), // Reduced offset
               ),
@@ -47,7 +48,8 @@ class BaseCard extends StatelessWidget {
     );
 
     Widget cardContent = Container(
-      padding: padding ?? const EdgeInsets.all(DesignTokens.spacingSm), // Tighter padding
+      padding: padding ??
+          const EdgeInsets.all(DesignTokens.spacingSm), // Tighter padding
       decoration: cardDecoration,
       child: child,
     );
@@ -55,8 +57,8 @@ class BaseCard extends StatelessWidget {
     if (onTap != null) {
       cardContent = InkWell(
         onTap: onTap,
-        borderRadius:
-            borderRadius ?? BorderRadius.circular(DesignTokens.radiusLg), // Sharper corners
+        borderRadius: borderRadius ??
+            BorderRadius.circular(DesignTokens.radiusLg), // Sharper corners
         child: cardContent,
       );
     }
@@ -119,9 +121,11 @@ class InfoCard extends StatelessWidget {
                       title,
                       style: const TextStyle(
                         fontSize: DesignTokens.fontSizeMd,
-                        fontWeight: DesignTokens.fontWeightBold, // Bolder for hierarchy
+                        fontWeight:
+                            DesignTokens.fontWeightBold, // Bolder for hierarchy
                         color: DesignTokens.textPrimary,
-                        letterSpacing: DesignTokens.letterSpacingNormal, // Tighter tracking
+                        letterSpacing: DesignTokens
+                            .letterSpacingNormal, // Tighter tracking
                       ),
                     ),
                     if (subtitle != null) ...[
@@ -195,7 +199,8 @@ class StatusCard extends StatelessWidget {
                   title.toUpperCase(),
                   style: DesignTokens.getUppercaseLabelStyle(
                     fontSize: DesignTokens.fontSizeSm,
-                    fontWeight: DesignTokens.fontWeightBold, // Bolder for labels
+                    fontWeight:
+                        DesignTokens.fontWeightBold, // Bolder for labels
                     color: DesignTokens.textSecondary,
                   ),
                 ),
@@ -209,15 +214,16 @@ class StatusCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.alphabetic,
             children: [
-                Text(
-                  value,
-                  style: TextStyle(
-                    fontSize: DesignTokens.fontSizeXl,
-                    fontWeight: DesignTokens.fontWeightBold,
-                    color: valueColor ?? DesignTokens.textPrimary,
-                    letterSpacing: DesignTokens.letterSpacingTight, // Tighter tracking for numbers
-                  ),
+              Text(
+                value,
+                style: TextStyle(
+                  fontSize: DesignTokens.fontSizeXl,
+                  fontWeight: DesignTokens.fontWeightBold,
+                  color: valueColor ?? DesignTokens.textPrimary,
+                  letterSpacing: DesignTokens
+                      .letterSpacingTight, // Tighter tracking for numbers
                 ),
+              ),
               if (unit != null) ...[
                 const SizedBox(width: DesignTokens.spacingXs),
                 Text(

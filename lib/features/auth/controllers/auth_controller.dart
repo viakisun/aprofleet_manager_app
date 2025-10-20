@@ -10,11 +10,13 @@ class AuthController extends StateNotifier<AuthState> {
   /// Initialize authentication state from shared preferences
   Future<void> _initializeAuth() async {
     final prefs = await SharedPreferences.getInstance();
-    
+
     // 온보딩을 매번 표시할지 여부 설정 (개발/테스트 목적으로 true)
     const bool alwaysShowOnboarding = true;
-    
-    final hasSeenOnboarding = alwaysShowOnboarding ? false : (prefs.getBool('has_seen_onboarding') ?? false);
+
+    final hasSeenOnboarding = alwaysShowOnboarding
+        ? false
+        : (prefs.getBool('has_seen_onboarding') ?? false);
     final isLoggedIn = prefs.getBool('is_logged_in') ?? false;
 
     state = state.copyWith(
@@ -28,7 +30,7 @@ class AuthController extends StateNotifier<AuthState> {
   Future<void> completeOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('has_seen_onboarding', true);
-    
+
     state = state.copyWith(hasSeenOnboarding: true);
   }
 
@@ -36,7 +38,7 @@ class AuthController extends StateNotifier<AuthState> {
   Future<void> login({String? email, String? password}) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('is_logged_in', true);
-    
+
     state = state.copyWith(isLoggedIn: true);
   }
 
@@ -44,7 +46,7 @@ class AuthController extends StateNotifier<AuthState> {
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('is_logged_in', false);
-    
+
     state = state.copyWith(isLoggedIn: false);
   }
 
@@ -53,7 +55,7 @@ class AuthController extends StateNotifier<AuthState> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('has_seen_onboarding');
     await prefs.remove('is_logged_in');
-    
+
     state = const AuthState();
   }
 }
@@ -84,6 +86,7 @@ class AuthState {
 }
 
 /// Provider for authentication controller
-final authControllerProvider = StateNotifierProvider<AuthController, AuthState>((ref) {
+final authControllerProvider =
+    StateNotifierProvider<AuthController, AuthState>((ref) {
   return AuthController();
 });

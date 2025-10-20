@@ -20,7 +20,8 @@ class HamburgerMenu extends ConsumerWidget {
       decoration: BoxDecoration(
         color: DesignTokens.bgPrimary,
         borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(DesignTokens.radiusLg), // Already using updated radius
+          top: Radius.circular(
+              DesignTokens.radiusLg), // Already using updated radius
         ),
         border: Border.all(
           color: DesignTokens.borderPrimary,
@@ -34,8 +35,8 @@ class HamburgerMenu extends ConsumerWidget {
           Container(
             width: 32, // Smaller handle
             height: 3, // Thinner handle
-            margin:
-                const EdgeInsets.symmetric(vertical: DesignTokens.spacingSm), // Tighter margin
+            margin: const EdgeInsets.symmetric(
+                vertical: DesignTokens.spacingSm), // Tighter margin
             decoration: BoxDecoration(
               color: DesignTokens.borderPrimary, // More subtle color
               borderRadius: BorderRadius.circular(1), // Sharper corners
@@ -69,9 +70,11 @@ class HamburgerMenu extends ConsumerWidget {
                         '김토스',
                         style: TextStyle(
                           fontSize: DesignTokens.fontSizeLg,
-                          fontWeight: DesignTokens.fontWeightBold, // Bolder for hierarchy
+                          fontWeight: DesignTokens
+                              .fontWeightBold, // Bolder for hierarchy
                           color: DesignTokens.textPrimary,
-                          letterSpacing: DesignTokens.letterSpacingNormal, // Tighter tracking
+                          letterSpacing: DesignTokens
+                              .letterSpacingNormal, // Tighter tracking
                         ),
                       ),
                       Text(
@@ -262,7 +265,8 @@ class HamburgerMenu extends ConsumerWidget {
                   foregroundColor: DesignTokens.textPrimary,
                   elevation: DesignTokens.elevationNone,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(DesignTokens.radiusMd), // Sharper corners
+                    borderRadius: BorderRadius.circular(
+                        DesignTokens.radiusMd), // Sharper corners
                   ),
                   padding: const EdgeInsets.symmetric(
                     horizontal: DesignTokens.spacingLg,
@@ -274,7 +278,8 @@ class HamburgerMenu extends ConsumerWidget {
                   style: const TextStyle(
                     fontSize: DesignTokens.fontSizeMd,
                     fontWeight: DesignTokens.fontWeightBold, // Bolder text
-                    letterSpacing: DesignTokens.letterSpacingNormal, // Tighter tracking
+                    letterSpacing:
+                        DesignTokens.letterSpacingNormal, // Tighter tracking
                   ),
                 ),
               ),
@@ -304,7 +309,8 @@ class HamburgerMenu extends ConsumerWidget {
               fontSize: DesignTokens.fontSizeSm,
               fontWeight: DesignTokens.fontWeightBold, // Bolder for hierarchy
               color: DesignTokens.textSecondary,
-              letterSpacing: DesignTokens.letterSpacingNormal, // Tighter tracking
+              letterSpacing:
+                  DesignTokens.letterSpacingNormal, // Tighter tracking
             ),
           ),
         ),
@@ -337,7 +343,8 @@ class HamburgerMenu extends ConsumerWidget {
               fontSize: DesignTokens.fontSizeMd,
               fontWeight: DesignTokens.fontWeightBold, // Bolder for hierarchy
               color: DesignTokens.textPrimary,
-              letterSpacing: DesignTokens.letterSpacingNormal, // Tighter tracking
+              letterSpacing:
+                  DesignTokens.letterSpacingNormal, // Tighter tracking
             ),
           ),
           subtitle: Text(

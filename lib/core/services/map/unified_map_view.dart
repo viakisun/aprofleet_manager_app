@@ -17,6 +17,7 @@ class UnifiedMapView extends ConsumerStatefulWidget {
   final CameraPosition? initialCameraPosition;
   final bool showUserLocation;
   final double mapOpacity;
+  final bool isSatellite;
 
   const UnifiedMapView({
     super.key,
@@ -27,20 +28,23 @@ class UnifiedMapView extends ConsumerStatefulWidget {
     this.initialCameraPosition,
     this.showUserLocation = false,
     this.mapOpacity = 0.5,
+    this.isSatellite = true,
   });
 
   @override
-  ConsumerState<UnifiedMapView> createState() => _UnifiedMapViewState();
+  ConsumerState<UnifiedMapView> createState() => UnifiedMapViewState();
 }
 
-class _UnifiedMapViewState extends ConsumerState<UnifiedMapView> {
+class UnifiedMapViewState extends ConsumerState<UnifiedMapView> {
   MapProviderType? _currentProvider;
   bool _isLoading = true;
   String? _error;
+  late bool _isSatellite;
 
   @override
   void initState() {
     super.initState();
+    _isSatellite = widget.isSatellite;
     _loadMapProvider();
   }
 
@@ -119,6 +123,7 @@ class _UnifiedMapViewState extends ConsumerState<UnifiedMapView> {
           initialCameraPosition: widget.initialCameraPosition,
           showUserLocation: widget.showUserLocation,
           mapOpacity: widget.mapOpacity,
+          isSatellite: _isSatellite,
         );
 
       default:
@@ -149,4 +154,10 @@ class _UnifiedMapViewState extends ConsumerState<UnifiedMapView> {
 
   /// Get current map provider
   MapProviderType? get currentProvider => _currentProvider;
+
+  void toggleLayer() {
+    setState(() {
+      _isSatellite = !_isSatellite;
+    });
+  }
 }

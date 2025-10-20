@@ -74,7 +74,8 @@ class _PrimaryButtonState extends State<PrimaryButton>
                 foregroundColor: DesignTokens.bgPrimary,
                 elevation: DesignTokens.elevationNone,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(DesignTokens.radiusMd), // Sharper corners
+                  borderRadius: BorderRadius.circular(
+                      DesignTokens.radiusMd), // Sharper corners
                 ),
                 padding: _getPadding(),
               ),
@@ -100,8 +101,10 @@ class _PrimaryButtonState extends State<PrimaryButton>
                           widget.text.toUpperCase(),
                           style: TextStyle(
                             fontSize: _getFontSize(),
-                            fontWeight: DesignTokens.fontWeightBold, // Bolder text
-                            letterSpacing: DesignTokens.letterSpacingNormal, // Tighter tracking
+                            fontWeight:
+                                DesignTokens.fontWeightBold, // Bolder text
+                            letterSpacing: DesignTokens
+                                .letterSpacingNormal, // Tighter tracking
                           ),
                         ),
                       ],

@@ -251,10 +251,10 @@ class MockApi {
       for (final entry in jsonMap.entries) {
         final cartId = entry.key;
         final cart = _carts[cartId];
-        
+
         // 카트의 현재 위치를 텔레메트리 데이터에 포함
         final position = cart?.position ?? LatLng(35.9558448, 127.0060949);
-        
+
         final telemetry = Telemetry.fromJson({
           ...entry.value,
           'position': {
@@ -395,29 +395,30 @@ class MockApi {
     try {
       final geoJsonData = await GeoJsonService.instance.loadGolfCourseData();
       final cartList = _carts.values.toList();
-      
+
       if (cartList.isEmpty) {
         print('No carts to update');
         return;
       }
-      
+
       print('Updating ${cartList.length} carts to route positions');
-      
+
       // 경로 좌표 추출
-      final routeCoordinates = GeoJsonService.instance.extractRouteCoordinates(geoJsonData);
-      
+      final routeCoordinates =
+          GeoJsonService.instance.extractRouteCoordinates(geoJsonData);
+
       if (routeCoordinates.isEmpty) {
         print('No route coordinates found, using fallback positions');
         await _updateCartsWithFallbackPositions(cartList);
         return;
       }
-      
+
       print('Found ${routeCoordinates.length} route coordinates');
-      
+
       // 경로상에 카트들을 균등 분산 배치
       final positions = <LatLng>[];
       final step = routeCoordinates.length / cartList.length;
-      
+
       for (int i = 0; i < cartList.length; i++) {
         final index = (i * step).round();
         if (index < routeCoordinates.length) {
@@ -427,19 +428,20 @@ class MockApi {
           positions.add(routeCoordinates.last);
         }
       }
-      
+
       print('Generated ${positions.length} route positions');
-      
+
       for (int i = 0; i < cartList.length && i < positions.length; i++) {
         final cart = cartList[i];
         final newPosition = positions[i];
-        
-        print('Updating cart ${cart.id} from ${cart.position.latitude}, ${cart.position.longitude} to ${newPosition.latitude}, ${newPosition.longitude}');
-        
+
+        print(
+            'Updating cart ${cart.id} from ${cart.position.latitude}, ${cart.position.longitude} to ${newPosition.latitude}, ${newPosition.longitude}');
+
         final updatedCart = cart.copyWith(position: newPosition);
         _carts[cart.id] = updatedCart;
       }
-      
+
       print('Successfully updated ${cartList.length} carts to route positions');
     } catch (e) {
       print('Failed to update cart positions: $e');
@@ -454,22 +456,23 @@ class MockApi {
     // 웅포CC 골프장 중심 좌표 (전북 익산)
     const baseLat = 35.9558448;
     const baseLng = 127.0060949;
-    
+
     final random = Random();
-    
+
     for (int i = 0; i < cartList.length; i++) {
       // 골프장 주변 반경 0.01도 (약 1km) 내에서 랜덤 배치
       final latOffset = (random.nextDouble() - 0.5) * 0.01;
       final lngOffset = (random.nextDouble() - 0.5) * 0.01;
-      
+
       final newPosition = LatLng(
         baseLat + latOffset,
         baseLng + lngOffset,
       );
-      
+
       final cart = cartList[i];
-      print('Updating cart ${cart.id} to fallback position ${newPosition.latitude}, ${newPosition.longitude}');
-      
+      print(
+          'Updating cart ${cart.id} to fallback position ${newPosition.latitude}, ${newPosition.longitude}');
+
       final updatedCart = cart.copyWith(position: newPosition);
       _carts[cart.id] = updatedCart;
     }
@@ -480,21 +483,22 @@ class MockApi {
     try {
       final cart = _carts[cartId];
       if (cart == null) return;
-      
+
       // GeoJSON 데이터 로드
       final geoJsonData = await GeoJsonService.instance.loadGolfCourseData();
-      final randomPosition = GeoJsonService.instance.getRandomPositionOnRoute(geoJsonData);
-      
+      final randomPosition =
+          GeoJsonService.instance.getRandomPositionOnRoute(geoJsonData);
+
       if (randomPosition != null) {
         final updatedCart = cart.copyWith(
           position: randomPosition,
         );
-        
+
         _carts[cartId] = updatedCart;
-        
+
         // 텔레메트리 데이터도 함께 업데이트
         await _updateTelemetryForCart(cartId, randomPosition);
-        
+
         print('Updated cart $cartId position to route');
       }
     } catch (e) {

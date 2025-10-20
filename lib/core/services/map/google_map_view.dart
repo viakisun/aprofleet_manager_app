@@ -22,7 +22,8 @@ class GoogleMapView extends ConsumerStatefulWidget {
   final CameraPosition? initialCameraPosition;
   final bool showUserLocation;
   final double mapOpacity;
-  
+  final bool isSatellite;
+
   const GoogleMapView({
     super.key,
     required this.carts,
@@ -32,8 +33,9 @@ class GoogleMapView extends ConsumerStatefulWidget {
     this.initialCameraPosition,
     this.showUserLocation = false,
     this.mapOpacity = 0.5,
+    this.isSatellite = true,
   });
-  
+
   @override
   ConsumerState<GoogleMapView> createState() => _GoogleMapViewState();
 }
@@ -43,22 +45,27 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
   bool _isMapReady = false;
   Set<google.Marker> _markers = {};
   final Set<google.Polyline> _polylines = {};
-  
+  late bool _isSatellite;
+
   @override
   void initState() {
     super.initState();
+    _isSatellite = widget.isSatellite;
   }
 
   /// 골프장 경로 폴리라인 생성
   void _createGolfCoursePolyline(GeoJsonData geoJsonData) {
-    final routeCoordinates = GeoJsonService.instance.extractRouteCoordinates(geoJsonData);
-    
+    final routeCoordinates =
+        GeoJsonService.instance.extractRouteCoordinates(geoJsonData);
+
     if (routeCoordinates.isEmpty) {
       return;
     }
 
-    final points = routeCoordinates.map((latLng) => google.LatLng(latLng.latitude, latLng.longitude)).toList();
-    
+    final points = routeCoordinates
+        .map((latLng) => google.LatLng(latLng.latitude, latLng.longitude))
+        .toList();
+
     // Create subtle white outline for contrast
     final routeOutline = google.Polyline(
       polylineId: const google.PolylineId('golf_course_route_outline'),
@@ -71,7 +78,7 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
       ],
       zIndex: 999,
     );
-    
+
     // Create bright green center line
     final routeCenter = google.Polyline(
       polylineId: const google.PolylineId('golf_course_route'),
@@ -87,8 +94,8 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
 
     setState(() {
       _polylines.clear();
-      _polylines.add(routeOutline);  // Add outline first
-      _polylines.add(routeCenter);   // Add bright center on top
+      _polylines.add(routeOutline); // Add outline first
+      _polylines.add(routeCenter); // Add bright center on top
     });
   }
 
@@ -110,19 +117,21 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
       return;
     }
 
-    final routeCoordinates = GeoJsonService.instance.extractRouteCoordinates(geoJsonData);
+    final routeCoordinates =
+        GeoJsonService.instance.extractRouteCoordinates(geoJsonData);
     if (routeCoordinates.isEmpty) {
       return;
     }
 
-    final routeCenter = GeoJsonService.instance.calculateRouteCenter(routeCoordinates);
+    final routeCenter =
+        GeoJsonService.instance.calculateRouteCenter(routeCoordinates);
     final bounds = GeoJsonService.instance.calculateBounds(routeCoordinates);
-    
+
     // 경로의 경계에 맞춰 줌 레벨 계산
     final latDiff = bounds['maxLat']! - bounds['minLat']!;
     final lngDiff = bounds['maxLng']! - bounds['minLng']!;
     final maxDiff = latDiff > lngDiff ? latDiff : lngDiff;
-    
+
     // 줌 레벨 계산 (경로 크기에 따라 조정) - 전체 경로가 화면에 잘 보이도록
     double zoom = 14.5; // 기본 줌 레벨을 낮춰서 전체 경로가 보이도록
     if (maxDiff > 0.005) zoom = 14.0;
@@ -149,16 +158,16 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
     );
     widget.onCameraChanged?.call(newCameraPosition);
   }
-  
+
   @override
   void dispose() {
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final routeState = ref.watch(golfCourseRouteProvider);
-    
+
     // Update polylines when route data changes (without auto-adjusting camera)
     if (routeState.data != null && _isMapReady) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -166,9 +175,12 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
         // Camera auto-adjustment removed - user can freely navigate
       });
     }
-    
+
     // Force route loading when in live map view
-    if (!routeState.isLoading && routeState.data == null && routeState.error == null && _isMapReady) {
+    if (!routeState.isLoading &&
+        routeState.data == null &&
+        routeState.error == null &&
+        _isMapReady) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ref.read(golfCourseRouteProvider.notifier).loadRoute();
       });
@@ -192,14 +204,14 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
               ),
               zoom: MapConstants.defaultZoom,
             ),
-      mapType: google.MapType.hybrid, // Good for golf courses
+      mapType: _isSatellite ? google.MapType.hybrid : google.MapType.normal,
       style: _generateMapStyle(), // 지도 톤 조정 스타일 적용
-      zoomGesturesEnabled: true,      // Enable zoom gestures
-      scrollGesturesEnabled: true,    // Enable drag/pan gestures
-      rotateGesturesEnabled: true,    // Enable rotation gestures
-      tiltGesturesEnabled: true,      // Enable tilt gestures
-      zoomControlsEnabled: false,     // Disable default controls (we have custom)
-      liteModeEnabled: false,         // Disable lite mode for full interactivity
+      zoomGesturesEnabled: true, // Enable zoom gestures
+      scrollGesturesEnabled: true, // Enable drag/pan gestures
+      rotateGesturesEnabled: true, // Enable rotation gestures
+      tiltGesturesEnabled: true, // Enable tilt gestures
+      zoomControlsEnabled: false, // Disable default controls (we have custom)
+      liteModeEnabled: false, // Disable lite mode for full interactivity
       onMapCreated: _onMapCreated,
       onTap: _onMapTap,
       onCameraMove: _onCameraMove,
@@ -212,31 +224,31 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
       polylines: _polylines,
     );
   }
-  
+
   void _onMapCreated(google.GoogleMapController controller) {
     _controller = controller;
-    
+
     setState(() {
       _isMapReady = true;
     });
-    
+
     // Apply CSS darkening to map tiles (Web only)
     _applyMapTileDarkening();
-    
+
     // Update markers when map is ready
     _updateMarkers();
-    
+
     // Route loading removed - no auto loading
   }
-  
+
   void _onMapTap(google.LatLng point) {
     widget.onMapTap?.call(latlong.LatLng(point.latitude, point.longitude));
   }
-  
+
   void _onCameraMove(google.CameraPosition position) {
     // Handle camera movement if needed
   }
-  
+
   void _onCameraIdle() {
     if (_controller != null) {
       _controller!.getVisibleRegion().then((region) {
@@ -244,7 +256,7 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
           (region.northeast.latitude + region.southwest.latitude) / 2,
           (region.northeast.longitude + region.southwest.longitude) / 2,
         );
-        
+
         _controller!.getZoomLevel().then((zoom) {
           final cameraPosition = CameraPosition(
             center: center,
@@ -257,29 +269,31 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
       });
     }
   }
-  
+
   void _updateMarkers() async {
     if (!_isMapReady) return;
-    
+
     print('Updating markers: ${widget.carts.length} carts');
-    
+
     final markers = <google.Marker>{};
-    
+
     for (final cart in widget.carts) {
-      print('Adding marker for cart ${cart.id} at ${cart.position.latitude}, ${cart.position.longitude}');
+      print(
+          'Adding marker for cart ${cart.id} at ${cart.position.latitude}, ${cart.position.longitude}');
       final statusColor = MapConstants.getStatusColor(cart.status);
-      
+
       // Create custom cart marker icon
       final customIcon = await CustomMarkerIcon.createStatusCartMarkerIcon(
         statusColor: statusColor,
         size: 40.0,
         showDirection: true,
       );
-      
+
       markers.add(
         google.Marker(
           markerId: google.MarkerId(cart.id),
-          position: google.LatLng(cart.position.latitude, cart.position.longitude),
+          position:
+              google.LatLng(cart.position.latitude, cart.position.longitude),
           infoWindow: google.InfoWindow(
             title: cart.id,
             snippet: '${cart.model} - ${cart.status.name}',
@@ -288,7 +302,7 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
           onTap: () => widget.onCartTap(cart),
         ),
       );
-      
+
       // Add low battery indicator if needed
       if (MapConstants.isLowBattery(cart.batteryPct)) {
         final batteryIcon = await CustomMarkerIcon.createCartMarkerIcon(
@@ -298,7 +312,7 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
           showDirection: false,
           cacheKey: 'battery_warning',
         );
-        
+
         markers.add(
           google.Marker(
             markerId: google.MarkerId('${cart.id}_battery'),
@@ -315,43 +329,43 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
         );
       }
     }
-    
+
     print('Total markers created: ${markers.length}');
-    
+
     if (mounted) {
       setState(() {
         _markers = markers;
       });
     }
   }
-  
+
   @override
   void didUpdateWidget(GoogleMapView oldWidget) {
     super.didUpdateWidget(oldWidget);
-    
+
     // Update markers if cart list changed
     if (oldWidget.carts != widget.carts) {
       _updateMarkers();
     }
-    
+
     // Update camera position if it changed
     if (oldWidget.initialCameraPosition != widget.initialCameraPosition &&
         widget.initialCameraPosition != null) {
       setCameraPosition(widget.initialCameraPosition!);
     }
-    
+
     // Apply CSS darkening when opacity changes
     if (oldWidget.mapOpacity != widget.mapOpacity) {
       _applyMapTileDarkening();
     }
   }
-  
+
   /// Get marker hue from color
   double _getMarkerHue(Color color) {
     final hsl = HSLColor.fromColor(color);
     return hsl.hue;
   }
-  
+
   /// Public method to animate to a specific cart
   Future<void> animateToCart(String cartId) async {
     final cart = widget.carts.firstWhere((c) => c.id == cartId);
@@ -361,14 +375,14 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
       ),
     );
   }
-  
+
   /// Public method to set camera position
   Future<void> setCameraPosition(CameraPosition position) async {
     await _controller?.animateCamera(
       google.CameraUpdate.newCameraPosition(
         google.CameraPosition(
           target: google.LatLng(
-            position.center.latitude, 
+            position.center.latitude,
             position.center.longitude,
           ),
           zoom: position.zoom,
@@ -377,5 +391,11 @@ class _GoogleMapViewState extends ConsumerState<GoogleMapView> {
         ),
       ),
     );
+  }
+
+  void toggleLayer() {
+    setState(() {
+      _isSatellite = !_isSatellite;
+    });
   }
 }

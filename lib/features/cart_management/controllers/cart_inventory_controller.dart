@@ -50,11 +50,11 @@ class CartInventoryController extends StateNotifier<CartInventoryState> {
   /// 카트들을 경로 상에 배치
   Future<void> updateCartPositionsAlongRoute() async {
     state = state.copyWith(isLoading: true);
-    
+
     try {
       // Mock API를 통해 카트 위치 업데이트
       await MockApi().updateCartPositionsAlongRoute();
-      
+
       // 카트 데이터 새로고침
       final updatedCarts = await ref.read(cartsProvider.future);
       state = state.copyWith(

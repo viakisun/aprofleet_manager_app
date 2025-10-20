@@ -105,7 +105,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     )
                   else
                     const SizedBox(width: 48),
-                  
+
                   // Skip button
                   TextButton(
                     onPressed: _skipOnboarding,
@@ -122,7 +122,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 ],
               ),
             ),
-            
+
             // Page content
             Expanded(
               child: PageView.builder(
@@ -138,7 +138,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 },
               ),
             ),
-            
+
             // Bottom section with indicators and buttons
             Padding(
               padding: const EdgeInsets.all(DesignTokens.spacingLg),
@@ -152,9 +152,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       (index) => _buildPageIndicator(index == _currentPage),
                     ),
                   ),
-                  
+
                   const SizedBox(height: DesignTokens.spacingLg),
-                  
+
                   // Next/Get Started button
                   SizedBox(
                     width: double.infinity,
@@ -165,7 +165,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         backgroundColor: DesignTokens.statusActive,
                         foregroundColor: DesignTokens.textPrimary,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
+                          borderRadius:
+                              BorderRadius.circular(DesignTokens.radiusMd),
                         ),
                         elevation: 0,
                       ),
@@ -216,15 +217,16 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 ),
               ],
             ),
-            child: pageData.customIcon ?? Icon(
-              pageData.icon,
-              size: 80,
-              color: Colors.white,
-            ),
+            child: pageData.customIcon ??
+                Icon(
+                  pageData.icon,
+                  size: 80,
+                  color: Colors.white,
+                ),
           ),
-          
+
           const SizedBox(height: DesignTokens.spacing3xl),
-          
+
           // Title
           Text(
             pageData.title,
@@ -237,9 +239,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             ),
             textAlign: TextAlign.center,
           ),
-          
+
           const SizedBox(height: DesignTokens.spacingLg),
-          
+
           // Description
           Text(
             pageData.description,
@@ -263,7 +265,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       width: isActive ? 24 : 8,
       height: 8,
       decoration: BoxDecoration(
-        color: isActive ? DesignTokens.statusActive : DesignTokens.borderSecondary,
+        color:
+            isActive ? DesignTokens.statusActive : DesignTokens.borderSecondary,
         borderRadius: BorderRadius.circular(4),
       ),
     );

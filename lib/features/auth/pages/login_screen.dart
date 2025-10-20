@@ -37,9 +37,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     await Future.delayed(const Duration(milliseconds: 800));
 
     await ref.read(authControllerProvider.notifier).login(
-      email: _emailController.text.trim(),
-      password: _passwordController.text,
-    );
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+        );
 
     if (mounted) {
       context.go('/rt/map');
@@ -72,15 +72,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             child: Column(
               children: [
                 const SizedBox(height: DesignTokens.spacing3xl),
-                
+
                 // Logo section
                 _buildLogoSection(),
-                
+
                 const SizedBox(height: DesignTokens.spacing3xl),
-                
+
                 // Login form
                 _buildLoginForm(),
-                
+
                 const SizedBox(height: DesignTokens.spacing3xl),
               ],
             ),
@@ -123,9 +123,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
           ),
         ),
-        
+
         const SizedBox(height: DesignTokens.spacingLg),
-        
+
         // App name
         Text(
           'APRO FLEET',
@@ -137,9 +137,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             letterSpacing: DesignTokens.letterSpacingWide,
           ),
         ),
-        
+
         const SizedBox(height: DesignTokens.spacingSm),
-        
+
         // Welcome message
         Text(
           '시스템에 로그인하세요',
@@ -174,9 +174,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               keyboardType: TextInputType.emailAddress,
               prefixIcon: Icons.email_outlined,
             ),
-            
+
             const SizedBox(height: DesignTokens.spacingLg),
-            
+
             // Password field
             _buildTextField(
               controller: _passwordController,
@@ -196,9 +196,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
               ),
             ),
-            
+
             const SizedBox(height: DesignTokens.spacingXl),
-            
+
             // Login button
             SizedBox(
               height: 56,
@@ -219,7 +219,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         height: 20,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
                         ),
                       )
                     : Text(
@@ -232,9 +233,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ),
               ),
             ),
-            
+
             const SizedBox(height: DesignTokens.spacingLg),
-            
+
             // Guest login option
             TextButton(
               onPressed: _isLoading ? null : _login,
@@ -276,9 +277,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             letterSpacing: DesignTokens.letterSpacingWide,
           ),
         ),
-        
         const SizedBox(height: DesignTokens.spacingSm),
-        
         TextFormField(
           controller: controller,
           keyboardType: keyboardType,

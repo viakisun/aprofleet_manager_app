@@ -90,7 +90,8 @@ class _AnalyticsDashboardState extends ConsumerState<AnalyticsDashboard> {
                         fontSize: 14,
                         fontWeight: FontWeight.w700, // Bolder for hierarchy
                         color: Colors.white,
-                        letterSpacing: DesignTokens.letterSpacingNormal, // Tighter tracking
+                        letterSpacing: DesignTokens
+                            .letterSpacingNormal, // Tighter tracking
                       ),
                     ),
                     const SizedBox(height: 8), // Tighter spacing

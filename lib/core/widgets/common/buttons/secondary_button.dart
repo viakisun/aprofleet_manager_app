@@ -74,7 +74,8 @@ class _SecondaryButtonState extends State<SecondaryButton>
                 side: BorderSide(color: DesignTokens.borderSecondary),
                 elevation: DesignTokens.elevationNone,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(DesignTokens.radiusMd), // Sharper corners
+                  borderRadius: BorderRadius.circular(
+                      DesignTokens.radiusMd), // Sharper corners
                 ),
                 padding: _getPadding(),
               ),
@@ -100,8 +101,10 @@ class _SecondaryButtonState extends State<SecondaryButton>
                           widget.text.toUpperCase(),
                           style: TextStyle(
                             fontSize: _getFontSize(),
-                            fontWeight: DesignTokens.fontWeightBold, // Bolder text
-                            letterSpacing: DesignTokens.letterSpacingNormal, // Tighter tracking
+                            fontWeight:
+                                DesignTokens.fontWeightBold, // Bolder text
+                            letterSpacing: DesignTokens
+                                .letterSpacingNormal, // Tighter tracking
                           ),
                         ),
                       ],

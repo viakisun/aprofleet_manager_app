@@ -21,7 +21,8 @@ class AppNavigationBar extends ConsumerWidget {
         color: DesignTokens.bgPrimary,
         border: Border(
           top: BorderSide(
-            color: DesignTokens.borderPrimary, // Already updated to be more subtle
+            color:
+                DesignTokens.borderPrimary, // Already updated to be more subtle
             width: 1,
           ),
         ),

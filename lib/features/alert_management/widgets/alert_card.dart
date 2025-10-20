@@ -33,7 +33,8 @@ class AlertNotificationCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8), // Tighter spacing
       decoration: BoxDecoration(
         color: const Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(DesignTokens.radiusLg), // Sharper corners
+        borderRadius:
+            BorderRadius.circular(DesignTokens.radiusLg), // Sharper corners
         border: Border.all(
           color: DesignTokens.borderPrimary, // More subtle border
           width: 1,
@@ -41,7 +42,8 @@ class AlertNotificationCard extends StatelessWidget {
       ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(DesignTokens.radiusLg), // Sharper corners
+        borderRadius:
+            BorderRadius.circular(DesignTokens.radiusLg), // Sharper corners
         child: Padding(
           padding: const EdgeInsets.all(12), // Tighter padding
           child: Row(
@@ -71,10 +73,12 @@ class AlertNotificationCard extends StatelessWidget {
                             alert.title,
                             style: TextStyle(
                               fontSize: 16,
-                              fontWeight:
-                                  isUnread ? FontWeight.w700 : FontWeight.w700, // Bolder for hierarchy
+                              fontWeight: isUnread
+                                  ? FontWeight.w700
+                                  : FontWeight.w700, // Bolder for hierarchy
                               color: Colors.white,
-                              letterSpacing: DesignTokens.letterSpacingNormal, // Tighter tracking
+                              letterSpacing: DesignTokens
+                                  .letterSpacingNormal, // Tighter tracking
                             ),
                           ),
                         ),

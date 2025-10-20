@@ -22,22 +22,22 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     initialLocation: '/splash',
     redirect: (context, state) {
       final authState = ref.read(authControllerProvider);
-      
+
       // If still loading, stay on splash
       if (authState.isLoading) {
         return '/splash';
       }
-      
+
       // If hasn't seen onboarding, go to onboarding
       if (!authState.hasSeenOnboarding) {
         return '/onboarding';
       }
-      
+
       // If not logged in, go to login
       if (!authState.isLoggedIn) {
         return '/login';
       }
-      
+
       // If logged in, allow access to main app
       return null;
     },
@@ -58,7 +58,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         name: 'login',
         builder: (context, state) => const LoginScreen(),
       ),
-      
+
       // Main app shell route
       ShellRoute(
         builder: (context, state, child) {
