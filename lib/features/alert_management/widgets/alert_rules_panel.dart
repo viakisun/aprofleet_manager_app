@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../../core/widgets/via/via_bottom_sheet.dart';
+import '../../../core/widgets/via/via_button.dart';
+import '../../../core/theme/design_tokens.dart';
 
 class AlertRulesPanel extends StatelessWidget {
   final VoidCallback onExportAlerts;
@@ -158,89 +161,110 @@ class AlertRulesPanel extends StatelessWidget {
   }
 
   void _showAlertRules(BuildContext context) {
-    showDialog(
+    ViaBottomSheet.show(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1A1A),
-        title: const Text('Alert Rules', style: TextStyle(color: Colors.white)),
-        content: const Text(
-          'Alert rules configuration will be available in the full version.',
-          style: TextStyle(color: Colors.white),
+      snapPoints: [0.3, 0.5],
+      header: const Text(
+        'Alert Rules',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: DesignTokens.textPrimary,
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
-          ),
-        ],
+      ),
+      child: Text(
+        'Alert rules configuration will be available in the full version.',
+        style: TextStyle(color: DesignTokens.textSecondary),
+      ),
+      footer: ViaButton.primary(
+        text: 'OK',
+        onPressed: () => Navigator.of(context).pop(),
+        isFullWidth: true,
       ),
     );
   }
 
   void _showNotificationSettings(BuildContext context) {
-    showDialog(
+    ViaBottomSheet.show(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1A1A),
-        title: const Text('Notification Settings',
-            style: TextStyle(color: Colors.white)),
-        content: const Text(
-          'Notification settings will be available in the full version.',
-          style: TextStyle(color: Colors.white),
+      snapPoints: [0.3, 0.5],
+      header: const Text(
+        'Notification Settings',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: DesignTokens.textPrimary,
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
-          ),
-        ],
+      ),
+      child: Text(
+        'Notification settings will be available in the full version.',
+        style: TextStyle(color: DesignTokens.textSecondary),
+      ),
+      footer: ViaButton.primary(
+        text: 'OK',
+        onPressed: () => Navigator.of(context).pop(),
+        isFullWidth: true,
       ),
     );
   }
 
   void _showEscalationMatrix(BuildContext context) {
-    showDialog(
+    ViaBottomSheet.show(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1A1A),
-        title: const Text('Escalation Matrix',
-            style: TextStyle(color: Colors.white)),
-        content: const Text(
-          'Escalation matrix will be available in the full version.',
-          style: TextStyle(color: Colors.white),
+      snapPoints: [0.3, 0.5],
+      header: const Text(
+        'Escalation Matrix',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: DesignTokens.textPrimary,
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
-          ),
-        ],
+      ),
+      child: Text(
+        'Escalation matrix will be available in the full version.',
+        style: TextStyle(color: DesignTokens.textSecondary),
+      ),
+      footer: ViaButton.primary(
+        text: 'OK',
+        onPressed: () => Navigator.of(context).pop(),
+        isFullWidth: true,
       ),
     );
   }
 
   void _showClearResolvedDialog(BuildContext context) {
-    showDialog(
+    ViaBottomSheet.show(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1A1A),
-        title: const Text('Clear Resolved Alerts',
-            style: TextStyle(color: Colors.white)),
-        content: const Text(
-          'This will permanently remove all resolved alerts. This action cannot be undone.',
-          style: TextStyle(color: Colors.white),
+      snapPoints: [0.3, 0.5],
+      header: const Text(
+        'Clear Resolved Alerts',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: DesignTokens.textPrimary,
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+      ),
+      child: Text(
+        'This will permanently remove all resolved alerts. This action cannot be undone.',
+        style: TextStyle(color: DesignTokens.textSecondary),
+      ),
+      footer: Row(
+        children: [
+          Expanded(
+            child: ViaButton.ghost(
+              text: 'Cancel',
+              onPressed: () => Navigator.of(context).pop(),
+            ),
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              onClearResolved();
-            },
-            child: const Text('Clear', style: TextStyle(color: Colors.red)),
+          const SizedBox(width: DesignTokens.spacingMd),
+          Expanded(
+            child: ViaButton.danger(
+              text: 'Clear',
+              onPressed: () {
+                Navigator.of(context).pop();
+                onClearResolved();
+              },
+            ),
           ),
         ],
       ),

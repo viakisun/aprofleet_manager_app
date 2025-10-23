@@ -9,6 +9,10 @@ import '../../../core/localization/app_localizations.dart';
 import '../../../core/widgets/shared_widgets.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/design_tokens.dart';
+import '../../../core/widgets/via/via_toast.dart';
+import '../../../core/widgets/via/via_bottom_sheet.dart';
+import '../../../core/widgets/via/via_button.dart';
+import '../../../core/widgets/via/via_input.dart';
 import '../widgets/telemetry_gauge.dart';
 import '../widgets/system_metrics_card.dart';
 
@@ -648,30 +652,39 @@ class _CartDetailMonitorState extends ConsumerState<CartDetailMonitor> {
   }
 
   void _showSpeedLimitDialog() {
-    showDialog(
+    ViaBottomSheet.show(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1A1A),
-        title: const Text('Set Speed Limit',
-            style: TextStyle(color: Colors.white)),
-        content: const TextField(
-          style: TextStyle(color: Colors.white),
-          decoration: InputDecoration(
-            hintText: 'Enter speed limit (km/h)',
-            hintStyle: TextStyle(color: Colors.grey),
-          ),
+      snapPoints: [0.4, 0.6],
+      header: const Text(
+        'Set Speed Limit',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: DesignTokens.textPrimary,
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+      ),
+      child: const ViaInput(
+        label: 'Speed Limit (km/h)',
+        placeholder: 'Enter speed limit',
+        keyboardType: TextInputType.number,
+      ),
+      footer: Row(
+        children: [
+          Expanded(
+            child: ViaButton.ghost(
+              text: 'Cancel',
+              onPressed: () => Navigator.of(context).pop(),
+            ),
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              _showToast('Speed limit set');
-            },
-            child: const Text('Set'),
+          const SizedBox(width: DesignTokens.spacingMd),
+          Expanded(
+            child: ViaButton.primary(
+              text: 'Set',
+              onPressed: () {
+                Navigator.of(context).pop();
+                _showToast('Speed limit set');
+              },
+            ),
           ),
         ],
       ),
@@ -679,31 +692,39 @@ class _CartDetailMonitorState extends ConsumerState<CartDetailMonitor> {
   }
 
   void _showMessageDialog() {
-    showDialog(
+    ViaBottomSheet.show(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1A1A),
-        title:
-            const Text('Send Message', style: TextStyle(color: Colors.white)),
-        content: const TextField(
-          style: TextStyle(color: Colors.white),
-          decoration: InputDecoration(
-            hintText: 'Enter message for operator',
-            hintStyle: TextStyle(color: Colors.grey),
-          ),
-          maxLines: 3,
+      snapPoints: [0.5, 0.7],
+      header: const Text(
+        'Send Message',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: DesignTokens.textPrimary,
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+      ),
+      child: const ViaInput(
+        label: 'Message',
+        placeholder: 'Enter message for operator',
+        maxLines: 3,
+      ),
+      footer: Row(
+        children: [
+          Expanded(
+            child: ViaButton.ghost(
+              text: 'Cancel',
+              onPressed: () => Navigator.of(context).pop(),
+            ),
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              _showToast('Message sent');
-            },
-            child: const Text('Send'),
+          const SizedBox(width: DesignTokens.spacingMd),
+          Expanded(
+            child: ViaButton.primary(
+              text: 'Send',
+              onPressed: () {
+                Navigator.of(context).pop();
+                _showToast('Message sent');
+              },
+            ),
           ),
         ],
       ),
@@ -719,30 +740,38 @@ class _CartDetailMonitorState extends ConsumerState<CartDetailMonitor> {
   }
 
   void _showEmergencyStopDialog(Cart cart) {
-    showDialog(
+    ViaBottomSheet.show(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1A1A),
-        title: const Text(
-          'EMERGENCY STOP',
-          style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+      snapPoints: [0.4, 0.6],
+      header: const Text(
+        'EMERGENCY STOP',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: DesignTokens.alertCritical,
         ),
-        content: const Text(
-          'This will immediately stop the cart. This action cannot be undone. Are you sure?',
-          style: TextStyle(color: Colors.white),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+      ),
+      child: Text(
+        'This will immediately stop the cart. This action cannot be undone. Are you sure?',
+        style: TextStyle(color: DesignTokens.textSecondary),
+      ),
+      footer: Row(
+        children: [
+          Expanded(
+            child: ViaButton.ghost(
+              text: 'Cancel',
+              onPressed: () => Navigator.of(context).pop(),
+            ),
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              _executeEmergencyStop(cart);
-            },
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: const Text('STOP CART'),
+          const SizedBox(width: DesignTokens.spacingMd),
+          Expanded(
+            child: ViaButton.danger(
+              text: 'STOP CART',
+              onPressed: () {
+                Navigator.of(context).pop();
+                _executeEmergencyStop(cart);
+              },
+            ),
           ),
         ],
       ),
@@ -767,22 +796,18 @@ class _CartDetailMonitorState extends ConsumerState<CartDetailMonitor> {
   }
 
   void _showAlertToast(alert) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('New alert: ${alert.message}'),
-        backgroundColor: Colors.red,
-        duration: const Duration(seconds: 3),
-      ),
+    ViaToast.show(
+      context: context,
+      message: 'New alert: ${alert.message}',
+      variant: ViaToastVariant.error,
     );
   }
 
   void _showToast(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: const Color(0xFF1A1A1A),
-        duration: const Duration(seconds: 2),
-      ),
+    ViaToast.show(
+      context: context,
+      message: message,
+      variant: ViaToastVariant.info,
     );
   }
 }

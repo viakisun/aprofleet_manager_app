@@ -15,6 +15,9 @@ import 'package:flutter/material.dart' hide Stepper;
 import '../../../core/widgets/qr/qr_label.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/design_tokens.dart';
+import '../../../core/widgets/via/via_toast.dart';
+import '../../../core/widgets/via/via_bottom_sheet.dart';
+import '../../../core/widgets/via/via_button.dart';
 import '../controllers/cart_registration_controller.dart';
 import '../widgets/registration_stepper.dart';
 import '../widgets/component_checklist.dart';
@@ -889,11 +892,10 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
       final permission = await Permission.camera.request();
       if (permission != PermissionStatus.granted) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Camera permission is required to capture photos'),
-              backgroundColor: Colors.red,
-            ),
+          ViaToast.show(
+            context: context,
+            message: 'Camera permission is required to capture photos',
+            variant: ViaToastVariant.error,
           );
         }
         return;
@@ -955,11 +957,10 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Failed to capture photo: $e'),
-            backgroundColor: Colors.red,
-          ),
+        ViaToast.show(
+          context: context,
+          message: 'Failed to capture photo: $e',
+          variant: ViaToastVariant.error,
         );
       }
     }
@@ -989,21 +990,19 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
         _controller.setImagePath(photoKey, filePath);
 
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Photo saved successfully'),
-              backgroundColor: Colors.green,
-            ),
+          ViaToast.show(
+            context: context,
+            message: 'Photo saved successfully',
+            variant: ViaToastVariant.success,
           );
         }
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Failed to save photo: $e'),
-            backgroundColor: Colors.red,
-          ),
+        ViaToast.show(
+          context: context,
+          message: 'Failed to save photo: $e',
+          variant: ViaToastVariant.error,
         );
       }
     }
@@ -1096,11 +1095,10 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Failed to register cart: $e'),
-            backgroundColor: Colors.red,
-          ),
+        ViaToast.show(
+          context: context,
+          message: 'Failed to register cart: $e',
+          variant: ViaToastVariant.error,
         );
       }
     } finally {
@@ -1113,51 +1111,59 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
   }
 
   void _showSuccessModal(Cart cart) {
-    showDialog(
+    ViaBottomSheet.show(
       context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1A1A),
-        title: const Text(
-          'Cart Registered',
-          style: TextStyle(color: Colors.white),
+      snapPoints: [0.5, 0.7],
+      header: const Text(
+        'Cart Registered',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: DesignTokens.textPrimary,
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.check_circle,
-              color: Colors.green,
-              size: 48,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.check_circle,
+            color: DesignTokens.statusActive,
+            size: 48,
+          ),
+          const SizedBox(height: DesignTokens.spacingLg),
+          Text(
+            cart.id,
+            style: const TextStyle(
+              color: DesignTokens.textPrimary,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
             ),
-            const SizedBox(height: 16),
-            Text(
-              cart.id,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
+          ),
+          const SizedBox(height: DesignTokens.spacingSm),
+          Text(
+            'Cart has been registered successfully',
+            style: TextStyle(
+              color: DesignTokens.textSecondary,
+              fontSize: 14,
             ),
-            const SizedBox(height: 8),
-            Text(
-              'Cart has been registered successfully',
-              style: TextStyle(
-                color: Colors.white.withValues(alpha: 0.7),
-                fontSize: 14,
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+      footer: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ViaButton.primary(
+            text: 'View Inventory',
             onPressed: () {
               Navigator.of(context).pop();
               context.go('/cm/list');
             },
-            child: const Text('View Inventory'),
+            isFullWidth: true,
           ),
-          TextButton(
+          const SizedBox(height: DesignTokens.spacingMd),
+          ViaButton.ghost(
+            text: 'Register Another',
             onPressed: () {
               Navigator.of(context).pop();
               // Reset form for new registration
@@ -1171,7 +1177,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
                 curve: Curves.easeInOut,
               );
             },
-            child: const Text('Register Another'),
+            isFullWidth: true,
           ),
         ],
       ),
@@ -1179,27 +1185,38 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
   }
 
   void _showExitDialog() {
-    showDialog(
+    ViaBottomSheet.show(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1A1A),
-        title: const Text('Exit Cart Registration?',
-            style: TextStyle(color: Colors.white)),
-        content: const Text(
-          'Any unsaved changes will be lost.',
-          style: TextStyle(color: Colors.white),
+      snapPoints: [0.3, 0.5],
+      header: const Text(
+        'Exit Cart Registration?',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: DesignTokens.textPrimary,
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+      ),
+      child: Text(
+        'Any unsaved changes will be lost.',
+        style: TextStyle(color: DesignTokens.textSecondary),
+      ),
+      footer: Row(
+        children: [
+          Expanded(
+            child: ViaButton.ghost(
+              text: 'Cancel',
+              onPressed: () => Navigator.of(context).pop(),
+            ),
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              context.go('/cm/list');
-            },
-            child: const Text('Exit'),
+          const SizedBox(width: DesignTokens.spacingMd),
+          Expanded(
+            child: ViaButton.primary(
+              text: 'Exit',
+              onPressed: () {
+                Navigator.of(context).pop();
+                context.go('/cm/list');
+              },
+            ),
           ),
         ],
       ),

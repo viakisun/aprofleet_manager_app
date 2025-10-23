@@ -4,6 +4,10 @@ import 'package:intl/intl.dart';
 import '../../../domain/models/alert.dart';
 import '../../../core/widgets/shared_widgets.dart';
 import '../../../core/constants/app_constants.dart';
+import '../../../core/widgets/via/via_bottom_sheet.dart';
+import '../../../core/widgets/via/via_button.dart';
+import '../../../core/theme/design_tokens.dart';
+import '../../../core/theme/via_design_tokens.dart';
 
 class AlertDetailModal extends StatefulWidget {
   final Alert alert;
@@ -471,55 +475,64 @@ class _AlertDetailModalState extends State<AlertDetailModal> {
   }
 
   void _showEscalationDialog() {
-    showDialog(
+    ViaBottomSheet.show(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1A1A),
-        title:
-            const Text('Escalate Alert', style: TextStyle(color: Colors.white)),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: List.generate(4, (index) {
-            final level = index;
-            final isCurrent = level == (widget.alert.escalationLevel ?? 0);
-            final isCompleted = level < (widget.alert.escalationLevel ?? 0);
-
-            return RadioListTile<int>(
-              title: Text('Level $level',
-                  style: const TextStyle(color: Colors.white)),
-              subtitle: Text(
-                _getEscalationDescription(level),
-                style: TextStyle(color: Colors.white.withValues(alpha: 0.7)),
-              ),
-              value: level,
-              // ignore: deprecated_member_use
-              groupValue: _selectedEscalationLevel,
-              // ignore: deprecated_member_use
-              onChanged: isCurrent || isCompleted
-                  ? null
-                  : (value) {
-                      setState(() {
-                        _selectedEscalationLevel = value;
-                      });
-                    },
-              activeColor: Colors.white,
-            );
-          }),
+      snapPoints: [0.5, 0.7],
+      header: const Text(
+        'Escalate Alert',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: DesignTokens.textPrimary,
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: List.generate(4, (index) {
+          final level = index;
+          final isCurrent = level == (widget.alert.escalationLevel ?? 0);
+          final isCompleted = level < (widget.alert.escalationLevel ?? 0);
+
+          return RadioListTile<int>(
+            title: Text('Level $level',
+                style: TextStyle(color: DesignTokens.textPrimary)),
+            subtitle: Text(
+              _getEscalationDescription(level),
+              style: TextStyle(color: DesignTokens.textSecondary),
+            ),
+            value: level,
+            groupValue: _selectedEscalationLevel,
+            onChanged: isCurrent || isCompleted
+                ? null
+                : (value) {
+                    setState(() {
+                      _selectedEscalationLevel = value;
+                    });
+                  },
+            activeColor: ViaDesignTokens.primary,
+          );
+        }),
+      ),
+      footer: Row(
+        children: [
+          Expanded(
+            child: ViaButton.ghost(
+              text: 'Cancel',
+              onPressed: () => Navigator.of(context).pop(),
+            ),
           ),
-          TextButton(
-            onPressed: _selectedEscalationLevel != null
-                ? () {
-                    widget.onEscalate(_selectedEscalationLevel!);
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop(); // Close detail modal too
-                  }
-                : null,
-            child: const Text('Escalate'),
+          const SizedBox(width: DesignTokens.spacingMd),
+          Expanded(
+            child: ViaButton.primary(
+              text: 'Escalate',
+              onPressed: _selectedEscalationLevel != null
+                  ? () {
+                      widget.onEscalate(_selectedEscalationLevel!);
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop(); // Close detail modal too
+                    }
+                  : null,
+            ),
           ),
         ],
       ),

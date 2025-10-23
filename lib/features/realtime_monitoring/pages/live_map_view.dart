@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter/services.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as google;
 
 import '../../../core/localization/app_localizations.dart';
-import '../../../core/widgets/status_bar.dart' as status_bar;
-import '../../../core/widgets/filter_sheet.dart';
 import '../../../core/widgets/professional_app_bar.dart';
 import '../../../core/widgets/hamburger_menu.dart';
 import '../../../core/services/map/unified_map_view.dart';
 import '../../../domain/models/cart.dart';
 import '../../../core/theme/design_tokens.dart';
+import '../../../core/widgets/via/via_toast.dart';
 import '../controllers/live_map_controller.dart';
 import '../widgets/map_controls.dart';
 import '../widgets/cart_list_vertical.dart';
+import '../widgets/cart_bottom_sheet.dart';
 import '../widgets/tone_control_slider.dart';
-import '../widgets/selected_cart_tag.dart';
 import '../widgets/micro_tag.dart';
 import '../widgets/marker_overlay_tag.dart';
+import '../widgets/via_filter_sheet.dart';
+import '../widgets/via_status_bar.dart';
 import '../state/realtime_map_state.dart';
 import '../../../core/services/map/map_adapter.dart';
 import '../../../core/services/map/golf_course_route_provider.dart';
@@ -71,6 +71,10 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
     final mapController = ref.read(liveMapControllerProvider.notifier);
     final realtimeMapState = ref.watch(realtimeMapStateProvider);
 
+    // Detect mobile vs desktop
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 600;
+
     return RawKeyboardListener(
       focusNode: FocusNode()..requestFocus(),
       onKey: _handleKeyPress,
@@ -94,11 +98,11 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
             ),
             body: Column(
               children: [
-                status_bar.StatusBar(
+                ViaStatusBar(
                   statusCounts: mapController.statusCounts,
                   activeFilters: mapState.statusFilters,
                   onFilterTap: mapController.toggleStatusFilter,
-              onOpenFilter: () => _showFilterSheet(context, mapController, mapState),
+                  onOpenFilter: () => _showFilterSheet(context, mapController, mapState),
                 ),
                 Expanded(
                   child: Stack(
@@ -113,15 +117,19 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
                         isSatellite: _isSatelliteUI,
                     selectedCartId: realtimeMapState.selectedCartId,
                   ),
-                  CartListVertical(
-                    carts: mapController.filteredCarts,
-                    selectedCartId: realtimeMapState.selectedCartId,
-                    compactDensity: _compactDensity,
-                    cartListOnRight: _cartListOnRight,
-                    isCollapsed: _cartListCollapsed,
-                    onCartSelected: (cart) => _onCartSelected(cart),
-                    onToggleCollapse: () => setState(() => _cartListCollapsed = !_cartListCollapsed),
-                  ),
+
+                  // Desktop: Use floating cart list
+                  if (!isMobile)
+                    CartListVertical(
+                      carts: mapController.filteredCarts,
+                      selectedCartId: realtimeMapState.selectedCartId,
+                      compactDensity: _compactDensity,
+                      cartListOnRight: _cartListOnRight,
+                      isCollapsed: _cartListCollapsed,
+                      onCartSelected: (cart) => _onCartSelected(cart),
+                      onToggleCollapse: () => setState(() => _cartListCollapsed = !_cartListCollapsed),
+                    ),
+
                   MapControls(
                     onZoomIn: () => _zoomIn(mapController, mapState),
                     onZoomOut: () => _zoomOut(mapController, mapState),
@@ -139,6 +147,14 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
                   // Micro tag overlay for selected cart
                   if (realtimeMapState.selectedCartId != null)
                     _buildMicroTagOverlay(realtimeMapState.selectedCartId!, mapController.filteredCarts),
+
+                  // Mobile: Use bottom sheet
+                  if (isMobile)
+                    CartBottomSheet(
+                      carts: mapController.filteredCarts,
+                      selectedCartId: realtimeMapState.selectedCartId,
+                      onCartSelected: (cart) => _onCartSelected(cart),
+                    ),
                 ],
               ),
             ),
@@ -198,26 +214,27 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
   }
 
   void _showMyLocationMessage() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('내 위치 기능은 플랫폼별 권한 설정 후 활성화됩니다.')),
+    ViaToast.show(
+      context: context,
+      message: '내 위치 기능은 플랫폼별 권한 설정 후 활성화됩니다.',
+      variant: ViaToastVariant.info,
     );
   }
 
   void _showFullscreenMessage() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('전체화면 토글은 플랫폼별 API 연동 후 활성화됩니다.')),
+    ViaToast.show(
+      context: context,
+      message: '전체화면 토글은 플랫폼별 API 연동 후 활성화됩니다.',
+      variant: ViaToastVariant.info,
     );
   }
 
   void _showFilterSheet(BuildContext context, LiveMapController controller, mapState) {
-    showModalBottomSheet(
+    ViaFilterSheet.show(
       context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) => FilterSheet(
-        activeFilters: mapState.statusFilters,
-        onFilterToggle: controller.toggleStatusFilter,
-        onClearFilters: controller.clearFilters,
-      ),
+      activeFilters: mapState.statusFilters,
+      onFilterToggle: controller.toggleStatusFilter,
+      onClearFilters: controller.clearFilters,
     );
   }
 

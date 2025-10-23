@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../domain/models/work_order.dart';
 import '../../../../core/theme/design_tokens.dart';
+import '../../../../core/widgets/via/via_bottom_sheet.dart';
+import '../../../../core/widgets/via/via_button.dart';
+import '../../../../core/widgets/via/via_input.dart';
 
 /// Widget for managing work order parts
 class PartsList extends StatefulWidget {
@@ -170,9 +173,18 @@ class _PartsListState extends State<PartsList> {
   }
 
   void _addPart() {
-    showDialog(
+    ViaBottomSheet.show(
       context: context,
-      builder: (context) => _AddPartDialog(
+      snapPoints: [0.6, 0.8],
+      header: const Text(
+        'Add Part',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: DesignTokens.textPrimary,
+        ),
+      ),
+      child: _AddPartForm(
         onPartAdded: (part) {
           setState(() {
             _parts.add(part);
@@ -191,18 +203,18 @@ class _PartsListState extends State<PartsList> {
   }
 }
 
-class _AddPartDialog extends StatefulWidget {
+class _AddPartForm extends StatefulWidget {
   final Function(WoPart) onPartAdded;
 
-  const _AddPartDialog({
+  const _AddPartForm({
     required this.onPartAdded,
   });
 
   @override
-  State<_AddPartDialog> createState() => _AddPartDialogState();
+  State<_AddPartForm> createState() => _AddPartFormState();
 }
 
-class _AddPartDialogState extends State<_AddPartDialog> {
+class _AddPartFormState extends State<_AddPartForm> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _quantityController = TextEditingController(text: '1');
@@ -220,94 +232,82 @@ class _AddPartDialogState extends State<_AddPartDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Add Part'),
-      content: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextFormField(
-              controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Part Name',
-                border: OutlineInputBorder(),
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ViaInput(
+            controller: _nameController,
+            label: 'Part Name *',
+            placeholder: 'Enter part name',
+          ),
+          const SizedBox(height: DesignTokens.spacingMd),
+          ViaInput(
+            controller: _quantityController,
+            label: 'Quantity *',
+            placeholder: 'Enter quantity',
+            keyboardType: TextInputType.number,
+          ),
+          const SizedBox(height: DesignTokens.spacingMd),
+          ViaInput(
+            controller: _notesController,
+            label: 'Notes (Optional)',
+            placeholder: 'Enter notes',
+            maxLines: 2,
+          ),
+          const SizedBox(height: DesignTokens.spacingMd),
+          ViaInput(
+            controller: _serialController,
+            label: 'Serial Number (Optional)',
+            placeholder: 'Enter serial number',
+          ),
+          const SizedBox(height: DesignTokens.spacingLg),
+          Row(
+            children: [
+              Expanded(
+                child: ViaButton.ghost(
+                  text: 'Cancel',
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
               ),
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'Part name is required';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: DesignTokens.spacingMd),
-            TextFormField(
-              controller: _quantityController,
-              decoration: const InputDecoration(
-                labelText: 'Quantity',
-                border: OutlineInputBorder(),
+              const SizedBox(width: DesignTokens.spacingMd),
+              Expanded(
+                child: ViaButton.primary(
+                  text: 'Add',
+                  onPressed: _savePart,
+                ),
               ),
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'Quantity is required';
-                }
-                final quantity = int.tryParse(value);
-                if (quantity == null || quantity <= 0) {
-                  return 'Please enter a valid quantity';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: DesignTokens.spacingMd),
-            TextFormField(
-              controller: _notesController,
-              decoration: const InputDecoration(
-                labelText: 'Notes (Optional)',
-                border: OutlineInputBorder(),
-              ),
-              maxLines: 2,
-            ),
-            const SizedBox(height: DesignTokens.spacingMd),
-            TextFormField(
-              controller: _serialController,
-              decoration: const InputDecoration(
-                labelText: 'Serial Number (Optional)',
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
-        ),
-        ElevatedButton(
-          onPressed: _savePart,
-          child: const Text('Add'),
-        ),
-      ],
     );
   }
 
   void _savePart() {
-    if (_formKey.currentState!.validate()) {
-      final part = WoPart(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        name: _nameController.text.trim(),
-        quantity: int.parse(_quantityController.text),
-        notes: _notesController.text.trim().isEmpty
-            ? null
-            : _notesController.text.trim(),
-        serialNumber: _serialController.text.trim().isEmpty
-            ? null
-            : _serialController.text.trim(),
-      );
-
-      widget.onPartAdded(part);
-      Navigator.of(context).pop();
+    // Simple validation
+    if (_nameController.text.trim().isEmpty) {
+      return;
     }
+    final quantity = int.tryParse(_quantityController.text);
+    if (quantity == null || quantity <= 0) {
+      return;
+    }
+
+    final part = WoPart(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      name: _nameController.text.trim(),
+      quantity: quantity,
+      notes: _notesController.text.trim().isEmpty
+          ? null
+          : _notesController.text.trim(),
+      serialNumber: _serialController.text.trim().isEmpty
+          ? null
+          : _serialController.text.trim(),
+    );
+
+    widget.onPartAdded(part);
+    Navigator.of(context).pop();
   }
 }

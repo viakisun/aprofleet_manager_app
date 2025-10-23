@@ -56,14 +56,22 @@ class _MarkerOverlayTagState extends State<MarkerOverlayTag> {
   }
 
   Future<void> _recalc() async {
-    if (widget.controller == null) return;
+    if (widget.controller == null) {
+      print('MarkerOverlayTag: Controller is null');
+      return;
+    }
 
     try {
+      print('MarkerOverlayTag: Getting screen coordinate for position: ${widget.position}');
       final sc = await widget.controller!.getScreenCoordinate(widget.position);
       if (mounted) {
-        setState(() => screen = Offset(sc.x.toDouble(), sc.y.toDouble()));
+        final newScreen = Offset(sc.x.toDouble(), sc.y.toDouble());
+        print('MarkerOverlayTag: Screen coordinate = $newScreen');
+        print('MarkerOverlayTag: Calculated position - dx: ${newScreen.dx + 12}, dy: ${newScreen.dy - 32}');
+        setState(() => screen = newScreen);
       }
     } catch (e) {
+      print('MarkerOverlayTag: Error getting screen coordinate: $e');
       if (mounted) {
         setState(() => screen = Offset.zero);
       }
@@ -75,9 +83,16 @@ class _MarkerOverlayTagState extends State<MarkerOverlayTag> {
     final dx = screen.dx + 12;
     final dy = screen.dy - 32;
 
+    // 화면 밖으로 나가지 않도록 제한
+    final screenSize = MediaQuery.of(context).size;
+    final clampedDx = dx.clamp(0.0, screenSize.width - 100);
+    final clampedDy = dy.clamp(0.0, screenSize.height - 50);
+
+    print('MarkerOverlayTag: Final position - dx: $clampedDx, dy: $clampedDy');
+
     return Positioned(
-      left: dx,
-      top: dy,
+      left: clampedDx,
+      top: clampedDy,
       child: AnimatedOpacity(
         opacity: screen == Offset.zero ? 0 : 1,
         duration: const Duration(milliseconds: 200),

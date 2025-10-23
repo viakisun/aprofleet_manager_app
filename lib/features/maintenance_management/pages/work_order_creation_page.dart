@@ -9,6 +9,7 @@ import '../../../core/localization/app_localizations.dart';
 import '../../../core/theme/design_tokens.dart';
 import '../../../core/widgets/common/modals/base_modal.dart';
 import '../../../core/widgets/steps/stepper.dart' as custom;
+import '../../../core/widgets/via/via_toast.dart';
 import '../controllers/work_order_creation_controller.dart';
 import '../widgets/creation/work_order_creation_step1.dart';
 import '../widgets/creation/work_order_creation_step2.dart';
@@ -182,16 +183,10 @@ class _WorkOrderCreationPageState extends ConsumerState<WorkOrderCreationPage> {
         final draft = WorkOrderDraft.fromJson(jsonDecode(draftJson));
         _controller.loadDraft(draft);
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text('Draft found. Resume?'),
-            action: SnackBarAction(
-              label: 'Resume',
-              onPressed: () {
-                // Draft is already loaded
-              },
-            ),
-          ),
+        ViaToast.show(
+          context: context,
+          message: 'Draft found and loaded successfully',
+          variant: ViaToastVariant.info,
         );
       }
     } catch (e) {
@@ -206,14 +201,18 @@ class _WorkOrderCreationPageState extends ConsumerState<WorkOrderCreationPage> {
       await prefs.setString('draft.wo.create', draftJson);
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Draft saved successfully')),
+        ViaToast.show(
+          context: context,
+          message: 'Draft saved successfully',
+          variant: ViaToastVariant.success,
         );
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to save draft: $e')),
+        ViaToast.show(
+          context: context,
+          message: 'Failed to save draft: $e',
+          variant: ViaToastVariant.error,
         );
       }
     }
@@ -228,15 +227,19 @@ class _WorkOrderCreationPageState extends ConsumerState<WorkOrderCreationPage> {
       await prefs.remove('draft.wo.create');
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Work order created successfully')),
+        ViaToast.show(
+          context: context,
+          message: 'Work order created successfully',
+          variant: ViaToastVariant.success,
         );
         context.go('/mm/list');
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to create work order: $e')),
+        ViaToast.show(
+          context: context,
+          message: 'Failed to create work order: $e',
+          variant: ViaToastVariant.error,
         );
       }
     } finally {

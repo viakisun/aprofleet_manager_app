@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/design_tokens.dart';
+import '../../../core/theme/via_design_tokens.dart';
+import '../../../core/widgets/via/via_icon_button.dart';
 
+/// VIA Design System Map Controls
+///
+/// Provides map control buttons with VIA styling
 class MapControls extends StatelessWidget {
   final VoidCallback onZoomIn;
   final VoidCallback onZoomOut;
@@ -24,71 +28,50 @@ class MapControls extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      right: DesignTokens.spacingMd,
-      top: DesignTokens.spacingMd,
+      right: ViaDesignTokens.spacingMd,
+      top: ViaDesignTokens.spacingMd,
       child: Column(
         children: [
-          Tooltip(
-            message: 'Zoom in (+)',
-            child: FloatingActionButton.small(
-              heroTag: 'zoom_in',
-              onPressed: onZoomIn,
-              backgroundColor: DesignTokens.bgSecondary.withValues(alpha: 0.8),
-              child: const Icon(Icons.add, color: DesignTokens.textPrimary),
-            ),
+          ViaIconButton.ghost(
+            icon: Icons.add,
+            onPressed: onZoomIn,
+            tooltip: 'Zoom in (+)',
+            size: ViaIconButtonSize.medium,
           ),
-          const SizedBox(height: DesignTokens.spacingXs),
-          Tooltip(
-            message: 'Zoom out (−)',
-            child: FloatingActionButton.small(
-              heroTag: 'zoom_out',
-              onPressed: onZoomOut,
-              backgroundColor: DesignTokens.bgSecondary.withValues(alpha: 0.8),
-              child: const Icon(Icons.remove, color: DesignTokens.textPrimary),
-            ),
+          const SizedBox(height: ViaDesignTokens.spacingXs),
+          ViaIconButton.ghost(
+            icon: Icons.remove,
+            onPressed: onZoomOut,
+            tooltip: 'Zoom out (−)',
+            size: ViaIconButtonSize.medium,
           ),
-          const SizedBox(height: DesignTokens.spacingXs),
-          Tooltip(
-            message: 'Tone (T)',
-            child: FloatingActionButton.small(
-              heroTag: 'tone_control',
-              onPressed: onToneToggle,
-              backgroundColor: DesignTokens.bgSecondary.withValues(alpha: 0.8),
-              child: const Icon(Icons.palette, color: DesignTokens.textPrimary),
-            ),
+          const SizedBox(height: ViaDesignTokens.spacingXs),
+          ViaIconButton.ghost(
+            icon: Icons.palette,
+            onPressed: onToneToggle,
+            tooltip: 'Tone (T)',
+            size: ViaIconButtonSize.medium,
           ),
-          const SizedBox(height: DesignTokens.spacingXs),
-          Tooltip(
-            message: isSatelliteUI ? 'Layer: Satellite (L)' : 'Layer: Standard (L)',
-            child: FloatingActionButton.small(
-              heroTag: 'layer_toggle',
-              onPressed: onLayerToggle,
-              backgroundColor: DesignTokens.bgSecondary.withValues(alpha: 0.8),
-              child: Icon(
-                isSatelliteUI ? Icons.layers : Icons.layers_clear,
-                color: DesignTokens.textPrimary,
-              ),
-            ),
+          const SizedBox(height: ViaDesignTokens.spacingXs),
+          ViaIconButton.ghost(
+            icon: isSatelliteUI ? Icons.layers : Icons.layers_clear,
+            onPressed: onLayerToggle,
+            tooltip: isSatelliteUI ? 'Layer: Satellite (L)' : 'Layer: Standard (L)',
+            size: ViaIconButtonSize.medium,
           ),
-          const SizedBox(height: DesignTokens.spacingXs),
-          Tooltip(
-            message: 'My location',
-            child: FloatingActionButton.small(
-              heroTag: 'my_location',
-              onPressed: onMyLocation,
-              backgroundColor: DesignTokens.bgSecondary.withValues(alpha: 0.8),
-              child: const Icon(Icons.my_location, color: DesignTokens.textPrimary),
-            ),
+          const SizedBox(height: ViaDesignTokens.spacingXs),
+          ViaIconButton.ghost(
+            icon: Icons.my_location,
+            onPressed: onMyLocation,
+            tooltip: 'My location',
+            size: ViaIconButtonSize.medium,
           ),
-          const SizedBox(height: DesignTokens.spacingXs),
-          Tooltip(
-            message: 'Fullscreen (F)',
-            child: FloatingActionButton.small(
-              heroTag: 'fullscreen',
-              onPressed: onFullscreen,
-              backgroundColor: DesignTokens.bgSecondary.withValues(alpha: 0.8),
-              child: const Icon(Icons.fullscreen, color: DesignTokens.textPrimary),
-            ),
+          const SizedBox(height: ViaDesignTokens.spacingXs),
+          ViaIconButton.ghost(
+            icon: Icons.fullscreen,
+            onPressed: onFullscreen,
+            tooltip: 'Fullscreen (F)',
+            size: ViaIconButtonSize.medium,
           ),
         ],
       ),

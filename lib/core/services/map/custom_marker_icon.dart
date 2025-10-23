@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -106,7 +107,10 @@ class CustomMarkerIcon {
   }) async {
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);
-    final size = 24.0 * scale;
+    
+    // Platform-specific sizing - 웹은 작게, 모바일은 크게
+    final baseSize = kIsWeb ? 20.0 : 42.0; // 모바일을 절반으로 줄임 (84 / 2 = 42)
+    final size = baseSize * scale;
     final center = Offset(size/2, size/2);
 
     // Halo (selected only)
@@ -114,7 +118,7 @@ class CustomMarkerIcon {
       final haloPaint = Paint()
         ..color = color.withOpacity(0.25)
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
-      canvas.drawCircle(center, 12, haloPaint);
+      canvas.drawCircle(center, size * 0.5, haloPaint); // 상대적 크기로 조정
     }
     
     // White ring (2px)
@@ -122,13 +126,13 @@ class CustomMarkerIcon {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2
       ..color = Colors.white;
-    canvas.drawCircle(center, 8, ring);
+    canvas.drawCircle(center, size * 0.33, ring); // 상대적 크기로 조정
     
     // Dot (16px diameter = 8px radius)
     final dot = Paint()
       ..style = PaintingStyle.fill
       ..color = color;
-    canvas.drawCircle(center, 7, dot);
+    canvas.drawCircle(center, size * 0.29, dot); // 상대적 크기로 조정
 
     final img = await recorder.endRecording().toImage(size.toInt(), size.toInt());
     final bytes = (await img.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();

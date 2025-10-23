@@ -11,6 +11,10 @@ import '../../../core/widgets/professional_app_bar.dart';
 import '../../../core/widgets/hamburger_menu.dart';
 import '../../../core/services/map/map_provider_type.dart';
 import '../../../core/services/map/map_settings_service.dart';
+import '../../../core/widgets/via/via_toast.dart';
+import '../../../core/widgets/via/via_bottom_sheet.dart';
+import '../../../core/widgets/via/via_button.dart';
+import '../widgets/scenario_control_panel.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
@@ -36,10 +40,10 @@ class SettingsPage extends ConsumerWidget {
           AppBarActionButton(
             icon: Icons.search,
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                    content: Text(
-                        '${localizations.search} - ${localizations.comingSoon}')),
+              ViaToast.show(
+                context: context,
+                message: '${localizations.search} - ${localizations.comingSoon}',
+                variant: ViaToastVariant.info,
               );
             },
           ),
@@ -217,6 +221,16 @@ class SettingsPage extends ConsumerWidget {
 
             const SizedBox(height: DesignTokens.spacingXl),
 
+            // Simulation Section
+            SettingsSection(
+              title: 'SIMULATION & DEMO',
+              children: const [
+                ScenarioControlPanel(),
+              ],
+            ),
+
+            const SizedBox(height: DesignTokens.spacingXl),
+
             // Support Section
             SettingsSection(
               title: 'SUPPORT',
@@ -250,10 +264,10 @@ class SettingsPage extends ConsumerWidget {
               width: double.infinity,
               margin: const EdgeInsets.symmetric(
                   horizontal: DesignTokens.spacingMd),
-              child: ActionButton(
+              child: ViaButton.danger(
                 text: localizations.signOut,
-                type: ActionButtonType.destructive,
                 onPressed: () => _showSignOutDialog(context),
+                isFullWidth: true,
               ),
             ),
           ],
@@ -267,13 +281,10 @@ class SettingsPage extends ConsumerWidget {
     controller.setLanguageByCode(languageCode);
     final localizations = AppLocalizations.of(context);
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-            '${localizations.languageChanged} ${controller.currentLanguageName}'),
-        backgroundColor: DesignTokens.statusActive,
-        duration: const Duration(seconds: 2),
-      ),
+    ViaToast.show(
+      context: context,
+      message: '${localizations.languageChanged} ${controller.currentLanguageName}',
+      variant: ViaToastVariant.success,
     );
   }
 
@@ -287,209 +298,214 @@ class SettingsPage extends ConsumerWidget {
   }
 
   void _showMapProviderDialog(BuildContext context, WidgetRef ref) {
-    showDialog(
+    ViaBottomSheet.show(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: DesignTokens.bgSecondary,
-        title: const Text(
-          'Select Map Provider',
-          style: TextStyle(color: DesignTokens.textPrimary),
+      snapPoints: [0.5, 0.8],
+      header: const Text(
+        'Select Map Provider',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: DesignTokens.textPrimary,
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: MapProviderType.values.map((provider) {
-            return ListTile(
-              leading: Icon(
-                provider.icon,
-                color: DesignTokens.textPrimary,
-              ),
-              title: Text(
-                provider.name,
-                style: const TextStyle(color: DesignTokens.textPrimary),
-              ),
-              subtitle: Text(
-                provider.description,
-                style: TextStyle(color: DesignTokens.textSecondary),
-              ),
-              onTap: () async {
-                Navigator.pop(context);
-                final service = ref.read(mapSettingsServiceProvider);
-                await service.setSelectedProvider(provider);
-
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Map provider changed to ${provider.name}'),
-                      backgroundColor: DesignTokens.statusActive,
-                      duration: const Duration(seconds: 2),
-                    ),
-                  );
-                }
-              },
-            );
-          }).toList(),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(
-              'Cancel',
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: MapProviderType.values.map((provider) {
+          return ListTile(
+            leading: Icon(
+              provider.icon,
+              color: DesignTokens.textPrimary,
+            ),
+            title: Text(
+              provider.name,
+              style: TextStyle(color: DesignTokens.textPrimary),
+            ),
+            subtitle: Text(
+              provider.description,
               style: TextStyle(color: DesignTokens.textSecondary),
             ),
-          ),
-        ],
+            onTap: () async {
+              Navigator.pop(context);
+              final service = ref.read(mapSettingsServiceProvider);
+              await service.setSelectedProvider(provider);
+
+              if (context.mounted) {
+                ViaToast.show(
+                  context: context,
+                  message: 'Map provider changed to ${provider.name}',
+                  variant: ViaToastVariant.success,
+                );
+              }
+            },
+          );
+        }).toList(),
+      ),
+      footer: ViaButton.ghost(
+        text: 'Cancel',
+        onPressed: () => Navigator.pop(context),
+        isFullWidth: true,
       ),
     );
   }
 
   void _showUserProfile(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content: Text(
-              '${localizations.profileSettings} - ${localizations.comingSoon}')),
+    ViaToast.show(
+      context: context,
+      message: '${localizations.profileSettings} - ${localizations.comingSoon}',
+      variant: ViaToastVariant.info,
     );
   }
 
   void _showProfileSettings(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content: Text(
-              '${localizations.profileSettings} - ${localizations.comingSoon}')),
+    ViaToast.show(
+      context: context,
+      message: '${localizations.profileSettings} - ${localizations.comingSoon}',
+      variant: ViaToastVariant.info,
     );
   }
 
   void _showSecuritySettings(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content:
-              Text('${localizations.security} - ${localizations.comingSoon}')),
+    ViaToast.show(
+      context: context,
+      message: '${localizations.security} - ${localizations.comingSoon}',
+      variant: ViaToastVariant.info,
     );
   }
 
   void _showPrivacySettings(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content:
-              Text('${localizations.privacy} - ${localizations.comingSoon}')),
+    ViaToast.show(
+      context: context,
+      message: '${localizations.privacy} - ${localizations.comingSoon}',
+      variant: ViaToastVariant.info,
     );
   }
 
   void _showNotificationSettings(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content: Text(
-              '${localizations.notifications} - ${localizations.comingSoon}')),
+    ViaToast.show(
+      context: context,
+      message: '${localizations.notifications} - ${localizations.comingSoon}',
+      variant: ViaToastVariant.info,
     );
   }
 
   void _showThemeSettings(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content:
-              Text('${localizations.theme} - ${localizations.comingSoon}')),
+    ViaToast.show(
+      context: context,
+      message: '${localizations.theme} - ${localizations.comingSoon}',
+      variant: ViaToastVariant.info,
     );
   }
 
   void _showStorageSettings(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content:
-              Text('${localizations.storage} - ${localizations.comingSoon}')),
+    ViaToast.show(
+      context: context,
+      message: '${localizations.storage} - ${localizations.comingSoon}',
+      variant: ViaToastVariant.info,
     );
   }
 
   void _showHelp(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content:
-              Text('${localizations.helpFaq} - ${localizations.comingSoon}')),
+    ViaToast.show(
+      context: context,
+      message: '${localizations.helpFaq} - ${localizations.comingSoon}',
+      variant: ViaToastVariant.info,
     );
   }
 
   void _reportIssue(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content: Text(
-              '${localizations.reportIssue} - ${localizations.comingSoon}')),
+    ViaToast.show(
+      context: context,
+      message: '${localizations.reportIssue} - ${localizations.comingSoon}',
+      variant: ViaToastVariant.info,
     );
   }
 
   void _showAbout(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    showDialog(
+    ViaBottomSheet.show(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: DesignTokens.bgSecondary,
-        title: Text(
-          localizations.aboutAproFleetManager,
-          style: const TextStyle(color: DesignTokens.textPrimary),
+      snapPoints: [0.4, 0.7],
+      header: Text(
+        localizations.aboutAproFleetManager,
+        style: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: DesignTokens.textPrimary,
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(localizations.versionInfo,
-                style: TextStyle(color: DesignTokens.textSecondary)),
-            const SizedBox(height: DesignTokens.spacingSm),
-            Text(localizations.manufacturerInfo,
-                style: TextStyle(color: DesignTokens.textSecondary)),
-            const SizedBox(height: DesignTokens.spacingSm),
-            Text(localizations.productInfo,
-                style: TextStyle(color: DesignTokens.textSecondary)),
-            const SizedBox(height: DesignTokens.spacingSm),
-            Text('© 2024 DY Innovate. All rights reserved.',
-                style: TextStyle(color: DesignTokens.textTertiary)),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(localizations.ok,
-                style: const TextStyle(color: DesignTokens.statusActive)),
-          ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(localizations.versionInfo,
+              style: TextStyle(color: DesignTokens.textSecondary)),
+          const SizedBox(height: DesignTokens.spacingSm),
+          Text(localizations.manufacturerInfo,
+              style: TextStyle(color: DesignTokens.textSecondary)),
+          const SizedBox(height: DesignTokens.spacingSm),
+          Text(localizations.productInfo,
+              style: TextStyle(color: DesignTokens.textSecondary)),
+          const SizedBox(height: DesignTokens.spacingSm),
+          Text('© 2024 DY Innovate. All rights reserved.',
+              style: TextStyle(color: DesignTokens.textTertiary)),
         ],
+      ),
+      footer: ViaButton.primary(
+        text: localizations.ok,
+        onPressed: () => Navigator.pop(context),
+        isFullWidth: true,
       ),
     );
   }
 
   void _showSignOutDialog(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    showDialog(
+    ViaBottomSheet.show(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: DesignTokens.bgSecondary,
-        title: Text(
-          localizations.signOut,
-          style: const TextStyle(color: DesignTokens.textPrimary),
+      snapPoints: [0.3, 0.5],
+      header: Text(
+        localizations.signOut,
+        style: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: DesignTokens.textPrimary,
         ),
-        content: Text(
-          localizations.signOutConfirm,
-          style: TextStyle(color: DesignTokens.textSecondary),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(localizations.cancel,
-                style: TextStyle(color: DesignTokens.textSecondary)),
+      ),
+      child: Text(
+        localizations.signOutConfirm,
+        style: TextStyle(color: DesignTokens.textSecondary),
+      ),
+      footer: Row(
+        children: [
+          Expanded(
+            child: ViaButton.ghost(
+              text: localizations.cancel,
+              onPressed: () => Navigator.pop(context),
+            ),
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(localizations.signedOutSuccess)),
-              );
-            },
-            child: Text(localizations.signOut,
-                style: const TextStyle(color: DesignTokens.statusCritical)),
+          const SizedBox(width: DesignTokens.spacingMd),
+          Expanded(
+            child: ViaButton.danger(
+              text: localizations.signOut,
+              onPressed: () {
+                Navigator.pop(context);
+                ViaToast.show(
+                  context: context,
+                  message: localizations.signedOutSuccess,
+                  variant: ViaToastVariant.success,
+                );
+              },
+            ),
           ),
         ],
       ),
