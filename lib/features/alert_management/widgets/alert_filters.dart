@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/models/alert.dart';
 import '../../../domain/models/work_order.dart';
 import '../../../core/widgets/shared_widgets.dart';
+import '../../../core/widgets/via/via_button.dart';
 import '../../../core/constants/app_constants.dart';
 
 class AlertFilters extends StatelessWidget {
@@ -53,12 +54,10 @@ class AlertFilters extends StatelessWidget {
                   ),
                 ),
                 if (_hasActiveFilters())
-                  TextButton(
+                  ViaButton.ghost(
+                    text: 'Clear All',
                     onPressed: onClearFilters,
-                    child: const Text(
-                      'Clear All',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    size: ViaButtonSize.small,
                   ),
               ],
             ),

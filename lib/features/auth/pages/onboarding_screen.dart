@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/design_tokens.dart';
+import '../../../core/widgets/via/via_button.dart';
 import '../controllers/auth_controller.dart';
 import '../widgets/cart_icon.dart';
 
@@ -107,17 +108,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     const SizedBox(width: 48),
 
                   // Skip button
-                  TextButton(
+                  ViaButton.ghost(
+                    text: '건너뛰기',
                     onPressed: _skipOnboarding,
-                    child: Text(
-                      '건너뛰기',
-                      style: TextStyle(
-                        fontFamily: DesignTokens.fontFamily,
-                        fontSize: DesignTokens.fontSizeMd,
-                        fontWeight: DesignTokens.fontWeightMedium,
-                        color: DesignTokens.textSecondary,
-                      ),
-                    ),
+                    size: ViaButtonSize.small,
                   ),
                 ],
               ),
@@ -156,29 +150,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   const SizedBox(height: DesignTokens.spacingLg),
 
                   // Next/Get Started button
-                  SizedBox(
-                    width: double.infinity,
-                    height: 56,
-                    child: ElevatedButton(
-                      onPressed: _nextPage,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: DesignTokens.statusActive,
-                        foregroundColor: DesignTokens.textPrimary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(DesignTokens.radiusMd),
-                        ),
-                        elevation: 0,
-                      ),
-                      child: Text(
-                        _currentPage == _pages.length - 1 ? '시작하기' : '다음',
-                        style: TextStyle(
-                          fontFamily: DesignTokens.fontFamily,
-                          fontSize: DesignTokens.fontSizeLg,
-                          fontWeight: DesignTokens.fontWeightSemibold,
-                        ),
-                      ),
-                    ),
+                  ViaButton.primary(
+                    text: _currentPage == _pages.length - 1 ? '시작하기' : '다음',
+                    onPressed: _nextPage,
+                    isFullWidth: true,
                   ),
                 ],
               ),
