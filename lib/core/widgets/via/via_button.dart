@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
+import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 
-/// VIA Design System Button Component
+/// Industrial Dark Button Component
 ///
 /// Provides 4 button variants:
-/// - Primary: VIA green fill with white text
-/// - Secondary: Transparent with border + green text
+/// - Primary: Accent blue fill with white text
+/// - Secondary: Transparent with 2px outline border
 /// - Ghost: Text-only with hover state
 /// - Danger: Critical red for emergency actions
 ///
@@ -16,6 +16,7 @@ import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
 /// - Loading state
 /// - Disabled state
 /// - Custom icon support
+/// - Outline-based depth (no shadows)
 enum ViaButtonVariant {
   primary,
   secondary,
@@ -119,7 +120,7 @@ class _ViaButtonState extends State<ViaButton>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: ViaDesignTokens.durationFast,
+      duration: IndustrialDarkTokens.durationFast,
       vsync: this,
     );
     _scaleAnimation = Tween<double>(
@@ -127,7 +128,7 @@ class _ViaButtonState extends State<ViaButton>
       end: 0.96,
     ).animate(CurvedAnimation(
       parent: _controller,
-      curve: ViaDesignTokens.curveStandard,
+      curve: IndustrialDarkTokens.curveStandard,
     ));
   }
 
@@ -175,8 +176,8 @@ class _ViaButtonState extends State<ViaButton>
         onTapCancel: _handleTapCancel,
         onTap: _handleTap,
         child: AnimatedOpacity(
-          opacity: isDisabled ? ViaDesignTokens.opacityDisabled : 1.0,
-          duration: ViaDesignTokens.durationFast,
+          opacity: isDisabled ? 0.3 : 1.0,
+          duration: IndustrialDarkTokens.durationFast,
           child: Container(
             width: widget.isFullWidth ? double.infinity : null,
             padding: _getPadding(),
@@ -204,7 +205,7 @@ class _ViaButtonState extends State<ViaButton>
                       size: _getIconSize(),
                       color: _getTextColor(),
                     ),
-                  SizedBox(width: ViaDesignTokens.spacingSm),
+                  SizedBox(width: IndustrialDarkTokens.spacingCompact),
                 ],
                 if (!widget.isLoading || widget.icon == null)
                   Text(
@@ -214,7 +215,7 @@ class _ViaButtonState extends State<ViaButton>
                     ),
                   ),
                 if (widget.icon != null && widget.iconTrailing) ...[
-                  SizedBox(width: ViaDesignTokens.spacingSm),
+                  SizedBox(width: IndustrialDarkTokens.spacingCompact),
                   if (widget.isLoading)
                     SizedBox(
                       width: _getIconSize(),
@@ -234,7 +235,7 @@ class _ViaButtonState extends State<ViaButton>
                     ),
                 ],
                 if (widget.isLoading && widget.icon == null) ...[
-                  SizedBox(width: ViaDesignTokens.spacingSm),
+                  SizedBox(width: IndustrialDarkTokens.spacingCompact),
                   SizedBox(
                     width: _getIconSize(),
                     height: _getIconSize(),
@@ -258,18 +259,18 @@ class _ViaButtonState extends State<ViaButton>
     switch (widget.size) {
       case ViaButtonSize.small:
         return const EdgeInsets.symmetric(
-          horizontal: ViaDesignTokens.spacingMd,
-          vertical: ViaDesignTokens.spacingSm,
+          horizontal: IndustrialDarkTokens.spacingItem,
+          vertical: IndustrialDarkTokens.spacingCompact,
         );
       case ViaButtonSize.medium:
         return const EdgeInsets.symmetric(
-          horizontal: ViaDesignTokens.spacingXl,
-          vertical: ViaDesignTokens.spacingMd,
+          horizontal: IndustrialDarkTokens.spacingCard,
+          vertical: IndustrialDarkTokens.spacingItem,
         );
       case ViaButtonSize.large:
         return const EdgeInsets.symmetric(
-          horizontal: ViaDesignTokens.spacing2xl,
-          vertical: ViaDesignTokens.spacingLg,
+          horizontal: IndustrialDarkTokens.spacingSection,
+          vertical: IndustrialDarkTokens.spacingCard,
         );
     }
   }
@@ -277,22 +278,31 @@ class _ViaButtonState extends State<ViaButton>
   double _getIconSize() {
     switch (widget.size) {
       case ViaButtonSize.small:
-        return ViaDesignTokens.iconXs;
+        return 16.0;
       case ViaButtonSize.medium:
-        return ViaDesignTokens.iconSm;
+        return 20.0;
       case ViaButtonSize.large:
-        return ViaDesignTokens.iconMd;
+        return 24.0;
     }
   }
 
   TextStyle _getTextStyle() {
     switch (widget.size) {
       case ViaButtonSize.small:
-        return ViaDesignTokens.labelSmall;
+        return IndustrialDarkTokens.labelStyle.copyWith(
+          fontSize: IndustrialDarkTokens.fontSizeSmall,
+          fontWeight: IndustrialDarkTokens.fontWeightBold,
+        );
       case ViaButtonSize.medium:
-        return ViaDesignTokens.labelMedium;
+        return IndustrialDarkTokens.labelStyle.copyWith(
+          fontSize: IndustrialDarkTokens.fontSizeLabel,
+          fontWeight: IndustrialDarkTokens.fontWeightBold,
+        );
       case ViaButtonSize.large:
-        return ViaDesignTokens.labelLarge;
+        return IndustrialDarkTokens.labelStyle.copyWith(
+          fontSize: IndustrialDarkTokens.fontSizeBody,
+          fontWeight: IndustrialDarkTokens.fontWeightBold,
+        );
     }
   }
 
@@ -301,37 +311,39 @@ class _ViaButtonState extends State<ViaButton>
       case ViaButtonVariant.primary:
         return BoxDecoration(
           color: isDisabled
-              ? ViaDesignTokens.primary.withValues(alpha: 0.3)
-              : ViaDesignTokens.primary,
-          borderRadius: BorderRadius.circular(ViaDesignTokens.radiusMd),
+              ? IndustrialDarkTokens.accentDisabled
+              : IndustrialDarkTokens.accentPrimary,
+          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          // No shadow in Industrial Dark
         );
 
       case ViaButtonVariant.secondary:
         return BoxDecoration(
           color: Colors.transparent,
-          borderRadius: BorderRadius.circular(ViaDesignTokens.radiusMd),
+          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
           border: Border.all(
             color: isDisabled
-                ? ViaDesignTokens.primary.withValues(alpha: 0.3)
-                : ViaDesignTokens.primary,
-            width: 1.5,
+                ? IndustrialDarkTokens.accentDisabled
+                : IndustrialDarkTokens.accentPrimary,
+            width: IndustrialDarkTokens.borderWidth, // 2px outline
           ),
         );
 
       case ViaButtonVariant.ghost:
         return BoxDecoration(
           color: _isPressed && !isDisabled
-              ? ViaDesignTokens.primary.withValues(alpha: 0.1)
+              ? IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.1)
               : Colors.transparent,
-          borderRadius: BorderRadius.circular(ViaDesignTokens.radiusMd),
+          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
         );
 
       case ViaButtonVariant.danger:
         return BoxDecoration(
           color: isDisabled
-              ? ViaDesignTokens.critical.withValues(alpha: 0.3)
-              : ViaDesignTokens.critical,
-          borderRadius: BorderRadius.circular(ViaDesignTokens.radiusMd),
+              ? IndustrialDarkTokens.error.withValues(alpha: 0.3)
+              : IndustrialDarkTokens.error,
+          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          // No shadow in Industrial Dark
         );
     }
   }
@@ -345,13 +357,13 @@ class _ViaButtonState extends State<ViaButton>
 
       case ViaButtonVariant.secondary:
         return isDisabled
-            ? ViaDesignTokens.primary.withValues(alpha: 0.3)
-            : ViaDesignTokens.primary;
+            ? IndustrialDarkTokens.accentDisabled
+            : IndustrialDarkTokens.accentPrimary;
 
       case ViaButtonVariant.ghost:
         return isDisabled
-            ? ViaDesignTokens.textDisabled
-            : ViaDesignTokens.primary;
+            ? IndustrialDarkTokens.textDisabled
+            : IndustrialDarkTokens.accentPrimary;
 
       case ViaButtonVariant.danger:
         return Colors.white;

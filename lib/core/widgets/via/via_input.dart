@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
+import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 
-/// VIA Design System Input Component
+/// Industrial Dark Input Component
 ///
-/// Glass-style text input with:
-/// - Glass background with subtle blur effect
-/// - Focused state with VIA primary color glow
-/// - Error state with red glow and shake animation
+/// Professional text input with:
+/// - Dark gray background (#222222)
+/// - 2px outline on focus (no glow - outline-based depth only)
+/// - Error state with red border and shake animation
 /// - Password toggle with visibility icon
 /// - Prefix/suffix icon support
 /// - Character counter
@@ -16,7 +16,8 @@ import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
 /// Features:
 /// - Smooth focus/error animations
 /// - Haptic feedback on interaction
-/// - Integration with VIA design tokens
+/// - Outline-based depth (no shadows)
+/// - Integration with Industrial Dark tokens
 enum ViaInputType {
   text,
   email,
@@ -302,23 +303,14 @@ class _ViaInputState extends State<ViaInput>
 
   Color _getBorderColor() {
     if (widget.errorText != null) {
-      return ViaDesignTokens.critical;
+      return IndustrialDarkTokens.error;
     }
     if (_isFocused) {
-      return ViaDesignTokens.primary;
+      return IndustrialDarkTokens.accentPrimary;
     }
-    return ViaDesignTokens.borderPrimary;
+    return IndustrialDarkTokens.outline;
   }
 
-  Color _getGlowColor() {
-    if (widget.errorText != null) {
-      return ViaDesignTokens.critical.withValues(alpha: 0.3);
-    }
-    if (_isFocused) {
-      return ViaDesignTokens.primary.withValues(alpha: 0.3);
-    }
-    return Colors.transparent;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -343,34 +335,30 @@ class _ViaInputState extends State<ViaInput>
           if (widget.label != null) ...[
             Text(
               widget.label!,
-              style: ViaDesignTokens.labelMedium.copyWith(
+              style: IndustrialDarkTokens.labelStyle.copyWith(
+                fontSize: IndustrialDarkTokens.fontSizeLabel,
                 color: hasError
-                    ? ViaDesignTokens.critical
-                    : ViaDesignTokens.textSecondary,
+                    ? IndustrialDarkTokens.error
+                    : IndustrialDarkTokens.textSecondary,
               ),
             ),
-            const SizedBox(height: ViaDesignTokens.spacingSm),
+            const SizedBox(height: IndustrialDarkTokens.spacingCompact),
           ],
 
-          // Input field with glass effect and glow
+          // Input field with outline-based depth (no glow)
           AnimatedContainer(
-            duration: ViaDesignTokens.durationFast,
+            duration: IndustrialDarkTokens.durationFast,
             decoration: BoxDecoration(
-              // Glass background
-              color: ViaDesignTokens.surfaceSecondary,
-              borderRadius: BorderRadius.circular(ViaDesignTokens.radiusMd),
+              // Dark gray background
+              color: IndustrialDarkTokens.bgSurface,
+              borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
               border: Border.all(
                 color: _getBorderColor(),
-                width: _isFocused || hasError ? 1.5 : 1.0,
+                width: _isFocused || hasError
+                    ? IndustrialDarkTokens.borderWidth // 2px
+                    : IndustrialDarkTokens.borderWidthThin, // 1px
               ),
-              // Glow effect
-              boxShadow: [
-                BoxShadow(
-                  color: _getGlowColor(),
-                  blurRadius: _isFocused || hasError ? 12.0 : 0.0,
-                  spreadRadius: _isFocused || hasError ? 2.0 : 0.0,
-                ),
-              ],
+              // NO boxShadow in Industrial Dark - outline-based depth only
             ),
             child: TextField(
               controller: _controller,
@@ -391,25 +379,27 @@ class _ViaInputState extends State<ViaInput>
               onChanged: widget.onChanged,
               onEditingComplete: widget.onEditingComplete,
               onSubmitted: widget.onSubmitted,
-              style: ViaDesignTokens.bodyMedium.copyWith(
+              style: IndustrialDarkTokens.bodyStyle.copyWith(
+                fontSize: IndustrialDarkTokens.fontSizeBody,
                 color: widget.enabled
-                    ? ViaDesignTokens.textPrimary
-                    : ViaDesignTokens.textDisabled,
+                    ? IndustrialDarkTokens.textPrimary
+                    : IndustrialDarkTokens.textSecondary.withValues(alpha: 0.3),
               ),
               decoration: InputDecoration(
                 hintText: widget.placeholder,
-                hintStyle: ViaDesignTokens.bodyMedium.copyWith(
-                  color: ViaDesignTokens.textMuted,
+                hintStyle: IndustrialDarkTokens.bodyStyle.copyWith(
+                  fontSize: IndustrialDarkTokens.fontSizeBody,
+                  color: IndustrialDarkTokens.textSecondary,
                 ),
                 prefixIcon: widget.prefixIcon != null
                     ? Icon(
                         widget.prefixIcon,
                         color: hasError
-                            ? ViaDesignTokens.critical
+                            ? IndustrialDarkTokens.error
                             : (_isFocused
-                                ? ViaDesignTokens.primary
-                                : ViaDesignTokens.textMuted),
-                        size: ViaDesignTokens.iconSm,
+                                ? IndustrialDarkTokens.accentPrimary
+                                : IndustrialDarkTokens.textSecondary),
+                        size: 20,
                       )
                     : null,
                 suffixIcon: _buildSuffixIcon(),
@@ -420,9 +410,9 @@ class _ViaInputState extends State<ViaInput>
                 focusedErrorBorder: InputBorder.none,
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: widget.prefixIcon == null
-                      ? ViaDesignTokens.spacingLg
-                      : ViaDesignTokens.spacingSm,
-                  vertical: ViaDesignTokens.spacingMd,
+                      ? IndustrialDarkTokens.spacingCard // 16px
+                      : IndustrialDarkTokens.spacingCompact, // 8px
+                  vertical: IndustrialDarkTokens.spacingItem, // 12px
                 ),
                 counterText: '', // Hide default counter
               ),
@@ -431,34 +421,36 @@ class _ViaInputState extends State<ViaInput>
 
           // Helper or error text
           if (widget.helperText != null || hasError) ...[
-            const SizedBox(height: ViaDesignTokens.spacingSm),
+            const SizedBox(height: IndustrialDarkTokens.spacingCompact),
             Row(
               children: [
                 if (hasError) ...[
                   Icon(
                     Icons.error_outline,
-                    size: ViaDesignTokens.iconXs,
-                    color: ViaDesignTokens.critical,
+                    size: 16,
+                    color: IndustrialDarkTokens.error,
                   ),
-                  const SizedBox(width: ViaDesignTokens.spacingXs),
+                  const SizedBox(width: IndustrialDarkTokens.spacingMinimal),
                 ],
                 Expanded(
                   child: Text(
                     hasError ? widget.errorText! : widget.helperText!,
-                    style: ViaDesignTokens.bodySmall.copyWith(
+                    style: IndustrialDarkTokens.bodyStyle.copyWith(
+                      fontSize: IndustrialDarkTokens.fontSizeSmall,
                       color: hasError
-                          ? ViaDesignTokens.critical
-                          : ViaDesignTokens.textMuted,
+                          ? IndustrialDarkTokens.error
+                          : IndustrialDarkTokens.textSecondary,
                     ),
                   ),
                 ),
                 // Character counter
                 if (widget.maxLength != null) ...[
-                  const SizedBox(width: ViaDesignTokens.spacingSm),
+                  const SizedBox(width: IndustrialDarkTokens.spacingCompact),
                   Text(
                     '${_controller.text.length}/${widget.maxLength}',
-                    style: ViaDesignTokens.bodySmall.copyWith(
-                      color: ViaDesignTokens.textMuted,
+                    style: IndustrialDarkTokens.bodyStyle.copyWith(
+                      fontSize: IndustrialDarkTokens.fontSizeSmall,
+                      color: IndustrialDarkTokens.textSecondary,
                     ),
                   ),
                 ],
@@ -476,10 +468,10 @@ class _ViaInputState extends State<ViaInput>
       return IconButton(
         icon: Icon(
           _obscureText ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-          size: ViaDesignTokens.iconSm,
+          size: 20,
           color: _isFocused
-              ? ViaDesignTokens.primary
-              : ViaDesignTokens.textMuted,
+              ? IndustrialDarkTokens.accentPrimary
+              : IndustrialDarkTokens.textSecondary,
         ),
         onPressed: _togglePasswordVisibility,
       );
@@ -490,10 +482,10 @@ class _ViaInputState extends State<ViaInput>
       return IconButton(
         icon: Icon(
           widget.suffixIcon,
-          size: ViaDesignTokens.iconSm,
+          size: 20,
           color: _isFocused
-              ? ViaDesignTokens.primary
-              : ViaDesignTokens.textMuted,
+              ? IndustrialDarkTokens.accentPrimary
+              : IndustrialDarkTokens.textSecondary,
         ),
         onPressed: widget.onSuffixIconTap,
       );

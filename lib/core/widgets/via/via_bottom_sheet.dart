@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
+import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 
-/// VIA Design System Bottom Sheet Component
+/// Industrial Dark Bottom Sheet Component
 ///
 /// Draggable bottom sheet with:
 /// - Snap points for different heights
@@ -13,7 +13,7 @@ import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
 ///
 /// Features:
 /// - Haptic feedback on snap
-/// - Integration with VIA design tokens
+/// - Outline-based depth (no shadows)
 /// - Customizable snap points
 
 class ViaBottomSheet extends StatefulWidget {
@@ -96,7 +96,7 @@ class _ViaBottomSheetState extends State<ViaBottomSheet>
     super.initState();
     _currentSnapIndex = widget.initialSnapIndex;
     _controller = AnimationController(
-      duration: ViaDesignTokens.durationNormal,
+      duration: IndustrialDarkTokens.durationMedium,
       vsync: this,
     );
     _controller.forward();
@@ -202,7 +202,7 @@ class _ViaBottomSheetState extends State<ViaBottomSheet>
                     end: Offset.zero,
                   ).animate(CurvedAnimation(
                     parent: _controller,
-                    curve: ViaDesignTokens.curveDeceleration,
+                    curve: IndustrialDarkTokens.curveStandard,
                   )),
                   child: child,
                 ),
@@ -215,24 +215,18 @@ class _ViaBottomSheetState extends State<ViaBottomSheet>
                 height: _getCurrentHeight(),
                 decoration: BoxDecoration(
                   color: widget.backgroundColor ??
-                      ViaDesignTokens.surfaceSecondary,
+                      IndustrialDarkTokens.bgSurface,
                   borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(ViaDesignTokens.radiusXl),
-                    topRight: Radius.circular(ViaDesignTokens.radiusXl),
+                    topLeft: Radius.circular(IndustrialDarkTokens.radiusCard),
+                    topRight: Radius.circular(IndustrialDarkTokens.radiusCard),
                   ),
                   border: Border(
                     top: BorderSide(
-                      color: ViaDesignTokens.borderPrimary,
-                      width: 1,
+                      color: IndustrialDarkTokens.outline,
+                      width: IndustrialDarkTokens.borderWidth, // 2px
                     ),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.3),
-                      blurRadius: 20,
-                      offset: const Offset(0, -4),
-                    ),
-                  ],
+                  // NO boxShadow in Industrial Dark - outline-based depth only
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -241,17 +235,16 @@ class _ViaBottomSheetState extends State<ViaBottomSheet>
                     if (widget.showDragHandle)
                       Padding(
                         padding: const EdgeInsets.only(
-                          top: ViaDesignTokens.spacingMd,
-                          bottom: ViaDesignTokens.spacingSm,
+                          top: IndustrialDarkTokens.spacingItem,
+                          bottom: IndustrialDarkTokens.spacingCompact,
                         ),
                         child: Container(
                           width: 40,
                           height: 4,
                           decoration: BoxDecoration(
-                            color: ViaDesignTokens.textMuted
+                            color: IndustrialDarkTokens.textSecondary
                                 .withValues(alpha: 0.3),
-                            borderRadius: BorderRadius.circular(
-                                ViaDesignTokens.radiusFull),
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
                       ),
@@ -260,22 +253,22 @@ class _ViaBottomSheetState extends State<ViaBottomSheet>
                     if (widget.header != null) ...[
                       Padding(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: ViaDesignTokens.spacingLg,
-                          vertical: ViaDesignTokens.spacingMd,
+                          horizontal: IndustrialDarkTokens.spacingCard,
+                          vertical: IndustrialDarkTokens.spacingItem,
                         ),
                         child: widget.header!,
                       ),
                       Divider(
                         height: 1,
                         thickness: 1,
-                        color: ViaDesignTokens.borderPrimary,
+                        color: IndustrialDarkTokens.outline,
                       ),
                     ],
 
                     // Content
                     Expanded(
                       child: SingleChildScrollView(
-                        padding: const EdgeInsets.all(ViaDesignTokens.spacingLg),
+                        padding: const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
                         child: widget.child,
                       ),
                     ),
@@ -285,10 +278,10 @@ class _ViaBottomSheetState extends State<ViaBottomSheet>
                       Divider(
                         height: 1,
                         thickness: 1,
-                        color: ViaDesignTokens.borderPrimary,
+                        color: IndustrialDarkTokens.outline,
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(ViaDesignTokens.spacingLg),
+                        padding: const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
                         child: widget.footer!,
                       ),
                     ],
@@ -334,7 +327,7 @@ class ViaBottomSheetWithIndicators extends StatelessWidget {
       header: Column(
         children: [
           if (header != null) header!,
-          const SizedBox(height: ViaDesignTokens.spacingSm),
+          const SizedBox(height: IndustrialDarkTokens.spacingCompact),
           // Snap point indicators
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -342,20 +335,20 @@ class ViaBottomSheetWithIndicators extends StatelessWidget {
               snapPoints.length,
               (index) => Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: ViaDesignTokens.spacingXxs,
+                  horizontal: IndustrialDarkTokens.spacingMinimal,
                 ),
                 child: GestureDetector(
                   onTap: () => onSnapIndexChanged?.call(index),
                   child: AnimatedContainer(
-                    duration: ViaDesignTokens.durationFast,
+                    duration: IndustrialDarkTokens.durationFast,
                     width: index == currentSnapIndex ? 24 : 8,
                     height: 4,
                     decoration: BoxDecoration(
                       color: index == currentSnapIndex
-                          ? ViaDesignTokens.primary
-                          : ViaDesignTokens.textMuted.withValues(alpha: 0.3),
+                          ? IndustrialDarkTokens.accentPrimary
+                          : IndustrialDarkTokens.textSecondary.withValues(alpha: 0.3),
                       borderRadius:
-                          BorderRadius.circular(ViaDesignTokens.radiusFull),
+                          BorderRadius.circular(20.0),
                     ),
                   ),
                 ),

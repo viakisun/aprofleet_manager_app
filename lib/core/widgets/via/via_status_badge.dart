@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
+import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 
-/// VIA Design System Status Badge Component
+/// Industrial Dark Status Badge Component
 ///
 /// Status indicators for golf cart states with:
 /// - 5 status variants: active, idle, charging, maintenance, offline
@@ -13,7 +13,7 @@ import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
 /// Features:
 /// - Animated pulse effect for real-time status
 /// - Color-coded based on golf cart state
-/// - Integration with VIA design tokens
+/// - No shadows (outline-based depth only)
 
 enum ViaStatus {
   active,    // Green - Cart is active/moving
@@ -145,15 +145,15 @@ class _ViaStatusBadgeState extends State<ViaStatusBadge>
   Color _getStatusColor() {
     switch (widget.status) {
       case ViaStatus.active:
-        return ViaDesignTokens.statusActive;
+        return IndustrialDarkTokens.statusActive;
       case ViaStatus.idle:
-        return ViaDesignTokens.statusIdle;
+        return IndustrialDarkTokens.statusIdle;
       case ViaStatus.charging:
-        return ViaDesignTokens.statusCharging;
+        return IndustrialDarkTokens.statusCharging;
       case ViaStatus.maintenance:
-        return ViaDesignTokens.statusMaintenance;
+        return IndustrialDarkTokens.statusMaintenance;
       case ViaStatus.offline:
-        return ViaDesignTokens.statusOffline;
+        return IndustrialDarkTokens.statusOffline;
     }
   }
 
@@ -209,15 +209,15 @@ class _ViaStatusBadgeState extends State<ViaStatusBadge>
   Widget _buildCompactBadge(Color statusColor) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: ViaDesignTokens.spacingSm,
-        vertical: ViaDesignTokens.spacingXs,
+        horizontal: IndustrialDarkTokens.spacingCompact,
+        vertical: IndustrialDarkTokens.spacingMinimal,
       ),
       decoration: BoxDecoration(
         color: statusColor.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(ViaDesignTokens.radiusFull),
+        borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusChip),
         border: Border.all(
           color: statusColor.withValues(alpha: 0.3),
-          width: 1,
+          width: IndustrialDarkTokens.borderWidthThin,
         ),
       ),
       child: Row(
@@ -244,31 +244,26 @@ class _ViaStatusBadgeState extends State<ViaStatusBadge>
                     );
                   },
                 ),
-              // Status dot
+              // Status dot (NO boxShadow in Industrial Dark)
               Container(
                 width: 8.0,
                 height: 8.0,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: statusColor,
-                  boxShadow: [
-                    BoxShadow(
-                      color: statusColor.withValues(alpha: 0.4),
-                      blurRadius: 4.0,
-                      spreadRadius: 1.0,
-                    ),
-                  ],
+                  // NO boxShadow
                 ),
               ),
             ],
           ),
-          const SizedBox(width: ViaDesignTokens.spacingSm),
+          const SizedBox(width: IndustrialDarkTokens.spacingCompact),
           // Status text
           Text(
             _getStatusText().toUpperCase(),
-            style: ViaDesignTokens.labelSmall.copyWith(
+            style: IndustrialDarkTokens.labelStyle.copyWith(
+              fontSize: IndustrialDarkTokens.fontSizeSmall,
               color: statusColor,
-              fontWeight: FontWeight.w600,
+              fontWeight: IndustrialDarkTokens.fontWeightBold,
             ),
           ),
         ],
@@ -279,15 +274,15 @@ class _ViaStatusBadgeState extends State<ViaStatusBadge>
   Widget _buildExpandedBadge(Color statusColor) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: ViaDesignTokens.spacingMd,
-        vertical: ViaDesignTokens.spacingSm,
+        horizontal: IndustrialDarkTokens.spacingItem,
+        vertical: IndustrialDarkTokens.spacingCompact,
       ),
       decoration: BoxDecoration(
         color: statusColor.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(ViaDesignTokens.radiusMd),
+        borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
         border: Border.all(
           color: statusColor.withValues(alpha: 0.3),
-          width: 1,
+          width: IndustrialDarkTokens.borderWidthThin,
         ),
       ),
       child: Row(
@@ -314,30 +309,24 @@ class _ViaStatusBadgeState extends State<ViaStatusBadge>
                     );
                   },
                 ),
-              // Icon container
+              // Icon container (NO boxShadow in Industrial Dark)
               Container(
                 width: 32.0,
                 height: 32.0,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: statusColor.withValues(alpha: 0.2),
-                  boxShadow: [
-                    BoxShadow(
-                      color: statusColor.withValues(alpha: 0.3),
-                      blurRadius: 8.0,
-                      spreadRadius: 1.0,
-                    ),
-                  ],
+                  // NO boxShadow
                 ),
                 child: Icon(
                   _getStatusIcon(),
-                  size: ViaDesignTokens.iconSm,
+                  size: 20.0,
                   color: statusColor,
                 ),
               ),
             ],
           ),
-          const SizedBox(width: ViaDesignTokens.spacingMd),
+          const SizedBox(width: IndustrialDarkTokens.spacingItem),
           // Text content
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -345,17 +334,19 @@ class _ViaStatusBadgeState extends State<ViaStatusBadge>
             children: [
               Text(
                 _getStatusText(),
-                style: ViaDesignTokens.labelMedium.copyWith(
+                style: IndustrialDarkTokens.labelStyle.copyWith(
+                  fontSize: IndustrialDarkTokens.fontSizeLabel,
                   color: statusColor,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: IndustrialDarkTokens.fontWeightBold,
                 ),
               ),
               if (widget.description != null) ...[
-                const SizedBox(height: ViaDesignTokens.spacingXxs),
+                const SizedBox(height: IndustrialDarkTokens.spacingMinimal),
                 Text(
                   widget.description!,
-                  style: ViaDesignTokens.bodySmall.copyWith(
-                    color: ViaDesignTokens.textMuted,
+                  style: IndustrialDarkTokens.bodyStyle.copyWith(
+                    fontSize: IndustrialDarkTokens.fontSizeSmall,
+                    color: IndustrialDarkTokens.textSecondary,
                   ),
                 ),
               ],

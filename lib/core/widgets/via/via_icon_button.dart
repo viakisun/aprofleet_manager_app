@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
+import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 
-/// VIA Design System Icon Button Component
+/// Industrial Dark Icon Button Component
 ///
 /// Provides circular icon-only buttons for UI controls
 ///
@@ -10,8 +10,8 @@ import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
 /// - Press scale animation (0.96)
 /// - Haptic feedback
 /// - 3 sizes: small (32px), medium (40px), large (48px)
-/// - 3 variants: primary, secondary, ghost
-/// - Disabled state
+/// - 3 variants: primary (blue), secondary (outline), ghost (semi-transparent)
+/// - Disabled state (30% opacity)
 /// - Tooltip support
 enum ViaIconButtonSize {
   small,
@@ -96,7 +96,7 @@ class _ViaIconButtonState extends State<ViaIconButton>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: ViaDesignTokens.durationFast,
+      duration: IndustrialDarkTokens.durationFast,
       vsync: this,
     );
     _scaleAnimation = Tween<double>(
@@ -104,7 +104,7 @@ class _ViaIconButtonState extends State<ViaIconButton>
       end: 0.96,
     ).animate(CurvedAnimation(
       parent: _controller,
-      curve: ViaDesignTokens.curveStandard,
+      curve: IndustrialDarkTokens.curveStandard,
     ));
   }
 
@@ -151,8 +151,8 @@ class _ViaIconButtonState extends State<ViaIconButton>
         onTapCancel: _handleTapCancel,
         onTap: _handleTap,
         child: AnimatedOpacity(
-          opacity: isDisabled ? ViaDesignTokens.opacityDisabled : 1.0,
-          duration: ViaDesignTokens.durationFast,
+          opacity: isDisabled ? 0.3 : 1.0, // 30% opacity when disabled
+          duration: IndustrialDarkTokens.durationFast,
           child: Container(
             width: buttonSize,
             height: buttonSize,
@@ -193,11 +193,11 @@ class _ViaIconButtonState extends State<ViaIconButton>
   double _getIconSize() {
     switch (widget.size) {
       case ViaIconButtonSize.small:
-        return ViaDesignTokens.iconXs;
+        return 16; // Small icon
       case ViaIconButtonSize.medium:
-        return ViaDesignTokens.iconSm;
+        return 20; // Medium icon
       case ViaIconButtonSize.large:
-        return ViaDesignTokens.iconMd;
+        return 24; // Large icon
     }
   }
 
@@ -214,29 +214,31 @@ class _ViaIconButtonState extends State<ViaIconButton>
 
     switch (widget.variant) {
       case ViaIconButtonVariant.primary:
+        // Accent blue background (#0072E5)
         return BoxDecoration(
           color: isDisabled
-              ? ViaDesignTokens.primary.withValues(alpha: 0.3)
-              : ViaDesignTokens.primary,
+              ? IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.3)
+              : IndustrialDarkTokens.accentPrimary,
           shape: BoxShape.circle,
         );
 
       case ViaIconButtonVariant.secondary:
+        // Transparent with 2px outline
         return BoxDecoration(
           color: Colors.transparent,
           shape: BoxShape.circle,
           border: Border.all(
             color: isDisabled
-                ? ViaDesignTokens.primary.withValues(alpha: 0.3)
-                : ViaDesignTokens.primary,
-            width: 1.5,
+                ? IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.3)
+                : IndustrialDarkTokens.accentPrimary,
+            width: IndustrialDarkTokens.borderWidth, // 2px
           ),
         );
 
       case ViaIconButtonVariant.ghost:
-        // Semi-transparent background (default for map controls)
+        // Semi-transparent dark gray background (for map controls)
         return BoxDecoration(
-          color: ViaDesignTokens.surfaceSecondary.withValues(alpha: 0.8),
+          color: IndustrialDarkTokens.bgSurface.withValues(alpha: 0.9),
           shape: BoxShape.circle,
         );
     }
@@ -246,18 +248,21 @@ class _ViaIconButtonState extends State<ViaIconButton>
     final isDisabled = widget.onPressed == null;
 
     if (isDisabled) {
-      return ViaDesignTokens.textDisabled;
+      return IndustrialDarkTokens.textSecondary.withValues(alpha: 0.3);
     }
 
     switch (widget.variant) {
       case ViaIconButtonVariant.primary:
+        // White icon on blue background
         return Colors.white;
 
       case ViaIconButtonVariant.secondary:
-        return ViaDesignTokens.primary;
+        // Accent blue icon (matches border)
+        return IndustrialDarkTokens.accentPrimary;
 
       case ViaIconButtonVariant.ghost:
-        return ViaDesignTokens.textPrimary;
+        // Primary text color (85% white)
+        return IndustrialDarkTokens.textPrimary;
     }
   }
 }

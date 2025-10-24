@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'router/app_router.dart';
-import 'theme/via_theme.dart';
+import 'theme/industrial_dark_theme.dart';
 import 'core/localization/app_localizations.dart';
 import 'core/controllers/language_controller.dart';
 
@@ -27,8 +27,8 @@ class AproFleetApp extends ConsumerWidget {
       title: 'AproFleet Manager',
       debugShowCheckedModeBanner: false,
 
-      // Theme - VIA Design System
-      theme: ViaTheme.darkTheme,
+      // Theme - Industrial Dark UI System
+      theme: IndustrialDarkTheme.darkTheme,
 
       // Localization
       locale: currentLocale,

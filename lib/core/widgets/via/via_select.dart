@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../theme/via_design_tokens.dart';
+import '../../theme/industrial_dark_tokens.dart';
 import 'via_bottom_sheet.dart';
 
 /// VIA Design System - Select/Dropdown Component
@@ -93,7 +93,7 @@ class ViaSelect<T> extends StatelessWidget {
         style: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w600,
-          color: ViaDesignTokens.textPrimary,
+          color: IndustrialDarkTokens.textPrimary,
         ),
       ),
       child: _SelectionList<T>(
@@ -125,30 +125,30 @@ class ViaSelect<T> extends StatelessWidget {
         if (label != null) ...[
           Text(
             label!,
-            style: ViaDesignTokens.labelMedium.copyWith(
+            style: IndustrialDarkTokens.labelStyle.copyWith(
               color: isDisabled
-                  ? ViaDesignTokens.textMuted
-                  : ViaDesignTokens.textPrimary,
+                  ? IndustrialDarkTokens.textSecondary
+                  : IndustrialDarkTokens.textPrimary,
             ),
           ),
-          const SizedBox(height: ViaDesignTokens.spacingSm),
+          const SizedBox(height: IndustrialDarkTokens.spacingCompact),
         ],
         GestureDetector(
           onTap: isDisabled ? null : () => _showSelectionSheet(context),
           child: Container(
             padding: const EdgeInsets.symmetric(
-              horizontal: ViaDesignTokens.spacingMd,
-              vertical: ViaDesignTokens.spacingMd,
+              horizontal: IndustrialDarkTokens.spacingItem,
+              vertical: IndustrialDarkTokens.spacingItem,
             ),
             decoration: BoxDecoration(
               color: isDisabled
-                  ? ViaDesignTokens.surfaceSecondary.withValues(alpha: 0.5)
-                  : ViaDesignTokens.surfaceSecondary,
-              borderRadius: BorderRadius.circular(ViaDesignTokens.radiusMd),
+                  ? IndustrialDarkTokens.bgSurface.withValues(alpha: 0.5)
+                  : IndustrialDarkTokens.bgSurface,
+              borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
               border: Border.all(
                 color: isDisabled
-                    ? ViaDesignTokens.borderPrimary.withValues(alpha: 0.3)
-                    : ViaDesignTokens.borderPrimary,
+                    ? IndustrialDarkTokens.outline.withValues(alpha: 0.3)
+                    : IndustrialDarkTokens.outline,
                 width: 1.5,
               ),
             ),
@@ -157,31 +157,31 @@ class ViaSelect<T> extends StatelessWidget {
                 if (icon != null) ...[
                   Icon(
                     icon,
-                    size: ViaDesignTokens.iconSm,
+                    size: 20,
                     color: isDisabled
-                        ? ViaDesignTokens.textMuted
-                        : ViaDesignTokens.textSecondary,
+                        ? IndustrialDarkTokens.textSecondary
+                        : IndustrialDarkTokens.textSecondary,
                   ),
-                  const SizedBox(width: ViaDesignTokens.spacingMd),
+                  const SizedBox(width: IndustrialDarkTokens.spacingItem),
                 ],
                 Expanded(
                   child: Text(
                     displayText,
-                    style: ViaDesignTokens.bodyMedium.copyWith(
+                    style: IndustrialDarkTokens.bodyStyle.copyWith(
                       color: value == null
-                          ? ViaDesignTokens.textMuted
+                          ? IndustrialDarkTokens.textSecondary
                           : isDisabled
-                              ? ViaDesignTokens.textMuted
-                              : ViaDesignTokens.textPrimary,
+                              ? IndustrialDarkTokens.textSecondary
+                              : IndustrialDarkTokens.textPrimary,
                     ),
                   ),
                 ),
                 Icon(
                   Icons.keyboard_arrow_down,
-                  size: ViaDesignTokens.iconMd,
+                  size: 24,
                   color: isDisabled
-                      ? ViaDesignTokens.textMuted
-                      : ViaDesignTokens.textSecondary,
+                      ? IndustrialDarkTokens.textSecondary
+                      : IndustrialDarkTokens.textSecondary,
                 ),
               ],
             ),
@@ -248,39 +248,39 @@ class _SelectionListState<T> extends State<_SelectionList<T>> {
       children: [
         if (widget.enableSearch) ...[
           Padding(
-            padding: const EdgeInsets.only(bottom: ViaDesignTokens.spacingMd),
+            padding: const EdgeInsets.only(bottom: IndustrialDarkTokens.spacingItem),
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
                 hintText: 'Search...',
-                hintStyle: TextStyle(color: ViaDesignTokens.textMuted),
+                hintStyle: TextStyle(color: IndustrialDarkTokens.textSecondary),
                 prefixIcon: Icon(
                   Icons.search,
-                  color: ViaDesignTokens.textSecondary,
+                  color: IndustrialDarkTokens.textSecondary,
                 ),
                 filled: true,
-                fillColor: ViaDesignTokens.surfaceSecondary,
+                fillColor: IndustrialDarkTokens.bgSurface,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(ViaDesignTokens.radiusMd),
+                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
                   borderSide: BorderSide(
-                    color: ViaDesignTokens.borderPrimary,
+                    color: IndustrialDarkTokens.outline,
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(ViaDesignTokens.radiusMd),
+                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
                   borderSide: BorderSide(
-                    color: ViaDesignTokens.borderPrimary,
+                    color: IndustrialDarkTokens.outline,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(ViaDesignTokens.radiusMd),
+                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
                   borderSide: const BorderSide(
-                    color: ViaDesignTokens.primary,
+                    color: IndustrialDarkTokens.accentPrimary,
                     width: 2,
                   ),
                 ),
               ),
-              style: const TextStyle(color: ViaDesignTokens.textPrimary),
+              style: const TextStyle(color: IndustrialDarkTokens.textPrimary),
             ),
           ),
         ],
@@ -296,16 +296,16 @@ class _SelectionListState<T> extends State<_SelectionList<T>> {
                 onTap: () => widget.onChanged(item),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: ViaDesignTokens.spacingLg,
-                    vertical: ViaDesignTokens.spacingMd,
+                    horizontal: IndustrialDarkTokens.spacingCard,
+                    vertical: IndustrialDarkTokens.spacingItem,
                   ),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? ViaDesignTokens.primary.withValues(alpha: 0.1)
+                        ? IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.1)
                         : null,
                     border: Border(
                       bottom: BorderSide(
-                        color: ViaDesignTokens.borderPrimary.withValues(alpha: 0.5),
+                        color: IndustrialDarkTokens.outline.withValues(alpha: 0.5),
                         width: 1,
                       ),
                     ),
@@ -317,10 +317,10 @@ class _SelectionListState<T> extends State<_SelectionList<T>> {
                             ? widget.itemWidgetBuilder!(item)
                             : Text(
                                 widget.itemBuilder(item),
-                                style: ViaDesignTokens.bodyMedium.copyWith(
+                                style: IndustrialDarkTokens.bodyStyle.copyWith(
                                   color: isSelected
-                                      ? ViaDesignTokens.primary
-                                      : ViaDesignTokens.textPrimary,
+                                      ? IndustrialDarkTokens.accentPrimary
+                                      : IndustrialDarkTokens.textPrimary,
                                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                                 ),
                               ),
@@ -328,8 +328,8 @@ class _SelectionListState<T> extends State<_SelectionList<T>> {
                       if (isSelected)
                         const Icon(
                           Icons.check_circle,
-                          color: ViaDesignTokens.primary,
-                          size: ViaDesignTokens.iconMd,
+                          color: IndustrialDarkTokens.accentPrimary,
+                          size: 24,
                         ),
                     ],
                   ),
@@ -400,10 +400,10 @@ class ViaSelectWithItems<T> extends StatelessWidget {
           if (item.icon != null) ...[
             Icon(
               item.icon,
-              color: ViaDesignTokens.textSecondary,
-              size: ViaDesignTokens.iconMd,
+              color: IndustrialDarkTokens.textSecondary,
+              size: 24,
             ),
-            const SizedBox(width: ViaDesignTokens.spacingMd),
+            const SizedBox(width: IndustrialDarkTokens.spacingItem),
           ],
           Expanded(
             child: Column(
@@ -411,16 +411,16 @@ class ViaSelectWithItems<T> extends StatelessWidget {
               children: [
                 Text(
                   item.label,
-                  style: ViaDesignTokens.labelMedium.copyWith(
-                    color: ViaDesignTokens.textPrimary,
+                  style: IndustrialDarkTokens.labelStyle.copyWith(
+                    color: IndustrialDarkTokens.textPrimary,
                   ),
                 ),
                 if (item.description != null) ...[
-                  const SizedBox(height: ViaDesignTokens.spacingXxs),
+                  const SizedBox(height: IndustrialDarkTokens.spacingMinimal),
                   Text(
                     item.description!,
-                    style: ViaDesignTokens.bodySmall.copyWith(
-                      color: ViaDesignTokens.textSecondary,
+                    style: IndustrialDarkTokens.bodyStyle.copyWith(
+                      color: IndustrialDarkTokens.textSecondary,
                     ),
                   ),
                 ],
