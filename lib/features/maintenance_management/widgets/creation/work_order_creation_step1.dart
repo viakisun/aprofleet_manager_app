@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/design_tokens.dart';
+import '../../../../core/widgets/via/via_input.dart';
 import '../../controllers/work_order_creation_controller.dart';
 import '../work_order_type_selector.dart';
 import '../priority_selector.dart';
@@ -49,48 +50,19 @@ class WorkOrderCreationStep1 extends ConsumerWidget {
           // Description Section
           _buildSectionHeader('DESCRIPTION'),
           const SizedBox(height: DesignTokens.spacingMd),
-          TextField(
-            controller:
-                TextEditingController(text: createWoState.draft.description),
+          ViaInput(
+            initialValue: createWoState.draft.description,
             onChanged: controller.setDescription,
+            label: 'Description',
+            placeholder: 'Describe the work to be performed...',
             maxLines: 4,
-            style: const TextStyle(
-              color: DesignTokens.textPrimary,
-              fontSize: DesignTokens.fontSizeMd,
-            ),
-            decoration: InputDecoration(
-              hintText: 'Describe the work to be performed...',
-              hintStyle: TextStyle(
-                color: DesignTokens.textTertiary,
-                fontSize: DesignTokens.fontSizeMd,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-                borderSide: BorderSide(color: DesignTokens.borderPrimary),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-                borderSide: BorderSide(color: DesignTokens.borderPrimary),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-                borderSide: const BorderSide(color: DesignTokens.textPrimary),
-              ),
-              contentPadding: const EdgeInsets.all(DesignTokens.spacingMd),
-            ),
+            validator: (value) {
+              if (value == null || value.length < 10) {
+                return 'Description must be at least 10 characters';
+              }
+              return null;
+            },
           ),
-
-          const SizedBox(height: DesignTokens.spacingMd),
-
-          // Validation errors
-          if (createWoState.draft.description.length < 10)
-            const Text(
-              'Description must be at least 10 characters',
-              style: TextStyle(
-                color: DesignTokens.alertCritical,
-                fontSize: DesignTokens.fontSizeSm,
-              ),
-            ),
         ],
       ),
     );

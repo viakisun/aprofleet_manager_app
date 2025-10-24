@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/design_tokens.dart';
+import '../../../../core/widgets/via/via_input.dart';
+import '../../../../core/widgets/via/via_card.dart';
 
 /// Widget for selecting technician
 class TechnicianSelector extends StatelessWidget {
@@ -27,32 +29,10 @@ class TechnicianSelector extends StatelessWidget {
     return Column(
       children: [
         // Search field
-        TextField(
-          decoration: InputDecoration(
-            hintText: 'Search technicians...',
-            hintStyle: TextStyle(
-              color: DesignTokens.textTertiary,
-              fontSize: DesignTokens.fontSizeMd,
-            ),
-            prefixIcon: Icon(
-              Icons.search,
-              color: DesignTokens.textSecondary,
-              size: DesignTokens.iconMd,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-              borderSide: BorderSide(color: DesignTokens.borderPrimary),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-              borderSide: BorderSide(color: DesignTokens.borderPrimary),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-              borderSide: const BorderSide(color: DesignTokens.textPrimary),
-            ),
-            contentPadding: const EdgeInsets.all(DesignTokens.spacingMd),
-          ),
+        ViaInput(
+          label: 'Search',
+          placeholder: 'Search technicians...',
+          prefixIcon: Icons.search,
         ),
 
         const SizedBox(height: DesignTokens.spacingMd),
@@ -61,21 +41,12 @@ class TechnicianSelector extends StatelessWidget {
         ...technicians.map((technician) {
           final isSelected = selectedTechnician == technician;
 
-          return Container(
-            margin: const EdgeInsets.only(bottom: DesignTokens.spacingSm),
-            decoration: BoxDecoration(
-              color: isSelected
-                  ? DesignTokens.bgSecondary
-                  : DesignTokens.bgTertiary,
-              borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-              border: Border.all(
-                color: isSelected
-                    ? DesignTokens.textPrimary
-                    : DesignTokens.borderPrimary,
-                width: 1,
-              ),
-            ),
-            child: ListTile(
+          return Padding(
+            padding: const EdgeInsets.only(bottom: DesignTokens.spacingSm),
+            child: ViaCard(
+              onTap: () => onTechnicianSelected(technician),
+              child: ListTile(
+                contentPadding: EdgeInsets.zero,
               leading: CircleAvatar(
                 backgroundColor: DesignTokens.textPrimary,
                 child: Text(
@@ -108,7 +79,7 @@ class TechnicianSelector extends StatelessWidget {
                       size: DesignTokens.iconMd,
                     )
                   : null,
-              onTap: () => onTechnicianSelected(technician),
+              ),
             ),
           );
         }),

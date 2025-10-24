@@ -48,18 +48,11 @@ class _PartsListState extends State<PartsList> {
                 ),
               ),
             ),
-            ElevatedButton.icon(
+            ViaButton.primary(
               onPressed: _addPart,
-              icon: const Icon(Icons.add),
-              label: const Text('Add Part'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: DesignTokens.textPrimary,
-                foregroundColor: DesignTokens.bgPrimary,
-                elevation: DesignTokens.elevationNone,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-                ),
-              ),
+              text: 'Add Part',
+              icon: Icons.add,
+              size: ViaButtonSize.small,
             ),
           ],
         ),

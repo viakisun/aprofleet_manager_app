@@ -7,9 +7,10 @@ import 'dart:convert';
 import '../../../domain/models/work_order.dart';
 import '../../../core/localization/app_localizations.dart';
 import '../../../core/theme/design_tokens.dart';
-import '../../../core/widgets/common/modals/base_modal.dart';
 import '../../../core/widgets/steps/stepper.dart' as custom;
 import '../../../core/widgets/via/via_toast.dart';
+import '../../../core/widgets/via/via_button.dart';
+import '../../../core/widgets/via/via_bottom_sheet.dart';
 import '../controllers/work_order_creation_controller.dart';
 import '../widgets/creation/work_order_creation_step1.dart';
 import '../widgets/creation/work_order_creation_step2.dart';
@@ -70,9 +71,13 @@ class _WorkOrderCreationPageState extends ConsumerState<WorkOrderCreationPage> {
           onPressed: () => _showExitDialog(),
         ),
         actions: [
-          TextButton(
-            onPressed: _canSaveDraft() ? _saveDraft : null,
-            child: const Text('Save Draft'),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: ViaButton.ghost(
+              text: 'Save Draft',
+              onPressed: _canSaveDraft() ? _saveDraft : null,
+              size: ViaButtonSize.small,
+            ),
           ),
         ],
       ),
@@ -131,42 +136,19 @@ class _WorkOrderCreationPageState extends ConsumerState<WorkOrderCreationPage> {
         children: [
           // Previous button
           Expanded(
-            child: ElevatedButton(
+            child: ViaButton.ghost(
+              text: 'PREVIOUS',
               onPressed: _currentStep > 0 ? _previousStep : null,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.transparent,
-                foregroundColor: DesignTokens.textPrimary,
-                side: BorderSide(color: DesignTokens.borderSecondary),
-                elevation: DesignTokens.elevationNone,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: DesignTokens.spacingLg,
-                  vertical: DesignTokens.spacingMd,
-                ),
-              ),
-              child: const Text('PREVIOUS'),
+              isFullWidth: true,
             ),
           ),
           const SizedBox(width: DesignTokens.spacingMd),
           // Next button
           Expanded(
-            child: ElevatedButton(
+            child: ViaButton.primary(
+              text: 'NEXT',
               onPressed: _canProceedToNextStep() ? _nextStep : null,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: DesignTokens.textPrimary,
-                foregroundColor: DesignTokens.bgPrimary,
-                elevation: DesignTokens.elevationNone,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: DesignTokens.spacingLg,
-                  vertical: DesignTokens.spacingMd,
-                ),
-              ),
-              child: const Text('NEXT'),
+              isFullWidth: true,
             ),
           ),
         ],
@@ -274,66 +256,44 @@ class _WorkOrderCreationPageState extends ConsumerState<WorkOrderCreationPage> {
   }
 
   void _showExitDialog() {
-    BaseModal.show(
+    ViaBottomSheet.show(
       context: context,
-      title: 'Exit Work Order Creation',
-      child: Padding(
-        padding: const EdgeInsets.all(DesignTokens.spacingLg),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Are you sure you want to exit? Any unsaved changes will be lost.',
-              style: TextStyle(
-                fontSize: DesignTokens.fontSizeMd,
-                color: DesignTokens.textSecondary,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: DesignTokens.spacingXl),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: DesignTokens.textPrimary,
-                      side: BorderSide(color: DesignTokens.borderSecondary),
-                      elevation: DesignTokens.elevationNone,
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(DesignTokens.radiusSm),
-                      ),
-                    ),
-                    child: const Text('Cancel'),
-                  ),
-                ),
-                const SizedBox(width: DesignTokens.spacingMd),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      context.go('/mm/list');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: DesignTokens.textPrimary,
-                      foregroundColor: DesignTokens.bgPrimary,
-                      elevation: DesignTokens.elevationNone,
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(DesignTokens.radiusSm),
-                      ),
-                    ),
-                    child: const Text('Exit'),
-                  ),
-                ),
-              ],
-            ),
-          ],
+      snapPoints: [0.3, 0.5],
+      header: const Text(
+        'Exit Work Order Creation',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: DesignTokens.textPrimary,
         ),
+      ),
+      child: Text(
+        'Are you sure you want to exit? Any unsaved changes will be lost.',
+        style: TextStyle(
+          fontSize: DesignTokens.fontSizeMd,
+          color: DesignTokens.textSecondary,
+        ),
+        textAlign: TextAlign.center,
+      ),
+      footer: Row(
+        children: [
+          Expanded(
+            child: ViaButton.ghost(
+              text: 'Cancel',
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ),
+          const SizedBox(width: DesignTokens.spacingMd),
+          Expanded(
+            child: ViaButton.primary(
+              text: 'Exit',
+              onPressed: () {
+                Navigator.of(context).pop();
+                context.go('/mm/list');
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

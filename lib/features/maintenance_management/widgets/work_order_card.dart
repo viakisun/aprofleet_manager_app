@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/models/work_order.dart';
 import '../../../core/widgets/shared_widgets.dart';
+import '../../../core/widgets/via/via_card.dart';
+import '../../../core/widgets/via/via_priority_badge.dart';
+import '../../../core/widgets/via/via_status_badge.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/localization/app_localizations.dart';
+import '../../../core/theme/design_tokens.dart';
 
 class WorkOrderCard extends StatelessWidget {
   final WorkOrder workOrder;
@@ -19,26 +23,12 @@ class WorkOrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final priorityColor =
         AppConstants.priorityColors[workOrder.priority] ?? Colors.grey;
-    final statusColor = _getStatusColor(workOrder.status);
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.06),
-          width: 1,
-        ),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+    return ViaCard(
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
               // Header with Priority Bar
               Row(
                 children: [
@@ -70,27 +60,11 @@ class WorkOrderCard extends StatelessWidget {
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            PriorityIndicator(priority: workOrder.priority),
+                            ViaPriorityBadge(priority: workOrder.priority),
                             const SizedBox(width: 8),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 2),
-                              decoration: BoxDecoration(
-                                color: statusColor.withValues(alpha: 0.2),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: statusColor.withValues(alpha: 0.5),
-                                  width: 1,
-                                ),
-                              ),
-                              child: Text(
-                                workOrder.status.getDisplayName(context),
-                                style: TextStyle(
-                                  color: statusColor,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
+                            ViaStatusBadge(
+                              label: workOrder.status.getDisplayName(context),
+                              status: _mapWorkOrderStatusToViaStatus(workOrder.status),
                             ),
                           ],
                         ),
@@ -204,11 +178,27 @@ class WorkOrderCard extends StatelessWidget {
                   ),
                 ],
               ),
-            ],
-          ),
+          ],
         ),
-      ),
+      ],
     );
+  }
+
+  ViaStatusType _mapWorkOrderStatusToViaStatus(WorkOrderStatus status) {
+    switch (status) {
+      case WorkOrderStatus.draft:
+        return ViaStatusType.idle;
+      case WorkOrderStatus.pending:
+        return ViaStatusType.warning;
+      case WorkOrderStatus.inProgress:
+        return ViaStatusType.active;
+      case WorkOrderStatus.onHold:
+        return ViaStatusType.maintenance;
+      case WorkOrderStatus.completed:
+        return ViaStatusType.active;
+      case WorkOrderStatus.cancelled:
+        return ViaStatusType.offline;
+    }
   }
 
   Widget _buildAgeIndicator(BuildContext context) {
@@ -265,20 +255,4 @@ class WorkOrderCard extends StatelessWidget {
     }
   }
 
-  Color _getStatusColor(WorkOrderStatus status) {
-    switch (status) {
-      case WorkOrderStatus.draft:
-        return Colors.grey;
-      case WorkOrderStatus.pending:
-        return Colors.orange;
-      case WorkOrderStatus.inProgress:
-        return Colors.blue;
-      case WorkOrderStatus.onHold:
-        return Colors.purple;
-      case WorkOrderStatus.completed:
-        return Colors.green;
-      case WorkOrderStatus.cancelled:
-        return Colors.red;
-    }
-  }
 }
