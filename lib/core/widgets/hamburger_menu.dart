@@ -20,7 +20,8 @@ class HamburgerMenu extends ConsumerWidget {
       decoration: BoxDecoration(
         color: DesignTokens.bgPrimary,
         borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(DesignTokens.radiusLg),
+          top: Radius.circular(
+              DesignTokens.radiusLg), // Already using updated radius
         ),
         border: Border.all(
           color: DesignTokens.borderPrimary,
@@ -30,15 +31,15 @@ class HamburgerMenu extends ConsumerWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Handle bar
+          // Handle bar - More subtle
           Container(
-            width: 40,
-            height: 4,
-            margin:
-                const EdgeInsets.symmetric(vertical: DesignTokens.spacingMd),
+            width: 32, // Smaller handle
+            height: 3, // Thinner handle
+            margin: const EdgeInsets.symmetric(
+                vertical: DesignTokens.spacingSm), // Tighter margin
             decoration: BoxDecoration(
-              color: DesignTokens.borderSecondary,
-              borderRadius: BorderRadius.circular(2),
+              color: DesignTokens.borderPrimary, // More subtle color
+              borderRadius: BorderRadius.circular(1), // Sharper corners
             ),
           ),
 
@@ -69,8 +70,11 @@ class HamburgerMenu extends ConsumerWidget {
                         '김토스',
                         style: TextStyle(
                           fontSize: DesignTokens.fontSizeLg,
-                          fontWeight: DesignTokens.fontWeightSemibold,
+                          fontWeight: DesignTokens
+                              .fontWeightBold, // Bolder for hierarchy
                           color: DesignTokens.textPrimary,
+                          letterSpacing: DesignTokens
+                              .letterSpacingNormal, // Tighter tracking
                         ),
                       ),
                       Text(
@@ -261,7 +265,8 @@ class HamburgerMenu extends ConsumerWidget {
                   foregroundColor: DesignTokens.textPrimary,
                   elevation: DesignTokens.elevationNone,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
+                    borderRadius: BorderRadius.circular(
+                        DesignTokens.radiusMd), // Sharper corners
                   ),
                   padding: const EdgeInsets.symmetric(
                     horizontal: DesignTokens.spacingLg,
@@ -272,8 +277,9 @@ class HamburgerMenu extends ConsumerWidget {
                   localizations.menuSignOut,
                   style: const TextStyle(
                     fontSize: DesignTokens.fontSizeMd,
-                    fontWeight: DesignTokens.fontWeightSemibold,
-                    letterSpacing: DesignTokens.letterSpacingWide,
+                    fontWeight: DesignTokens.fontWeightBold, // Bolder text
+                    letterSpacing:
+                        DesignTokens.letterSpacingNormal, // Tighter tracking
                   ),
                 ),
               ),
@@ -301,9 +307,10 @@ class HamburgerMenu extends ConsumerWidget {
             title,
             style: TextStyle(
               fontSize: DesignTokens.fontSizeSm,
-              fontWeight: DesignTokens.fontWeightSemibold,
+              fontWeight: DesignTokens.fontWeightBold, // Bolder for hierarchy
               color: DesignTokens.textSecondary,
-              letterSpacing: DesignTokens.letterSpacingWide,
+              letterSpacing:
+                  DesignTokens.letterSpacingNormal, // Tighter tracking
             ),
           ),
         ),
@@ -334,8 +341,10 @@ class HamburgerMenu extends ConsumerWidget {
             title,
             style: const TextStyle(
               fontSize: DesignTokens.fontSizeMd,
-              fontWeight: DesignTokens.fontWeightMedium,
+              fontWeight: DesignTokens.fontWeightBold, // Bolder for hierarchy
               color: DesignTokens.textPrimary,
+              letterSpacing:
+                  DesignTokens.letterSpacingNormal, // Tighter tracking
             ),
           ),
           subtitle: Text(

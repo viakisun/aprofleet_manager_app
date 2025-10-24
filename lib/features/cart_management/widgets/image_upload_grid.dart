@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import '../../../core/theme/design_tokens.dart';
+import '../../../core/widgets/via/via_bottom_sheet.dart';
+import '../../../core/widgets/via/via_button.dart';
 
 class ImageUploadGrid extends StatefulWidget {
   final List<UploadedImage> images;
@@ -413,46 +415,41 @@ class _ImageUploadGridState extends State<ImageUploadGrid> {
   }
 
   void _showCategoryDialog(File imageFile) {
-    showDialog(
+    ViaBottomSheet.show(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: DesignTokens.bgSecondary,
-        title: Text(
-          'SELECT CATEGORY',
-          style: DesignTokens.getUppercaseLabelStyle(
-            fontSize: DesignTokens.fontSizeLg,
-            fontWeight: DesignTokens.fontWeightBold,
-            color: DesignTokens.textPrimary,
-          ),
+      snapPoints: [0.4, 0.6],
+      header: Text(
+        'SELECT CATEGORY',
+        style: DesignTokens.getUppercaseLabelStyle(
+          fontSize: DesignTokens.fontSizeLg,
+          fontWeight: DesignTokens.fontWeightBold,
+          color: DesignTokens.textPrimary,
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: widget.allowedCategories.map((category) {
-            return ListTile(
-              title: Text(
-                category,
-                style: const TextStyle(color: DesignTokens.textPrimary),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-                _addImage(imageFile, category);
-              },
-            );
-          }).toList(),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(
-              'CANCEL',
-              style: TextStyle(
-                color: DesignTokens.textSecondary,
-                fontWeight: DesignTokens.fontWeightSemibold,
-                letterSpacing: DesignTokens.letterSpacingWide,
-              ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: widget.allowedCategories.map((category) {
+          return ListTile(
+            title: Text(
+              category,
+              style: TextStyle(color: DesignTokens.textPrimary),
             ),
-          ),
-        ],
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: DesignTokens.textSecondary,
+              size: 16,
+            ),
+            onTap: () {
+              Navigator.of(context).pop();
+              _addImage(imageFile, category);
+            },
+          );
+        }).toList(),
+      ),
+      footer: ViaButton.ghost(
+        text: 'CANCEL',
+        onPressed: () => Navigator.of(context).pop(),
+        isFullWidth: true,
       ),
     );
   }

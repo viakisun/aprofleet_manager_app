@@ -76,6 +76,12 @@ flutter:
     - assets/seeds/course_playground.geojson
   
   fonts:
+    # VIA Design System - Primary Font
+    - family: Pretendard Variable
+      fonts:
+        - asset: assets/fonts/PretendardVariable.ttf
+
+    # Fallback Font
     - family: SF Pro Display
       fonts:
         - asset: assets/fonts/SFPRODISPLAYREGULAR.OTF

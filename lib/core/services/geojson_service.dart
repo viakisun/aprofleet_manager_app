@@ -107,30 +107,32 @@ class GeoJsonService {
   }
 
   /// 경로 좌표를 기반으로 카트들을 경로 상에 분산 배치
-  List<LatLng> generateCartPositionsAlongRoute(GeoJsonData data, int cartCount) {
+  List<LatLng> generateCartPositionsAlongRoute(
+      GeoJsonData data, int cartCount) {
     final routeCoordinates = extractRouteCoordinates(data);
     if (routeCoordinates.isEmpty) return [];
 
     final positions = <LatLng>[];
     final totalPoints = routeCoordinates.length;
-    
+
     // 경로를 따라 균등하게 분산 배치
     final step = totalPoints / cartCount;
-    
+
     for (int i = 0; i < cartCount; i++) {
       final index = (i * step).round();
       if (index < totalPoints) {
         positions.add(routeCoordinates[index]);
       }
     }
-    
+
     return positions;
   }
 
   /// 경로 좌표에서 특정 인덱스의 위치 반환
   LatLng? getPositionAtIndex(GeoJsonData data, int index) {
     final routeCoordinates = extractRouteCoordinates(data);
-    if (routeCoordinates.isEmpty || index >= routeCoordinates.length) return null;
+    if (routeCoordinates.isEmpty || index >= routeCoordinates.length)
+      return null;
     return routeCoordinates[index];
   }
 
@@ -138,25 +140,26 @@ class GeoJsonService {
   LatLng? getRandomPositionOnRoute(GeoJsonData data) {
     final routeCoordinates = extractRouteCoordinates(data);
     if (routeCoordinates.isEmpty) return null;
-    
+
     final random = Random();
     final index = random.nextInt(routeCoordinates.length);
     return routeCoordinates[index];
   }
 
   /// 여러 카트를 경로 상에 랜덤하게 배치하는 위치들 생성
-  List<LatLng> generateRandomCartPositionsOnRoute(GeoJsonData data, int cartCount) {
+  List<LatLng> generateRandomCartPositionsOnRoute(
+      GeoJsonData data, int cartCount) {
     final routeCoordinates = extractRouteCoordinates(data);
     if (routeCoordinates.isEmpty) return [];
-    
+
     final positions = <LatLng>[];
     final random = Random();
-    
+
     for (int i = 0; i < cartCount; i++) {
       final index = random.nextInt(routeCoordinates.length);
       positions.add(routeCoordinates[index]);
     }
-    
+
     return positions;
   }
 }

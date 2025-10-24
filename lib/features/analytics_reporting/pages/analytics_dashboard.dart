@@ -7,6 +7,8 @@ import '../../../core/services/providers.dart';
 import '../../../core/localization/app_localizations.dart';
 import '../../../core/widgets/professional_app_bar.dart';
 import '../../../core/widgets/hamburger_menu.dart';
+import '../../../core/theme/design_tokens.dart';
+import '../../../core/widgets/via/via_toast.dart';
 import '../controllers/analytics_controller.dart';
 import '../widgets/export_modal.dart';
 import '../widgets/sections/kpi_cards_section.dart';
@@ -73,43 +75,44 @@ class _AnalyticsDashboardState extends ConsumerState<AnalyticsDashboard> {
           Expanded(
             child: analyticsState.kpis.when(
               data: (kpis) => SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(12), // Tighter padding
                 child: Column(
                   children: [
                     KpiCardsSection(
                       kpis: kpis,
                       controller: analyticsController,
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16), // Tighter spacing
 
                     // Charts Section
                     Text(
                       localizations.analyticsChartsTitle,
                       style: const TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w700, // Bolder for hierarchy
                         color: Colors.white,
-                        letterSpacing: 0.5,
+                        letterSpacing: DesignTokens
+                            .letterSpacingNormal, // Tighter tracking
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 8), // Tighter spacing
 
                     FleetPerformanceSection(
                       controller: analyticsController,
                       range: _selectedRange,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12), // Tighter spacing
 
                     BatteryHealthSection(
                       controller: analyticsController,
                       range: _selectedRange,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12), // Tighter spacing
 
                     MaintenanceDistributionSection(
                       controller: analyticsController,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12), // Tighter spacing
 
                     CostAnalysisSection(
                       controller: analyticsController,
@@ -153,22 +156,19 @@ class _AnalyticsDashboardState extends ConsumerState<AnalyticsDashboard> {
 
   void _exportData(ExportFormat format, AnalyticsController controller) {
     // TODO: Implement actual export functionality
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-            'Exporting ${format.name} for ${_selectedRange.displayName}...'),
-        backgroundColor: Colors.green,
-      ),
+    ViaToast.show(
+      context: context,
+      message: 'Exporting ${format.name} for ${_selectedRange.displayName}...',
+      variant: ViaToastVariant.success,
     );
   }
 
   void _toggleFullscreen() {
     // TODO: Implement fullscreen toggle
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Fullscreen mode coming soon'),
-        backgroundColor: Colors.orange,
-      ),
+    ViaToast.show(
+      context: context,
+      message: 'Fullscreen mode coming soon',
+      variant: ViaToastVariant.info,
     );
   }
 

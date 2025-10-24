@@ -35,6 +35,7 @@ class SplashState {
 }
 
 /// Provider for splash controller
-final splashControllerProvider = StateNotifierProvider<SplashController, SplashState>((ref) {
+final splashControllerProvider =
+    StateNotifierProvider<SplashController, SplashState>((ref) {
   return SplashController();
 });

@@ -41,7 +41,8 @@ class ProfessionalAppBar extends StatelessWidget
         color: backgroundColor ?? DesignTokens.bgPrimary,
         border: Border(
           bottom: BorderSide(
-            color: DesignTokens.borderPrimary,
+            color:
+                DesignTokens.borderPrimary, // Already updated to be more subtle
             width: 1.0,
           ),
         ),
@@ -50,7 +51,7 @@ class ProfessionalAppBar extends StatelessWidget
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: DesignTokens.spacingMd,
-            vertical: DesignTokens.spacingSm,
+            vertical: DesignTokens.spacingXs, // Tighter vertical padding
           ),
           child: Row(
             children: [
@@ -74,7 +75,8 @@ class ProfessionalAppBar extends StatelessWidget
                       fontSize: DesignTokens.fontSizeXl,
                       fontWeight: DesignTokens.fontWeightBold,
                       color: foregroundColor ?? DesignTokens.textPrimary,
-                      letterSpacing: DesignTokens.letterSpacingWide,
+                      letterSpacing:
+                          DesignTokens.letterSpacingNormal, // Tighter tracking
                     ),
                     textAlign: TextAlign.left,
                   ),

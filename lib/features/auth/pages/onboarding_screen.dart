@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/design_tokens.dart';
+import '../../../core/widgets/via/via_button.dart';
 import '../controllers/auth_controller.dart';
 import '../widgets/cart_icon.dart';
 
@@ -105,24 +106,17 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     )
                   else
                     const SizedBox(width: 48),
-                  
+
                   // Skip button
-                  TextButton(
+                  ViaButton.ghost(
+                    text: '건너뛰기',
                     onPressed: _skipOnboarding,
-                    child: Text(
-                      '건너뛰기',
-                      style: TextStyle(
-                        fontFamily: DesignTokens.fontFamily,
-                        fontSize: DesignTokens.fontSizeMd,
-                        fontWeight: DesignTokens.fontWeightMedium,
-                        color: DesignTokens.textSecondary,
-                      ),
-                    ),
+                    size: ViaButtonSize.small,
                   ),
                 ],
               ),
             ),
-            
+
             // Page content
             Expanded(
               child: PageView.builder(
@@ -138,7 +132,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 },
               ),
             ),
-            
+
             // Bottom section with indicators and buttons
             Padding(
               padding: const EdgeInsets.all(DesignTokens.spacingLg),
@@ -152,32 +146,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       (index) => _buildPageIndicator(index == _currentPage),
                     ),
                   ),
-                  
+
                   const SizedBox(height: DesignTokens.spacingLg),
-                  
+
                   // Next/Get Started button
-                  SizedBox(
-                    width: double.infinity,
-                    height: 56,
-                    child: ElevatedButton(
-                      onPressed: _nextPage,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: DesignTokens.statusActive,
-                        foregroundColor: DesignTokens.textPrimary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(DesignTokens.radiusMd),
-                        ),
-                        elevation: 0,
-                      ),
-                      child: Text(
-                        _currentPage == _pages.length - 1 ? '시작하기' : '다음',
-                        style: TextStyle(
-                          fontFamily: DesignTokens.fontFamily,
-                          fontSize: DesignTokens.fontSizeLg,
-                          fontWeight: DesignTokens.fontWeightSemibold,
-                        ),
-                      ),
-                    ),
+                  ViaButton.primary(
+                    text: _currentPage == _pages.length - 1 ? '시작하기' : '다음',
+                    onPressed: _nextPage,
+                    isFullWidth: true,
                   ),
                 ],
               ),
@@ -216,15 +192,16 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 ),
               ],
             ),
-            child: pageData.customIcon ?? Icon(
-              pageData.icon,
-              size: 80,
-              color: Colors.white,
-            ),
+            child: pageData.customIcon ??
+                Icon(
+                  pageData.icon,
+                  size: 80,
+                  color: Colors.white,
+                ),
           ),
-          
+
           const SizedBox(height: DesignTokens.spacing3xl),
-          
+
           // Title
           Text(
             pageData.title,
@@ -237,9 +214,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             ),
             textAlign: TextAlign.center,
           ),
-          
+
           const SizedBox(height: DesignTokens.spacingLg),
-          
+
           // Description
           Text(
             pageData.description,
@@ -263,7 +240,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       width: isActive ? 24 : 8,
       height: 8,
       decoration: BoxDecoration(
-        color: isActive ? DesignTokens.statusActive : DesignTokens.borderSecondary,
+        color:
+            isActive ? DesignTokens.statusActive : DesignTokens.borderSecondary,
         borderRadius: BorderRadius.circular(4),
       ),
     );

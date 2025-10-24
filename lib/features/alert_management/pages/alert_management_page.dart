@@ -7,6 +7,9 @@ import '../../../core/localization/app_localizations.dart';
 import '../../../core/theme/design_tokens.dart';
 import '../../../core/widgets/professional_app_bar.dart';
 import '../../../core/widgets/hamburger_menu.dart';
+import '../../../core/widgets/via/via_bottom_sheet.dart';
+import '../../../core/widgets/via/via_button.dart';
+import '../../../core/widgets/via/via_input.dart';
 import '../controllers/alert_controller.dart';
 import '../widgets/alert_card.dart';
 import '../widgets/alert_filters.dart';
@@ -265,26 +268,39 @@ class _AlertManagementPageState extends ConsumerState<AlertManagementPage>
   }
 
   void _showSearchDialog(BuildContext context, alertController) {
-    showDialog(
+    ViaBottomSheet.show(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Search Alerts'),
-        content: TextField(
-          decoration: const InputDecoration(
-            hintText: 'Search by cart ID, description...',
-          ),
-          onChanged: (query) {
-            // Implement search logic
-          },
+      snapPoints: [0.4, 0.6],
+      header: const Text(
+        'Search Alerts',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: DesignTokens.textPrimary,
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+      ),
+      child: ViaInput(
+        label: 'Search',
+        placeholder: 'Search by cart ID, description...',
+        prefixIcon: Icons.search,
+        onChanged: (query) {
+          // Implement search logic
+        },
+      ),
+      footer: Row(
+        children: [
+          Expanded(
+            child: ViaButton.ghost(
+              text: 'Cancel',
+              onPressed: () => Navigator.of(context).pop(),
+            ),
           ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Search'),
+          const SizedBox(width: DesignTokens.spacingMd),
+          Expanded(
+            child: ViaButton.primary(
+              text: 'Search',
+              onPressed: () => Navigator.of(context).pop(),
+            ),
           ),
         ],
       ),

@@ -4,6 +4,7 @@ import '../../../domain/models/alert.dart';
 import '../../../core/widgets/shared_widgets.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/localization/app_localizations.dart';
+import '../../../core/theme/design_tokens.dart';
 
 class AlertNotificationCard extends StatelessWidget {
   final Alert alert;
@@ -29,29 +30,31 @@ class AlertNotificationCard extends StatelessWidget {
         alert.state == AlertStatus.notified;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 8), // Tighter spacing
       decoration: BoxDecoration(
         color: const Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius:
+            BorderRadius.circular(DesignTokens.radiusLg), // Sharper corners
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.06),
+          color: DesignTokens.borderPrimary, // More subtle border
           width: 1,
         ),
       ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius:
+            BorderRadius.circular(DesignTokens.radiusLg), // Sharper corners
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12), // Tighter padding
           child: Row(
             children: [
-              // Severity indicator bar
+              // Severity indicator bar - Sharper corners
               Container(
-                width: 4,
-                height: 60,
+                width: 3, // Thinner for cleaner look
+                height: 48, // Shorter for compact design
                 decoration: BoxDecoration(
                   color: severityColor,
-                  borderRadius: BorderRadius.circular(2),
+                  borderRadius: BorderRadius.circular(1), // Sharper corners
                 ),
               ),
 
@@ -70,10 +73,12 @@ class AlertNotificationCard extends StatelessWidget {
                             alert.title,
                             style: TextStyle(
                               fontSize: 16,
-                              fontWeight:
-                                  isUnread ? FontWeight.w700 : FontWeight.w600,
+                              fontWeight: isUnread
+                                  ? FontWeight.w700
+                                  : FontWeight.w700, // Bolder for hierarchy
                               color: Colors.white,
-                              letterSpacing: 0.5,
+                              letterSpacing: DesignTokens
+                                  .letterSpacingNormal, // Tighter tracking
                             ),
                           ),
                         ),
@@ -92,7 +97,7 @@ class AlertNotificationCard extends StatelessWidget {
                       ],
                     ),
 
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 6), // Tighter spacing
 
                     // Message
                     Text(
@@ -105,7 +110,7 @@ class AlertNotificationCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
 
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 8), // Tighter spacing
 
                     // Meta information
                     Row(

@@ -16,12 +16,13 @@ class AppNavigationBar extends ConsumerWidget {
     final currentLocation = GoRouterState.of(context).uri.path;
 
     return Container(
-      height: 75,
+      height: 65, // More compact height
       decoration: BoxDecoration(
         color: DesignTokens.bgPrimary,
         border: Border(
           top: BorderSide(
-            color: DesignTokens.borderPrimary,
+            color:
+                DesignTokens.borderPrimary, // Already updated to be more subtle
             width: 1,
           ),
         ),
@@ -95,8 +96,8 @@ class AppNavigationBar extends ConsumerWidget {
       child: AnimatedContainer(
         duration: DesignTokens.animationFast,
         padding: const EdgeInsets.symmetric(
-          horizontal: DesignTokens.spacingSm,
-          vertical: DesignTokens.spacingSm,
+          horizontal: DesignTokens.spacingXs, // Tighter padding
+          vertical: DesignTokens.spacingXs,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -144,7 +145,7 @@ class AppNavigationBar extends ConsumerWidget {
               label,
               style: DesignTokens.getUppercaseLabelStyle(
                 fontSize: DesignTokens.fontSizeXs,
-                fontWeight: DesignTokens.fontWeightMedium,
+                fontWeight: DesignTokens.fontWeightBold, // Bolder for hierarchy
                 color: isActive
                     ? DesignTokens.textPrimary
                     : DesignTokens.textTertiary,

@@ -22,10 +22,10 @@ class DesignTokens {
   /// Quaternary background color - Slightly lighter for elevated surfaces
   static const Color bgQuaternary = Color(0xFF2A2A2A);
 
-  // Border Colors
-  static Color borderPrimary = Colors.white.withValues(alpha: 0.06);
-  static Color borderSecondary = Colors.white.withValues(alpha: 0.12);
-  static Color borderTertiary = Colors.white.withValues(alpha: 0.20);
+  // Border Colors - More subtle for monochrome design
+  static Color borderPrimary = Colors.white.withValues(alpha: 0.04);
+  static Color borderSecondary = Colors.white.withValues(alpha: 0.08);
+  static Color borderTertiary = Colors.white.withValues(alpha: 0.12);
 
   // Text Colors
   static const Color textPrimary = Color(0xFFFFFFFF);
@@ -126,12 +126,13 @@ class DesignTokens {
   // BORDER RADIUS
   // ============================================================================
 
-  static const double radiusXs = 4.0;
-  static const double radiusSm = 8.0;
-  static const double radiusMd = 12.0;
-  static const double radiusLg = 16.0;
-  static const double radiusXl = 24.0;
-  static const double radius2xl = 32.0;
+  // Border Radius - Sharper corners for monochrome design
+  static const double radiusXs = 2.0;
+  static const double radiusSm = 4.0;
+  static const double radiusMd = 6.0;
+  static const double radiusLg = 8.0;
+  static const double radiusXl = 12.0;
+  static const double radius2xl = 16.0;
 
   // ============================================================================
   // TYPOGRAPHY
@@ -161,10 +162,10 @@ class DesignTokens {
   static const double lineHeightNormal = 1.4;
   static const double lineHeightRelaxed = 1.6;
 
-  // Letter Spacing
-  static const double letterSpacingTight = 0.5;
-  static const double letterSpacingNormal = 1.0;
-  static const double letterSpacingWide = 1.2;
+  // Letter Spacing - Tighter tracking for professional look
+  static const double letterSpacingTight = 0.0;
+  static const double letterSpacingNormal = 0.2;
+  static const double letterSpacingWide = 0.5;
 
   // ============================================================================
   // ELEVATION & SHADOWS
@@ -279,7 +280,7 @@ class DesignTokens {
     );
   }
 
-  /// Get card decoration
+  /// Get card decoration with minimal styling
   static BoxDecoration getCardDecoration({
     Color? backgroundColor,
     double? borderRadius,
@@ -288,15 +289,16 @@ class DesignTokens {
   }) {
     return BoxDecoration(
       color: backgroundColor ?? bgTertiary,
-      borderRadius: BorderRadius.circular(borderRadius ?? radiusMd),
+      borderRadius: BorderRadius.circular(borderRadius ?? radiusLg),
       border: Border.all(
         color: borderColor ?? borderPrimary,
         width: 1.0,
       ),
+      // Minimal shadows - prefer flat design
       boxShadow: elevation != null && elevation > 0
           ? [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
+                color: Colors.black.withValues(alpha: 0.05),
                 blurRadius: elevation,
                 offset: Offset(0, elevation / 2),
               ),
@@ -336,6 +338,32 @@ class DesignTokens {
           Colors.white.withValues(alpha: (opacity ?? 0.05) * 0.5),
         ],
       ),
+    );
+  }
+
+  /// Get icon background square decoration (CraneEyes style)
+  static BoxDecoration getIconBackgroundDecoration({
+    double? size,
+    Color? backgroundColor,
+  }) {
+    return BoxDecoration(
+      color: backgroundColor ?? bgPrimary,
+      borderRadius: BorderRadius.circular(radiusXs),
+    );
+  }
+
+  /// Get button decoration with minimal styling
+  static BoxDecoration getButtonDecoration({
+    Color? backgroundColor,
+    double? borderRadius,
+    Color? borderColor,
+  }) {
+    return BoxDecoration(
+      color: backgroundColor ?? bgPrimary,
+      borderRadius: BorderRadius.circular(borderRadius ?? radiusMd),
+      border: borderColor != null
+          ? Border.all(color: borderColor, width: 1.0)
+          : null,
     );
   }
 }

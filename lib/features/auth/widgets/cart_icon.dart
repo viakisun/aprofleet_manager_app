@@ -56,14 +56,14 @@ class CartIconPainter extends CustomPainter {
     // Draw cart wheels (two smaller circles)
     final wheelRadius = radius * 0.2;
     final wheelY = center.dy + radius * 0.6;
-    
+
     // Left wheel
     canvas.drawCircle(
       Offset(center.dx - radius * 0.4, wheelY),
       wheelRadius,
       strokePaint,
     );
-    
+
     // Right wheel
     canvas.drawCircle(
       Offset(center.dx + radius * 0.4, wheelY),
@@ -93,14 +93,16 @@ class CartIconPainter extends CustomPainter {
 
     // Create arrow path
     final arrowPath = Path();
-    
+
     // Arrow shaft
     arrowPath.moveTo(startPoint.dx, startPoint.dy - arrowWidth / 2);
-    arrowPath.lineTo(endPoint.dx - arrowHeadSize, startPoint.dy - arrowWidth / 2);
+    arrowPath.lineTo(
+        endPoint.dx - arrowHeadSize, startPoint.dy - arrowWidth / 2);
     arrowPath.lineTo(endPoint.dx - arrowHeadSize, startPoint.dy - arrowWidth);
     arrowPath.lineTo(endPoint.dx, startPoint.dy);
     arrowPath.lineTo(endPoint.dx - arrowHeadSize, startPoint.dy + arrowWidth);
-    arrowPath.lineTo(endPoint.dx - arrowHeadSize, startPoint.dy + arrowWidth / 2);
+    arrowPath.lineTo(
+        endPoint.dx - arrowHeadSize, startPoint.dy + arrowWidth / 2);
     arrowPath.lineTo(startPoint.dx, startPoint.dy + arrowWidth / 2);
     arrowPath.close();
 
@@ -142,7 +144,7 @@ class _AnimatedCartIconState extends State<AnimatedCartIcon>
       duration: widget.animationDuration,
       vsync: this,
     );
-    
+
     _pulseAnimation = Tween<double>(
       begin: 1.0,
       end: 1.2,

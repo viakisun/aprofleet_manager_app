@@ -12,6 +12,10 @@ import '../../../core/widgets/hamburger_menu.dart';
 import '../../../core/widgets/custom_icons.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/design_tokens.dart';
+import '../../../core/widgets/via/via_toast.dart';
+import '../../../core/widgets/via/via_bottom_sheet.dart';
+import '../../../core/widgets/via/via_button.dart';
+import '../../../core/widgets/via/via_input.dart';
 import '../controllers/cart_inventory_controller.dart';
 import '../widgets/cart_list_item.dart';
 import '../widgets/cart_grid_item.dart';
@@ -600,35 +604,42 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
 
   void _showSearchDialog(
       BuildContext context, CartInventoryController controller) {
-    showDialog(
+    ViaBottomSheet.show(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1A1A),
-        title: const Text(
-          'Search Carts',
-          style: TextStyle(color: Colors.white),
+      snapPoints: [0.4, 0.6],
+      header: const Text(
+        'Search Carts',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: DesignTokens.textPrimary,
         ),
-        content: TextField(
-          controller: _searchController,
-          style: const TextStyle(color: Colors.white),
-          decoration: const InputDecoration(
-            hintText: 'Search by ID, model, or location...',
-            hintStyle: TextStyle(color: Colors.grey),
+      ),
+      child: ViaInput(
+        controller: _searchController,
+        label: 'Search',
+        placeholder: 'Search by ID, model, or location...',
+        prefixIcon: Icons.search,
+        onChanged: controller.setSearchQuery,
+      ),
+      footer: Row(
+        children: [
+          Expanded(
+            child: ViaButton.ghost(
+              text: 'Clear',
+              onPressed: () {
+                _searchController.clear();
+                controller.setSearchQuery('');
+                Navigator.of(context).pop();
+              },
+            ),
           ),
-          onChanged: controller.setSearchQuery,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              _searchController.clear();
-              controller.setSearchQuery('');
-              Navigator.of(context).pop();
-            },
-            child: const Text('Clear'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
+          const SizedBox(width: DesignTokens.spacingMd),
+          Expanded(
+            child: ViaButton.primary(
+              text: 'Close',
+              onPressed: () => Navigator.of(context).pop(),
+            ),
           ),
         ],
       ),
@@ -650,34 +661,30 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
 
   void _bulkAssign() {
     // TODO: Implement bulk assign
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Assigning ${_selectedCarts.length} carts'),
-        backgroundColor: const Color(0xFF1A1A1A),
-      ),
+    ViaToast.show(
+      context: context,
+      message: 'Assigning ${_selectedCarts.length} carts',
+      variant: ViaToastVariant.info,
     );
     _clearSelection();
   }
 
   void _bulkService() {
     // TODO: Implement bulk service
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content:
-            Text('Creating service request for ${_selectedCarts.length} carts'),
-        backgroundColor: const Color(0xFF1A1A1A),
-      ),
+    ViaToast.show(
+      context: context,
+      message: 'Creating service request for ${_selectedCarts.length} carts',
+      variant: ViaToastVariant.info,
     );
     _clearSelection();
   }
 
   void _bulkExport() {
     // TODO: Implement bulk export
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Exporting ${_selectedCarts.length} carts'),
-        backgroundColor: const Color(0xFF1A1A1A),
-      ),
+    ViaToast.show(
+      context: context,
+      message: 'Exporting ${_selectedCarts.length} carts',
+      variant: ViaToastVariant.info,
     );
     _clearSelection();
   }
@@ -720,22 +727,22 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
   }
 
   void _goToRouteView(BuildContext context) async {
-    final inventoryController = ref.read(cartInventoryControllerProvider.notifier);
-    
+    final inventoryController =
+        ref.read(cartInventoryControllerProvider.notifier);
+
     // 카트들을 경로 상에 배치
     try {
       await inventoryController.updateCartPositionsAlongRoute();
-      
+
       // 성공 메시지 표시
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('카트들이 경로 상에 배치되었습니다'),
-            duration: Duration(seconds: 2),
-          ),
+        ViaToast.show(
+          context: context,
+          message: '카트들이 경로 상에 배치되었습니다',
+          variant: ViaToastVariant.success,
         );
       }
-      
+
       // 라이브 맵 뷰로 이동
       if (context.mounted) {
         context.go('/rt/live');
@@ -743,12 +750,10 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
     } catch (e) {
       // 오류 메시지 표시
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('카트 위치 업데이트 실패: $e'),
-            duration: const Duration(seconds: 3),
-            backgroundColor: Colors.red,
-          ),
+        ViaToast.show(
+          context: context,
+          message: '카트 위치 업데이트 실패: $e',
+          variant: ViaToastVariant.error,
         );
       }
     }

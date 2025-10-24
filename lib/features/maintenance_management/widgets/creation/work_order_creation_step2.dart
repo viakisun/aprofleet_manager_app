@@ -5,7 +5,10 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import '../../../../domain/models/cart.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../core/services/providers.dart';
-import '../../../../core/widgets/common/cards/base_card.dart';
+import '../../../../core/widgets/via/via_card.dart';
+import '../../../../core/widgets/via/via_input.dart';
+import '../../../../core/widgets/via/via_button.dart';
+import '../../../../core/widgets/via/via_status_badge.dart';
 import '../../controllers/work_order_creation_controller.dart';
 
 /// Second step of work order creation: Cart and Location selection
@@ -48,7 +51,7 @@ class _WorkOrderCreationStep2State
           const SizedBox(height: DesignTokens.spacingMd),
 
           // QR Scanner Button
-          BaseCard(
+          ViaCard(
             onTap: _toggleScanner,
             child: Row(
               children: [
@@ -100,10 +103,11 @@ class _WorkOrderCreationStep2State
                   final cart = cartList[index];
                   final isSelected = createWoState.draft.cartId == cart.id;
 
-                  return BaseCard(
-                    margin:
+                  return Padding(
+                    padding:
                         const EdgeInsets.only(bottom: DesignTokens.spacingSm),
-                    onTap: () => widget.controller.setCartId(cart.id),
+                    child: ViaCard(
+                      onTap: () => widget.controller.setCartId(cart.id),
                     child: Row(
                       children: [
                         // Selection indicator
@@ -157,28 +161,13 @@ class _WorkOrderCreationStep2State
                         ),
 
                         // Status indicator
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: DesignTokens.spacingSm,
-                            vertical: DesignTokens.spacingXs,
-                          ),
-                          decoration: BoxDecoration(
-                            color:
-                                DesignTokens.getStatusColor(cart.status.name),
-                            borderRadius:
-                                BorderRadius.circular(DesignTokens.radiusSm),
-                          ),
-                          child: Text(
-                            cart.status.displayName.toUpperCase(),
-                            style: const TextStyle(
-                              fontSize: DesignTokens.fontSizeXs,
-                              fontWeight: DesignTokens.fontWeightSemibold,
-                              color: DesignTokens.textPrimary,
-                            ),
-                          ),
+                        ViaStatusBadge(
+                          status: _mapCartStatusToViaStatus(cart.status),
+                          customText: cart.status.displayName.toUpperCase(),
                         ),
                       ],
                     ),
+                  ),
                   );
                 },
               ),
@@ -199,29 +188,12 @@ class _WorkOrderCreationStep2State
           // Location Section
           _buildSectionHeader('LOCATION'),
           const SizedBox(height: DesignTokens.spacingMd),
-          TextField(
+          ViaInput(
             controller: _locationController,
             onChanged: widget.controller.setLocation,
-            decoration: InputDecoration(
-              hintText: 'Enter work location (optional)',
-              hintStyle: TextStyle(
-                color: DesignTokens.textTertiary,
-                fontSize: DesignTokens.fontSizeMd,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-                borderSide: BorderSide(color: DesignTokens.borderPrimary),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-                borderSide: BorderSide(color: DesignTokens.borderPrimary),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-                borderSide: const BorderSide(color: DesignTokens.textPrimary),
-              ),
-              contentPadding: const EdgeInsets.all(DesignTokens.spacingMd),
-            ),
+            label: 'Location',
+            placeholder: 'Enter work location (optional)',
+            prefixIcon: Icons.location_on,
           ),
 
           // QR Scanner Modal
@@ -276,19 +248,14 @@ class _WorkOrderCreationStep2State
             ),
             Padding(
               padding: const EdgeInsets.all(DesignTokens.spacingLg),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          _isScanning = false;
-                        });
-                      },
-                      child: const Text('Cancel'),
-                    ),
-                  ),
-                ],
+              child: ViaButton.ghost(
+                text: 'Cancel',
+                onPressed: () {
+                  setState(() {
+                    _isScanning = false;
+                  });
+                },
+                isFullWidth: true,
               ),
             ),
           ],
@@ -301,5 +268,20 @@ class _WorkOrderCreationStep2State
     setState(() {
       _isScanning = !_isScanning;
     });
+  }
+
+  ViaStatus _mapCartStatusToViaStatus(CartStatus status) {
+    switch (status) {
+      case CartStatus.active:
+        return ViaStatus.active;
+      case CartStatus.idle:
+        return ViaStatus.idle;
+      case CartStatus.charging:
+        return ViaStatus.charging;
+      case CartStatus.maintenance:
+        return ViaStatus.maintenance;
+      case CartStatus.offline:
+        return ViaStatus.offline;
+    }
   }
 }

@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/design_tokens.dart';
-import '../../../../core/widgets/common/cards/base_card.dart';
+import '../../../../core/widgets/via/via_card.dart';
+import '../../../../core/widgets/via/via_input.dart';
 import '../../controllers/work_order_creation_controller.dart';
 import '../technician_selector.dart';
 
@@ -40,7 +41,7 @@ class _WorkOrderCreationStep3State
           const SizedBox(height: DesignTokens.spacingMd),
 
           // Date Selection
-          BaseCard(
+          ViaCard(
             onTap: _selectDate,
             child: Row(
               children: [
@@ -88,7 +89,7 @@ class _WorkOrderCreationStep3State
           const SizedBox(height: DesignTokens.spacingMd),
 
           // Time Selection
-          BaseCard(
+          ViaCard(
             onTap: _selectTime,
             child: Row(
               children: [
@@ -151,7 +152,10 @@ class _WorkOrderCreationStep3State
           Row(
             children: [
               Expanded(
-                child: TextField(
+                child: ViaInput(
+                  inputType: ViaInputType.number,
+                  label: 'Duration',
+                  placeholder: 'Hours',
                   keyboardType: TextInputType.number,
                   onChanged: (value) {
                     final duration = int.tryParse(value);
@@ -160,31 +164,6 @@ class _WorkOrderCreationStep3State
                           .setEstimatedDuration(Duration(hours: duration));
                     }
                   },
-                  decoration: InputDecoration(
-                    hintText: 'Hours',
-                    hintStyle: TextStyle(
-                      color: DesignTokens.textTertiary,
-                      fontSize: DesignTokens.fontSizeMd,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(DesignTokens.radiusSm),
-                      borderSide: BorderSide(color: DesignTokens.borderPrimary),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(DesignTokens.radiusSm),
-                      borderSide: BorderSide(color: DesignTokens.borderPrimary),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(DesignTokens.radiusSm),
-                      borderSide:
-                          const BorderSide(color: DesignTokens.textPrimary),
-                    ),
-                    contentPadding:
-                        const EdgeInsets.all(DesignTokens.spacingMd),
-                  ),
                 ),
               ),
               const SizedBox(width: DesignTokens.spacingMd),
@@ -203,29 +182,11 @@ class _WorkOrderCreationStep3State
           // Notes Section
           _buildSectionHeader('NOTES'),
           const SizedBox(height: DesignTokens.spacingMd),
-          TextField(
+          ViaInput(
             onChanged: widget.controller.setNotes,
+            label: 'Notes',
+            placeholder: 'Additional notes or instructions...',
             maxLines: 3,
-            decoration: InputDecoration(
-              hintText: 'Additional notes or instructions...',
-              hintStyle: TextStyle(
-                color: DesignTokens.textTertiary,
-                fontSize: DesignTokens.fontSizeMd,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-                borderSide: BorderSide(color: DesignTokens.borderPrimary),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-                borderSide: BorderSide(color: DesignTokens.borderPrimary),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(DesignTokens.radiusSm),
-                borderSide: const BorderSide(color: DesignTokens.textPrimary),
-              ),
-              contentPadding: const EdgeInsets.all(DesignTokens.spacingMd),
-            ),
           ),
         ],
       ),

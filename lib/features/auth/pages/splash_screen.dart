@@ -34,7 +34,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
-    
+
     _scaleController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
@@ -70,7 +70,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
   void _navigateToNextScreen() {
     final authState = ref.read(authControllerProvider);
-    
+
     if (!authState.hasSeenOnboarding) {
       context.go('/onboarding');
     } else if (!authState.isLoggedIn) {
@@ -133,7 +133,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: DesignTokens.statusActive.withValues(alpha: 0.3),
+                                  color: DesignTokens.statusActive
+                                      .withValues(alpha: 0.3),
                                   blurRadius: 20,
                                   spreadRadius: 5,
                                 ),
@@ -147,9 +148,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                               ),
                             ),
                           ),
-                          
+
                           const SizedBox(height: DesignTokens.spacingXl),
-                          
+
                           // App name
                           Text(
                             'APRO FLEET',
@@ -161,9 +162,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                               letterSpacing: DesignTokens.letterSpacingWide,
                             ),
                           ),
-                          
+
                           const SizedBox(height: DesignTokens.spacingSm),
-                          
+
                           // Subtitle
                           Text(
                             'Fleet Management System',
@@ -181,9 +182,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                   );
                 },
               ),
-              
+
               const SizedBox(height: DesignTokens.spacing3xl),
-              
+
               // Loading indicator
               AnimatedBuilder(
                 animation: _fadeAnimation,
