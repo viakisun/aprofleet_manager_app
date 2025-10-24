@@ -29,158 +29,157 @@ class WorkOrderCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-              // Header with Priority Bar
-              Row(
-                children: [
-                  // Priority indicator bar
-                  Container(
-                    width: 4,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: priorityColor,
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
+          // Header with Priority Bar
+          Row(
+            children: [
+              // Priority indicator bar
+              Container(
+                width: 4,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: priorityColor,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(width: 12),
 
-                  // Work Order ID and Priority
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              // Work Order ID and Priority
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      workOrder.id,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
                       children: [
-                        Text(
-                          workOrder.id,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                            letterSpacing: 0.5,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Row(
-                          children: [
-                            ViaPriorityBadge(priority: workOrder.priority),
-                            const SizedBox(width: 8),
-                            ViaStatusBadge(
-                              status: _mapWorkOrderStatusToViaStatus(workOrder.status),
-                              customText: workOrder.status.getDisplayName(context),
-                            ),
-                          ],
+                        ViaPriorityBadge(priority: workOrder.priority),
+                        const SizedBox(width: 8),
+                        ViaStatusBadge(
+                          status: _mapWorkOrderStatusToViaStatus(workOrder.status),
+                          customText: workOrder.status.getDisplayName(context),
                         ),
                       ],
                     ),
-                  ),
-
-                  // Age indicator
-                  _buildAgeIndicator(context),
-                ],
-              ),
-
-              const SizedBox(height: 12),
-
-              // Type and Description
-              Text(
-                workOrder.type.getDisplayName(context),
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                  ],
                 ),
               ),
-              const SizedBox(height: 4),
+
+              // Age indicator
+              _buildAgeIndicator(context),
+            ],
+          ),
+
+          const SizedBox(height: 12),
+
+          // Type and Description
+          Text(
+            workOrder.type.getDisplayName(context),
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            workOrder.description,
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.white.withValues(alpha: 0.7),
+            ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+
+          const SizedBox(height: 12),
+
+          // Cart and Location Info
+          Row(
+            children: [
+              Icon(
+                Icons.directions_car,
+                size: 16,
+                color: Colors.white.withValues(alpha: 0.7),
+              ),
+              const SizedBox(width: 4),
               Text(
-                workOrder.description,
+                workOrder.cartId,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white.withValues(alpha: 0.7),
+                ),
+              ),
+              if (workOrder.location != null) ...[
+                const SizedBox(width: 8),
+                Icon(
+                  Icons.location_on,
+                  size: 16,
+                  color: Colors.white.withValues(alpha: 0.7),
+                ),
+                const SizedBox(width: 4),
+                Expanded(
+                  child: Text(
+                    workOrder.location!,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white.withValues(alpha: 0.7),
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ],
+          ),
+
+          const SizedBox(height: 8),
+
+          // Technician and Time Info
+          Row(
+            children: [
+              if (workOrder.technician != null) ...[
+                Icon(
+                  Icons.person,
+                  size: 16,
+                  color: Colors.white.withValues(alpha: 0.7),
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  workOrder.technician!,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white.withValues(alpha: 0.7),
+                  ),
+                ),
+                const Spacer(),
+              ],
+
+              // Time info
+              Icon(
+                Icons.access_time,
+                size: 16,
+                color: Colors.white.withValues(alpha: 0.7),
+              ),
+              const SizedBox(width: 4),
+              Text(
+                _formatTimeInfo(context),
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.white.withValues(alpha: 0.7),
                 ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
               ),
-
-              const SizedBox(height: 12),
-
-              // Cart and Location Info
-              Row(
-                children: [
-                  Icon(
-                    Icons.directions_car,
-                    size: 16,
-                    color: Colors.white.withValues(alpha: 0.7),
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    workOrder.cartId,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white.withValues(alpha: 0.7),
-                    ),
-                  ),
-                  if (workOrder.location != null) ...[
-                    const SizedBox(width: 8),
-                    Icon(
-                      Icons.location_on,
-                      size: 16,
-                      color: Colors.white.withValues(alpha: 0.7),
-                    ),
-                    const SizedBox(width: 4),
-                    Expanded(
-                      child: Text(
-                        workOrder.location!,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.white.withValues(alpha: 0.7),
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-
-              const SizedBox(height: 8),
-
-              // Technician and Time Info
-              Row(
-                children: [
-                  if (workOrder.technician != null) ...[
-                    Icon(
-                      Icons.person,
-                      size: 16,
-                      color: Colors.white.withValues(alpha: 0.7),
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      workOrder.technician!,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white.withValues(alpha: 0.7),
-                      ),
-                    ),
-                    const Spacer(),
-                  ],
-
-                  // Time info
-                  Icon(
-                    Icons.access_time,
-                    size: 16,
-                    color: Colors.white.withValues(alpha: 0.7),
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    _formatTimeInfo(context),
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.white.withValues(alpha: 0.7),
-                    ),
-                  ),
-                ],
-              ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 
