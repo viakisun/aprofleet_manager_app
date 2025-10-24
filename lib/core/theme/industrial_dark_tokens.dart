@@ -21,13 +21,20 @@ class IndustrialDarkTokens {
   // BACKGROUNDS
   // ========================================================================
 
-  /// Main scaffold background - Dark gray, not pure black
+  /// Main scaffold background - Pure black for maximum contrast
   /// Used for: Full-screen base tone
-  static const Color bgBase = Color(0xFF1A1A1A);
+  /// Reference: #000 (pure black)
+  static const Color bgBase = Color(0xFF000000);
 
-  /// Elevated surface background
+  /// Card/surface background - Material Design 3 inspired for visibility
   /// Used for: Cards, sheets, panels
-  static const Color bgSurface = Color(0xFF222222);
+  /// Reference: Material 3 Surface level (#1C1B1F) adapted to #1A1A1A for consistency
+  static const Color bgSurface = Color(0xFF1A1A1A);
+
+  /// Hover/interactive surface background
+  /// Used for: Card hover states, active surfaces
+  /// Reference: rgba(255,255,255,0.14) ≈ #242424
+  static const Color bgCard = Color(0xFF242424);
 
   /// Map overlay to prevent glare and separate data layer
   static const Color bgOverlay = Color(0x40000000); // rgba(0,0,0,0.25)
@@ -36,15 +43,18 @@ class IndustrialDarkTokens {
   // BORDERS & OUTLINES (replacing shadows)
   // ========================================================================
 
-  /// Primary structural outline
+  /// Primary structural outline - Material Design 3 level contrast
   /// Used for: Card borders, dividers, panel separation
-  static const Color outline = Color(0xFF3A3A3A);
+  /// Reference: Material 3 Outline (#938F99 adapted) - rgba(255,255,255,0.4) ≈ #666666
+  static const Color outline = Color(0xFF666666);
 
   /// Emphasized outline for focus/hover states
-  static const Color outlineEmphasis = Color(0xFF505050);
+  /// Reference: rgba(255,255,255,0.6) ≈ #999999
+  static const Color outlineEmphasis = Color(0xFF999999);
 
   /// Subtle divider for less important separations
-  static const Color outlineSoft = Color(0xFF2A2A2A);
+  /// Reference: rgba(255,255,255,0.3) ≈ #4D4D4D
+  static const Color outlineSoft = Color(0xFF4D4D4D);
 
   // ========================================================================
   // TEXT
@@ -207,7 +217,7 @@ class IndustrialDarkTokens {
   // BORDERS
   // ========================================================================
 
-  /// Structural outline width (primary)
+  /// Structural outline width (primary) - Increased for outdoor visibility
   static const double borderWidth = 2.0;
 
   /// Thin divider width (subtle separations)
@@ -323,6 +333,55 @@ class IndustrialDarkTokens {
       fontWeight: fontWeight ?? fontWeightRegular,
       color: color ?? textPrimary,
       height: lineHeight,
+      letterSpacing: letterSpacing,
+    );
+  }
+
+  /// Backward compatibility: getCardDecoration() → cardDecoration()
+  static BoxDecoration getCardDecoration() {
+    return cardDecoration();
+  }
+
+  /// Backward compatibility: getGlassMorphismDecoration()
+  static BoxDecoration getGlassMorphismDecoration([BuildContext? context]) {
+    return BoxDecoration(
+      color: bgSurface.withValues(alpha: 0.6),
+      borderRadius: BorderRadius.circular(radiusCard),
+      border: Border.all(
+        color: outline,
+        width: borderWidth,
+      ),
+    );
+  }
+
+  /// Backward compatibility: getStatusColor()
+  static Color getStatusColor(String status) {
+    switch (status.toLowerCase()) {
+      case 'active':
+        return statusActive;
+      case 'idle':
+        return statusIdle;
+      case 'charging':
+        return statusCharging;
+      case 'maintenance':
+        return statusMaintenance;
+      case 'offline':
+        return statusOffline;
+      default:
+        return textSecondary;
+    }
+  }
+
+  /// Backward compatibility: getUppercaseLabelStyle()
+  static TextStyle getUppercaseLabelStyle({
+    double? fontSize,
+    Color? color,
+    FontWeight? fontWeight,
+  }) {
+    return TextStyle(
+      fontSize: fontSize ?? fontSizeSmall,
+      fontWeight: fontWeight ?? fontWeightBold,
+      color: color ?? textSecondary,
       letterSpacing: letterSpacing,
     );
   }

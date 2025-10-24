@@ -4,9 +4,9 @@ class AppLocalizationsZhCn {
     'appName': 'AproFleet 管理器',
 
     // Navigation
-    'navRealTime': '实时',
+    'navRealTime': '车队',
     'navCartManagement': '车辆',
-    'navMaintenance': '维护',
+    'navMaintenance': '服务',
     'navAlerts': '警报',
     'navAnalytics': '分析',
     'navSettings': '设置',

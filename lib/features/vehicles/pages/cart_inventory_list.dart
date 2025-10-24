@@ -17,7 +17,6 @@ import '../../../core/widgets/via/via_bottom_sheet.dart';
 import '../../../core/widgets/via/via_button.dart';
 import '../../../core/widgets/via/via_input.dart';
 import '../controllers/cart_inventory_controller.dart';
-import '../widgets/cart_list_item.dart';
 import '../widgets/cart_grid_item.dart';
 import '../widgets/inventory_stats_bar.dart';
 import '../widgets/admin_cart_card.dart';

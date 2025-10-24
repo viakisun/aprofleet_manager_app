@@ -268,11 +268,9 @@ class _AdminCartCardState extends State<AdminCartCard>
           child: Column(
             children: [
               // Main Collapsed Content
-              Column(
+              // Primary Row: Status + ID + Battery + More
+              Row(
                 children: [
-                  // Primary Row: Status + ID + Battery + More
-                  Row(
-                      children: [
                         // Status indicator with glow
                         Container(
                           width: 10,
@@ -347,14 +345,11 @@ class _AdminCartCardState extends State<AdminCartCard>
                       ],
                     ),
 
-                    // Critical Issue Badge (if any)
-                    if (criticalIssue != null && !_isExpanded) ...[
-                      const SizedBox(height: 8),
-                      _buildCriticalIssueBadge(criticalIssue),
-                    ],
-                  ],
-                ),
-              ),
+              // Critical Issue Badge (if any)
+              if (criticalIssue != null && !_isExpanded) ...[
+                const SizedBox(height: 8),
+                _buildCriticalIssueBadge(criticalIssue),
+              ],
 
               // Expanded Details Section
               if (_isExpanded) ...[
@@ -374,8 +369,8 @@ class _AdminCartCardState extends State<AdminCartCard>
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                            // Status & Location
-                            Row(
+                          // Status & Location
+                          Row(
                               children: [
                                 // Status badge
                                 Container(
@@ -435,8 +430,8 @@ class _AdminCartCardState extends State<AdminCartCard>
                               ],
                             ),
 
-                            // All Issues
-                            if (widget.cart.activeIssues.isNotEmpty) ...[
+                          // All Issues
+                          if (widget.cart.activeIssues.isNotEmpty) ...[
                               const SizedBox(height: 12),
                               Text(
                                 'ISSUES (${widget.cart.activeIssuesCount})',
@@ -451,11 +446,11 @@ class _AdminCartCardState extends State<AdminCartCard>
                               const SizedBox(height: 6),
                               ...widget.cart.activeIssues
                                   .map((issue) => _buildIssueRow(issue)),
-                            ],
+                          ],
 
-                            // Metrics Grid
-                            const SizedBox(height: 12),
-                            Row(
+                          // Metrics Grid
+                          const SizedBox(height: 12),
+                          Row(
                               children: [
                                 if (widget.cart.todayDistance != null)
                                   Expanded(
@@ -488,9 +483,9 @@ class _AdminCartCardState extends State<AdminCartCard>
                               ],
                             ),
 
-                            // Maintenance Dates
-                            if (widget.cart.lastMaintenanceDate != null ||
-                                widget.cart.nextMaintenanceDate != null) ...[
+                          // Maintenance Dates
+                          if (widget.cart.lastMaintenanceDate != null ||
+                              widget.cart.nextMaintenanceDate != null) ...[
                               const SizedBox(height: 12),
                               if (widget.cart.nextMaintenanceDate != null)
                                 _buildInfoRow(
@@ -510,24 +505,24 @@ class _AdminCartCardState extends State<AdminCartCard>
                                       .format(widget.cart.lastMaintenanceDate!),
                                 ),
                               ],
-                            ],
+                          ],
 
-                            // Primary Actions
-                            const SizedBox(height: 12),
-                            _buildPrimaryAction(
+                          // Primary Actions
+                          const SizedBox(height: 12),
+                          _buildPrimaryAction(
                               icon: Icons.assignment_rounded,
                               label: 'CREATE WORK ORDER',
                               onTap: widget.onWorkOrder,
                             ),
-                            const SizedBox(height: 8),
-                            _buildPrimaryAction(
-                              icon: Icons.my_location_rounded,
-                              label: 'VIEW ON MAP',
-                              onTap: widget.onTrack,
-                              secondary: true,
-                            ),
-                          ],
-                        ),
+                          const SizedBox(height: 8),
+                          _buildPrimaryAction(
+                            icon: Icons.my_location_rounded,
+                            label: 'VIEW ON MAP',
+                            onTap: widget.onTrack,
+                            secondary: true,
+                          ),
+                        ],
+                      ),
 
                       // Collapse indicator
                       Container(

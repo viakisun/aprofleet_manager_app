@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/controllers/language_controller.dart';
 import '../../../core/localization/app_localizations.dart';
-import '../../../core/theme/design_tokens.dart';
+import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 import '../../../core/widgets/shared_widgets.dart';
 import '../../../core/widgets/settings_widgets.dart';
 import '../../../core/widgets/professional_app_bar.dart';
@@ -27,7 +27,7 @@ class SettingsPage extends ConsumerWidget {
     final currentMapProvider = ref.watch(currentMapProviderProvider);
 
     return Scaffold(
-      backgroundColor: DesignTokens.bgPrimary,
+      backgroundColor: IndustrialDarkTokens.bgBase,
       appBar: ProfessionalAppBar(
         title: localizations.settingsTitle,
         showBackButton: false,
@@ -50,7 +50,7 @@ class SettingsPage extends ConsumerWidget {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(DesignTokens.spacingMd),
+        padding: const EdgeInsets.all(IndustrialDarkTokens.spacingItem),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -61,7 +61,7 @@ class SettingsPage extends ConsumerWidget {
               onProfileTap: () => _showUserProfile(context),
             ),
 
-            const SizedBox(height: DesignTokens.spacingXl),
+            const SizedBox(height: IndustrialDarkTokens.spacingSection),
 
             // Language Section
             SettingsSection(
@@ -72,12 +72,12 @@ class SettingsPage extends ConsumerWidget {
                   title: localizations.english,
                   subtitle: localizations.english,
                   iconColor: currentLocale.languageCode == 'en'
-                      ? DesignTokens.statusActive
+                      ? IndustrialDarkTokens.statusActive
                       : null,
                   trailing: currentLocale.languageCode == 'en'
                       ? const Icon(Icons.check_circle,
-                          color: DesignTokens.statusActive,
-                          size: DesignTokens.iconMd)
+                          color: IndustrialDarkTokens.statusActive,
+                          size: 20)
                       : null,
                   onTap: () =>
                       _changeLanguage(languageController, 'en', context),
@@ -87,12 +87,12 @@ class SettingsPage extends ConsumerWidget {
                   title: localizations.korean,
                   subtitle: localizations.korean,
                   iconColor: currentLocale.languageCode == 'ko'
-                      ? DesignTokens.statusActive
+                      ? IndustrialDarkTokens.statusActive
                       : null,
                   trailing: currentLocale.languageCode == 'ko'
                       ? const Icon(Icons.check_circle,
-                          color: DesignTokens.statusActive,
-                          size: DesignTokens.iconMd)
+                          color: IndustrialDarkTokens.statusActive,
+                          size: 20)
                       : null,
                   onTap: () =>
                       _changeLanguage(languageController, 'ko', context),
@@ -102,12 +102,12 @@ class SettingsPage extends ConsumerWidget {
                   title: localizations.japanese,
                   subtitle: localizations.japanese,
                   iconColor: currentLocale.languageCode == 'ja'
-                      ? DesignTokens.statusActive
+                      ? IndustrialDarkTokens.statusActive
                       : null,
                   trailing: currentLocale.languageCode == 'ja'
                       ? const Icon(Icons.check_circle,
-                          color: DesignTokens.statusActive,
-                          size: DesignTokens.iconMd)
+                          color: IndustrialDarkTokens.statusActive,
+                          size: 20)
                       : null,
                   onTap: () =>
                       _changeLanguage(languageController, 'ja', context),
@@ -118,13 +118,13 @@ class SettingsPage extends ConsumerWidget {
                   subtitle: localizations.chineseSimplified,
                   iconColor: currentLocale.languageCode == 'zh' &&
                           currentLocale.countryCode == 'CN'
-                      ? DesignTokens.statusActive
+                      ? IndustrialDarkTokens.statusActive
                       : null,
                   trailing: currentLocale.languageCode == 'zh' &&
                           currentLocale.countryCode == 'CN'
                       ? const Icon(Icons.check_circle,
-                          color: DesignTokens.statusActive,
-                          size: DesignTokens.iconMd)
+                          color: IndustrialDarkTokens.statusActive,
+                          size: 20)
                       : null,
                   onTap: () =>
                       _changeLanguage(languageController, 'zh_CN', context),
@@ -135,13 +135,13 @@ class SettingsPage extends ConsumerWidget {
                   subtitle: localizations.chineseTraditional,
                   iconColor: currentLocale.languageCode == 'zh' &&
                           currentLocale.countryCode == 'TW'
-                      ? DesignTokens.statusActive
+                      ? IndustrialDarkTokens.statusActive
                       : null,
                   trailing: currentLocale.languageCode == 'zh' &&
                           currentLocale.countryCode == 'TW'
                       ? const Icon(Icons.check_circle,
-                          color: DesignTokens.statusActive,
-                          size: DesignTokens.iconMd)
+                          color: IndustrialDarkTokens.statusActive,
+                          size: 20)
                       : null,
                   onTap: () =>
                       _changeLanguage(languageController, 'zh_TW', context),
@@ -150,7 +150,7 @@ class SettingsPage extends ConsumerWidget {
               ],
             ),
 
-            const SizedBox(height: DesignTokens.spacingXl),
+            const SizedBox(height: IndustrialDarkTokens.spacingSection),
 
             // Account Section
             SettingsSection(
@@ -178,7 +178,7 @@ class SettingsPage extends ConsumerWidget {
               ],
             ),
 
-            const SizedBox(height: DesignTokens.spacingXl),
+            const SizedBox(height: IndustrialDarkTokens.spacingSection),
 
             // App Settings Section
             SettingsSection(
@@ -205,8 +205,8 @@ class SettingsPage extends ConsumerWidget {
                   title: 'Theme',
                   subtitle: 'Dark mode (always on)',
                   trailing: const Icon(Icons.check_circle,
-                      color: DesignTokens.statusActive,
-                      size: DesignTokens.iconMd),
+                      color: IndustrialDarkTokens.statusActive,
+                      size: 20),
                   onTap: () => _showThemeSettings(context),
                 ),
                 SettingsMenuItem(
@@ -219,7 +219,7 @@ class SettingsPage extends ConsumerWidget {
               ],
             ),
 
-            const SizedBox(height: DesignTokens.spacingXl),
+            const SizedBox(height: IndustrialDarkTokens.spacingSection),
 
             // Simulation Section
             SettingsSection(
@@ -229,7 +229,7 @@ class SettingsPage extends ConsumerWidget {
               ],
             ),
 
-            const SizedBox(height: DesignTokens.spacingXl),
+            const SizedBox(height: IndustrialDarkTokens.spacingSection),
 
             // Support Section
             SettingsSection(
@@ -257,13 +257,13 @@ class SettingsPage extends ConsumerWidget {
               ],
             ),
 
-            const SizedBox(height: DesignTokens.spacingXl),
+            const SizedBox(height: IndustrialDarkTokens.spacingSection),
 
             // Sign Out Button
             Container(
               width: double.infinity,
               margin: const EdgeInsets.symmetric(
-                  horizontal: DesignTokens.spacingMd),
+                  horizontal: IndustrialDarkTokens.spacingItem),
               child: ViaButton.danger(
                 text: localizations.signOut,
                 onPressed: () => _showSignOutDialog(context),
@@ -306,7 +306,7 @@ class SettingsPage extends ConsumerWidget {
         style: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w600,
-          color: DesignTokens.textPrimary,
+          color: IndustrialDarkTokens.textPrimary,
         ),
       ),
       child: Column(
@@ -315,15 +315,15 @@ class SettingsPage extends ConsumerWidget {
           return ListTile(
             leading: Icon(
               provider.icon,
-              color: DesignTokens.textPrimary,
+              color: IndustrialDarkTokens.textPrimary,
             ),
             title: Text(
               provider.name,
-              style: TextStyle(color: DesignTokens.textPrimary),
+              style: TextStyle(color: IndustrialDarkTokens.textPrimary),
             ),
             subtitle: Text(
               provider.description,
-              style: TextStyle(color: DesignTokens.textSecondary),
+              style: TextStyle(color: IndustrialDarkTokens.textSecondary),
             ),
             onTap: () async {
               Navigator.pop(context);
@@ -440,7 +440,7 @@ class SettingsPage extends ConsumerWidget {
         style: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w600,
-          color: DesignTokens.textPrimary,
+          color: IndustrialDarkTokens.textPrimary,
         ),
       ),
       child: Column(
@@ -448,16 +448,16 @@ class SettingsPage extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(localizations.versionInfo,
-              style: TextStyle(color: DesignTokens.textSecondary)),
-          const SizedBox(height: DesignTokens.spacingSm),
+              style: TextStyle(color: IndustrialDarkTokens.textSecondary)),
+          const SizedBox(height: IndustrialDarkTokens.spacingCompact),
           Text(localizations.manufacturerInfo,
-              style: TextStyle(color: DesignTokens.textSecondary)),
-          const SizedBox(height: DesignTokens.spacingSm),
+              style: TextStyle(color: IndustrialDarkTokens.textSecondary)),
+          const SizedBox(height: IndustrialDarkTokens.spacingCompact),
           Text(localizations.productInfo,
-              style: TextStyle(color: DesignTokens.textSecondary)),
-          const SizedBox(height: DesignTokens.spacingSm),
+              style: TextStyle(color: IndustrialDarkTokens.textSecondary)),
+          const SizedBox(height: IndustrialDarkTokens.spacingCompact),
           Text('© 2024 DY Innovate. All rights reserved.',
-              style: TextStyle(color: DesignTokens.textTertiary)),
+              style: TextStyle(color: IndustrialDarkTokens.textSecondary)),
         ],
       ),
       footer: ViaButton.primary(
@@ -478,12 +478,12 @@ class SettingsPage extends ConsumerWidget {
         style: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w600,
-          color: DesignTokens.textPrimary,
+          color: IndustrialDarkTokens.textPrimary,
         ),
       ),
       child: Text(
         localizations.signOutConfirm,
-        style: TextStyle(color: DesignTokens.textSecondary),
+        style: TextStyle(color: IndustrialDarkTokens.textSecondary),
       ),
       footer: Row(
         children: [
@@ -493,7 +493,7 @@ class SettingsPage extends ConsumerWidget {
               onPressed: () => Navigator.pop(context),
             ),
           ),
-          const SizedBox(width: DesignTokens.spacingMd),
+          const SizedBox(width: IndustrialDarkTokens.spacingItem),
           Expanded(
             child: ViaButton.danger(
               text: localizations.signOut,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/theme/design_tokens.dart';
+import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 import '../../../core/widgets/via/via_button.dart';
 import '../controllers/auth_controller.dart';
 import '../widgets/cart_icon.dart';
@@ -24,7 +24,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       icon: Icons.location_on,
       title: '실시간 카트 모니터링',
       description: '모든 골프카트의 실시간 위치와 상태를\n한눈에 확인하고 효율적으로 관리하세요.',
-      color: DesignTokens.statusActive,
+      color: IndustrialDarkTokens.statusActive,
       customIcon: const CartIcon(
         size: 80,
         color: Colors.white,
@@ -35,13 +35,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       icon: Icons.build_circle,
       title: '유지보수 및 워크오더 관리',
       description: '체계적인 유지보수 계획과\n워크오더 생성으로 관리 효율성을 높이세요.',
-      color: DesignTokens.statusCharging,
+      color: IndustrialDarkTokens.statusCharging,
     ),
     OnboardingPageData(
       icon: Icons.analytics,
       title: '알림 및 분석 리포트',
       description: '데이터 기반의 인사이트로\n더 나은 의사결정을 내리세요.',
-      color: DesignTokens.alertInfo,
+      color: IndustrialDarkTokens.accentPrimary,
     ),
   ];
 
@@ -85,13 +85,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: DesignTokens.bgPrimary,
+      backgroundColor: IndustrialDarkTokens.bgBase,
       body: SafeArea(
         child: Column(
           children: [
             // Header with skip button
             Padding(
-              padding: const EdgeInsets.all(DesignTokens.spacingMd),
+              padding: const EdgeInsets.all(IndustrialDarkTokens.spacingItem),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -101,7 +101,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       onPressed: _previousPage,
                       icon: Icon(
                         Icons.arrow_back_ios,
-                        color: DesignTokens.textSecondary,
+                        color: IndustrialDarkTokens.textSecondary,
                       ),
                     )
                   else
@@ -135,7 +135,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
             // Bottom section with indicators and buttons
             Padding(
-              padding: const EdgeInsets.all(DesignTokens.spacingLg),
+              padding: const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
               child: Column(
                 children: [
                   // Page indicators
@@ -147,7 +147,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     ),
                   ),
 
-                  const SizedBox(height: DesignTokens.spacingLg),
+                  const SizedBox(height: IndustrialDarkTokens.spacingCard),
 
                   // Next/Get Started button
                   ViaButton.primary(
@@ -166,7 +166,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   Widget _buildOnboardingPage(OnboardingPageData pageData) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spacingLg),
+      padding: const EdgeInsets.symmetric(horizontal: IndustrialDarkTokens.spacingCard),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -200,32 +200,32 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 ),
           ),
 
-          const SizedBox(height: DesignTokens.spacing3xl),
+          const SizedBox(height: 64),
 
           // Title
           Text(
             pageData.title,
             style: TextStyle(
-              fontFamily: DesignTokens.fontFamily,
-              fontSize: DesignTokens.fontSize3xl,
-              fontWeight: DesignTokens.fontWeightBold,
-              color: DesignTokens.textPrimary,
-              height: DesignTokens.lineHeightTight,
+              fontFamily: 'Pretendard Variable',
+              fontSize: 28,
+              fontWeight: IndustrialDarkTokens.fontWeightBold,
+              color: IndustrialDarkTokens.textPrimary,
+              height: 1.2,
             ),
             textAlign: TextAlign.center,
           ),
 
-          const SizedBox(height: DesignTokens.spacingLg),
+          const SizedBox(height: IndustrialDarkTokens.spacingCard),
 
           // Description
           Text(
             pageData.description,
             style: TextStyle(
-              fontFamily: DesignTokens.fontFamily,
-              fontSize: DesignTokens.fontSizeLg,
-              fontWeight: DesignTokens.fontWeightNormal,
-              color: DesignTokens.textSecondary,
-              height: DesignTokens.lineHeightRelaxed,
+              fontFamily: 'Pretendard Variable',
+              fontSize: IndustrialDarkTokens.fontSizeBody,
+              fontWeight: IndustrialDarkTokens.fontWeightRegular,
+              color: IndustrialDarkTokens.textSecondary,
+              height: 1.6,
             ),
             textAlign: TextAlign.center,
           ),
@@ -241,7 +241,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       height: 8,
       decoration: BoxDecoration(
         color:
-            isActive ? DesignTokens.statusActive : DesignTokens.borderSecondary,
+            isActive ? IndustrialDarkTokens.statusActive : IndustrialDarkTokens.outlineSoft,
         borderRadius: BorderRadius.circular(4),
       ),
     );

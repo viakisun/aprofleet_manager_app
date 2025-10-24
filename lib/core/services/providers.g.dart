@@ -983,7 +983,7 @@ final alertStreamProvider = AutoDisposeStreamProvider<Alert>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AlertStreamRef = AutoDisposeStreamProviderRef<Alert>;
-String _$initializeAppHash() => r'f5181871c1bf7f1cf756df0a27105310ef4d6a3c';
+String _$initializeAppHash() => r'420be8617dfbd9df6a7e7f752e95dc2a3aa4e556';
 
 /// See also [initializeApp].
 @ProviderFor(initializeApp)

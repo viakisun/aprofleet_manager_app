@@ -4,9 +4,9 @@ class AppLocalizationsKo {
     'appName': 'AproFleet 매니저',
 
     // Navigation
-    'navRealTime': '실시간',
-    'navCartManagement': '카트',
-    'navMaintenance': '정비',
+    'navRealTime': '플릿',
+    'navCartManagement': '차량',
+    'navMaintenance': '서비스',
     'navAlerts': '알림',
     'navAnalytics': '분석',
     'navSettings': '설정',

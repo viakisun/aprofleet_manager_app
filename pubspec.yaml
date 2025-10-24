@@ -29,6 +29,7 @@ dependencies:
   cached_network_image: ^3.3.0
   animations: ^2.0.8
   lucide_icons: ^0.257.0
+  phosphor_flutter: ^2.1.0
   
   # QR Code & Camera
   mobile_scanner: ^5.0.0
@@ -51,6 +52,9 @@ dependencies:
   
   # Google Maps
   google_maps_flutter: ^2.5.0
+
+  # Mapbox Maps
+  mapbox_maps_flutter: ^2.12.0
 
 dev_dependencies:
   flutter_test:

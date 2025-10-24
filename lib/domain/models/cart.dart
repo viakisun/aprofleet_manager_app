@@ -2,6 +2,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../core/utils/json_converters.dart';
+import 'alert.dart';
+import 'cart_issue.dart';
 
 part 'cart.freezed.dart';
 part 'cart.g.dart';
@@ -36,6 +38,18 @@ class Cart with _$Cart {
     double? batteryPct,
     double? speedKph,
     String? location,
+    // Alert integration
+    String? activeAlertId,
+    AlertSeverity? alertSeverity,
+    // Manager-centric fields
+    String? courseLocation, // e.g., "On Course - Hole 7", "In Garage", "Charging Station"
+    String? firmwareVersion, // e.g., "v2.5.1"
+    @Default(false) bool firmwareUpdateAvailable, // Whether firmware update is needed
+    DateTime? lastMaintenanceDate, // Last maintenance/service date
+    DateTime? nextMaintenanceDate, // Next scheduled maintenance
+    @Default(0) int activeIssuesCount, // Count of active unresolved issues
+    @Default([]) List<CartIssue> activeIssues, // List of active issues
+    double? todayDistance, // Distance traveled today (km)
   }) = _Cart;
 
   factory Cart.fromJson(Map<String, dynamic> json) => _$CartFromJson(json);
@@ -110,4 +124,12 @@ extension CartStatusExtension on CartStatus {
         return 'OFFLINE';
     }
   }
+}
+
+extension CartExtension on Cart {
+  /// Returns true if this cart has an active alert
+  bool get hasActiveAlert => activeAlertId != null;
+
+  /// Returns true if this cart is on the route (active or has alert)
+  bool get isOnRoute => status == CartStatus.active || hasActiveAlert;
 }

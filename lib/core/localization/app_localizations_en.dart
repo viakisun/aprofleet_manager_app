@@ -4,11 +4,11 @@ class AppLocalizationsEn {
     'appName': 'AproFleet Manager',
 
     // Navigation
-    'navRealTime': 'LIVE',
-    'navCartManagement': 'CARTS',
-    'navMaintenance': 'WORK',
+    'navRealTime': 'FLEET',
+    'navCartManagement': 'VEHICLES',
+    'navMaintenance': 'SERVICE',
     'navAlerts': 'ALERTS',
-    'navAnalytics': 'DATA',
+    'navAnalytics': 'ANALYTICS',
     'navSettings': 'SETTINGS',
 
     // Cart Registration

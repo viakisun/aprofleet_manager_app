@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/design_tokens.dart';
+import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 
 /// Custom cart icon with directional arrow for APRO FLEET
 class CartIcon extends StatelessWidget {
@@ -19,7 +19,7 @@ class CartIcon extends StatelessWidget {
     return CustomPaint(
       size: Size(size, size),
       painter: CartIconPainter(
-        color: color ?? DesignTokens.statusActive,
+        color: color ?? IndustrialDarkTokens.statusActive,
         showDirection: showDirection,
       ),
     );

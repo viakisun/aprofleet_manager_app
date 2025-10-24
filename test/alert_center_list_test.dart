@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:aprofleet_manager/features/alert_management/pages/alert_management_page.dart';
+import 'package:aprofleet_manager/features/alerts/pages/alert_management_page_v2.dart';
 import 'package:aprofleet_manager/domain/models/alert.dart';
 import 'package:aprofleet_manager/domain/models/work_order.dart';
 import 'package:aprofleet_manager/core/services/providers.dart';
@@ -36,7 +36,7 @@ void main() {
               alertsProvider.overrideWith((ref) async => mockAlerts),
             ],
             child: const MaterialApp(
-              home: AlertManagementPage(),
+              home: AlertManagementPageV2(),
             ),
           ),
         );
@@ -44,7 +44,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the widget loads (basic smoke test)
-        expect(find.byType(AlertManagementPage), findsOneWidget);
+        expect(find.byType(AlertManagementPageV2V2), findsOneWidget);
       } finally {
         // 화면 크기 원상복구
         await tester.binding.setSurfaceSize(null);
@@ -62,7 +62,7 @@ void main() {
               alertsProvider.overrideWith((ref) async => []),
             ],
             child: const MaterialApp(
-              home: AlertManagementPage(),
+              home: AlertManagementPageV2(),
             ),
           ),
         );

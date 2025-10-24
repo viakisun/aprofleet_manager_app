@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/theme/design_tokens.dart';
+import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 import '../../../core/widgets/via/via_input.dart';
 import '../../../core/widgets/via/via_button.dart';
 import '../controllers/auth_controller.dart';
@@ -55,7 +55,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: DesignTokens.bgPrimary,
+      backgroundColor: IndustrialDarkTokens.bgBase,
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -70,20 +70,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         ),
         child: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(DesignTokens.spacingLg),
+            padding: const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
             child: Column(
               children: [
-                const SizedBox(height: DesignTokens.spacing3xl),
+                const SizedBox(height: 64),
 
                 // Logo section
                 _buildLogoSection(),
 
-                const SizedBox(height: DesignTokens.spacing3xl),
+                const SizedBox(height: 64),
 
                 // Login form
                 _buildLoginForm(),
 
-                const SizedBox(height: DesignTokens.spacing3xl),
+                const SizedBox(height: 64),
               ],
             ),
           ),
@@ -105,13 +105,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                DesignTokens.statusActive,
-                DesignTokens.statusCharging,
+                IndustrialDarkTokens.statusActive,
+                IndustrialDarkTokens.statusCharging,
               ],
             ),
             boxShadow: [
               BoxShadow(
-                color: DesignTokens.statusActive.withValues(alpha: 0.3),
+                color: IndustrialDarkTokens.statusActive.withValues(alpha: 0.3),
                 blurRadius: 20,
                 spreadRadius: 5,
               ),
@@ -126,30 +126,30 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ),
         ),
 
-        const SizedBox(height: DesignTokens.spacingLg),
+        const SizedBox(height: IndustrialDarkTokens.spacingCard),
 
         // App name
         Text(
           'APRO FLEET',
           style: TextStyle(
-            fontFamily: DesignTokens.fontFamily,
-            fontSize: DesignTokens.fontSize3xl,
-            fontWeight: DesignTokens.fontWeightBold,
-            color: DesignTokens.textPrimary,
-            letterSpacing: DesignTokens.letterSpacingWide,
+            fontFamily: 'Pretendard Variable',
+            fontSize: 28,
+            fontWeight: IndustrialDarkTokens.fontWeightBold,
+            color: IndustrialDarkTokens.textPrimary,
+            letterSpacing: IndustrialDarkTokens.letterSpacing,
           ),
         ),
 
-        const SizedBox(height: DesignTokens.spacingSm),
+        const SizedBox(height: IndustrialDarkTokens.spacingCompact),
 
         // Welcome message
         Text(
           '시스템에 로그인하세요',
           style: TextStyle(
-            fontFamily: DesignTokens.fontFamily,
-            fontSize: DesignTokens.fontSizeLg,
-            fontWeight: DesignTokens.fontWeightNormal,
-            color: DesignTokens.textSecondary,
+            fontFamily: 'Pretendard Variable',
+            fontSize: IndustrialDarkTokens.fontSizeBody,
+            fontWeight: IndustrialDarkTokens.fontWeightRegular,
+            color: IndustrialDarkTokens.textSecondary,
           ),
         ),
       ],
@@ -158,11 +158,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Widget _buildLoginForm() {
     return Container(
-      padding: const EdgeInsets.all(DesignTokens.spacingLg),
-      decoration: DesignTokens.getGlassMorphismDecoration(
-        borderRadius: DesignTokens.radiusLg,
-        opacity: 0.1,
-      ),
+      padding: const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
+      decoration: IndustrialDarkTokens.getGlassMorphismDecoration(),
       child: Form(
         key: _formKey,
         child: Column(
@@ -175,7 +172,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               placeholder: '이메일을 입력하세요',
             ),
 
-            const SizedBox(height: DesignTokens.spacingLg),
+            const SizedBox(height: IndustrialDarkTokens.spacingCard),
 
             // Password field
             ViaInput.password(
@@ -184,7 +181,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               placeholder: '비밀번호를 입력하세요',
             ),
 
-            const SizedBox(height: DesignTokens.spacingXl),
+            const SizedBox(height: IndustrialDarkTokens.spacingSection),
 
             // Login button
             ViaButton.primary(
@@ -194,7 +191,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               isFullWidth: true,
             ),
 
-            const SizedBox(height: DesignTokens.spacingLg),
+            const SizedBox(height: IndustrialDarkTokens.spacingCard),
 
             // Guest login option
             ViaButton.ghost(
