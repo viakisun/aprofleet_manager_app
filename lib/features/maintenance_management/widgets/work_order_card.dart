@@ -60,7 +60,7 @@ class WorkOrderCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        ViaPriorityBadge(priority: workOrder.priority),
+                        ViaPriorityBadge(priority: _mapPriorityToViaPriority(workOrder.priority)),
                         const SizedBox(width: 8),
                         ViaStatusBadge(
                           status: _mapWorkOrderStatusToViaStatus(workOrder.status),
@@ -181,6 +181,19 @@ class WorkOrderCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  ViaPriority _mapPriorityToViaPriority(Priority priority) {
+    switch (priority) {
+      case Priority.p1:
+        return ViaPriority.p1;
+      case Priority.p2:
+        return ViaPriority.p2;
+      case Priority.p3:
+        return ViaPriority.p3;
+      case Priority.p4:
+        return ViaPriority.p4;
+    }
   }
 
   ViaStatus _mapWorkOrderStatusToViaStatus(WorkOrderStatus status) {
