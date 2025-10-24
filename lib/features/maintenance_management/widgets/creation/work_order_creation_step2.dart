@@ -162,8 +162,8 @@ class _WorkOrderCreationStep2State
 
                         // Status indicator
                         ViaStatusBadge(
-                          label: cart.status.displayName.toUpperCase(),
                           status: _mapCartStatusToViaStatus(cart.status),
+                          customText: cart.status.displayName.toUpperCase(),
                         ),
                       ],
                     ),
@@ -270,18 +270,18 @@ class _WorkOrderCreationStep2State
     });
   }
 
-  ViaStatusType _mapCartStatusToViaStatus(CartStatus status) {
+  ViaStatus _mapCartStatusToViaStatus(CartStatus status) {
     switch (status) {
       case CartStatus.active:
-        return ViaStatusType.active;
+        return ViaStatus.active;
       case CartStatus.idle:
-        return ViaStatusType.idle;
+        return ViaStatus.idle;
       case CartStatus.charging:
-        return ViaStatusType.charging;
+        return ViaStatus.charging;
       case CartStatus.maintenance:
-        return ViaStatusType.maintenance;
+        return ViaStatus.maintenance;
       case CartStatus.offline:
-        return ViaStatusType.offline;
+        return ViaStatus.offline;
     }
   }
 }

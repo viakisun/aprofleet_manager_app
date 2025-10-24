@@ -51,17 +51,14 @@ class WorkOrderCreationStep1 extends ConsumerWidget {
           _buildSectionHeader('DESCRIPTION'),
           const SizedBox(height: DesignTokens.spacingMd),
           ViaInput(
-            initialValue: createWoState.draft.description,
+            controller: TextEditingController(text: createWoState.draft.description),
             onChanged: controller.setDescription,
             label: 'Description',
             placeholder: 'Describe the work to be performed...',
             maxLines: 4,
-            validator: (value) {
-              if (value == null || value.length < 10) {
-                return 'Description must be at least 10 characters';
-              }
-              return null;
-            },
+            errorText: createWoState.draft.description.length < 10
+                ? 'Description must be at least 10 characters'
+                : null,
           ),
         ],
       ),

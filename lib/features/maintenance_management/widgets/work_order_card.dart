@@ -63,8 +63,8 @@ class WorkOrderCard extends StatelessWidget {
                             ViaPriorityBadge(priority: workOrder.priority),
                             const SizedBox(width: 8),
                             ViaStatusBadge(
-                              label: workOrder.status.getDisplayName(context),
                               status: _mapWorkOrderStatusToViaStatus(workOrder.status),
+                              customText: workOrder.status.getDisplayName(context),
                             ),
                           ],
                         ),
@@ -184,20 +184,20 @@ class WorkOrderCard extends StatelessWidget {
     );
   }
 
-  ViaStatusType _mapWorkOrderStatusToViaStatus(WorkOrderStatus status) {
+  ViaStatus _mapWorkOrderStatusToViaStatus(WorkOrderStatus status) {
     switch (status) {
       case WorkOrderStatus.draft:
-        return ViaStatusType.idle;
+        return ViaStatus.idle;
       case WorkOrderStatus.pending:
-        return ViaStatusType.warning;
+        return ViaStatus.idle;
       case WorkOrderStatus.inProgress:
-        return ViaStatusType.active;
+        return ViaStatus.active;
       case WorkOrderStatus.onHold:
-        return ViaStatusType.maintenance;
+        return ViaStatus.maintenance;
       case WorkOrderStatus.completed:
-        return ViaStatusType.active;
+        return ViaStatus.active;
       case WorkOrderStatus.cancelled:
-        return ViaStatusType.offline;
+        return ViaStatus.offline;
     }
   }
 

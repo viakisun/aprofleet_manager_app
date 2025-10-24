@@ -153,9 +153,10 @@ class _WorkOrderCreationStep3State
             children: [
               Expanded(
                 child: ViaInput(
-                  type: ViaInputType.number,
+                  inputType: ViaInputType.number,
                   label: 'Duration',
                   placeholder: 'Hours',
+                  keyboardType: TextInputType.number,
                   onChanged: (value) {
                     final duration = int.tryParse(value);
                     if (duration != null) {
