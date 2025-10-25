@@ -346,5 +346,9 @@ class AppLocalizationsEn {
     'alertSourceGeofence': 'GEOFENCE',
     'alertSourceTemperature': 'TEMPERATURE',
     'alertSourceSystem': 'SYSTEM',
+
+    // Cart Inventory - Route View
+    'cartsPositionedOnRoute': 'Carts positioned on route',
+    'cartPositionUpdateFailed': 'Failed to update cart positions',
   };
 }

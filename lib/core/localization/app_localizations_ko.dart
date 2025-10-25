@@ -352,5 +352,9 @@ class AppLocalizationsKo {
     'alertSourceGeofence': '지오펜스',
     'alertSourceTemperature': '온도',
     'alertSourceSystem': '시스템',
+
+    // Cart Inventory - Route View
+    'cartsPositionedOnRoute': '카트들이 경로 상에 배치되었습니다',
+    'cartPositionUpdateFailed': '카트 위치 업데이트 실패',
   };
 }

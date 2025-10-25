@@ -352,5 +352,9 @@ class AppLocalizationsZhTw {
     'alertSourceGeofence': '地理圍欄',
     'alertSourceTemperature': '溫度',
     'alertSourceSystem': '系統',
+
+    // Cart Inventory - Route View
+    'cartsPositionedOnRoute': '車輛已在路線上定位',
+    'cartPositionUpdateFailed': '車輛位置更新失敗',
   };
 }

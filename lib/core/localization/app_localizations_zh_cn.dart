@@ -352,5 +352,9 @@ class AppLocalizationsZhCn {
     'alertSourceGeofence': '地理围栏',
     'alertSourceTemperature': '温度',
     'alertSourceSystem': '系统',
+
+    // Cart Inventory - Route View
+    'cartsPositionedOnRoute': '车辆已在路线上定位',
+    'cartPositionUpdateFailed': '车辆位置更新失败',
   };
 }

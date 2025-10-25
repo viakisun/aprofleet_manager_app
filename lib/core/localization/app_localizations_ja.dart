@@ -352,5 +352,9 @@ class AppLocalizationsJa {
     'alertSourceGeofence': 'ジオフェンス',
     'alertSourceTemperature': '温度',
     'alertSourceSystem': 'システム',
+
+    // Cart Inventory - Route View
+    'cartsPositionedOnRoute': 'カートが経路上に配置されました',
+    'cartPositionUpdateFailed': 'カート位置の更新に失敗しました',
   };
 }

@@ -373,6 +373,12 @@ class AppLocalizations {
       _getLocalizedValue('alertSourceTemperature');
   String get alertSourceSystem => _getLocalizedValue('alertSourceSystem');
 
+  // Cart Inventory - Route View
+  String get cartsPositionedOnRoute =>
+      _getLocalizedValue('cartsPositionedOnRoute');
+  String get cartPositionUpdateFailed =>
+      _getLocalizedValue('cartPositionUpdateFailed');
+
   String _getLocalizedValue(String key) {
     switch (locale.languageCode) {
       case 'ja':

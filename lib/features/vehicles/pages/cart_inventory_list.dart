@@ -10,7 +10,6 @@ import '../../../core/widgets/filter_sheet.dart';
 import '../../../core/widgets/professional_app_bar.dart';
 import '../../../core/widgets/hamburger_menu.dart';
 import '../../../core/widgets/custom_icons.dart';
-import '../../../core/constants/app_constants.dart';
 import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 import '../../../core/widgets/via/via_toast.dart';
 import '../../../core/widgets/via/via_bottom_sheet.dart';
@@ -209,269 +208,6 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
     );
   }
 
-  // ignore: unused_element
-  Widget _buildCartCard(Cart cart, int index) {
-    final statusColor = AppConstants.statusColors[cart.status] ?? Colors.grey;
-    final isSelected = _selectedCarts.contains(cart.id);
-
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color:
-              isSelected ? Colors.blue : Colors.white.withValues(alpha: 0.06),
-          width: isSelected ? 2 : 1,
-        ),
-      ),
-      child: InkWell(
-        onTap: _isSelectionMode
-            ? () => _toggleSelection(cart.id)
-            : () => _showCartActions(context, cart),
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header
-              Row(
-                children: [
-                  Container(
-                    width: 12,
-                    height: 12,
-                    decoration: BoxDecoration(
-                      color: statusColor,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      cart.id,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                  ),
-                  CartStatusChip(status: cart.status),
-                  if (_isSelectionMode)
-                    Checkbox(
-                      value: isSelected,
-                      onChanged: (value) => _toggleSelection(cart.id),
-                      activeColor: Colors.blue,
-                    ),
-                ],
-              ),
-
-              const SizedBox(height: 12),
-
-              // Cart Info
-              Text(
-                cart.model,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                cart.location?.toString() ?? 'Unknown Location',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.white.withValues(alpha: 0.7),
-                ),
-              ),
-
-              const SizedBox(height: 12),
-
-              // Telemetry Info
-              Row(
-                children: [
-                  Expanded(
-                    child: TelemetryWidget(
-                      label: 'Battery',
-                      value: cart.batteryPct ?? 0.0,
-                      unit: '%',
-                      color: (cart.batteryPct ?? 0) > 50
-                          ? Colors.green
-                          : (cart.batteryPct ?? 0) > 20
-                              ? Colors.orange
-                              : Colors.red,
-                      isCompact: true,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: TelemetryWidget(
-                      label: 'Speed',
-                      value: cart.speedKph ?? 0.0,
-                      unit: 'km/h',
-                      isCompact: true,
-                    ),
-                  ),
-                ],
-              ),
-
-              if (!_isSelectionMode) ...[
-                const SizedBox(height: 12),
-                // Action Buttons
-                Row(
-                  children: [
-                    Expanded(
-                      child: ActionButton(
-                        text: 'Details',
-                        onPressed: () => context.go('/cm/profile/${cart.id}'),
-                        type: ActionButtonType.secondary,
-                        icon: Icons.info_outline,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: ActionButton(
-                        text: 'Track',
-                        onPressed: () => context.go('/rt/cart/${cart.id}'),
-                        type: ActionButtonType.secondary,
-                        icon: Icons.my_location,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: ActionButton(
-                        text: 'Service',
-                        onPressed: () =>
-                            context.go('/mm/create?cart=${cart.id}'),
-                        type: ActionButtonType.secondary,
-                        icon: Icons.build,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ignore: unused_element
-  Widget _buildCartGridCard(Cart cart, int index) {
-    final statusColor = AppConstants.statusColors[cart.status] ?? Colors.grey;
-    final isSelected = _selectedCarts.contains(cart.id);
-
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color:
-              isSelected ? Colors.blue : Colors.white.withValues(alpha: 0.06),
-          width: isSelected ? 2 : 1,
-        ),
-      ),
-      child: InkWell(
-        onTap: _isSelectionMode
-            ? () => _toggleSelection(cart.id)
-            : () => _showCartActions(context, cart),
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header
-              Row(
-                children: [
-                  Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: statusColor,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  Expanded(
-                    child: Text(
-                      cart.id,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                  ),
-                  if (_isSelectionMode)
-                    Checkbox(
-                      value: isSelected,
-                      onChanged: (value) => _toggleSelection(cart.id),
-                      activeColor: Colors.blue,
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
-                ],
-              ),
-
-              const SizedBox(height: 8),
-
-              // Model
-              Text(
-                cart.model,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-
-              const SizedBox(height: 8),
-
-              // Status
-              CartStatusChip(status: cart.status, isCompact: true),
-
-              const Spacer(),
-
-              // Battery
-              Row(
-                children: [
-                  Icon(
-                    Icons.battery_std,
-                    size: 12,
-                    color: (cart.batteryPct ?? 0) > 50
-                        ? Colors.green
-                        : (cart.batteryPct ?? 0) > 20
-                            ? Colors.orange
-                            : Colors.red,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    '${(cart.batteryPct ?? 0).toStringAsFixed(0)}%',
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600,
-                      color: (cart.batteryPct ?? 0) > 50
-                          ? Colors.green
-                          : (cart.batteryPct ?? 0) > 20
-                              ? Colors.orange
-                              : Colors.red,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
   Widget _buildSelectionActions(CartInventoryController controller) {
     return Container(
@@ -766,32 +502,33 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
   }
 
   void _goToRouteView(BuildContext context) async {
+    final localizations = AppLocalizations.of(context);
     final inventoryController =
         ref.read(cartInventoryControllerProvider.notifier);
 
-    // 카트들을 경로 상에 배치
+    // Position carts along route
     try {
       await inventoryController.updateCartPositionsAlongRoute();
 
-      // 성공 메시지 표시
+      // Show success message
       if (context.mounted) {
         ViaToast.show(
           context: context,
-          message: '카트들이 경로 상에 배치되었습니다',
+          message: localizations.cartsPositionedOnRoute,
           variant: ViaToastVariant.success,
         );
       }
 
-      // 라이브 맵 뷰로 이동
+      // Navigate to live map view
       if (context.mounted) {
         context.go('/rt/live');
       }
     } catch (e) {
-      // 오류 메시지 표시
+      // Show error message
       if (context.mounted) {
         ViaToast.show(
           context: context,
-          message: '카트 위치 업데이트 실패: $e',
+          message: '${localizations.cartPositionUpdateFailed}: $e',
           variant: ViaToastVariant.error,
         );
       }
