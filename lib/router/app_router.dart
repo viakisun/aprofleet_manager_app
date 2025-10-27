@@ -107,7 +107,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             },
           ),
 
-          // Cart Management Module
+          // Cart Management Module (VEHICLES)
           GoRoute(
             path: '/cm/list',
             name: 'cart-inventory',
@@ -124,6 +124,26 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                 );
               },
             ),
+          ),
+          GoRoute(
+            path: '/cm/profile/:id',
+            name: 'cart-profile',
+            pageBuilder: (context, state) {
+              final cartId = state.pathParameters['id']!;
+              return CustomTransitionPage(
+                child: CartDetailMonitor(cartId: cartId),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return SlideTransition(
+                    position: animation.drive(
+                      Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                          .chain(CurveTween(curve: Curves.easeInOut)),
+                    ),
+                    child: child,
+                  );
+                },
+              );
+            },
           ),
           GoRoute(
             path: '/cm/register',

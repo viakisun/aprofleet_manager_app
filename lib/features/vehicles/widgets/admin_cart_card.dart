@@ -345,10 +345,12 @@ class _AdminCartCardState extends State<AdminCartCard>
                       ],
                     ),
 
-              // Critical Issue Badge (if any)
+              // Critical Issue Badge + Action Buttons (if any)
               if (criticalIssue != null && !_isExpanded) ...[
-                const SizedBox(height: 8),
+                const SizedBox(height: 12),
                 _buildCriticalIssueBadge(criticalIssue),
+                const SizedBox(height: 8),
+                _buildQuickActionButtons(),
               ],
 
               // Expanded Details Section
@@ -576,7 +578,7 @@ class _AdminCartCardState extends State<AdminCartCard>
   Widget _buildCriticalIssueBadge(CartIssue issue) {
     final color = _getIssueSeverityColor(issue.severity);
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(8),
@@ -585,24 +587,51 @@ class _AdminCartCardState extends State<AdminCartCard>
           width: 1,
         ),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            issue.severity.emoji,
-            style: const TextStyle(fontSize: 12),
-          ),
-          const SizedBox(width: 6),
-          Expanded(
-            child: Text(
-              issue.message,
-              style: const TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-                height: 1.3,
+          Row(
+            children: [
+              Text(
+                issue.severity.emoji,
+                style: const TextStyle(fontSize: 12),
               ),
-              overflow: TextOverflow.ellipsis,
-            ),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  issue.message,
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                    height: 1.3,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              Icon(
+                Icons.error_outline,
+                size: 11,
+                color: Colors.white.withValues(alpha: 0.6),
+              ),
+              const SizedBox(width: 4),
+              Text(
+                'ACTION REQUIRED: ${issue.actionType}',
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white.withValues(alpha: 0.8),
+                  letterSpacing: 0.2,
+                  height: 1.3,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -798,6 +827,91 @@ class _AdminCartCardState extends State<AdminCartCard>
           ],
         ),
       ),
+    );
+  }
+
+  /// Quick action buttons for collapsed state when critical issues exist
+  Widget _buildQuickActionButtons() {
+    return Row(
+      children: [
+        Expanded(
+          child: InkWell(
+            onTap: widget.onWorkOrder,
+            borderRadius: BorderRadius.circular(6),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              decoration: BoxDecoration(
+                color: const Color(0xFFD14B4B).withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(6),
+                border: Border.all(
+                  color: const Color(0xFFD14B4B).withValues(alpha: 0.3),
+                  width: 1,
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.build_rounded,
+                    size: 14,
+                    color: const Color(0xFFD14B4B),
+                  ),
+                  const SizedBox(width: 6),
+                  const Text(
+                    'CREATE WO',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFFD14B4B),
+                      letterSpacing: 0.3,
+                      height: 1.3,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: InkWell(
+            onTap: widget.onTrack,
+            borderRadius: BorderRadius.circular(6),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.05),
+                borderRadius: BorderRadius.circular(6),
+                border: Border.all(
+                  color: Colors.white.withValues(alpha: 0.1),
+                  width: 1,
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.my_location_rounded,
+                    size: 14,
+                    color: Colors.white.withValues(alpha: 0.8),
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    'TRACK',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white.withValues(alpha: 0.8),
+                      letterSpacing: 0.3,
+                      height: 1.3,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

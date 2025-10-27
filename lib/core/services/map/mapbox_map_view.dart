@@ -98,6 +98,9 @@ class MapboxMapViewState extends ConsumerState<MapboxMapView> {
     _mapboxMap = mapboxMap;
     debugPrint('[MapboxMapView] Map created at globe scale');
 
+    // Hide scale bar
+    await mapboxMap.scaleBar.updateSettings(ScaleBarSettings(enabled: false));
+
     // 경로가 있으면 즉시 애니메이션 시작
     if (widget.routeCoordinates != null && !_hasAnimatedToRoute) {
       await _animateToRouteBounds();
