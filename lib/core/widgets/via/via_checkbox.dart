@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../theme/via_design_tokens.dart';
+import '../../theme/industrial_dark_tokens.dart';
 
-/// VIA Design System - Checkbox Component
+/// Industrial Dark Checkbox Component
 ///
-/// A modern, monochrome checkbox following VIA design principles.
+/// A professional checkbox following Industrial Dark design principles.
 ///
 /// Features:
 /// - Smooth check/uncheck animation
 /// - Haptic feedback on toggle
-/// - Checked/unchecked states with proper colors
+/// - Checked (blue) / unchecked (outline) states
 /// - Indeterminate state support
-/// - Disabled state support
-/// - Optional label
-/// - Consistent with VIA design tokens
+/// - Disabled state (30% opacity)
+/// - Optional label with description
+/// - Consistent with Industrial Dark tokens
 ///
 /// Usage:
 /// ```dart
@@ -86,13 +86,13 @@ class _ViaCheckboxState extends State<ViaCheckbox> with SingleTickerProviderStat
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: ViaDesignTokens.durationNormal,
+      duration: IndustrialDarkTokens.durationMedium,
       vsync: this,
     );
 
     _checkAnimation = CurvedAnimation(
       parent: _controller,
-      curve: ViaDesignTokens.curveStandard,
+      curve: IndustrialDarkTokens.curveStandard,
     );
 
     _scaleAnimation = TweenSequence<double>([
@@ -106,7 +106,7 @@ class _ViaCheckboxState extends State<ViaCheckbox> with SingleTickerProviderStat
       ),
     ]).animate(CurvedAnimation(
       parent: _controller,
-      curve: ViaDesignTokens.curveStandard,
+      curve: IndustrialDarkTokens.curveStandard,
     ));
 
     if (widget.value == true) {
@@ -179,8 +179,8 @@ class _ViaCheckboxState extends State<ViaCheckbox> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
     final bool isDisabled = widget.onChanged == null;
-    final Color activeColor = widget.activeColor ?? ViaDesignTokens.primary;
-    final Color borderColor = widget.borderColor ?? ViaDesignTokens.borderPrimary;
+    final Color activeColor = widget.activeColor ?? IndustrialDarkTokens.accentPrimary; // Blue accent
+    final Color borderColor = widget.borderColor ?? IndustrialDarkTokens.outline;
 
     Widget checkboxWidget = GestureDetector(
       onTap: isDisabled ? null : _handleTap,
@@ -198,14 +198,14 @@ class _ViaCheckboxState extends State<ViaCheckbox> with SingleTickerProviderStat
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(_borderRadius),
                 color: isDisabled
-                    ? ViaDesignTokens.surfaceSecondary.withValues(alpha: 0.5)
+                    ? IndustrialDarkTokens.bgBase.withValues(alpha: 0.5)
                     : (isChecked || isIndeterminate)
                         ? Color.lerp(
-                            ViaDesignTokens.surfaceSecondary,
+                            IndustrialDarkTokens.bgBase,
                             activeColor,
                             _checkAnimation.value,
                           )
-                        : ViaDesignTokens.surfaceSecondary,
+                        : IndustrialDarkTokens.bgBase,
                 border: Border.all(
                   color: isDisabled
                       ? borderColor.withValues(alpha: 0.3)
@@ -216,7 +216,7 @@ class _ViaCheckboxState extends State<ViaCheckbox> with SingleTickerProviderStat
                               _checkAnimation.value,
                             )!
                           : borderColor,
-                  width: 1.5,
+                  width: IndustrialDarkTokens.borderWidth, // 2px
                 ),
               ),
               child: isIndeterminate
@@ -256,7 +256,7 @@ class _ViaCheckboxState extends State<ViaCheckbox> with SingleTickerProviderStat
             padding: const EdgeInsets.only(top: 2),
             child: checkboxWidget,
           ),
-          const SizedBox(width: ViaDesignTokens.spacingMd),
+          const SizedBox(width: IndustrialDarkTokens.spacingItem),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -264,18 +264,20 @@ class _ViaCheckboxState extends State<ViaCheckbox> with SingleTickerProviderStat
               children: [
                 Text(
                   widget.label!,
-                  style: ViaDesignTokens.labelMedium.copyWith(
+                  style: IndustrialDarkTokens.labelStyle.copyWith(
+                    fontSize: IndustrialDarkTokens.fontSizeLabel,
                     color: isDisabled
-                        ? ViaDesignTokens.textMuted
-                        : ViaDesignTokens.textPrimary,
+                        ? IndustrialDarkTokens.textSecondary.withValues(alpha: 0.3)
+                        : IndustrialDarkTokens.textPrimary,
                   ),
                 ),
                 if (widget.description != null) ...[
-                  const SizedBox(height: ViaDesignTokens.spacingXxs),
+                  const SizedBox(height: IndustrialDarkTokens.spacingMinimal),
                   Text(
                     widget.description!,
-                    style: ViaDesignTokens.bodySmall.copyWith(
-                      color: ViaDesignTokens.textSecondary,
+                    style: IndustrialDarkTokens.bodyStyle.copyWith(
+                      fontSize: IndustrialDarkTokens.fontSizeSmall,
+                      color: IndustrialDarkTokens.textSecondary,
                     ),
                   ),
                 ],
@@ -384,18 +386,18 @@ class ViaCheckboxListItem extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: ViaDesignTokens.spacingLg,
-            vertical: ViaDesignTokens.spacingMd,
+            horizontal: IndustrialDarkTokens.spacingCard,
+            vertical: IndustrialDarkTokens.spacingItem,
           ),
           child: Row(
             children: [
               if (icon != null) ...[
                 Icon(
                   icon,
-                  size: ViaDesignTokens.iconMd,
-                  color: iconColor ?? ViaDesignTokens.textSecondary,
+                  size: 24,
+                  color: iconColor ?? IndustrialDarkTokens.textSecondary,
                 ),
-                const SizedBox(width: ViaDesignTokens.spacingMd),
+                const SizedBox(width: IndustrialDarkTokens.spacingItem),
               ],
               Expanded(
                 child: Column(
@@ -403,23 +405,25 @@ class ViaCheckboxListItem extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: ViaDesignTokens.labelMedium.copyWith(
-                        color: ViaDesignTokens.textPrimary,
+                      style: IndustrialDarkTokens.labelStyle.copyWith(
+                        fontSize: IndustrialDarkTokens.fontSizeLabel,
+                        color: IndustrialDarkTokens.textPrimary,
                       ),
                     ),
                     if (subtitle != null) ...[
-                      const SizedBox(height: ViaDesignTokens.spacingXxs),
+                      const SizedBox(height: IndustrialDarkTokens.spacingMinimal),
                       Text(
                         subtitle!,
-                        style: ViaDesignTokens.bodySmall.copyWith(
-                          color: ViaDesignTokens.textSecondary,
+                        style: IndustrialDarkTokens.bodyStyle.copyWith(
+                          fontSize: IndustrialDarkTokens.fontSizeSmall,
+                          color: IndustrialDarkTokens.textSecondary,
                         ),
                       ),
                     ],
                   ],
                 ),
               ),
-              const SizedBox(width: ViaDesignTokens.spacingMd),
+              const SizedBox(width: IndustrialDarkTokens.spacingItem),
               ViaCheckbox(
                 value: value,
                 onChanged: onChanged,
@@ -432,14 +436,15 @@ class ViaCheckboxListItem extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(
               left: icon != null
-                  ? ViaDesignTokens.spacingLg +
-                      ViaDesignTokens.iconMd +
-                      ViaDesignTokens.spacingMd
-                  : ViaDesignTokens.spacingLg,
+                  ? IndustrialDarkTokens.spacingCard +
+                      24 +
+                      IndustrialDarkTokens.spacingItem
+                  : IndustrialDarkTokens.spacingCard,
             ),
             child: Divider(
               height: 1,
-              color: ViaDesignTokens.borderPrimary,
+              thickness: IndustrialDarkTokens.borderWidthThin,
+              color: IndustrialDarkTokens.outline,
             ),
           ),
       ],

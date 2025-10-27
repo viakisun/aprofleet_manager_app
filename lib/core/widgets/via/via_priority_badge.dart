@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
+import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 
-/// VIA Design System Priority Badge Component
+/// Industrial Dark Priority Badge Component
 ///
 /// Priority indicators for tasks/alerts (P1-P4):
 /// - P1: Critical (Red) - Immediate action required
@@ -13,7 +13,7 @@ import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
 /// - Colored left bar indicator
 /// - Icon support
 /// - Compact and expanded sizes
-/// - Integration with VIA design tokens
+/// - Outline-based depth (no shadows)
 
 enum ViaPriority {
   p1, // Critical - Red
@@ -88,13 +88,13 @@ class ViaPriorityBadge extends StatelessWidget {
   Color _getPriorityColor() {
     switch (priority) {
       case ViaPriority.p1:
-        return ViaDesignTokens.priorityP1;
+        return IndustrialDarkTokens.priorityP1;
       case ViaPriority.p2:
-        return ViaDesignTokens.priorityP2;
+        return IndustrialDarkTokens.priorityP2;
       case ViaPriority.p3:
-        return ViaDesignTokens.priorityP3;
+        return IndustrialDarkTokens.priorityP3;
       case ViaPriority.p4:
-        return ViaDesignTokens.priorityP4;
+        return IndustrialDarkTokens.priorityP4;
     }
   }
 
@@ -164,10 +164,10 @@ class ViaPriorityBadge extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: priorityColor.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(ViaDesignTokens.radiusSm),
+        borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
         border: Border.all(
           color: priorityColor.withValues(alpha: 0.3),
-          width: 1,
+          width: IndustrialDarkTokens.borderWidthThin,
         ),
       ),
       child: IntrinsicHeight(
@@ -181,8 +181,8 @@ class ViaPriorityBadge extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: priorityColor,
                   borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(ViaDesignTokens.radiusSm),
-                    bottomLeft: Radius.circular(ViaDesignTokens.radiusSm),
+                    topLeft: Radius.circular(IndustrialDarkTokens.radiusSmall),
+                    bottomLeft: Radius.circular(IndustrialDarkTokens.radiusSmall),
                   ),
                 ),
               ),
@@ -190,15 +190,16 @@ class ViaPriorityBadge extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: showLeftBar
-                    ? ViaDesignTokens.spacingSm
-                    : ViaDesignTokens.spacingMd,
-                vertical: ViaDesignTokens.spacingXs,
+                    ? IndustrialDarkTokens.spacingCompact
+                    : IndustrialDarkTokens.spacingItem,
+                vertical: IndustrialDarkTokens.spacingMinimal,
               ),
               child: Text(
                 _getPriorityLabel(),
-                style: ViaDesignTokens.labelSmall.copyWith(
+                style: IndustrialDarkTokens.labelStyle.copyWith(
+                  fontSize: IndustrialDarkTokens.fontSizeSmall,
                   color: priorityColor,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: IndustrialDarkTokens.fontWeightBold,
                 ),
               ),
             ),
@@ -212,10 +213,10 @@ class ViaPriorityBadge extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: priorityColor.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(ViaDesignTokens.radiusMd),
+        borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
         border: Border.all(
           color: priorityColor.withValues(alpha: 0.3),
-          width: 1,
+          width: IndustrialDarkTokens.borderWidthThin,
         ),
       ),
       child: IntrinsicHeight(
@@ -229,8 +230,8 @@ class ViaPriorityBadge extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: priorityColor,
                   borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(ViaDesignTokens.radiusMd),
-                    bottomLeft: Radius.circular(ViaDesignTokens.radiusMd),
+                    topLeft: Radius.circular(IndustrialDarkTokens.radiusButton),
+                    bottomLeft: Radius.circular(IndustrialDarkTokens.radiusButton),
                   ),
                 ),
               ),
@@ -238,9 +239,9 @@ class ViaPriorityBadge extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: showLeftBar
-                    ? ViaDesignTokens.spacingMd
-                    : ViaDesignTokens.spacingLg,
-                vertical: ViaDesignTokens.spacingSm,
+                    ? IndustrialDarkTokens.spacingItem
+                    : IndustrialDarkTokens.spacingCard,
+                vertical: IndustrialDarkTokens.spacingCompact,
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -248,10 +249,10 @@ class ViaPriorityBadge extends StatelessWidget {
                   // Icon
                   Icon(
                     _getPriorityIcon(),
-                    size: ViaDesignTokens.iconSm,
+                    size: 20.0,
                     color: priorityColor,
                   ),
-                  const SizedBox(width: ViaDesignTokens.spacingSm),
+                  const SizedBox(width: IndustrialDarkTokens.spacingCompact),
                   // Text content
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -259,16 +260,18 @@ class ViaPriorityBadge extends StatelessWidget {
                     children: [
                       Text(
                         _getPriorityLabel(),
-                        style: ViaDesignTokens.labelMedium.copyWith(
+                        style: IndustrialDarkTokens.labelStyle.copyWith(
+                          fontSize: IndustrialDarkTokens.fontSizeLabel,
                           color: priorityColor,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: IndustrialDarkTokens.fontWeightBold,
                         ),
                       ),
-                      const SizedBox(height: ViaDesignTokens.spacingXxs),
+                      const SizedBox(height: IndustrialDarkTokens.spacingMinimal),
                       Text(
                         _getPriorityDescription(),
-                        style: ViaDesignTokens.bodySmall.copyWith(
-                          color: ViaDesignTokens.textMuted,
+                        style: IndustrialDarkTokens.bodyStyle.copyWith(
+                          fontSize: IndustrialDarkTokens.fontSizeSmall,
+                          color: IndustrialDarkTokens.textSecondary,
                         ),
                       ),
                     ],
@@ -307,7 +310,7 @@ class ViaPrioritySelector extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: priorities.map((priority) {
           return Padding(
-            padding: const EdgeInsets.only(right: ViaDesignTokens.spacingSm),
+            padding: const EdgeInsets.only(right: IndustrialDarkTokens.spacingCompact),
             child: _buildPriorityOption(priority),
           );
         }).toList(),
@@ -318,7 +321,7 @@ class ViaPrioritySelector extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: priorities.map((priority) {
           return Padding(
-            padding: const EdgeInsets.only(bottom: ViaDesignTokens.spacingSm),
+            padding: const EdgeInsets.only(bottom: IndustrialDarkTokens.spacingCompact),
             child: _buildPriorityOption(priority),
           );
         }).toList(),
@@ -336,9 +339,9 @@ class ViaPrioritySelector extends StatelessWidget {
       child: Transform.scale(
         scale: isSelected ? 1.05 : 1.0,
         child: AnimatedContainer(
-          duration: ViaDesignTokens.durationFast,
+          duration: IndustrialDarkTokens.durationFast,
           child: Opacity(
-            opacity: enabled ? 1.0 : ViaDesignTokens.opacityDisabled,
+            opacity: enabled ? 1.0 : 0.3,
             child: ViaPriorityBadge(
               priority: priority,
               size: isSelected

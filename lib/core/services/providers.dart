@@ -10,6 +10,7 @@ import '../../domain/models/user_profile.dart';
 import 'mock/mock_api.dart';
 import 'mock/mock_ws_hub.dart';
 import 'repositories/cart_repository.dart';
+import 'map/map_marker_factory.dart';
 
 part 'providers.g.dart';
 
@@ -126,6 +127,10 @@ Future<void> initializeApp(Ref ref) async {
   final mockApi = ref.watch(mockApiProvider);
   final mockWsHub = ref.watch(mockWsHubProvider);
 
-  await mockApi.initialize();
-  await mockWsHub.initialize();
+  // 앱 초기화: Mock API, WebSocket Hub, 커스텀 마커 아이콘
+  await Future.wait([
+    mockApi.initialize(),
+    mockWsHub.initialize(),
+    MapMarkerFactory.initializeCustomIcons(), // 커스텀 마커 아이콘 캐시 초기화
+  ]);
 }

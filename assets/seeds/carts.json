@@ -12,15 +12,23 @@
     "maxSpeed": 25.0,
     "status": "active",
     "position": {
-      "latitude": 37.7749,
-      "longitude": -122.4194
+      "latitude": 35.9558,
+      "longitude": 127.0061
     },
     "batteryLevel": 85.2,
     "speed": 12.5,
     "lastSeen": "2025-01-27T10:30:00.000Z",
     "batteryPct": 85.2,
     "speedKph": 12.5,
-    "location": "Hole 1"
+    "location": "Hole 1",
+    "courseLocation": "On Course - Hole 1",
+    "firmwareVersion": "v2.5.1",
+    "firmwareUpdateAvailable": false,
+    "lastMaintenanceDate": "2025-01-15T09:00:00.000Z",
+    "nextMaintenanceDate": "2025-02-15T09:00:00.000Z",
+    "activeIssuesCount": 0,
+    "activeIssues": [],
+    "todayDistance": 8.3
   },
   {
     "id": "APRO-002",
@@ -35,15 +43,34 @@
     "maxSpeed": 30.0,
     "status": "idle",
     "position": {
-      "latitude": 37.7750,
-      "longitude": -122.4195
+      "latitude": 35.9560,
+      "longitude": 127.0063
     },
     "batteryLevel": 92.1,
     "speed": 0.0,
     "lastSeen": "2025-01-27T10:29:00.000Z",
     "batteryPct": 92.1,
     "speedKph": 0.0,
-    "location": "Hole 2"
+    "location": "Hole 2",
+    "courseLocation": "On Course - Hole 2",
+    "firmwareVersion": "v2.4.8",
+    "firmwareUpdateAvailable": true,
+    "lastMaintenanceDate": "2025-01-20T10:00:00.000Z",
+    "nextMaintenanceDate": "2025-02-20T10:00:00.000Z",
+    "activeIssuesCount": 1,
+    "activeIssues": [
+      {
+        "id": "ISS-2025-001",
+        "category": "hardware",
+        "severity": "info",
+        "message": "Firmware update available v2.5.1",
+        "occurredAt": "2025-01-27T08:00:00.000Z",
+        "actionType": "Firmware Update",
+        "details": "New firmware version v2.5.1 includes performance improvements and bug fixes",
+        "resolved": false
+      }
+    ],
+    "todayDistance": 5.7
   },
   {
     "id": "APRO-003",
@@ -58,15 +85,34 @@
     "maxSpeed": 20.0,
     "status": "charging",
     "position": {
-      "latitude": 37.7751,
-      "longitude": -122.4196
+      "latitude": 35.9562,
+      "longitude": 127.0065
     },
     "batteryLevel": 45.8,
     "speed": 0.0,
     "lastSeen": "2025-01-27T10:25:00.000Z",
     "batteryPct": 45.8,
     "speedKph": 0.0,
-    "location": "Charging Station"
+    "location": "Charging Station",
+    "courseLocation": "Charging Station A",
+    "firmwareVersion": "v2.5.1",
+    "firmwareUpdateAvailable": false,
+    "lastMaintenanceDate": "2025-01-10T11:00:00.000Z",
+    "nextMaintenanceDate": "2025-02-10T11:00:00.000Z",
+    "activeIssuesCount": 1,
+    "activeIssues": [
+      {
+        "id": "ISS-2025-002",
+        "category": "operational",
+        "severity": "warning",
+        "message": "Battery charging slower than normal",
+        "occurredAt": "2025-01-27T10:00:00.000Z",
+        "actionType": "Battery Inspection",
+        "details": "Charging rate is 15% below expected. May indicate battery degradation",
+        "resolved": false
+      }
+    ],
+    "todayDistance": 12.4
   },
   {
     "id": "APRO-004",
@@ -81,15 +127,23 @@
     "maxSpeed": 35.0,
     "status": "active",
     "position": {
-      "latitude": 37.7752,
-      "longitude": -122.4197
+      "latitude": 35.9564,
+      "longitude": 127.0067
     },
     "batteryLevel": 78.3,
     "speed": 15.2,
     "lastSeen": "2025-01-27T10:32:00.000Z",
     "batteryPct": 78.3,
     "speedKph": 15.2,
-    "location": "Hole 3"
+    "location": "Hole 3",
+    "courseLocation": "On Course - Hole 3",
+    "firmwareVersion": "v2.5.1",
+    "firmwareUpdateAvailable": false,
+    "lastMaintenanceDate": "2025-01-18T14:00:00.000Z",
+    "nextMaintenanceDate": "2025-02-18T14:00:00.000Z",
+    "activeIssuesCount": 0,
+    "activeIssues": [],
+    "todayDistance": 10.2
   },
   {
     "id": "APRO-005",
@@ -104,15 +158,54 @@
     "maxSpeed": 25.0,
     "status": "maintenance",
     "position": {
-      "latitude": 37.7753,
-      "longitude": -122.4198
+      "latitude": 35.9566,
+      "longitude": 127.0069
     },
     "batteryLevel": 65.4,
     "speed": 0.0,
     "lastSeen": "2025-01-27T09:45:00.000Z",
     "batteryPct": 65.4,
     "speedKph": 0.0,
-    "location": "Maintenance Bay"
+    "location": "Maintenance Bay",
+    "courseLocation": "Maintenance Bay 1",
+    "firmwareVersion": "v2.4.5",
+    "firmwareUpdateAvailable": true,
+    "lastMaintenanceDate": "2024-12-15T09:00:00.000Z",
+    "nextMaintenanceDate": "2025-01-15T09:00:00.000Z",
+    "activeIssuesCount": 3,
+    "activeIssues": [
+      {
+        "id": "ISS-2025-003",
+        "category": "operational",
+        "severity": "critical",
+        "message": "Brake system requires immediate attention",
+        "occurredAt": "2025-01-27T09:30:00.000Z",
+        "actionType": "Emergency Repair",
+        "details": "Brake pressure sensor reading abnormal values. Cart taken offline for safety",
+        "resolved": false
+      },
+      {
+        "id": "ISS-2025-004",
+        "category": "workOrder",
+        "severity": "warning",
+        "message": "Maintenance overdue by 12 days",
+        "occurredAt": "2025-01-15T09:00:00.000Z",
+        "actionType": "Schedule Service",
+        "details": "Scheduled maintenance was due on 2025-01-15. Current date exceeds due date",
+        "resolved": false
+      },
+      {
+        "id": "ISS-2025-005",
+        "category": "hardware",
+        "severity": "info",
+        "message": "Firmware update required v2.5.1",
+        "occurredAt": "2025-01-20T08:00:00.000Z",
+        "actionType": "Firmware Update",
+        "details": "Running outdated firmware v2.4.5. Update to v2.5.1 recommended",
+        "resolved": false
+      }
+    ],
+    "todayDistance": 3.1
   },
   {
     "id": "APRO-006",
@@ -127,15 +220,23 @@
     "maxSpeed": 30.0,
     "status": "active",
     "position": {
-      "latitude": 37.7754,
-      "longitude": -122.4199
+      "latitude": 35.9556,
+      "longitude": 127.0059
     },
     "batteryLevel": 88.7,
     "speed": 18.5,
     "lastSeen": "2025-01-27T10:35:00.000Z",
     "batteryPct": 88.7,
     "speedKph": 18.5,
-    "location": "Hole 4"
+    "location": "Hole 4",
+    "courseLocation": "On Course - Hole 4",
+    "firmwareVersion": "v2.5.1",
+    "firmwareUpdateAvailable": false,
+    "lastMaintenanceDate": "2025-01-22T13:00:00.000Z",
+    "nextMaintenanceDate": "2025-02-22T13:00:00.000Z",
+    "activeIssuesCount": 0,
+    "activeIssues": [],
+    "todayDistance": 9.8
   },
   {
     "id": "APRO-007",
@@ -150,15 +251,34 @@
     "maxSpeed": 25.0,
     "status": "active",
     "position": {
-      "latitude": 37.7755,
-      "longitude": -122.4200
+      "latitude": 35.9554,
+      "longitude": 127.0057
     },
     "batteryLevel": 91.2,
     "speed": 14.3,
     "lastSeen": "2025-01-27T10:33:00.000Z",
     "batteryPct": 91.2,
     "speedKph": 14.3,
-    "location": "Hole 5"
+    "location": "Hole 5",
+    "courseLocation": "On Course - Hole 5",
+    "firmwareVersion": "v2.5.1",
+    "firmwareUpdateAvailable": false,
+    "lastMaintenanceDate": "2025-01-25T08:30:00.000Z",
+    "nextMaintenanceDate": "2025-02-25T08:30:00.000Z",
+    "activeIssuesCount": 1,
+    "activeIssues": [
+      {
+        "id": "ISS-2025-006",
+        "category": "hardware",
+        "severity": "warning",
+        "message": "GPS signal intermittent",
+        "occurredAt": "2025-01-27T10:15:00.000Z",
+        "actionType": "Check GPS Module",
+        "details": "GPS signal strength fluctuating. May affect location tracking accuracy",
+        "resolved": false
+      }
+    ],
+    "todayDistance": 7.5
   },
   {
     "id": "APRO-008",
@@ -173,15 +293,44 @@
     "maxSpeed": 20.0,
     "status": "idle",
     "position": {
-      "latitude": 37.7756,
-      "longitude": -122.4201
+      "latitude": 35.9552,
+      "longitude": 127.0055
     },
     "batteryLevel": 72.8,
     "speed": 0.0,
     "lastSeen": "2025-01-27T10:20:00.000Z",
     "batteryPct": 72.8,
     "speedKph": 0.0,
-    "location": "Hole 6"
+    "location": "Hole 6",
+    "courseLocation": "On Course - Hole 6",
+    "firmwareVersion": "v2.3.9",
+    "firmwareUpdateAvailable": true,
+    "lastMaintenanceDate": "2024-12-28T10:00:00.000Z",
+    "nextMaintenanceDate": "2025-01-28T10:00:00.000Z",
+    "activeIssuesCount": 2,
+    "activeIssues": [
+      {
+        "id": "ISS-2025-007",
+        "category": "operational",
+        "severity": "critical",
+        "message": "Battery voltage critically low",
+        "occurredAt": "2025-01-27T10:10:00.000Z",
+        "actionType": "Immediate Charging",
+        "details": "Battery voltage dropped below safe threshold. Cart should be charged immediately",
+        "resolved": false
+      },
+      {
+        "id": "ISS-2025-008",
+        "category": "hardware",
+        "severity": "warning",
+        "message": "Firmware critically outdated v2.3.9",
+        "occurredAt": "2025-01-25T08:00:00.000Z",
+        "actionType": "Urgent Firmware Update",
+        "details": "Running v2.3.9, current version is v2.5.1. Multiple security patches and performance improvements available",
+        "resolved": false
+      }
+    ],
+    "todayDistance": 4.2
   },
   {
     "id": "APRO-009",
@@ -196,15 +345,23 @@
     "maxSpeed": 30.0,
     "status": "active",
     "position": {
-      "latitude": 37.7757,
-      "longitude": -122.4202
+      "latitude": 35.9550,
+      "longitude": 127.0053
     },
     "batteryLevel": 83.5,
     "speed": 16.7,
     "lastSeen": "2025-01-27T10:37:00.000Z",
     "batteryPct": 83.5,
     "speedKph": 16.7,
-    "location": "Hole 7"
+    "location": "Hole 7",
+    "courseLocation": "On Course - Hole 7",
+    "firmwareVersion": "v2.5.1",
+    "firmwareUpdateAvailable": false,
+    "lastMaintenanceDate": "2025-01-12T15:00:00.000Z",
+    "nextMaintenanceDate": "2025-02-12T15:00:00.000Z",
+    "activeIssuesCount": 0,
+    "activeIssues": [],
+    "todayDistance": 11.6
   },
   {
     "id": "APRO-010",
@@ -219,15 +376,34 @@
     "maxSpeed": 25.0,
     "status": "charging",
     "position": {
-      "latitude": 37.7758,
-      "longitude": -122.4203
+      "latitude": 35.9568,
+      "longitude": 127.0071
     },
     "batteryLevel": 56.9,
     "speed": 0.0,
     "lastSeen": "2025-01-27T10:15:00.000Z",
     "batteryPct": 56.9,
     "speedKph": 0.0,
-    "location": "Charging Station"
+    "location": "Charging Station",
+    "courseLocation": "Charging Station B",
+    "firmwareVersion": "v2.5.0",
+    "firmwareUpdateAvailable": true,
+    "lastMaintenanceDate": "2025-01-08T11:30:00.000Z",
+    "nextMaintenanceDate": "2025-02-08T11:30:00.000Z",
+    "activeIssuesCount": 1,
+    "activeIssues": [
+      {
+        "id": "ISS-2025-009",
+        "category": "hardware",
+        "severity": "info",
+        "message": "Minor firmware update available v2.5.1",
+        "occurredAt": "2025-01-27T09:00:00.000Z",
+        "actionType": "Firmware Update",
+        "details": "v2.5.1 available with minor bug fixes",
+        "resolved": false
+      }
+    ],
+    "todayDistance": 6.9
   },
   {
     "id": "APRO-011",
@@ -242,15 +418,34 @@
     "maxSpeed": 35.0,
     "status": "active",
     "position": {
-      "latitude": 37.7759,
-      "longitude": -122.4204
+      "latitude": 35.9548,
+      "longitude": 127.0051
     },
     "batteryLevel": 89.4,
     "speed": 19.8,
     "lastSeen": "2025-01-27T10:38:00.000Z",
     "batteryPct": 89.4,
     "speedKph": 19.8,
-    "location": "Hole 8"
+    "location": "Hole 8",
+    "courseLocation": "On Course - Hole 8",
+    "firmwareVersion": "v2.5.1",
+    "firmwareUpdateAvailable": false,
+    "lastMaintenanceDate": "2025-01-19T16:00:00.000Z",
+    "nextMaintenanceDate": "2025-02-19T16:00:00.000Z",
+    "activeIssuesCount": 1,
+    "activeIssues": [
+      {
+        "id": "ISS-2025-010",
+        "category": "operational",
+        "severity": "warning",
+        "message": "Unusual vibration detected",
+        "occurredAt": "2025-01-27T10:20:00.000Z",
+        "actionType": "Inspection Required",
+        "details": "Vibration sensor detected abnormal patterns. May indicate wheel or suspension issue",
+        "resolved": false
+      }
+    ],
+    "todayDistance": 13.2
   },
   {
     "id": "APRO-012",
@@ -265,14 +460,43 @@
     "maxSpeed": 30.0,
     "status": "maintenance",
     "position": {
-      "latitude": 37.7760,
-      "longitude": -122.4205
+      "latitude": 35.9570,
+      "longitude": 127.0073
     },
     "batteryLevel": 67.3,
     "speed": 0.0,
     "lastSeen": "2025-01-27T09:30:00.000Z",
     "batteryPct": 67.3,
     "speedKph": 0.0,
-    "location": "Maintenance Bay"
+    "location": "Maintenance Bay",
+    "courseLocation": "Maintenance Bay 2",
+    "firmwareVersion": "v2.5.1",
+    "firmwareUpdateAvailable": false,
+    "lastMaintenanceDate": "2025-01-05T10:00:00.000Z",
+    "nextMaintenanceDate": "2025-02-05T10:00:00.000Z",
+    "activeIssuesCount": 2,
+    "activeIssues": [
+      {
+        "id": "ISS-2025-011",
+        "category": "workOrder",
+        "severity": "info",
+        "message": "Scheduled preventive maintenance in progress",
+        "occurredAt": "2025-01-27T09:00:00.000Z",
+        "actionType": "Complete Service",
+        "details": "Work Order WO-2025-0023: Routine preventive maintenance including tire rotation and brake check",
+        "resolved": false
+      },
+      {
+        "id": "ISS-2025-012",
+        "category": "hardware",
+        "severity": "warning",
+        "message": "Headlight malfunction detected",
+        "occurredAt": "2025-01-27T08:45:00.000Z",
+        "actionType": "Replace Headlight",
+        "details": "Left headlight not responding. Requires replacement during current maintenance",
+        "resolved": false
+      }
+    ],
+    "todayDistance": 2.8
   }
 ]

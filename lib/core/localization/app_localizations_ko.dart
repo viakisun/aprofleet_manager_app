@@ -4,9 +4,9 @@ class AppLocalizationsKo {
     'appName': 'AproFleet 매니저',
 
     // Navigation
-    'navRealTime': '실시간',
-    'navCartManagement': '카트',
-    'navMaintenance': '정비',
+    'navRealTime': '플릿',
+    'navCartManagement': '차량',
+    'navMaintenance': '서비스',
     'navAlerts': '알림',
     'navAnalytics': '분석',
     'navSettings': '설정',
@@ -352,5 +352,9 @@ class AppLocalizationsKo {
     'alertSourceGeofence': '지오펜스',
     'alertSourceTemperature': '온도',
     'alertSourceSystem': '시스템',
+
+    // Cart Inventory - Route View
+    'cartsPositionedOnRoute': '카트들이 경로 상에 배치되었습니다',
+    'cartPositionUpdateFailed': '카트 위치 업데이트 실패',
   };
 }

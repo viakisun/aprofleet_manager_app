@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../../domain/models/cart.dart';
+import '../../../domain/models/cart_issue.dart';
 import '../../../domain/models/work_order.dart';
 import '../../../domain/models/alert.dart';
 import '../../../domain/models/telemetry.dart';
@@ -342,6 +343,18 @@ class MockApi {
       batteryLevel: 85.0,
       speed: 0.0,
       lastSeen: DateTime.now(),
+      activeIssues: [
+        CartIssue(
+          id: 'ISSUE-FB-001',
+          category: IssueCategory.hardware,
+          severity: IssueSeverity.critical,
+          message: 'Battery sensor fault detected - immediate inspection required',
+          occurredAt: DateTime.now().subtract(const Duration(hours: 2)),
+          actionType: 'Schedule inspection',
+          details: 'Battery management system reporting inconsistent voltage readings. Possible BMS malfunction.',
+        ),
+      ],
+      activeIssuesCount: 1,
     );
     _carts[fallbackCart.id] = fallbackCart;
   }

@@ -9,6 +9,8 @@ import '../../../domain/models/cart.dart';
 import '../../../domain/models/geojson_data.dart';
 import '../../constants/map_constants.dart';
 import '../../services/geojson_service.dart';
+import '../../theme/industrial_dark_tokens.dart';
+import '../../utils/performance_logger.dart';
 import 'golf_course_route_provider.dart';
 import 'map_adapter.dart';
 import 'custom_marker_icon.dart';
@@ -52,7 +54,7 @@ class GoogleMapViewState extends ConsumerState<GoogleMapView> {
   bool _isCameraMoving = false;
   List<Cart>? _pendingCarts;
   DateTime _lastUpdateTime = DateTime.fromMillisecondsSinceEpoch(0);
-  Duration _minUpdateInterval = const Duration(milliseconds: 350);
+  Duration _minUpdateInterval = const Duration(milliseconds: 1000); // 1s for battery efficiency (markers update in 1ms)
 
   @override
   void initState() {
@@ -73,13 +75,17 @@ class GoogleMapViewState extends ConsumerState<GoogleMapView> {
         .map((latLng) => google.LatLng(latLng.latitude, latLng.longitude))
         .toList();
 
-    // Simplified single solid polyline for performance on Android
+    // Material Design 3 styled polyline for visual harmony
     final route = google.Polyline(
       polylineId: const google.PolylineId('golf_course_route'),
       points: points,
-      color: const Color(0xFF4CAF50),
-      width: 4,
+      color: IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.8), // #0072E5 with 80% opacity
+      width: 5, // Slightly thicker for better visibility
       zIndex: 1,
+      patterns: [
+        google.PatternItem.dash(20),
+        google.PatternItem.gap(10),
+      ], // Dashed pattern for visual distinction
     );
 
     setState(() {
@@ -259,44 +265,61 @@ class GoogleMapViewState extends ConsumerState<GoogleMapView> {
       });
     }
 
-    // Flush any pending cart updates after camera settles
+    // Flush any pending cart updates IMMEDIATELY after camera settles (bypass throttle)
     if (_pendingCarts != null) {
+      _lastUpdateTime = DateTime.fromMillisecondsSinceEpoch(0); // Reset throttle
       _scheduleMarkerUpdate(_pendingCarts!);
       _pendingCarts = null;
     }
   }
 
   void _updateMarkers() async {
-    if (!_isMapReady) return;
+    PerformanceLogger.start('updateMarkers');
+
+    if (!_isMapReady) {
+      PerformanceLogger.end('updateMarkers');
+      return;
+    }
+
+    PerformanceLogger.start('updateMarkers.throttle');
     if (_isCameraMoving) {
       _pendingCarts = widget.carts;
+      PerformanceLogger.end('updateMarkers.throttle');
+      PerformanceLogger.end('updateMarkers');
       return;
     }
     final now = DateTime.now();
     final elapsed = now.difference(_lastUpdateTime);
     if (elapsed < _minUpdateInterval) {
       _pendingCarts = widget.carts;
+      PerformanceLogger.end('updateMarkers.throttle');
+      PerformanceLogger.end('updateMarkers');
       return;
     }
     _lastUpdateTime = now;
+    PerformanceLogger.end('updateMarkers.throttle');
 
     // Diff-based update: reuse existing markers and update only changed ones
+    PerformanceLogger.start('updateMarkers.diffSetup');
     final existing = {for (final m in _markers) m.markerId.value: m};
     final nextMarkers = <String, google.Marker>{};
+    PerformanceLogger.end('updateMarkers.diffSetup');
 
+    PerformanceLogger.start('updateMarkers.loop');
     for (final cart in widget.carts) {
       final id = cart.id;
       final pos = google.LatLng(cart.position.latitude, cart.position.longitude);
       final statusColor = MapConstants.getStatusColor(cart.status);
       final isSelected = widget.selectedCartId == id;
-      
+
       // Get cached icon or generate new one
+      PerformanceLogger.start('updateMarkers.iconGet');
       google.BitmapDescriptor? icon = CustomMarkerIcon.getCachedMarkerIcon(
         color: statusColor,
         selected: isSelected,
         scale: 1.0,
       );
-      
+
       if (icon == null) {
         // Fallback: generate once and it will be cached for future
         icon = await CustomMarkerIcon.buildMarkerIcon(
@@ -305,12 +328,14 @@ class GoogleMapViewState extends ConsumerState<GoogleMapView> {
           scale: 1.0,
         );
       }
+      PerformanceLogger.end('updateMarkers.iconGet');
 
+      PerformanceLogger.start('updateMarkers.diffCheck');
       final previous = existing[id];
       if (previous != null &&
           previous.position == pos &&
           previous.icon == icon &&
-          previous.alpha == (isSelected ? 1.0 : 0.6) &&
+          previous.alpha == (isSelected ? 1.0 : 0.8) &&
           previous.zIndex == (isSelected ? 1000 : 0)) {
         nextMarkers[id] = previous;
       } else {
@@ -318,14 +343,21 @@ class GoogleMapViewState extends ConsumerState<GoogleMapView> {
           markerId: google.MarkerId(id),
           position: pos,
           icon: icon,
-          alpha: isSelected ? 1.0 : 0.6,
+          alpha: isSelected ? 1.0 : 0.8, // 비선택 마커도 더 선명하게
           zIndex: isSelected ? 1000 : 0,
+          infoWindow: google.InfoWindow(
+            title: cart.id,
+            snippet: 'Battery: ${cart.batteryPct?.toInt() ?? 0}%',
+          ),
           onTap: () => widget.onCartTap(cart),
         );
       }
+      PerformanceLogger.end('updateMarkers.diffCheck');
     }
+    PerformanceLogger.end('updateMarkers.loop');
 
     // Assign only if changed
+    PerformanceLogger.start('updateMarkers.setState');
     final newSet = nextMarkers.values.toSet();
     if (!setEquals(_markers, newSet)) {
       if (mounted) {
@@ -334,6 +366,9 @@ class GoogleMapViewState extends ConsumerState<GoogleMapView> {
         });
       }
     }
+    PerformanceLogger.end('updateMarkers.setState');
+
+    PerformanceLogger.end('updateMarkers');
   }
 
   void _scheduleMarkerUpdate(List<Cart> carts) {
@@ -342,14 +377,22 @@ class GoogleMapViewState extends ConsumerState<GoogleMapView> {
   }
 
   Future<void> _prewarmIconsAndUpdate() async {
-    // Prewarm icons for common statuses
-    final colors = <Color>{};
-    for (final cart in widget.carts) {
-      colors.add(MapConstants.getStatusColor(cart.status));
-    }
-    if (colors.isNotEmpty) {
-      await CustomMarkerIcon.initializeIconCache(colors: colors.toList(), sizes: const [1.0], includeSelected: true);
-    }
+    // Prewarm ALL possible status colors (not just current carts)
+    final allStatusColors = [
+      MapConstants.getStatusColor(CartStatus.active),
+      MapConstants.getStatusColor(CartStatus.idle),
+      MapConstants.getStatusColor(CartStatus.charging),
+      MapConstants.getStatusColor(CartStatus.maintenance),
+      MapConstants.getStatusColor(CartStatus.offline),
+    ];
+
+    // Pre-generate both selected and unselected states
+    await CustomMarkerIcon.initializeIconCache(
+      colors: allStatusColors,
+      sizes: const [1.0],
+      includeSelected: true,
+    );
+
     _updateMarkers();
   }
 
@@ -357,10 +400,22 @@ class GoogleMapViewState extends ConsumerState<GoogleMapView> {
   void didUpdateWidget(GoogleMapView oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // Update markers if cart list changed
-    if (oldWidget.carts != widget.carts) {
+    // CRITICAL: Prevent unnecessary updates during camera movement or identical cart data
+    // Only update markers if:
+    // 1. Cart list reference changed AND
+    // 2. Camera is NOT moving (prevents lag during drag)
+    if (oldWidget.carts != widget.carts && !_isCameraMoving) {
+      // Additional check: Compare cart IDs to avoid rebuilds from Provider cache refresh
+      final oldIds = oldWidget.carts.map((c) => c.id).toSet();
+      final newIds = widget.carts.map((c) => c.id).toSet();
+
+      // Only update if cart set actually changed (not just Provider rebuild)
+      if (oldIds.length != newIds.length || !oldIds.containsAll(newIds)) {
+        _scheduleMarkerUpdate(widget.carts);
+      }
+    } else if (oldWidget.carts != widget.carts && _isCameraMoving) {
+      // Camera is moving - just store for later
       _pendingCarts = widget.carts;
-      _updateMarkers();
     }
 
     // Update camera position if it changed

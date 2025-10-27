@@ -45,6 +45,25 @@ _$CartImpl _$$CartImplFromJson(Map<String, dynamic> json) => _$CartImpl(
       batteryPct: (json['batteryPct'] as num?)?.toDouble(),
       speedKph: (json['speedKph'] as num?)?.toDouble(),
       location: json['location'] as String?,
+      activeAlertId: json['activeAlertId'] as String?,
+      alertSeverity:
+          $enumDecodeNullable(_$AlertSeverityEnumMap, json['alertSeverity']),
+      courseLocation: json['courseLocation'] as String?,
+      firmwareVersion: json['firmwareVersion'] as String?,
+      firmwareUpdateAvailable:
+          json['firmwareUpdateAvailable'] as bool? ?? false,
+      lastMaintenanceDate: json['lastMaintenanceDate'] == null
+          ? null
+          : DateTime.parse(json['lastMaintenanceDate'] as String),
+      nextMaintenanceDate: json['nextMaintenanceDate'] == null
+          ? null
+          : DateTime.parse(json['nextMaintenanceDate'] as String),
+      activeIssuesCount: (json['activeIssuesCount'] as num?)?.toInt() ?? 0,
+      activeIssues: (json['activeIssues'] as List<dynamic>?)
+              ?.map((e) => CartIssue.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      todayDistance: (json['todayDistance'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$CartImplToJson(_$CartImpl instance) =>
@@ -75,6 +94,16 @@ Map<String, dynamic> _$$CartImplToJson(_$CartImpl instance) =>
       'batteryPct': instance.batteryPct,
       'speedKph': instance.speedKph,
       'location': instance.location,
+      'activeAlertId': instance.activeAlertId,
+      'alertSeverity': _$AlertSeverityEnumMap[instance.alertSeverity],
+      'courseLocation': instance.courseLocation,
+      'firmwareVersion': instance.firmwareVersion,
+      'firmwareUpdateAvailable': instance.firmwareUpdateAvailable,
+      'lastMaintenanceDate': instance.lastMaintenanceDate?.toIso8601String(),
+      'nextMaintenanceDate': instance.nextMaintenanceDate?.toIso8601String(),
+      'activeIssuesCount': instance.activeIssuesCount,
+      'activeIssues': instance.activeIssues,
+      'todayDistance': instance.todayDistance,
     };
 
 const _$CartStatusEnumMap = {
@@ -83,6 +112,13 @@ const _$CartStatusEnumMap = {
   CartStatus.charging: 'charging',
   CartStatus.maintenance: 'maintenance',
   CartStatus.offline: 'offline',
+};
+
+const _$AlertSeverityEnumMap = {
+  AlertSeverity.critical: 'critical',
+  AlertSeverity.warning: 'warning',
+  AlertSeverity.info: 'info',
+  AlertSeverity.success: 'success',
 };
 
 _$CartRegistrationImpl _$$CartRegistrationImplFromJson(

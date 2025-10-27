@@ -4,11 +4,11 @@ class AppLocalizationsEn {
     'appName': 'AproFleet Manager',
 
     // Navigation
-    'navRealTime': 'LIVE',
-    'navCartManagement': 'CARTS',
-    'navMaintenance': 'WORK',
+    'navRealTime': 'FLEET',
+    'navCartManagement': 'VEHICLES',
+    'navMaintenance': 'SERVICE',
     'navAlerts': 'ALERTS',
-    'navAnalytics': 'DATA',
+    'navAnalytics': 'ANALYTICS',
     'navSettings': 'SETTINGS',
 
     // Cart Registration
@@ -346,5 +346,9 @@ class AppLocalizationsEn {
     'alertSourceGeofence': 'GEOFENCE',
     'alertSourceTemperature': 'TEMPERATURE',
     'alertSourceSystem': 'SYSTEM',
+
+    // Cart Inventory - Route View
+    'cartsPositionedOnRoute': 'Carts positioned on route',
+    'cartPositionUpdateFailed': 'Failed to update cart positions',
   };
 }

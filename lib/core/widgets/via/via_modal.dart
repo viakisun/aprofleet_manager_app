@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
+import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 
 /// VIA Design System Modal Component
 ///
@@ -99,21 +99,21 @@ class ViaModal extends StatefulWidget {
           if (isDangerous)
             Icon(
               Icons.warning_amber_rounded,
-              color: ViaDesignTokens.critical,
-              size: ViaDesignTokens.iconMd,
+              color: IndustrialDarkTokens.critical,
+              size: 24,
             ),
-          if (isDangerous) const SizedBox(width: ViaDesignTokens.spacingSm),
+          if (isDangerous) const SizedBox(width: IndustrialDarkTokens.spacingCompact),
           Expanded(
             child: Text(
               title,
-              style: ViaDesignTokens.headingMedium,
+              style: IndustrialDarkTokens.headingMedium,
             ),
           ),
         ],
       ),
       body: Text(
         message,
-        style: ViaDesignTokens.bodyMedium,
+        style: IndustrialDarkTokens.bodyStyle,
       ),
       footer: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -122,22 +122,22 @@ class ViaModal extends StatefulWidget {
             onPressed: () => Navigator.of(context).pop(false),
             child: Text(
               cancelText,
-              style: ViaDesignTokens.labelMedium.copyWith(
-                color: ViaDesignTokens.textMuted,
+              style: IndustrialDarkTokens.labelStyle.copyWith(
+                color: IndustrialDarkTokens.textSecondary,
               ),
             ),
           ),
-          const SizedBox(width: ViaDesignTokens.spacingSm),
+          const SizedBox(width: IndustrialDarkTokens.spacingCompact),
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(true),
             style: ElevatedButton.styleFrom(
               backgroundColor: isDangerous
-                  ? ViaDesignTokens.critical
-                  : ViaDesignTokens.primary,
+                  ? IndustrialDarkTokens.critical
+                  : IndustrialDarkTokens.accentPrimary,
             ),
             child: Text(
               confirmText,
-              style: ViaDesignTokens.labelMedium.copyWith(
+              style: IndustrialDarkTokens.labelStyle.copyWith(
                 color: Colors.white,
               ),
             ),
@@ -158,7 +158,7 @@ class _ViaModalState extends State<ViaModal>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: ViaDesignTokens.durationNormal,
+      duration: IndustrialDarkTokens.durationNormal,
       vsync: this,
     );
 
@@ -167,7 +167,7 @@ class _ViaModalState extends State<ViaModal>
       end: 1.0,
     ).animate(CurvedAnimation(
       parent: _controller,
-      curve: ViaDesignTokens.curveDeceleration,
+      curve: IndustrialDarkTokens.curveDeceleration,
     ));
 
     _scaleAnimation = Tween<double>(
@@ -175,7 +175,7 @@ class _ViaModalState extends State<ViaModal>
       end: 1.0,
     ).animate(CurvedAnimation(
       parent: _controller,
-      curve: ViaDesignTokens.curveDeceleration,
+      curve: IndustrialDarkTokens.curveDeceleration,
     ));
 
     _controller.forward();
@@ -234,11 +234,11 @@ class _ViaModalState extends State<ViaModal>
                 ),
                 decoration: BoxDecoration(
                   color: widget.backgroundColor ??
-                      ViaDesignTokens.surfaceSecondary,
+                      IndustrialDarkTokens.bgSurface,
                   borderRadius:
-                      BorderRadius.circular(ViaDesignTokens.radiusXl),
+                      BorderRadius.circular(IndustrialDarkTokens.radiusXl),
                   border: Border.all(
-                    color: ViaDesignTokens.borderPrimary,
+                    color: IndustrialDarkTokens.outline,
                     width: 1,
                   ),
                   boxShadow: [
@@ -257,11 +257,11 @@ class _ViaModalState extends State<ViaModal>
                     if (widget.header != null || widget.showCloseButton)
                       Container(
                         padding:
-                            const EdgeInsets.all(ViaDesignTokens.spacingLg),
+                            const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: ViaDesignTokens.borderPrimary,
+                              color: IndustrialDarkTokens.outline,
                               width: 1,
                             ),
                           ),
@@ -274,8 +274,8 @@ class _ViaModalState extends State<ViaModal>
                               IconButton(
                                 icon: Icon(
                                   Icons.close,
-                                  size: ViaDesignTokens.iconMd,
-                                  color: ViaDesignTokens.textMuted,
+                                  size: 24,
+                                  color: IndustrialDarkTokens.textSecondary,
                                 ),
                                 onPressed: _close,
                                 padding: EdgeInsets.zero,
@@ -290,7 +290,7 @@ class _ViaModalState extends State<ViaModal>
                       Flexible(
                         child: SingleChildScrollView(
                           padding:
-                              const EdgeInsets.all(ViaDesignTokens.spacingLg),
+                              const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
                           child: widget.body ?? widget.child,
                         ),
                       ),
@@ -299,11 +299,11 @@ class _ViaModalState extends State<ViaModal>
                     if (widget.footer != null)
                       Container(
                         padding:
-                            const EdgeInsets.all(ViaDesignTokens.spacingLg),
+                            const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
                         decoration: BoxDecoration(
                           border: Border(
                             top: BorderSide(
-                              color: ViaDesignTokens.borderPrimary,
+                              color: IndustrialDarkTokens.outline,
                               width: 1,
                             ),
                           ),
@@ -335,7 +335,7 @@ class ViaAlertModal extends StatelessWidget {
     required this.title,
     required this.message,
     this.icon = Icons.info_outline,
-    this.iconColor = ViaDesignTokens.primary,
+    this.iconColor = IndustrialDarkTokens.accentPrimary,
     this.buttonText = 'OK',
     this.onButtonPressed,
   });
@@ -346,7 +346,7 @@ class ViaAlertModal extends StatelessWidget {
     required String title,
     required String message,
     IconData icon = Icons.info_outline,
-    Color iconColor = ViaDesignTokens.primary,
+    Color iconColor = IndustrialDarkTokens.accentPrimary,
     String buttonText = 'OK',
   }) {
     return ViaModal.show(
@@ -360,17 +360,17 @@ class ViaAlertModal extends StatelessWidget {
             size: 64,
             color: iconColor,
           ),
-          const SizedBox(height: ViaDesignTokens.spacingLg),
+          const SizedBox(height: IndustrialDarkTokens.spacingCard),
           Text(
             title,
-            style: ViaDesignTokens.headingMedium,
+            style: IndustrialDarkTokens.headingMedium,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: ViaDesignTokens.spacingSm),
+          const SizedBox(height: IndustrialDarkTokens.spacingCompact),
           Text(
             message,
-            style: ViaDesignTokens.bodyMedium.copyWith(
-              color: ViaDesignTokens.textSecondary,
+            style: IndustrialDarkTokens.bodyStyle.copyWith(
+              color: IndustrialDarkTokens.textSecondary,
             ),
             textAlign: TextAlign.center,
           ),
@@ -385,7 +385,7 @@ class ViaAlertModal extends StatelessWidget {
           ),
           child: Text(
             buttonText,
-            style: ViaDesignTokens.labelMedium.copyWith(
+            style: IndustrialDarkTokens.labelStyle.copyWith(
               color: Colors.white,
             ),
           ),

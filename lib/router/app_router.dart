@@ -5,14 +5,14 @@ import 'package:go_router/go_router.dart';
 import '../features/auth/pages/splash_screen.dart';
 import '../features/auth/pages/onboarding_screen.dart';
 import '../features/auth/pages/login_screen.dart';
-import '../features/realtime_monitoring/pages/live_map_view.dart';
-import '../features/realtime_monitoring/pages/cart_detail_monitor.dart';
-import '../features/cart_management/pages/cart_inventory_list.dart';
-import '../features/cart_management/pages/cart_registration.dart';
-import '../features/maintenance_management/pages/work_order_list.dart';
-import '../features/maintenance_management/pages/work_order_creation_page.dart';
-import '../features/alert_management/pages/alert_management_page.dart';
-import '../features/analytics_reporting/pages/analytics_dashboard.dart';
+import '../features/fleet/pages/live_map_view.dart';
+import '../features/fleet/pages/cart_detail_monitor.dart';
+import '../features/vehicles/pages/cart_inventory_list.dart';
+import '../features/vehicles/pages/cart_registration.dart';
+import '../features/service/pages/work_order_list_v2.dart';
+import '../features/service/pages/work_order_creation_page.dart';
+import '../features/alerts/pages/alert_management_page_v2.dart';
+import '../features/analytics/pages/analytics_dashboard.dart';
 import '../features/settings/pages/settings_page.dart';
 import '../core/widgets/navigation_bar.dart';
 import '../features/auth/controllers/auth_controller.dart';
@@ -107,7 +107,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             },
           ),
 
-          // Cart Management Module
+          // Cart Management Module (VEHICLES)
           GoRoute(
             path: '/cm/list',
             name: 'cart-inventory',
@@ -124,6 +124,26 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                 );
               },
             ),
+          ),
+          GoRoute(
+            path: '/cm/profile/:id',
+            name: 'cart-profile',
+            pageBuilder: (context, state) {
+              final cartId = state.pathParameters['id']!;
+              return CustomTransitionPage(
+                child: CartDetailMonitor(cartId: cartId),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return SlideTransition(
+                    position: animation.drive(
+                      Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                          .chain(CurveTween(curve: Curves.easeInOut)),
+                    ),
+                    child: child,
+                  );
+                },
+              );
+            },
           ),
           GoRoute(
             path: '/cm/register',
@@ -148,7 +168,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: '/mm/list',
             name: 'work-order-list',
             pageBuilder: (context, state) => CustomTransitionPage(
-              child: const WorkOrderList(),
+              child: const WorkOrderListV2(),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 return SlideTransition(
@@ -186,7 +206,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: '/al/center',
             name: 'alert-center',
             pageBuilder: (context, state) => CustomTransitionPage(
-              child: const AlertManagementPage(),
+              child: const AlertManagementPageV2(),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 return SlideTransition(

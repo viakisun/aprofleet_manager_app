@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
+import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 
-/// VIA Design System Toast Component
+/// Industrial Dark Toast Component
 ///
 /// Slide-in notification toasts with:
 /// - 4 variants: success, error, warning, info
@@ -14,8 +14,8 @@ import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
 /// Features:
 /// - Smooth slide + fade animations
 /// - Haptic feedback
-/// - Queue management for multiple toasts
-/// - Integration with VIA design tokens
+/// - Outline-based depth (no shadows)
+/// - Integration with Industrial Dark tokens
 
 enum ViaToastVariant {
   success,
@@ -176,7 +176,7 @@ class _ViaToastWidgetState extends State<_ViaToastWidget>
     }
 
     _controller = AnimationController(
-      duration: ViaDesignTokens.durationNormal,
+      duration: IndustrialDarkTokens.durationMedium,
       vsync: this,
     );
 
@@ -189,7 +189,7 @@ class _ViaToastWidgetState extends State<_ViaToastWidget>
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _controller,
-      curve: ViaDesignTokens.curveDeceleration,
+      curve: IndustrialDarkTokens.curveStandard,
     ));
 
     _fadeAnimation = Tween<double>(
@@ -197,7 +197,7 @@ class _ViaToastWidgetState extends State<_ViaToastWidget>
       end: 1.0,
     ).animate(CurvedAnimation(
       parent: _controller,
-      curve: ViaDesignTokens.curveDeceleration,
+      curve: IndustrialDarkTokens.curveStandard,
     ));
 
     _controller.forward();
@@ -246,26 +246,26 @@ class _ViaToastWidgetState extends State<_ViaToastWidget>
   Color _getBackgroundColor() {
     switch (widget.toast.variant) {
       case ViaToastVariant.success:
-        return ViaDesignTokens.primary.withValues(alpha: 0.15);
+        return IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.15);
       case ViaToastVariant.error:
-        return ViaDesignTokens.critical.withValues(alpha: 0.15);
+        return IndustrialDarkTokens.error.withValues(alpha: 0.15);
       case ViaToastVariant.warning:
-        return ViaDesignTokens.warning.withValues(alpha: 0.15);
+        return IndustrialDarkTokens.warning.withValues(alpha: 0.15);
       case ViaToastVariant.info:
-        return ViaDesignTokens.secondary.withValues(alpha: 0.15);
+        return IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.15);
     }
   }
 
   Color _getBorderColor() {
     switch (widget.toast.variant) {
       case ViaToastVariant.success:
-        return ViaDesignTokens.primary;
+        return IndustrialDarkTokens.accentPrimary;
       case ViaToastVariant.error:
-        return ViaDesignTokens.critical;
+        return IndustrialDarkTokens.error;
       case ViaToastVariant.warning:
-        return ViaDesignTokens.warning;
+        return IndustrialDarkTokens.warning;
       case ViaToastVariant.info:
-        return ViaDesignTokens.secondary;
+        return IndustrialDarkTokens.accentPrimary;
     }
   }
 
@@ -294,13 +294,13 @@ class _ViaToastWidgetState extends State<_ViaToastWidget>
 
     return Positioned(
       top: widget.toast.position == ViaToastPosition.top
-          ? topPadding + ViaDesignTokens.spacingLg
+          ? topPadding + IndustrialDarkTokens.spacingCard
           : null,
       bottom: widget.toast.position == ViaToastPosition.bottom
-          ? bottomPadding + ViaDesignTokens.spacingLg
+          ? bottomPadding + IndustrialDarkTokens.spacingCard
           : null,
-      left: ViaDesignTokens.spacingLg,
-      right: ViaDesignTokens.spacingLg,
+      left: IndustrialDarkTokens.spacingCard,
+      right: IndustrialDarkTokens.spacingCard,
       child: AnimatedBuilder(
         animation: _controller,
         builder: (context, child) {
@@ -320,44 +320,39 @@ class _ViaToastWidgetState extends State<_ViaToastWidget>
             child: Material(
               color: Colors.transparent,
               child: Container(
-                padding: const EdgeInsets.all(ViaDesignTokens.spacingMd),
+                padding: const EdgeInsets.all(IndustrialDarkTokens.spacingItem),
                 decoration: BoxDecoration(
                   color: _getBackgroundColor(),
                   borderRadius:
-                      BorderRadius.circular(ViaDesignTokens.radiusMd),
+                      BorderRadius.circular(IndustrialDarkTokens.radiusButton),
                   border: Border.all(
                     color: _getBorderColor(),
-                    width: 1.5,
+                    width: IndustrialDarkTokens.borderWidth, // 2px
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.2),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
+                  // NO boxShadow in Industrial Dark - outline-based depth only
                 ),
                 child: Row(
                   children: [
                     // Icon
                     Icon(
                       _getIcon(),
-                      size: ViaDesignTokens.iconMd,
+                      size: 24,
                       color: _getBorderColor(),
                     ),
-                    const SizedBox(width: ViaDesignTokens.spacingMd),
+                    const SizedBox(width: IndustrialDarkTokens.spacingItem),
                     // Message
                     Expanded(
                       child: Text(
                         widget.toast.message,
-                        style: ViaDesignTokens.bodyMedium.copyWith(
-                          color: ViaDesignTokens.textPrimary,
+                        style: IndustrialDarkTokens.bodyStyle.copyWith(
+                          fontSize: IndustrialDarkTokens.fontSizeBody,
+                          color: IndustrialDarkTokens.textPrimary,
                         ),
                       ),
                     ),
                     // Action button
                     if (widget.toast.actionLabel != null) ...[
-                      const SizedBox(width: ViaDesignTokens.spacingMd),
+                      const SizedBox(width: IndustrialDarkTokens.spacingItem),
                       TextButton(
                         onPressed: () {
                           widget.toast.onActionPressed?.call();
@@ -365,29 +360,30 @@ class _ViaToastWidgetState extends State<_ViaToastWidget>
                         },
                         style: TextButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: ViaDesignTokens.spacingSm,
-                            vertical: ViaDesignTokens.spacingXs,
+                            horizontal: IndustrialDarkTokens.spacingCompact,
+                            vertical: IndustrialDarkTokens.spacingMinimal,
                           ),
                           minimumSize: Size.zero,
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                         child: Text(
                           widget.toast.actionLabel!.toUpperCase(),
-                          style: ViaDesignTokens.labelSmall.copyWith(
+                          style: IndustrialDarkTokens.labelStyle.copyWith(
+                            fontSize: IndustrialDarkTokens.fontSizeSmall,
                             color: _getBorderColor(),
-                            fontWeight: FontWeight.w600,
+                            fontWeight: IndustrialDarkTokens.fontWeightBold,
                           ),
                         ),
                       ),
                     ],
                     // Close button
-                    const SizedBox(width: ViaDesignTokens.spacingSm),
+                    const SizedBox(width: IndustrialDarkTokens.spacingCompact),
                     GestureDetector(
                       onTap: _handleDismiss,
                       child: Icon(
                         Icons.close,
-                        size: ViaDesignTokens.iconSm,
-                        color: ViaDesignTokens.textMuted,
+                        size: 20,
+                        color: IndustrialDarkTokens.textSecondary,
                       ),
                     ),
                   ],

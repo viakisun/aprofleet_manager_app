@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
+import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 
-/// VIA Design System Loading Indicator Component
+/// Industrial Dark Loading Indicator Component
 ///
 /// Multiple loading indicator variants:
 /// - Circular: Spinning circle loader
@@ -12,7 +12,7 @@ import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
 /// Features:
 /// - Smooth animations
 /// - Customizable colors and sizes
-/// - Integration with VIA design tokens
+/// - Integration with Industrial Dark tokens
 
 enum ViaLoadingIndicatorType {
   circular,
@@ -114,11 +114,12 @@ class ViaLoadingIndicator extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           loader,
-          const SizedBox(height: ViaDesignTokens.spacingMd),
+          const SizedBox(height: IndustrialDarkTokens.spacingItem),
           Text(
             message!,
-            style: ViaDesignTokens.bodySmall.copyWith(
-              color: ViaDesignTokens.textMuted,
+            style: IndustrialDarkTokens.bodyStyle.copyWith(
+              fontSize: IndustrialDarkTokens.fontSizeSmall,
+              color: IndustrialDarkTokens.textSecondary,
             ),
             textAlign: TextAlign.center,
           ),
@@ -138,10 +139,10 @@ class ViaLoadingIndicator extends StatelessWidget {
         value: value,
         strokeWidth: size == ViaLoadingIndicatorSize.small ? 2.0 : 3.0,
         valueColor: AlwaysStoppedAnimation<Color>(
-          color ?? ViaDesignTokens.primary,
+          color ?? IndustrialDarkTokens.accentPrimary, // Blue accent
         ),
         backgroundColor:
-            ViaDesignTokens.surfaceSecondary.withValues(alpha: 0.5),
+            IndustrialDarkTokens.bgBase.withValues(alpha: 0.5),
       ),
     );
   }
@@ -152,23 +153,24 @@ class ViaLoadingIndicator extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(ViaDesignTokens.radiusFull),
+          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusChip), // 20px pill
           child: LinearProgressIndicator(
             value: value,
             minHeight: 6.0,
             valueColor: AlwaysStoppedAnimation<Color>(
-              color ?? ViaDesignTokens.primary,
+              color ?? IndustrialDarkTokens.accentPrimary, // Blue accent
             ),
             backgroundColor:
-                ViaDesignTokens.surfaceSecondary.withValues(alpha: 0.5),
+                IndustrialDarkTokens.bgBase.withValues(alpha: 0.5),
           ),
         ),
         if (value != null) ...[
-          const SizedBox(height: ViaDesignTokens.spacingXs),
+          const SizedBox(height: IndustrialDarkTokens.spacingMinimal),
           Text(
             '${(value! * 100).toInt()}%',
-            style: ViaDesignTokens.labelSmall.copyWith(
-              color: ViaDesignTokens.textMuted,
+            style: IndustrialDarkTokens.labelStyle.copyWith(
+              fontSize: IndustrialDarkTokens.fontSizeSmall,
+              color: IndustrialDarkTokens.textSecondary,
             ),
             textAlign: TextAlign.right,
           ),
@@ -182,8 +184,8 @@ class ViaLoadingIndicator extends StatelessWidget {
       child: Container(
         height: _getSize(),
         decoration: BoxDecoration(
-          color: ViaDesignTokens.surfaceSecondary,
-          borderRadius: BorderRadius.circular(ViaDesignTokens.radiusSm),
+          color: IndustrialDarkTokens.bgBase,
+          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
         ),
       ),
     );
@@ -192,7 +194,7 @@ class ViaLoadingIndicator extends StatelessWidget {
   Widget _buildDotsLoader() {
     return _AnimatedDotsLoader(
       size: size,
-      color: color ?? ViaDesignTokens.primary,
+      color: color ?? IndustrialDarkTokens.accentPrimary, // Blue accent
     );
   }
 }
@@ -251,9 +253,9 @@ class _SkeletonShimmerState extends State<_SkeletonShimmer>
                 _animation.value + 0.3,
               ],
               colors: [
-                ViaDesignTokens.surfaceSecondary,
-                ViaDesignTokens.surfaceTertiary,
-                ViaDesignTokens.surfaceSecondary,
+                IndustrialDarkTokens.bgBase,
+                IndustrialDarkTokens.bgSurface,
+                IndustrialDarkTokens.bgBase,
               ],
             ).createShader(bounds);
           },
@@ -325,8 +327,8 @@ class _AnimatedDotsLoaderState extends State<_AnimatedDotsLoader>
                 : 1.3 - ((value - 0.5) * 0.6);
 
             return Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: ViaDesignTokens.spacingXxs,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 2, // Minimal spacing between dots
               ),
               child: Transform.scale(
                 scale: scale,
@@ -365,14 +367,14 @@ class ViaSkeletonCard extends StatelessWidget {
         height: height,
         width: width,
         decoration: BoxDecoration(
-          color: ViaDesignTokens.surfaceSecondary,
-          borderRadius: BorderRadius.circular(ViaDesignTokens.radiusLg),
+          color: IndustrialDarkTokens.bgSurface,
+          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusCard),
           border: Border.all(
-            color: ViaDesignTokens.borderPrimary,
-            width: 1,
+            color: IndustrialDarkTokens.outline,
+            width: IndustrialDarkTokens.borderWidth, // 2px
           ),
         ),
-        padding: const EdgeInsets.all(ViaDesignTokens.spacingLg),
+        padding: const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -380,19 +382,19 @@ class ViaSkeletonCard extends StatelessWidget {
               height: 16,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: ViaDesignTokens.surfaceTertiary,
+                color: IndustrialDarkTokens.bgBase,
                 borderRadius:
-                    BorderRadius.circular(ViaDesignTokens.radiusSm),
+                    BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
               ),
             ),
-            const SizedBox(height: ViaDesignTokens.spacingSm),
+            const SizedBox(height: IndustrialDarkTokens.spacingCompact),
             Container(
               height: 12,
               width: 200,
               decoration: BoxDecoration(
-                color: ViaDesignTokens.surfaceTertiary,
+                color: IndustrialDarkTokens.bgBase,
                 borderRadius:
-                    BorderRadius.circular(ViaDesignTokens.radiusSm),
+                    BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
               ),
             ),
             const Spacer(),
@@ -400,9 +402,9 @@ class ViaSkeletonCard extends StatelessWidget {
               height: 12,
               width: 150,
               decoration: BoxDecoration(
-                color: ViaDesignTokens.surfaceTertiary,
+                color: IndustrialDarkTokens.bgBase,
                 borderRadius:
-                    BorderRadius.circular(ViaDesignTokens.radiusSm),
+                    BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
               ),
             ),
           ],
@@ -421,8 +423,8 @@ class ViaSkeletonListItem extends StatelessWidget {
     return _SkeletonShimmer(
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: ViaDesignTokens.spacingLg,
-          vertical: ViaDesignTokens.spacingMd,
+          horizontal: IndustrialDarkTokens.spacingCard,
+          vertical: IndustrialDarkTokens.spacingItem,
         ),
         child: Row(
           children: [
@@ -431,11 +433,11 @@ class ViaSkeletonListItem extends StatelessWidget {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: ViaDesignTokens.surfaceTertiary,
+                color: IndustrialDarkTokens.bgBase,
                 shape: BoxShape.circle,
               ),
             ),
-            const SizedBox(width: ViaDesignTokens.spacingMd),
+            const SizedBox(width: IndustrialDarkTokens.spacingItem),
             // Content
             Expanded(
               child: Column(
@@ -445,19 +447,19 @@ class ViaSkeletonListItem extends StatelessWidget {
                     height: 14,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: ViaDesignTokens.surfaceTertiary,
+                      color: IndustrialDarkTokens.bgBase,
                       borderRadius:
-                          BorderRadius.circular(ViaDesignTokens.radiusSm),
+                          BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
                     ),
                   ),
-                  const SizedBox(height: ViaDesignTokens.spacingSm),
+                  const SizedBox(height: IndustrialDarkTokens.spacingCompact),
                   Container(
                     height: 12,
                     width: 200,
                     decoration: BoxDecoration(
-                      color: ViaDesignTokens.surfaceTertiary,
+                      color: IndustrialDarkTokens.bgBase,
                       borderRadius:
-                          BorderRadius.circular(ViaDesignTokens.radiusSm),
+                          BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
                     ),
                   ),
                 ],
@@ -488,16 +490,16 @@ class ViaLoadingOverlay extends StatelessWidget {
     }
 
     return Container(
-      color: Colors.black.withValues(alpha: 0.7),
+      color: Colors.black.withValues(alpha: 0.8), // Darker overlay
       child: Center(
         child: Container(
-          padding: const EdgeInsets.all(ViaDesignTokens.spacing2xl),
+          padding: const EdgeInsets.all(IndustrialDarkTokens.spacingSection),
           decoration: BoxDecoration(
-            color: ViaDesignTokens.surfaceSecondary,
-            borderRadius: BorderRadius.circular(ViaDesignTokens.radiusLg),
+            color: IndustrialDarkTokens.bgSurface,
+            borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusCard),
             border: Border.all(
-              color: ViaDesignTokens.borderPrimary,
-              width: 1,
+              color: IndustrialDarkTokens.outline,
+              width: IndustrialDarkTokens.borderWidth, // 2px
             ),
           ),
           child: ViaLoadingIndicator.circular(

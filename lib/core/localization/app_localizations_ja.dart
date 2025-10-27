@@ -4,11 +4,11 @@ class AppLocalizationsJa {
     'appName': 'AproFleet マネージャー',
 
     // Navigation
-    'navRealTime': 'リアルタイム',
-    'navCartManagement': 'カート',
-    'navMaintenance': 'メンテナンス',
+    'navRealTime': 'フリート',
+    'navCartManagement': '車両',
+    'navMaintenance': 'サービス',
     'navAlerts': 'アラート',
-    'navAnalytics': '分析',
+    'navAnalytics': 'アナリティクス',
     'navSettings': '設定',
 
     // Cart Registration
@@ -352,5 +352,9 @@ class AppLocalizationsJa {
     'alertSourceGeofence': 'ジオフェンス',
     'alertSourceTemperature': '温度',
     'alertSourceSystem': 'システム',
+
+    // Cart Inventory - Route View
+    'cartsPositionedOnRoute': 'カートが経路上に配置されました',
+    'cartPositionUpdateFailed': 'カート位置の更新に失敗しました',
   };
 }

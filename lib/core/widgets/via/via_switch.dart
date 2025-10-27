@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../theme/via_design_tokens.dart';
+import '../../theme/industrial_dark_tokens.dart';
 
 /// VIA Design System - Switch/Toggle Component
 ///
@@ -84,12 +84,12 @@ class _ViaSwitchState extends State<ViaSwitch> with SingleTickerProviderStateMix
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: ViaDesignTokens.durationNormal,
+      duration: IndustrialDarkTokens.durationNormal,
       vsync: this,
     );
     _animation = CurvedAnimation(
       parent: _controller,
-      curve: ViaDesignTokens.curveStandard,
+      curve: IndustrialDarkTokens.curveStandard,
     );
 
     if (widget.value) {
@@ -160,9 +160,9 @@ class _ViaSwitchState extends State<ViaSwitch> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     final bool isDisabled = widget.onChanged == null;
-    final Color activeColor = widget.activeColor ?? ViaDesignTokens.primary;
-    final Color inactiveTrackColor = widget.inactiveTrackColor ?? ViaDesignTokens.surfaceSecondary;
-    final Color inactiveThumbColor = widget.inactiveThumbColor ?? ViaDesignTokens.textMuted;
+    final Color activeColor = widget.activeColor ?? IndustrialDarkTokens.accentPrimary;
+    final Color inactiveTrackColor = widget.inactiveTrackColor ?? IndustrialDarkTokens.bgSurface;
+    final Color inactiveThumbColor = widget.inactiveThumbColor ?? IndustrialDarkTokens.textSecondary;
 
     Widget switchWidget = GestureDetector(
       onTap: isDisabled ? null : _handleTap,
@@ -175,7 +175,7 @@ class _ViaSwitchState extends State<ViaSwitch> with SingleTickerProviderStateMix
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(_switchHeight / 2),
               color: isDisabled
-                  ? ViaDesignTokens.surfaceSecondary.withValues(alpha: 0.5)
+                  ? IndustrialDarkTokens.bgSurface.withValues(alpha: 0.5)
                   : Color.lerp(
                       inactiveTrackColor,
                       activeColor.withValues(alpha: 0.3),
@@ -183,9 +183,9 @@ class _ViaSwitchState extends State<ViaSwitch> with SingleTickerProviderStateMix
                     ),
               border: Border.all(
                 color: isDisabled
-                    ? ViaDesignTokens.borderPrimary.withValues(alpha: 0.3)
+                    ? IndustrialDarkTokens.outline.withValues(alpha: 0.3)
                     : Color.lerp(
-                        ViaDesignTokens.borderPrimary,
+                        IndustrialDarkTokens.outline,
                         activeColor,
                         _animation.value,
                       )!,
@@ -206,7 +206,7 @@ class _ViaSwitchState extends State<ViaSwitch> with SingleTickerProviderStateMix
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: isDisabled
-                        ? ViaDesignTokens.textMuted.withValues(alpha: 0.5)
+                        ? IndustrialDarkTokens.textSecondary.withValues(alpha: 0.5)
                         : Color.lerp(
                             inactiveThumbColor,
                             activeColor,
@@ -247,25 +247,25 @@ class _ViaSwitchState extends State<ViaSwitch> with SingleTickerProviderStateMix
               children: [
                 Text(
                   widget.label!,
-                  style: ViaDesignTokens.labelMedium.copyWith(
+                  style: IndustrialDarkTokens.labelStyle.copyWith(
                     color: isDisabled
-                        ? ViaDesignTokens.textMuted
-                        : ViaDesignTokens.textPrimary,
+                        ? IndustrialDarkTokens.textSecondary
+                        : IndustrialDarkTokens.textPrimary,
                   ),
                 ),
                 if (widget.description != null) ...[
-                  const SizedBox(height: ViaDesignTokens.spacingXxs),
+                  const SizedBox(height: IndustrialDarkTokens.spacingMinimal),
                   Text(
                     widget.description!,
-                    style: ViaDesignTokens.bodySmall.copyWith(
-                      color: ViaDesignTokens.textSecondary,
+                    style: IndustrialDarkTokens.bodyStyle.copyWith(
+                      color: IndustrialDarkTokens.textSecondary,
                     ),
                   ),
                 ],
               ],
             ),
           ),
-          const SizedBox(width: ViaDesignTokens.spacingMd),
+          const SizedBox(width: IndustrialDarkTokens.spacingItem),
           switchWidget,
         ],
       ),
@@ -303,18 +303,18 @@ class ViaSwitchListItem extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: ViaDesignTokens.spacingLg,
-            vertical: ViaDesignTokens.spacingMd,
+            horizontal: IndustrialDarkTokens.spacingCard,
+            vertical: IndustrialDarkTokens.spacingItem,
           ),
           child: Row(
             children: [
               if (icon != null) ...[
                 Icon(
                   icon,
-                  size: ViaDesignTokens.iconMd,
-                  color: iconColor ?? ViaDesignTokens.textSecondary,
+                  size: 24,
+                  color: iconColor ?? IndustrialDarkTokens.textSecondary,
                 ),
-                const SizedBox(width: ViaDesignTokens.spacingMd),
+                const SizedBox(width: IndustrialDarkTokens.spacingItem),
               ],
               Expanded(
                 child: Column(
@@ -322,23 +322,23 @@ class ViaSwitchListItem extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: ViaDesignTokens.labelMedium.copyWith(
-                        color: ViaDesignTokens.textPrimary,
+                      style: IndustrialDarkTokens.labelStyle.copyWith(
+                        color: IndustrialDarkTokens.textPrimary,
                       ),
                     ),
                     if (subtitle != null) ...[
-                      const SizedBox(height: ViaDesignTokens.spacingXxs),
+                      const SizedBox(height: IndustrialDarkTokens.spacingMinimal),
                       Text(
                         subtitle!,
-                        style: ViaDesignTokens.bodySmall.copyWith(
-                          color: ViaDesignTokens.textSecondary,
+                        style: IndustrialDarkTokens.bodyStyle.copyWith(
+                          color: IndustrialDarkTokens.textSecondary,
                         ),
                       ),
                     ],
                   ],
                 ),
               ),
-              const SizedBox(width: ViaDesignTokens.spacingMd),
+              const SizedBox(width: IndustrialDarkTokens.spacingItem),
               ViaSwitch(
                 value: value,
                 onChanged: onChanged,
@@ -350,14 +350,14 @@ class ViaSwitchListItem extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(
               left: icon != null
-                  ? ViaDesignTokens.spacingLg +
-                      ViaDesignTokens.iconMd +
-                      ViaDesignTokens.spacingMd
-                  : ViaDesignTokens.spacingLg,
+                  ? IndustrialDarkTokens.spacingCard +
+                      24 +
+                      IndustrialDarkTokens.spacingItem
+                  : IndustrialDarkTokens.spacingCard,
             ),
             child: Divider(
               height: 1,
-              color: ViaDesignTokens.borderPrimary,
+              color: IndustrialDarkTokens.outline,
             ),
           ),
       ],

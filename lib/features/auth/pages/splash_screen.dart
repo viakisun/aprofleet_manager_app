@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/theme/design_tokens.dart';
+import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/splash_controller.dart';
 import '../widgets/cart_icon.dart';
@@ -90,7 +90,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: DesignTokens.bgPrimary,
+      backgroundColor: IndustrialDarkTokens.bgBase,
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -127,13 +127,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                                 colors: [
-                                  DesignTokens.statusActive,
-                                  DesignTokens.statusCharging,
+                                  IndustrialDarkTokens.statusActive,
+                                  IndustrialDarkTokens.statusCharging,
                                 ],
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: DesignTokens.statusActive
+                                  color: IndustrialDarkTokens.statusActive
                                       .withValues(alpha: 0.3),
                                   blurRadius: 20,
                                   spreadRadius: 5,
@@ -149,31 +149,31 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                             ),
                           ),
 
-                          const SizedBox(height: DesignTokens.spacingXl),
+                          const SizedBox(height: IndustrialDarkTokens.spacingSection),
 
                           // App name
                           Text(
                             'APRO FLEET',
                             style: TextStyle(
-                              fontFamily: DesignTokens.fontFamily,
-                              fontSize: DesignTokens.fontSize4xl,
-                              fontWeight: DesignTokens.fontWeightBold,
-                              color: DesignTokens.textPrimary,
-                              letterSpacing: DesignTokens.letterSpacingWide,
+                              fontFamily: 'Pretendard Variable',
+                              fontSize: 32,
+                              fontWeight: IndustrialDarkTokens.fontWeightBold,
+                              color: IndustrialDarkTokens.textPrimary,
+                              letterSpacing: IndustrialDarkTokens.letterSpacing,
                             ),
                           ),
 
-                          const SizedBox(height: DesignTokens.spacingSm),
+                          const SizedBox(height: IndustrialDarkTokens.spacingCompact),
 
                           // Subtitle
                           Text(
                             'Fleet Management System',
                             style: TextStyle(
-                              fontFamily: DesignTokens.fontFamily,
-                              fontSize: DesignTokens.fontSizeLg,
-                              fontWeight: DesignTokens.fontWeightMedium,
-                              color: DesignTokens.textSecondary,
-                              letterSpacing: DesignTokens.letterSpacingNormal,
+                              fontFamily: 'Pretendard Variable',
+                              fontSize: IndustrialDarkTokens.fontSizeBody,
+                              fontWeight: IndustrialDarkTokens.fontWeightMedium,
+                              color: IndustrialDarkTokens.textSecondary,
+                              letterSpacing: IndustrialDarkTokens.letterSpacing,
                             ),
                           ),
                         ],
@@ -183,7 +183,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                 },
               ),
 
-              const SizedBox(height: DesignTokens.spacing3xl),
+              const SizedBox(height: 64),
 
               // Loading indicator
               AnimatedBuilder(
@@ -197,7 +197,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          DesignTokens.statusActive,
+                          IndustrialDarkTokens.statusActive,
                         ),
                       ),
                     ),

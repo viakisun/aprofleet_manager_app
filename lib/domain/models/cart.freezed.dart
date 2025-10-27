@@ -48,7 +48,26 @@ mixin _$Cart {
       throw _privateConstructorUsedError; // Additional fields for compatibility
   double? get batteryPct => throw _privateConstructorUsedError;
   double? get speedKph => throw _privateConstructorUsedError;
-  String? get location => throw _privateConstructorUsedError;
+  String? get location =>
+      throw _privateConstructorUsedError; // Alert integration
+  String? get activeAlertId => throw _privateConstructorUsedError;
+  AlertSeverity? get alertSeverity =>
+      throw _privateConstructorUsedError; // Manager-centric fields
+  String? get courseLocation =>
+      throw _privateConstructorUsedError; // e.g., "On Course - Hole 7", "In Garage", "Charging Station"
+  String? get firmwareVersion =>
+      throw _privateConstructorUsedError; // e.g., "v2.5.1"
+  bool get firmwareUpdateAvailable =>
+      throw _privateConstructorUsedError; // Whether firmware update is needed
+  DateTime? get lastMaintenanceDate =>
+      throw _privateConstructorUsedError; // Last maintenance/service date
+  DateTime? get nextMaintenanceDate =>
+      throw _privateConstructorUsedError; // Next scheduled maintenance
+  int get activeIssuesCount =>
+      throw _privateConstructorUsedError; // Count of active unresolved issues
+  List<CartIssue> get activeIssues =>
+      throw _privateConstructorUsedError; // List of active issues
+  double? get todayDistance => throw _privateConstructorUsedError;
 
   /// Serializes this Cart to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -90,7 +109,17 @@ abstract class $CartCopyWith<$Res> {
       DateTime? lastSeen,
       double? batteryPct,
       double? speedKph,
-      String? location});
+      String? location,
+      String? activeAlertId,
+      AlertSeverity? alertSeverity,
+      String? courseLocation,
+      String? firmwareVersion,
+      bool firmwareUpdateAvailable,
+      DateTime? lastMaintenanceDate,
+      DateTime? nextMaintenanceDate,
+      int activeIssuesCount,
+      List<CartIssue> activeIssues,
+      double? todayDistance});
 }
 
 /// @nodoc
@@ -134,6 +163,16 @@ class _$CartCopyWithImpl<$Res, $Val extends Cart>
     Object? batteryPct = freezed,
     Object? speedKph = freezed,
     Object? location = freezed,
+    Object? activeAlertId = freezed,
+    Object? alertSeverity = freezed,
+    Object? courseLocation = freezed,
+    Object? firmwareVersion = freezed,
+    Object? firmwareUpdateAvailable = null,
+    Object? lastMaintenanceDate = freezed,
+    Object? nextMaintenanceDate = freezed,
+    Object? activeIssuesCount = null,
+    Object? activeIssues = null,
+    Object? todayDistance = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -240,6 +279,46 @@ class _$CartCopyWithImpl<$Res, $Val extends Cart>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as String?,
+      activeAlertId: freezed == activeAlertId
+          ? _value.activeAlertId
+          : activeAlertId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      alertSeverity: freezed == alertSeverity
+          ? _value.alertSeverity
+          : alertSeverity // ignore: cast_nullable_to_non_nullable
+              as AlertSeverity?,
+      courseLocation: freezed == courseLocation
+          ? _value.courseLocation
+          : courseLocation // ignore: cast_nullable_to_non_nullable
+              as String?,
+      firmwareVersion: freezed == firmwareVersion
+          ? _value.firmwareVersion
+          : firmwareVersion // ignore: cast_nullable_to_non_nullable
+              as String?,
+      firmwareUpdateAvailable: null == firmwareUpdateAvailable
+          ? _value.firmwareUpdateAvailable
+          : firmwareUpdateAvailable // ignore: cast_nullable_to_non_nullable
+              as bool,
+      lastMaintenanceDate: freezed == lastMaintenanceDate
+          ? _value.lastMaintenanceDate
+          : lastMaintenanceDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      nextMaintenanceDate: freezed == nextMaintenanceDate
+          ? _value.nextMaintenanceDate
+          : nextMaintenanceDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      activeIssuesCount: null == activeIssuesCount
+          ? _value.activeIssuesCount
+          : activeIssuesCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      activeIssues: null == activeIssues
+          ? _value.activeIssues
+          : activeIssues // ignore: cast_nullable_to_non_nullable
+              as List<CartIssue>,
+      todayDistance: freezed == todayDistance
+          ? _value.todayDistance
+          : todayDistance // ignore: cast_nullable_to_non_nullable
+              as double?,
     ) as $Val);
   }
 }
@@ -277,7 +356,17 @@ abstract class _$$CartImplCopyWith<$Res> implements $CartCopyWith<$Res> {
       DateTime? lastSeen,
       double? batteryPct,
       double? speedKph,
-      String? location});
+      String? location,
+      String? activeAlertId,
+      AlertSeverity? alertSeverity,
+      String? courseLocation,
+      String? firmwareVersion,
+      bool firmwareUpdateAvailable,
+      DateTime? lastMaintenanceDate,
+      DateTime? nextMaintenanceDate,
+      int activeIssuesCount,
+      List<CartIssue> activeIssues,
+      double? todayDistance});
 }
 
 /// @nodoc
@@ -318,6 +407,16 @@ class __$$CartImplCopyWithImpl<$Res>
     Object? batteryPct = freezed,
     Object? speedKph = freezed,
     Object? location = freezed,
+    Object? activeAlertId = freezed,
+    Object? alertSeverity = freezed,
+    Object? courseLocation = freezed,
+    Object? firmwareVersion = freezed,
+    Object? firmwareUpdateAvailable = null,
+    Object? lastMaintenanceDate = freezed,
+    Object? nextMaintenanceDate = freezed,
+    Object? activeIssuesCount = null,
+    Object? activeIssues = null,
+    Object? todayDistance = freezed,
   }) {
     return _then(_$CartImpl(
       id: null == id
@@ -424,6 +523,46 @@ class __$$CartImplCopyWithImpl<$Res>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as String?,
+      activeAlertId: freezed == activeAlertId
+          ? _value.activeAlertId
+          : activeAlertId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      alertSeverity: freezed == alertSeverity
+          ? _value.alertSeverity
+          : alertSeverity // ignore: cast_nullable_to_non_nullable
+              as AlertSeverity?,
+      courseLocation: freezed == courseLocation
+          ? _value.courseLocation
+          : courseLocation // ignore: cast_nullable_to_non_nullable
+              as String?,
+      firmwareVersion: freezed == firmwareVersion
+          ? _value.firmwareVersion
+          : firmwareVersion // ignore: cast_nullable_to_non_nullable
+              as String?,
+      firmwareUpdateAvailable: null == firmwareUpdateAvailable
+          ? _value.firmwareUpdateAvailable
+          : firmwareUpdateAvailable // ignore: cast_nullable_to_non_nullable
+              as bool,
+      lastMaintenanceDate: freezed == lastMaintenanceDate
+          ? _value.lastMaintenanceDate
+          : lastMaintenanceDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      nextMaintenanceDate: freezed == nextMaintenanceDate
+          ? _value.nextMaintenanceDate
+          : nextMaintenanceDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      activeIssuesCount: null == activeIssuesCount
+          ? _value.activeIssuesCount
+          : activeIssuesCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      activeIssues: null == activeIssues
+          ? _value._activeIssues
+          : activeIssues // ignore: cast_nullable_to_non_nullable
+              as List<CartIssue>,
+      todayDistance: freezed == todayDistance
+          ? _value.todayDistance
+          : todayDistance // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -457,9 +596,20 @@ class _$CartImpl implements _Cart {
       this.lastSeen,
       this.batteryPct,
       this.speedKph,
-      this.location})
+      this.location,
+      this.activeAlertId,
+      this.alertSeverity,
+      this.courseLocation,
+      this.firmwareVersion,
+      this.firmwareUpdateAvailable = false,
+      this.lastMaintenanceDate,
+      this.nextMaintenanceDate,
+      this.activeIssuesCount = 0,
+      final List<CartIssue> activeIssues = const [],
+      this.todayDistance})
       : _componentSerials = componentSerials,
-        _imagePaths = imagePaths;
+        _imagePaths = imagePaths,
+        _activeIssues = activeIssues;
 
   factory _$CartImpl.fromJson(Map<String, dynamic> json) =>
       _$$CartImplFromJson(json);
@@ -534,10 +684,49 @@ class _$CartImpl implements _Cart {
   final double? speedKph;
   @override
   final String? location;
+// Alert integration
+  @override
+  final String? activeAlertId;
+  @override
+  final AlertSeverity? alertSeverity;
+// Manager-centric fields
+  @override
+  final String? courseLocation;
+// e.g., "On Course - Hole 7", "In Garage", "Charging Station"
+  @override
+  final String? firmwareVersion;
+// e.g., "v2.5.1"
+  @override
+  @JsonKey()
+  final bool firmwareUpdateAvailable;
+// Whether firmware update is needed
+  @override
+  final DateTime? lastMaintenanceDate;
+// Last maintenance/service date
+  @override
+  final DateTime? nextMaintenanceDate;
+// Next scheduled maintenance
+  @override
+  @JsonKey()
+  final int activeIssuesCount;
+// Count of active unresolved issues
+  final List<CartIssue> _activeIssues;
+// Count of active unresolved issues
+  @override
+  @JsonKey()
+  List<CartIssue> get activeIssues {
+    if (_activeIssues is EqualUnmodifiableListView) return _activeIssues;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_activeIssues);
+  }
+
+// List of active issues
+  @override
+  final double? todayDistance;
 
   @override
   String toString() {
-    return 'Cart(id: $id, vin: $vin, manufacturer: $manufacturer, model: $model, year: $year, color: $color, batteryType: $batteryType, voltage: $voltage, seating: $seating, maxSpeed: $maxSpeed, gpsTrackerId: $gpsTrackerId, telemetryDeviceId: $telemetryDeviceId, componentSerials: $componentSerials, imagePaths: $imagePaths, purchaseDate: $purchaseDate, warrantyExpiry: $warrantyExpiry, insuranceNumber: $insuranceNumber, odometer: $odometer, status: $status, position: $position, batteryLevel: $batteryLevel, speed: $speed, lastSeen: $lastSeen, batteryPct: $batteryPct, speedKph: $speedKph, location: $location)';
+    return 'Cart(id: $id, vin: $vin, manufacturer: $manufacturer, model: $model, year: $year, color: $color, batteryType: $batteryType, voltage: $voltage, seating: $seating, maxSpeed: $maxSpeed, gpsTrackerId: $gpsTrackerId, telemetryDeviceId: $telemetryDeviceId, componentSerials: $componentSerials, imagePaths: $imagePaths, purchaseDate: $purchaseDate, warrantyExpiry: $warrantyExpiry, insuranceNumber: $insuranceNumber, odometer: $odometer, status: $status, position: $position, batteryLevel: $batteryLevel, speed: $speed, lastSeen: $lastSeen, batteryPct: $batteryPct, speedKph: $speedKph, location: $location, activeAlertId: $activeAlertId, alertSeverity: $alertSeverity, courseLocation: $courseLocation, firmwareVersion: $firmwareVersion, firmwareUpdateAvailable: $firmwareUpdateAvailable, lastMaintenanceDate: $lastMaintenanceDate, nextMaintenanceDate: $nextMaintenanceDate, activeIssuesCount: $activeIssuesCount, activeIssues: $activeIssues, todayDistance: $todayDistance)';
   }
 
   @override
@@ -587,7 +776,28 @@ class _$CartImpl implements _Cart {
             (identical(other.speedKph, speedKph) ||
                 other.speedKph == speedKph) &&
             (identical(other.location, location) ||
-                other.location == location));
+                other.location == location) &&
+            (identical(other.activeAlertId, activeAlertId) ||
+                other.activeAlertId == activeAlertId) &&
+            (identical(other.alertSeverity, alertSeverity) ||
+                other.alertSeverity == alertSeverity) &&
+            (identical(other.courseLocation, courseLocation) ||
+                other.courseLocation == courseLocation) &&
+            (identical(other.firmwareVersion, firmwareVersion) ||
+                other.firmwareVersion == firmwareVersion) &&
+            (identical(
+                    other.firmwareUpdateAvailable, firmwareUpdateAvailable) ||
+                other.firmwareUpdateAvailable == firmwareUpdateAvailable) &&
+            (identical(other.lastMaintenanceDate, lastMaintenanceDate) ||
+                other.lastMaintenanceDate == lastMaintenanceDate) &&
+            (identical(other.nextMaintenanceDate, nextMaintenanceDate) ||
+                other.nextMaintenanceDate == nextMaintenanceDate) &&
+            (identical(other.activeIssuesCount, activeIssuesCount) ||
+                other.activeIssuesCount == activeIssuesCount) &&
+            const DeepCollectionEquality()
+                .equals(other._activeIssues, _activeIssues) &&
+            (identical(other.todayDistance, todayDistance) ||
+                other.todayDistance == todayDistance));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -619,7 +829,17 @@ class _$CartImpl implements _Cart {
         lastSeen,
         batteryPct,
         speedKph,
-        location
+        location,
+        activeAlertId,
+        alertSeverity,
+        courseLocation,
+        firmwareVersion,
+        firmwareUpdateAvailable,
+        lastMaintenanceDate,
+        nextMaintenanceDate,
+        activeIssuesCount,
+        const DeepCollectionEquality().hash(_activeIssues),
+        todayDistance
       ]);
 
   /// Create a copy of Cart
@@ -665,7 +885,17 @@ abstract class _Cart implements Cart {
       final DateTime? lastSeen,
       final double? batteryPct,
       final double? speedKph,
-      final String? location}) = _$CartImpl;
+      final String? location,
+      final String? activeAlertId,
+      final AlertSeverity? alertSeverity,
+      final String? courseLocation,
+      final String? firmwareVersion,
+      final bool firmwareUpdateAvailable,
+      final DateTime? lastMaintenanceDate,
+      final DateTime? nextMaintenanceDate,
+      final int activeIssuesCount,
+      final List<CartIssue> activeIssues,
+      final double? todayDistance}) = _$CartImpl;
 
   factory _Cart.fromJson(Map<String, dynamic> json) = _$CartImpl.fromJson;
 
@@ -721,7 +951,28 @@ abstract class _Cart implements Cart {
   @override
   double? get speedKph;
   @override
-  String? get location;
+  String? get location; // Alert integration
+  @override
+  String? get activeAlertId;
+  @override
+  AlertSeverity? get alertSeverity; // Manager-centric fields
+  @override
+  String?
+      get courseLocation; // e.g., "On Course - Hole 7", "In Garage", "Charging Station"
+  @override
+  String? get firmwareVersion; // e.g., "v2.5.1"
+  @override
+  bool get firmwareUpdateAvailable; // Whether firmware update is needed
+  @override
+  DateTime? get lastMaintenanceDate; // Last maintenance/service date
+  @override
+  DateTime? get nextMaintenanceDate; // Next scheduled maintenance
+  @override
+  int get activeIssuesCount; // Count of active unresolved issues
+  @override
+  List<CartIssue> get activeIssues; // List of active issues
+  @override
+  double? get todayDistance;
 
   /// Create a copy of Cart
   /// with the given fields replaced by the non-null parameter values.

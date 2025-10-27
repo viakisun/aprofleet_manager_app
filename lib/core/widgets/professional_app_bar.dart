@@ -39,19 +39,26 @@ class ProfessionalAppBar extends StatelessWidget
     return Container(
       decoration: BoxDecoration(
         color: backgroundColor ?? DesignTokens.bgPrimary,
+        boxShadow: [
+          // iOS-style subtle shadow
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            offset: const Offset(0, 1),
+            blurRadius: 3,
+          ),
+        ],
         border: Border(
           bottom: BorderSide(
-            color:
-                DesignTokens.borderPrimary, // Already updated to be more subtle
-            width: 1.0,
+            color: Colors.white.withOpacity(0.04), // Ultra-thin subtle border
+            width: 0.5,
           ),
         ),
       ),
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: DesignTokens.spacingMd,
-            vertical: DesignTokens.spacingXs, // Tighter vertical padding
+            horizontal: 20.0, // More generous (was 16)
+            vertical: 12.0, // More generous (was 8)
           ),
           child: Row(
             children: [
@@ -65,18 +72,18 @@ class ProfessionalAppBar extends StatelessWidget
               else
                 const SizedBox(width: DesignTokens.iconMd),
 
-              // Title (left-aligned)
+              // Title (left-aligned, iOS-style typography)
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: DesignTokens.spacingSm),
+                  padding: const EdgeInsets.only(left: DesignTokens.spacingMd),
                   child: Text(
                     title,
                     style: TextStyle(
                       fontSize: DesignTokens.fontSizeXl,
-                      fontWeight: DesignTokens.fontWeightBold,
+                      fontWeight: FontWeight.w600, // iOS SF Pro semibold
                       color: foregroundColor ?? DesignTokens.textPrimary,
-                      letterSpacing:
-                          DesignTokens.letterSpacingNormal, // Tighter tracking
+                      letterSpacing: -0.5, // iOS-style tighter tracking
+                      height: 1.2,
                     ),
                     textAlign: TextAlign.left,
                   ),
@@ -85,13 +92,13 @@ class ProfessionalAppBar extends StatelessWidget
 
               // Notification button (if enabled)
               if (showNotificationButton) ...[
-                const SizedBox(width: DesignTokens.spacingSm),
+                const SizedBox(width: DesignTokens.spacingMd), // More generous spacing
                 _buildNotificationButton(context),
               ],
 
               // Actions (right-aligned)
               if (actions != null) ...[
-                const SizedBox(width: DesignTokens.spacingSm),
+                const SizedBox(width: DesignTokens.spacingMd), // More generous spacing
                 ...actions!,
               ],
             ],
@@ -101,64 +108,109 @@ class ProfessionalAppBar extends StatelessWidget
     );
   }
 
+  /// Modern iOS-style back button with proper touch area and ripple
   Widget _buildBackButton(BuildContext context) {
-    return GestureDetector(
-      onTap: onBackPressed ?? () => Navigator.of(context).pop(),
-      child: Icon(
-        CustomIcons.back,
-        size: CustomIcons.iconLg,
-        color: DesignTokens.textPrimary,
-      ),
-    );
-  }
-
-  Widget _buildMenuButton(BuildContext context) {
-    return GestureDetector(
-      onTap: onMenuPressed,
-      child: Icon(
-        CustomIcons.menu,
-        size: CustomIcons.iconLg,
-        color: DesignTokens.textPrimary,
-      ),
-    );
-  }
-
-  Widget _buildNotificationButton(BuildContext context) {
-    return GestureDetector(
-      onTap: onNotificationPressed,
-      child: Stack(
-        children: [
-          Icon(
-            CustomIcons.alerts,
-            size: CustomIcons.iconLg,
+    return Material(
+      color: Colors.white.withOpacity(0.06), // Subtle background
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        onTap: onBackPressed ?? () => Navigator.of(context).pop(),
+        borderRadius: BorderRadius.circular(12),
+        splashColor: Colors.white.withOpacity(0.1),
+        highlightColor: Colors.white.withOpacity(0.05),
+        child: Container(
+          width: 48,  // Minimum touch area (accessibility)
+          height: 48,
+          alignment: Alignment.center,
+          child: Icon(
+            CustomIcons.back,
+            size: 24, // Standard icon size
             color: DesignTokens.textPrimary,
           ),
-          if (notificationBadgeCount != null && notificationBadgeCount! > 0)
-            Positioned(
-              right: 0,
-              top: 0,
-              child: Container(
-                padding: const EdgeInsets.all(2),
-                decoration: const BoxDecoration(
-                  color: DesignTokens.alertCritical,
-                  shape: BoxShape.circle,
-                ),
-                constraints: const BoxConstraints(
-                  minWidth: 16,
-                  minHeight: 16,
-                ),
-                child: Text(
-                  notificationBadgeCount.toString(),
-                  style: const TextStyle(
-                    color: DesignTokens.textPrimary,
-                    fontSize: DesignTokens.fontSizeXs,
-                    fontWeight: DesignTokens.fontWeightSemibold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+        ),
+      ),
+    );
+  }
+
+  /// Modern iOS-style menu button with proper touch area and ripple
+  Widget _buildMenuButton(BuildContext context) {
+    return Material(
+      color: Colors.white.withOpacity(0.06), // Subtle background
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        onTap: onMenuPressed,
+        borderRadius: BorderRadius.circular(12),
+        splashColor: Colors.white.withOpacity(0.1),
+        highlightColor: Colors.white.withOpacity(0.05),
+        child: Container(
+          width: 48,  // Minimum touch area (accessibility)
+          height: 48,
+          alignment: Alignment.center,
+          child: Icon(
+            CustomIcons.menu,
+            size: 24, // Standard icon size
+            color: DesignTokens.textPrimary,
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Modern iOS-style notification button with badge and proper touch area
+  Widget _buildNotificationButton(BuildContext context) {
+    return Material(
+      color: Colors.white.withOpacity(0.06), // Subtle background
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        onTap: onNotificationPressed,
+        borderRadius: BorderRadius.circular(12),
+        splashColor: Colors.white.withOpacity(0.1),
+        highlightColor: Colors.white.withOpacity(0.05),
+        child: Container(
+          width: 48,  // Minimum touch area (accessibility)
+          height: 48,
+          alignment: Alignment.center,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Icon(
+                CustomIcons.alerts,
+                size: 24, // Standard icon size
+                color: DesignTokens.textPrimary,
               ),
-            ),
-        ],
+              if (notificationBadgeCount != null && notificationBadgeCount! > 0)
+                Positioned(
+                  right: -4,
+                  top: -4,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: DesignTokens.alertCritical,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: DesignTokens.bgPrimary,
+                        width: 1.5,
+                      ),
+                    ),
+                    constraints: const BoxConstraints(
+                      minWidth: 18,
+                      minHeight: 18,
+                    ),
+                    child: Text(
+                      notificationBadgeCount! > 99 ? '99+' : notificationBadgeCount.toString(),
+                      style: const TextStyle(
+                        color: DesignTokens.textPrimary,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w700,
+                        height: 1.0,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }

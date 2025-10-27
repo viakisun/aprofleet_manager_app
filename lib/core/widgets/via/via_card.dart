@@ -1,25 +1,25 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
+import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 
-/// VIA Design System Card Component
+/// Industrial Dark Card Component
 ///
 /// Container cards with multiple variants:
 /// - Outline: Bordered card with transparent background
 /// - Glass: Glassmorphism effect with blur
-/// - Elevated: Card with shadow elevation
+/// - Elevated: Card with outline borders (NO shadows)
 /// - Filled: Solid background card
 ///
 /// Features:
 /// - Optional header, body, footer sections
 /// - Tap interaction with scale animation
 /// - Customizable padding and border radius
-/// - Integration with VIA design tokens
+/// - Outline-based depth (no elevation/shadows)
 
 enum ViaCardVariant {
   outline,  // Border only
   glass,    // Glassmorphism with blur
-  elevated, // Shadow elevation
+  elevated, // Outline borders (NO shadows in Industrial Dark)
   filled,   // Solid background
 }
 
@@ -112,7 +112,7 @@ class _ViaCardState extends State<ViaCard>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: ViaDesignTokens.durationFast,
+      duration: IndustrialDarkTokens.durationFast,
       vsync: this,
     );
     _scaleAnimation = Tween<double>(
@@ -120,7 +120,7 @@ class _ViaCardState extends State<ViaCard>
       end: 0.98,
     ).animate(CurvedAnimation(
       parent: _controller,
-      curve: ViaDesignTokens.curveStandard,
+      curve: IndustrialDarkTokens.curveStandard,
     ));
   }
 
@@ -153,7 +153,7 @@ class _ViaCardState extends State<ViaCard>
   }
 
   BoxDecoration _getDecoration() {
-    final borderRadius = widget.borderRadius ?? ViaDesignTokens.radiusLg;
+    final borderRadius = widget.borderRadius ?? IndustrialDarkTokens.radiusCard;
 
     switch (widget.variant) {
       case ViaCardVariant.outline:
@@ -161,38 +161,37 @@ class _ViaCardState extends State<ViaCard>
           color: widget.backgroundColor ?? Colors.transparent,
           borderRadius: BorderRadius.circular(borderRadius),
           border: Border.all(
-            color: widget.borderColor ?? ViaDesignTokens.borderPrimary,
-            width: 1.0,
+            color: widget.borderColor ?? IndustrialDarkTokens.outline,
+            width: IndustrialDarkTokens.borderWidth,
           ),
         );
 
       case ViaCardVariant.glass:
         return BoxDecoration(
           color: widget.backgroundColor ??
-              ViaDesignTokens.surfaceSecondary.withValues(alpha: 0.6),
+              IndustrialDarkTokens.bgSurface.withValues(alpha: 0.6),
           borderRadius: BorderRadius.circular(borderRadius),
           border: Border.all(
-            color: widget.borderColor ?? ViaDesignTokens.borderPrimary,
-            width: 1.0,
+            color: widget.borderColor ?? IndustrialDarkTokens.outline,
+            width: IndustrialDarkTokens.borderWidth,
           ),
         );
 
       case ViaCardVariant.elevated:
+        // Industrial Dark: NO shadows, use outline borders instead
         return BoxDecoration(
-          color: widget.backgroundColor ?? ViaDesignTokens.surfaceTertiary,
+          color: widget.backgroundColor ?? IndustrialDarkTokens.bgSurface,
           borderRadius: BorderRadius.circular(borderRadius),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.3),
-              blurRadius: widget.elevation ?? ViaDesignTokens.elevationMd,
-              offset: const Offset(0, 2),
-            ),
-          ],
+          border: Border.all(
+            color: widget.borderColor ?? IndustrialDarkTokens.outlineEmphasis,
+            width: IndustrialDarkTokens.borderWidth,
+          ),
+          // NO boxShadow in Industrial Dark
         );
 
       case ViaCardVariant.filled:
         return BoxDecoration(
-          color: widget.backgroundColor ?? ViaDesignTokens.surfaceSecondary,
+          color: widget.backgroundColor ?? IndustrialDarkTokens.bgSurface,
           borderRadius: BorderRadius.circular(borderRadius),
         );
     }
@@ -202,7 +201,7 @@ class _ViaCardState extends State<ViaCard>
   Widget build(BuildContext context) {
     Widget cardContent = Container(
       padding: widget.padding ??
-          const EdgeInsets.all(ViaDesignTokens.spacingLg),
+          const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
       decoration: _getDecoration(),
       child: widget.child,
     );
@@ -211,7 +210,7 @@ class _ViaCardState extends State<ViaCard>
     if (widget.variant == ViaCardVariant.glass) {
       cardContent = ClipRRect(
         borderRadius: BorderRadius.circular(
-            widget.borderRadius ?? ViaDesignTokens.radiusLg),
+            widget.borderRadius ?? IndustrialDarkTokens.radiusCard),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
           child: cardContent,
@@ -292,14 +291,14 @@ class ViaCardSectioned extends StatelessWidget {
           if (header != null) ...[
             Padding(
               padding: padding ??
-                  const EdgeInsets.all(ViaDesignTokens.spacingLg),
+                  const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
               child: header!,
             ),
             if (showDividers && (body != null || footer != null))
               Divider(
                 height: 1,
                 thickness: 1,
-                color: ViaDesignTokens.borderPrimary,
+                color: IndustrialDarkTokens.outline,
               ),
           ],
 
@@ -307,14 +306,14 @@ class ViaCardSectioned extends StatelessWidget {
           if (body != null) ...[
             Padding(
               padding: padding ??
-                  const EdgeInsets.all(ViaDesignTokens.spacingLg),
+                  const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
               child: body!,
             ),
             if (showDividers && footer != null)
               Divider(
                 height: 1,
                 thickness: 1,
-                color: ViaDesignTokens.borderPrimary,
+                color: IndustrialDarkTokens.outline,
               ),
           ],
 
@@ -322,7 +321,7 @@ class ViaCardSectioned extends StatelessWidget {
           if (footer != null)
             Padding(
               padding: padding ??
-                  const EdgeInsets.all(ViaDesignTokens.spacingLg),
+                  const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
               child: footer!,
             ),
         ],
@@ -366,13 +365,16 @@ class ViaCartCard extends StatelessWidget {
               children: [
                 Text(
                   cartName ?? 'Cart $cartId',
-                  style: ViaDesignTokens.headingSmall,
+                  style: IndustrialDarkTokens.displayStyle.copyWith(
+                    fontSize: 18.0,
+                  ),
                 ),
-                const SizedBox(height: ViaDesignTokens.spacingXxs),
+                const SizedBox(height: IndustrialDarkTokens.spacingMinimal),
                 Text(
                   'ID: $cartId',
-                  style: ViaDesignTokens.bodySmall.copyWith(
-                    color: ViaDesignTokens.textMuted,
+                  style: IndustrialDarkTokens.bodyStyle.copyWith(
+                    fontSize: 14.0,
+                    color: IndustrialDarkTokens.textSecondary,
                   ),
                 ),
               ],

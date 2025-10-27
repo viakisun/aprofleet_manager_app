@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
+import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 
 /// VIA Design System Chip Component
 ///
@@ -112,7 +112,7 @@ class _ViaChipState extends State<ViaChip>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: ViaDesignTokens.durationFast,
+      duration: IndustrialDarkTokens.durationFast,
       vsync: this,
     );
     _scaleAnimation = Tween<double>(
@@ -120,7 +120,7 @@ class _ViaChipState extends State<ViaChip>
       end: 0.95,
     ).animate(CurvedAnimation(
       parent: _controller,
-      curve: ViaDesignTokens.curveStandard,
+      curve: IndustrialDarkTokens.curveStandard,
     ));
   }
 
@@ -155,50 +155,50 @@ class _ViaChipState extends State<ViaChip>
 
   Color _getBackgroundColor() {
     if (!widget.enabled) {
-      return ViaDesignTokens.surfaceSecondary.withValues(alpha: 0.5);
+      return IndustrialDarkTokens.bgSurface.withValues(alpha: 0.5);
     }
 
     if (widget.selected) {
-      return ViaDesignTokens.primary.withValues(alpha: 0.2);
+      return IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.2);
     }
 
-    return ViaDesignTokens.surfaceSecondary;
+    return IndustrialDarkTokens.bgSurface;
   }
 
   Color _getBorderColor() {
     if (!widget.enabled) {
-      return ViaDesignTokens.borderPrimary.withValues(alpha: 0.5);
+      return IndustrialDarkTokens.outline.withValues(alpha: 0.5);
     }
 
     if (widget.selected) {
-      return ViaDesignTokens.primary;
+      return IndustrialDarkTokens.accentPrimary;
     }
 
-    return ViaDesignTokens.borderPrimary;
+    return IndustrialDarkTokens.outline;
   }
 
   Color _getTextColor() {
     if (!widget.enabled) {
-      return ViaDesignTokens.textDisabled;
+      return IndustrialDarkTokens.textDisabled;
     }
 
     if (widget.selected) {
-      return ViaDesignTokens.primary;
+      return IndustrialDarkTokens.accentPrimary;
     }
 
-    return ViaDesignTokens.textPrimary;
+    return IndustrialDarkTokens.textPrimary;
   }
 
   Color _getIconColor() {
     if (!widget.enabled) {
-      return ViaDesignTokens.textDisabled;
+      return IndustrialDarkTokens.textDisabled;
     }
 
     if (widget.selected) {
-      return ViaDesignTokens.primary;
+      return IndustrialDarkTokens.accentPrimary;
     }
 
-    return ViaDesignTokens.textMuted;
+    return IndustrialDarkTokens.textSecondary;
   }
 
   @override
@@ -211,16 +211,16 @@ class _ViaChipState extends State<ViaChip>
         onTapCancel: _handleTapCancel,
         onTap: _handleTap,
         child: AnimatedContainer(
-          duration: ViaDesignTokens.durationFast,
+          duration: IndustrialDarkTokens.durationFast,
           padding: EdgeInsets.symmetric(
             horizontal: widget.avatar != null || widget.icon != null
-                ? ViaDesignTokens.spacingSm
-                : ViaDesignTokens.spacingMd,
-            vertical: ViaDesignTokens.spacingSm,
+                ? IndustrialDarkTokens.spacingCompact
+                : IndustrialDarkTokens.spacingItem,
+            vertical: IndustrialDarkTokens.spacingCompact,
           ),
           decoration: BoxDecoration(
             color: _getBackgroundColor(),
-            borderRadius: BorderRadius.circular(ViaDesignTokens.radiusFull),
+            borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusChip),
             border: Border.all(
               color: _getBorderColor(),
               width: widget.selected ? 1.5 : 1.0,
@@ -228,7 +228,7 @@ class _ViaChipState extends State<ViaChip>
             boxShadow: widget.selected
                 ? [
                     BoxShadow(
-                      color: ViaDesignTokens.primary.withValues(alpha: 0.2),
+                      color: IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.2),
                       blurRadius: 8.0,
                       spreadRadius: 0.0,
                     ),
@@ -245,17 +245,17 @@ class _ViaChipState extends State<ViaChip>
                   height: 20,
                   child: widget.avatar!,
                 ),
-                const SizedBox(width: ViaDesignTokens.spacingSm),
+                const SizedBox(width: IndustrialDarkTokens.spacingCompact),
               ],
 
               // Leading icon
               if (widget.icon != null && widget.avatar == null) ...[
                 Icon(
                   widget.icon,
-                  size: ViaDesignTokens.iconXs,
+                  size: 16,
                   color: _getIconColor(),
                 ),
-                const SizedBox(width: ViaDesignTokens.spacingSm),
+                const SizedBox(width: IndustrialDarkTokens.spacingCompact),
               ],
 
               // Selected indicator (checkmark)
@@ -263,16 +263,16 @@ class _ViaChipState extends State<ViaChip>
                   widget.variant == ViaChipVariant.filter) ...[
                 Icon(
                   Icons.check,
-                  size: ViaDesignTokens.iconXs,
-                  color: ViaDesignTokens.primary,
+                  size: 16,
+                  color: IndustrialDarkTokens.accentPrimary,
                 ),
-                const SizedBox(width: ViaDesignTokens.spacingXs),
+                const SizedBox(width: IndustrialDarkTokens.spacingCompact),
               ],
 
               // Label
               Text(
                 widget.label,
-                style: ViaDesignTokens.labelSmall.copyWith(
+                style: IndustrialDarkTokens.labelStyle.copyWith(
                   color: _getTextColor(),
                   fontWeight: widget.selected ? FontWeight.w600 : FontWeight.w500,
                 ),
@@ -280,12 +280,12 @@ class _ViaChipState extends State<ViaChip>
 
               // Delete icon (for input chips)
               if (widget.onDelete != null) ...[
-                const SizedBox(width: ViaDesignTokens.spacingXs),
+                const SizedBox(width: IndustrialDarkTokens.spacingCompact),
                 GestureDetector(
                   onTap: widget.enabled ? widget.onDelete : null,
                   child: Icon(
                     Icons.close,
-                    size: ViaDesignTokens.iconXs,
+                    size: 16,
                     color: _getIconColor(),
                   ),
                 ),
@@ -317,8 +317,8 @@ class ViaChipGroup extends StatefulWidget {
     this.multiSelect = true,
     this.enabled = true,
     this.alignment = WrapAlignment.start,
-    this.spacing = ViaDesignTokens.spacingSm,
-    this.runSpacing = ViaDesignTokens.spacingSm,
+    this.spacing = IndustrialDarkTokens.spacingCompact,
+    this.runSpacing = IndustrialDarkTokens.spacingCompact,
   });
 
   @override

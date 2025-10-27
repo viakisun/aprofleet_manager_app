@@ -108,8 +108,8 @@ class CustomMarkerIcon {
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);
     
-    // Platform-specific sizing - 웹은 작게, 모바일은 크게
-    final baseSize = kIsWeb ? 20.0 : 42.0; // 모바일을 절반으로 줄임 (84 / 2 = 42)
+    // Platform-specific sizing - 웹은 작게, 모바일은 명확하게
+    final baseSize = kIsWeb ? 24.0 : 64.0; // 모바일 크기 유지 (사용자 선호)
     final size = baseSize * scale;
     final center = Offset(size/2, size/2);
 
@@ -118,21 +118,28 @@ class CustomMarkerIcon {
       final haloPaint = Paint()
         ..color = color.withOpacity(0.25)
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
-      canvas.drawCircle(center, size * 0.5, haloPaint); // 상대적 크기로 조정
+      canvas.drawCircle(center, size * 0.5, haloPaint);
     }
-    
-    // White ring (2px)
-    final ring = Paint()
+
+    // Outer white ring (3-tier design for clarity)
+    final outerRing = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2
+      ..strokeWidth = 3 // 굵게
       ..color = Colors.white;
-    canvas.drawCircle(center, size * 0.33, ring); // 상대적 크기로 조정
-    
-    // Dot (16px diameter = 8px radius)
+    canvas.drawCircle(center, size * 0.38, outerRing);
+
+    // Status colored ring (middle layer)
+    final statusRing = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 4
+      ..color = color;
+    canvas.drawCircle(center, size * 0.32, statusRing);
+
+    // Inner dot (core)
     final dot = Paint()
       ..style = PaintingStyle.fill
       ..color = color;
-    canvas.drawCircle(center, size * 0.29, dot); // 상대적 크기로 조정
+    canvas.drawCircle(center, size * 0.22, dot);
 
     final img = await recorder.endRecording().toImage(size.toInt(), size.toInt());
     final bytes = (await img.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();

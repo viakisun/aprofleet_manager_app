@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -8,7 +9,16 @@ import 'core/localization/app_localizations.dart';
 import 'core/controllers/language_controller.dart';
 import 'core/services/providers.dart';
 
-void main() {
+void main() async {
+  // Flutter 바인딩 초기화
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // 화면 방향을 세로 모드로만 고정
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   runApp(
     const ProviderScope(
       child: AproFleetApp(),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/via_design_tokens.dart';
+import '../../../core/theme/industrial_dark_tokens.dart';
 import '../../../core/services/scenarios/scenario_engine.dart';
 import '../../../core/services/scenarios/emergency_scenario.dart';
 import '../../../domain/models/scenario_event.dart';
@@ -26,10 +26,10 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: ViaDesignTokens.surfacePrimary,
+        color: IndustrialDarkTokens.bgBase,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: ViaDesignTokens.borderPrimary,
+          color: IndustrialDarkTokens.outline,
           width: 1,
         ),
       ),
@@ -41,7 +41,7 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
             children: [
               const Icon(
                 Icons.play_circle_outline,
-                color: ViaDesignTokens.textPrimary,
+                color: IndustrialDarkTokens.textPrimary,
                 size: 24,
               ),
               const SizedBox(width: 12),
@@ -50,7 +50,7 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: ViaDesignTokens.textPrimary,
+                  color: IndustrialDarkTokens.textPrimary,
                 ),
               ),
               const Spacer(),
@@ -91,22 +91,22 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
 
     switch (state) {
       case ScenarioState.idle:
-        color = ViaDesignTokens.textMuted;
+        color = IndustrialDarkTokens.textSecondary;
         label = '대기';
         icon = Icons.stop;
         break;
       case ScenarioState.playing:
-        color = ViaDesignTokens.statusActive;
+        color = IndustrialDarkTokens.statusActive;
         label = '재생 중';
         icon = Icons.play_arrow;
         break;
       case ScenarioState.paused:
-        color = ViaDesignTokens.warning;
+        color = IndustrialDarkTokens.warning;
         label = '일시정지';
         icon = Icons.pause;
         break;
       case ScenarioState.completed:
-        color = ViaDesignTokens.primary;
+        color = IndustrialDarkTokens.accentPrimary;
         label = '완료';
         icon = Icons.check;
         break;
@@ -151,7 +151,7 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: ViaDesignTokens.textSecondary,
+            color: IndustrialDarkTokens.textSecondary,
           ),
         ),
         const SizedBox(height: 8),
@@ -170,13 +170,13 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isSelected
-              ? ViaDesignTokens.primary.withValues(alpha: 0.1)
+              ? IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.1)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: isSelected
-                ? ViaDesignTokens.primary
-                : ViaDesignTokens.borderPrimary,
+                ? IndustrialDarkTokens.accentPrimary
+                : IndustrialDarkTokens.outline,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -189,8 +189,8 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
                   isSelected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
                   size: 20,
                   color: isSelected
-                      ? ViaDesignTokens.primary
-                      : ViaDesignTokens.textMuted,
+                      ? IndustrialDarkTokens.accentPrimary
+                      : IndustrialDarkTokens.textSecondary,
                 ),
                 const SizedBox(width: 8),
                 Text(
@@ -199,8 +199,8 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: isSelected
-                        ? ViaDesignTokens.textPrimary
-                        : ViaDesignTokens.textSecondary,
+                        ? IndustrialDarkTokens.textPrimary
+                        : IndustrialDarkTokens.textSecondary,
                   ),
                 ),
               ],
@@ -212,7 +212,7 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
                 scenario.description,
                 style: TextStyle(
                   fontSize: 12,
-                  color: ViaDesignTokens.textMuted,
+                  color: IndustrialDarkTokens.textSecondary,
                 ),
               ),
             ),
@@ -222,7 +222,7 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
                 '${scenario.events.length}개 이벤트 • ${scenario.totalDuration.inMinutes}분',
                 style: TextStyle(
                   fontSize: 11,
-                  color: ViaDesignTokens.textMuted,
+                  color: IndustrialDarkTokens.textSecondary,
                 ),
               ),
             ),
@@ -247,14 +247,14 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: ViaDesignTokens.textSecondary,
+                color: IndustrialDarkTokens.textSecondary,
               ),
             ),
             Text(
               _formatTime(totalSeconds),
               style: TextStyle(
                 fontSize: 12,
-                color: ViaDesignTokens.textMuted,
+                color: IndustrialDarkTokens.textSecondary,
               ),
             ),
           ],
@@ -265,8 +265,8 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
           child: LinearProgressIndicator(
             value: percentage,
             minHeight: 8,
-            backgroundColor: ViaDesignTokens.surfaceSecondary,
-            valueColor: AlwaysStoppedAnimation<Color>(ViaDesignTokens.primary),
+            backgroundColor: IndustrialDarkTokens.bgSurface,
+            valueColor: AlwaysStoppedAnimation<Color>(IndustrialDarkTokens.accentPrimary),
           ),
         ),
       ],
@@ -281,8 +281,8 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
         IconButton(
           icon: const Icon(Icons.stop),
           onPressed: state != ScenarioState.idle ? () => engine.stop() : null,
-          color: ViaDesignTokens.textPrimary,
-          disabledColor: ViaDesignTokens.textMuted,
+          color: IndustrialDarkTokens.textPrimary,
+          disabledColor: IndustrialDarkTokens.textSecondary,
         ),
 
         const SizedBox(width: 16),
@@ -290,7 +290,7 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
         // Play/Pause button
         Container(
           decoration: BoxDecoration(
-            color: ViaDesignTokens.primary,
+            color: IndustrialDarkTokens.accentPrimary,
             shape: BoxShape.circle,
           ),
           child: IconButton(
@@ -317,8 +317,8 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
           onPressed: state != ScenarioState.idle
               ? () => engine.skipTo(engine.currentOffsetSeconds + 30)
               : null,
-          color: ViaDesignTokens.textPrimary,
-          disabledColor: ViaDesignTokens.textMuted,
+          color: IndustrialDarkTokens.textPrimary,
+          disabledColor: IndustrialDarkTokens.textSecondary,
         ),
       ],
     );
@@ -336,7 +336,7 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: ViaDesignTokens.textSecondary,
+            color: IndustrialDarkTokens.textSecondary,
           ),
         ),
         const SizedBox(height: 8),
@@ -351,12 +351,12 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? ViaDesignTokens.primary
-                        : ViaDesignTokens.surfaceSecondary,
+                        ? IndustrialDarkTokens.accentPrimary
+                        : IndustrialDarkTokens.bgSurface,
                     borderRadius: BorderRadius.circular(6),
                     border: isSelected
                         ? null
-                        : Border.all(color: ViaDesignTokens.borderPrimary),
+                        : Border.all(color: IndustrialDarkTokens.outline),
                   ),
                   child: Text(
                     '${speed}x',
@@ -366,7 +366,7 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
                       fontWeight: FontWeight.w600,
                       color: isSelected
                           ? Colors.white
-                          : ViaDesignTokens.textSecondary,
+                          : IndustrialDarkTokens.textSecondary,
                     ),
                   ),
                 ),

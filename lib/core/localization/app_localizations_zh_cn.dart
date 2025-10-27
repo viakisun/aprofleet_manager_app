@@ -4,9 +4,9 @@ class AppLocalizationsZhCn {
     'appName': 'AproFleet 管理器',
 
     // Navigation
-    'navRealTime': '实时',
+    'navRealTime': '车队',
     'navCartManagement': '车辆',
-    'navMaintenance': '维护',
+    'navMaintenance': '服务',
     'navAlerts': '警报',
     'navAnalytics': '分析',
     'navSettings': '设置',
@@ -352,5 +352,9 @@ class AppLocalizationsZhCn {
     'alertSourceGeofence': '地理围栏',
     'alertSourceTemperature': '温度',
     'alertSourceSystem': '系统',
+
+    // Cart Inventory - Route View
+    'cartsPositionedOnRoute': '车辆已在路线上定位',
+    'cartPositionUpdateFailed': '车辆位置更新失败',
   };
 }

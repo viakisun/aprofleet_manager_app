@@ -9,7 +9,14 @@
       "Bash(git commit -m \"$(cat <<''EOF''\nfeat(phase4): Complete Work Order module VIA conversion - Day 1-4\n\nConverted all Work Order components to VIA Design System:\n\n**Work Order Creation Page:**\n- Save Draft button: TextButton → ViaButton.ghost\n- Navigation buttons: ElevatedButton → ViaButton (primary/ghost)\n- Exit dialog: BaseModal → ViaBottomSheet\n\n**Work Order Creation Steps:**\n- Step 1: Description TextField → ViaInput with validation\n- Step 2: Location TextField → ViaInput, BaseCard → ViaCard, QR Cancel → ViaButton\n- Step 3: Date/Time pickers → ViaCard, Duration + Notes → ViaInput\n\n**Work Order Components:**\n- WorkOrderCard: Container → ViaCard, PriorityIndicator → ViaPriorityBadge\n- WorkOrderCard: Status badges → ViaStatusBadge with status mapping\n- PartsList: Add Part button → ViaButton.primary\n- TechnicianSelector: Search TextField → ViaInput, Container → ViaCard\n\n**Documentation:**\n- Added PHASE4_PLAN.md with complete roadmap\n- Added CLAUDE.md, VIA_DESIGN_SYSTEM_STATUS.md\n- Added phase completion documentation\n\nThis completes Week 1 (Day 1-4) of Phase 4:\n✅ All SnackBar → ViaToast conversions\n✅ All AlertDialog → ViaBottomSheet conversions  \n✅ Settings Page 100% VIA\n✅ Work Order module 100% VIA\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
       "Bash(adb devices:*)",
       "Bash(git commit:*)",
-      "Bash(tee:*)"
+      "Bash(tee:*)",
+      "Bash(adb install:*)",
+      "Bash(adb shell monkey:*)",
+      "Bash(flutter build:*)",
+      "Bash(adb:*)",
+      "Bash(find:*)",
+      "Bash(flutter pub get:*)",
+      "Bash(flutter clean:*)"
     ],
     "deny": [],
     "ask": []

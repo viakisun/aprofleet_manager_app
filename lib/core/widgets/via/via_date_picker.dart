@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import '../../theme/via_design_tokens.dart';
+import '../../theme/industrial_dark_tokens.dart';
 
 /// VIA Design System - Date Picker Component
 ///
@@ -103,15 +103,15 @@ class ViaDatePicker extends StatelessWidget {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: const ColorScheme.dark(
-              primary: ViaDesignTokens.primary,
+              primary: IndustrialDarkTokens.accentPrimary,
               onPrimary: Colors.white,
-              surface: ViaDesignTokens.surfacePrimary,
-              onSurface: ViaDesignTokens.textPrimary,
+              surface: IndustrialDarkTokens.surfacePrimary,
+              onSurface: IndustrialDarkTokens.textPrimary,
             ),
-            dialogBackgroundColor: ViaDesignTokens.surfacePrimary,
+            dialogBackgroundColor: IndustrialDarkTokens.surfacePrimary,
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor: ViaDesignTokens.primary,
+                foregroundColor: IndustrialDarkTokens.accentPrimary,
               ),
             ),
           ),
@@ -158,30 +158,30 @@ class ViaDatePicker extends StatelessWidget {
         if (label != null) ...[
           Text(
             label!,
-            style: ViaDesignTokens.labelMedium.copyWith(
+            style: IndustrialDarkTokens.labelStyle.copyWith(
               color: isDisabled
-                  ? ViaDesignTokens.textMuted
-                  : ViaDesignTokens.textPrimary,
+                  ? IndustrialDarkTokens.textSecondary
+                  : IndustrialDarkTokens.textPrimary,
             ),
           ),
-          const SizedBox(height: ViaDesignTokens.spacingSm),
+          const SizedBox(height: IndustrialDarkTokens.spacingCompact),
         ],
         GestureDetector(
           onTap: isDisabled ? null : () => _showDatePicker(context),
           child: Container(
             padding: const EdgeInsets.symmetric(
-              horizontal: ViaDesignTokens.spacingMd,
-              vertical: ViaDesignTokens.spacingMd,
+              horizontal: IndustrialDarkTokens.spacingItem,
+              vertical: IndustrialDarkTokens.spacingItem,
             ),
             decoration: BoxDecoration(
               color: isDisabled
-                  ? ViaDesignTokens.surfaceSecondary.withValues(alpha: 0.5)
-                  : ViaDesignTokens.surfaceSecondary,
-              borderRadius: BorderRadius.circular(ViaDesignTokens.radiusMd),
+                  ? IndustrialDarkTokens.bgSurface.withValues(alpha: 0.5)
+                  : IndustrialDarkTokens.bgSurface,
+              borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
               border: Border.all(
                 color: isDisabled
-                    ? ViaDesignTokens.borderPrimary.withValues(alpha: 0.3)
-                    : ViaDesignTokens.borderPrimary,
+                    ? IndustrialDarkTokens.outline.withValues(alpha: 0.3)
+                    : IndustrialDarkTokens.outline,
                 width: 1.5,
               ),
             ),
@@ -189,21 +189,21 @@ class ViaDatePicker extends StatelessWidget {
               children: [
                 Icon(
                   icon ?? Icons.calendar_today,
-                  size: ViaDesignTokens.iconSm,
+                  size: 20,
                   color: isDisabled
-                      ? ViaDesignTokens.textMuted
-                      : ViaDesignTokens.textSecondary,
+                      ? IndustrialDarkTokens.textSecondary
+                      : IndustrialDarkTokens.textSecondary,
                 ),
-                const SizedBox(width: ViaDesignTokens.spacingMd),
+                const SizedBox(width: IndustrialDarkTokens.spacingItem),
                 Expanded(
                   child: Text(
                     displayText,
-                    style: ViaDesignTokens.bodyMedium.copyWith(
+                    style: IndustrialDarkTokens.bodyStyle.copyWith(
                       color: selectedDate == null
-                          ? ViaDesignTokens.textMuted
+                          ? IndustrialDarkTokens.textSecondary
                           : isDisabled
-                              ? ViaDesignTokens.textMuted
-                              : ViaDesignTokens.textPrimary,
+                              ? IndustrialDarkTokens.textSecondary
+                              : IndustrialDarkTokens.textPrimary,
                     ),
                   ),
                 ),
@@ -212,8 +212,8 @@ class ViaDatePicker extends StatelessWidget {
                     onTap: _clearDate,
                     child: Icon(
                       Icons.close,
-                      size: ViaDesignTokens.iconSm,
-                      color: ViaDesignTokens.textSecondary,
+                      size: 20,
+                      color: IndustrialDarkTokens.textSecondary,
                     ),
                   ),
               ],
@@ -298,15 +298,15 @@ class ViaDateRangePicker extends StatelessWidget {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: const ColorScheme.dark(
-              primary: ViaDesignTokens.primary,
+              primary: IndustrialDarkTokens.accentPrimary,
               onPrimary: Colors.white,
-              surface: ViaDesignTokens.surfacePrimary,
-              onSurface: ViaDesignTokens.textPrimary,
+              surface: IndustrialDarkTokens.surfacePrimary,
+              onSurface: IndustrialDarkTokens.textPrimary,
             ),
-            dialogBackgroundColor: ViaDesignTokens.surfacePrimary,
+            dialogBackgroundColor: IndustrialDarkTokens.surfacePrimary,
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor: ViaDesignTokens.primary,
+                foregroundColor: IndustrialDarkTokens.accentPrimary,
               ),
             ),
           ),
@@ -353,30 +353,30 @@ class ViaDateRangePicker extends StatelessWidget {
         if (label != null) ...[
           Text(
             label!,
-            style: ViaDesignTokens.labelMedium.copyWith(
+            style: IndustrialDarkTokens.labelStyle.copyWith(
               color: isDisabled
-                  ? ViaDesignTokens.textMuted
-                  : ViaDesignTokens.textPrimary,
+                  ? IndustrialDarkTokens.textSecondary
+                  : IndustrialDarkTokens.textPrimary,
             ),
           ),
-          const SizedBox(height: ViaDesignTokens.spacingSm),
+          const SizedBox(height: IndustrialDarkTokens.spacingCompact),
         ],
         GestureDetector(
           onTap: isDisabled ? null : () => _showDateRangePicker(context),
           child: Container(
             padding: const EdgeInsets.symmetric(
-              horizontal: ViaDesignTokens.spacingMd,
-              vertical: ViaDesignTokens.spacingMd,
+              horizontal: IndustrialDarkTokens.spacingItem,
+              vertical: IndustrialDarkTokens.spacingItem,
             ),
             decoration: BoxDecoration(
               color: isDisabled
-                  ? ViaDesignTokens.surfaceSecondary.withValues(alpha: 0.5)
-                  : ViaDesignTokens.surfaceSecondary,
-              borderRadius: BorderRadius.circular(ViaDesignTokens.radiusMd),
+                  ? IndustrialDarkTokens.bgSurface.withValues(alpha: 0.5)
+                  : IndustrialDarkTokens.bgSurface,
+              borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
               border: Border.all(
                 color: isDisabled
-                    ? ViaDesignTokens.borderPrimary.withValues(alpha: 0.3)
-                    : ViaDesignTokens.borderPrimary,
+                    ? IndustrialDarkTokens.outline.withValues(alpha: 0.3)
+                    : IndustrialDarkTokens.outline,
                 width: 1.5,
               ),
             ),
@@ -384,21 +384,21 @@ class ViaDateRangePicker extends StatelessWidget {
               children: [
                 Icon(
                   icon ?? Icons.date_range,
-                  size: ViaDesignTokens.iconSm,
+                  size: 20,
                   color: isDisabled
-                      ? ViaDesignTokens.textMuted
-                      : ViaDesignTokens.textSecondary,
+                      ? IndustrialDarkTokens.textSecondary
+                      : IndustrialDarkTokens.textSecondary,
                 ),
-                const SizedBox(width: ViaDesignTokens.spacingMd),
+                const SizedBox(width: IndustrialDarkTokens.spacingItem),
                 Expanded(
                   child: Text(
                     displayText,
-                    style: ViaDesignTokens.bodyMedium.copyWith(
+                    style: IndustrialDarkTokens.bodyStyle.copyWith(
                       color: selectedRange == null
-                          ? ViaDesignTokens.textMuted
+                          ? IndustrialDarkTokens.textSecondary
                           : isDisabled
-                              ? ViaDesignTokens.textMuted
-                              : ViaDesignTokens.textPrimary,
+                              ? IndustrialDarkTokens.textSecondary
+                              : IndustrialDarkTokens.textPrimary,
                     ),
                   ),
                 ),
@@ -407,8 +407,8 @@ class ViaDateRangePicker extends StatelessWidget {
                     onTap: _clearRange,
                     child: Icon(
                       Icons.close,
-                      size: ViaDesignTokens.iconSm,
-                      color: ViaDesignTokens.textSecondary,
+                      size: 20,
+                      color: IndustrialDarkTokens.textSecondary,
                     ),
                   ),
               ],
