@@ -38,7 +38,8 @@ class TrendIndicator extends StatelessWidget {
           padding: const EdgeInsets.all(IndustrialDarkTokens.spacingMinimal),
           decoration: BoxDecoration(
             color: color.withValues(alpha: 0.2),
-            borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+            borderRadius:
+                BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
           ),
           child: Icon(
             icon,
@@ -62,7 +63,7 @@ class TrendIndicator extends StatelessWidget {
             if (label != null)
               Text(
                 label!,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 10,
                   color: IndustrialDarkTokens.textSecondary,
                 ),
@@ -76,7 +77,7 @@ class TrendIndicator extends StatelessWidget {
   Color _getTrendColor() {
     switch (direction) {
       case TrendDirection.up:
-        return IndustrialDarkTokens.alertSuccess;
+        return IndustrialDarkTokens.success;
       case TrendDirection.down:
         return IndustrialDarkTokens.error;
       case TrendDirection.stable:
@@ -150,7 +151,7 @@ class TrendIndicatorCompact extends StatelessWidget {
   Color _getTrendColor() {
     switch (direction) {
       case TrendDirection.up:
-        return IndustrialDarkTokens.alertSuccess;
+        return IndustrialDarkTokens.success;
       case TrendDirection.down:
         return IndustrialDarkTokens.error;
       case TrendDirection.stable:
@@ -236,7 +237,7 @@ class TrendIndicatorWithSparkline extends StatelessWidget {
             if (label != null)
               Text(
                 label!,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 10,
                   color: IndustrialDarkTokens.textSecondary,
                 ),
@@ -250,7 +251,7 @@ class TrendIndicatorWithSparkline extends StatelessWidget {
   Color _getTrendColor() {
     switch (direction) {
       case TrendDirection.up:
-        return IndustrialDarkTokens.alertSuccess;
+        return IndustrialDarkTokens.success;
       case TrendDirection.down:
         return IndustrialDarkTokens.error;
       case TrendDirection.stable:

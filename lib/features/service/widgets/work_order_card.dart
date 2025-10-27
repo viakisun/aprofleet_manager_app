@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/models/work_order.dart';
-import '../../../core/widgets/shared_widgets.dart';
 import '../../../core/widgets/via/via_card.dart';
 import '../../../core/widgets/via/via_priority_badge.dart';
 import '../../../core/widgets/via/via_status_badge.dart';
@@ -60,10 +59,14 @@ class WorkOrderCard extends StatelessWidget {
                     const SizedBox(height: IndustrialDarkTokens.spacingMinimal),
                     Row(
                       children: [
-                        ViaPriorityBadge(priority: _mapPriorityToViaPriority(workOrder.priority)),
-                        const SizedBox(width: IndustrialDarkTokens.spacingCompact),
+                        ViaPriorityBadge(
+                            priority:
+                                _mapPriorityToViaPriority(workOrder.priority)),
+                        const SizedBox(
+                            width: IndustrialDarkTokens.spacingCompact),
                         ViaStatusBadge(
-                          status: _mapWorkOrderStatusToViaStatus(workOrder.status),
+                          status:
+                              _mapWorkOrderStatusToViaStatus(workOrder.status),
                           customText: workOrder.status.getDisplayName(context),
                         ),
                       ],
@@ -272,5 +275,4 @@ class WorkOrderCard extends StatelessWidget {
       return '${age.inMinutes}${localizations.woTimeMinutes} ${localizations.woTimeAgo}';
     }
   }
-
 }

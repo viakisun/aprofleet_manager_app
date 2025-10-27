@@ -214,13 +214,13 @@ class _ViaBottomSheetState extends State<ViaBottomSheet>
               child: Container(
                 height: _getCurrentHeight(),
                 decoration: BoxDecoration(
-                  color: widget.backgroundColor ??
-                      IndustrialDarkTokens.bgSurface,
+                  color:
+                      widget.backgroundColor ?? IndustrialDarkTokens.bgSurface,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(IndustrialDarkTokens.radiusCard),
                     topRight: Radius.circular(IndustrialDarkTokens.radiusCard),
                   ),
-                  border: Border(
+                  border: const Border(
                     top: BorderSide(
                       color: IndustrialDarkTokens.outline,
                       width: IndustrialDarkTokens.borderWidth, // 2px
@@ -258,7 +258,7 @@ class _ViaBottomSheetState extends State<ViaBottomSheet>
                         ),
                         child: widget.header!,
                       ),
-                      Divider(
+                      const Divider(
                         height: 1,
                         thickness: 1,
                         color: IndustrialDarkTokens.outline,
@@ -268,20 +268,22 @@ class _ViaBottomSheetState extends State<ViaBottomSheet>
                     // Content
                     Expanded(
                       child: SingleChildScrollView(
-                        padding: const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
+                        padding: const EdgeInsets.all(
+                            IndustrialDarkTokens.spacingCard),
                         child: widget.child,
                       ),
                     ),
 
                     // Footer
                     if (widget.footer != null) ...[
-                      Divider(
+                      const Divider(
                         height: 1,
                         thickness: 1,
                         color: IndustrialDarkTokens.outline,
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
+                        padding: const EdgeInsets.all(
+                            IndustrialDarkTokens.spacingCard),
                         child: widget.footer!,
                       ),
                     ],
@@ -346,9 +348,9 @@ class ViaBottomSheetWithIndicators extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: index == currentSnapIndex
                           ? IndustrialDarkTokens.accentPrimary
-                          : IndustrialDarkTokens.textSecondary.withValues(alpha: 0.3),
-                      borderRadius:
-                          BorderRadius.circular(20.0),
+                          : IndustrialDarkTokens.textSecondary
+                              .withValues(alpha: 0.3),
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
                 ),

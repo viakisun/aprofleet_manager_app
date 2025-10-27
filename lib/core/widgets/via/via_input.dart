@@ -311,7 +311,6 @@ class _ViaInputState extends State<ViaInput>
     return IndustrialDarkTokens.outline;
   }
 
-
   @override
   Widget build(BuildContext context) {
     final hasError = widget.errorText != null;
@@ -321,8 +320,10 @@ class _ViaInputState extends State<ViaInput>
       builder: (context, child) {
         return Transform.translate(
           offset: hasError
-              ? Offset(_shakeAnimation.value *
-                  ((_shakeController.value * 2 - 1).sign), 0)
+              ? Offset(
+                  _shakeAnimation.value *
+                      ((_shakeController.value * 2 - 1).sign),
+                  0)
               : Offset.zero,
           child: child,
         );
@@ -351,7 +352,8 @@ class _ViaInputState extends State<ViaInput>
             decoration: BoxDecoration(
               // Dark gray background
               color: IndustrialDarkTokens.bgSurface,
-              borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+              borderRadius:
+                  BorderRadius.circular(IndustrialDarkTokens.radiusButton),
               border: Border.all(
                 color: _getBorderColor(),
                 width: _isFocused || hasError
@@ -425,7 +427,7 @@ class _ViaInputState extends State<ViaInput>
             Row(
               children: [
                 if (hasError) ...[
-                  Icon(
+                  const Icon(
                     Icons.error_outline,
                     size: 16,
                     color: IndustrialDarkTokens.error,
@@ -467,7 +469,9 @@ class _ViaInputState extends State<ViaInput>
     if (widget.inputType == ViaInputType.password) {
       return IconButton(
         icon: Icon(
-          _obscureText ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+          _obscureText
+              ? Icons.visibility_outlined
+              : Icons.visibility_off_outlined,
           size: 20,
           color: _isFocused
               ? IndustrialDarkTokens.accentPrimary

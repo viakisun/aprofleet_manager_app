@@ -16,16 +16,16 @@ import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 /// - No shadows (outline-based depth only)
 
 enum ViaStatus {
-  active,    // Green - Cart is active/moving
-  idle,      // Orange - Cart is idle/waiting
-  charging,  // Blue - Cart is charging
+  active, // Green - Cart is active/moving
+  idle, // Orange - Cart is idle/waiting
+  charging, // Blue - Cart is charging
   maintenance, // Yellow/Orange - Cart under maintenance
-  offline,   // Gray - Cart is offline/unavailable
+  offline, // Gray - Cart is offline/unavailable
 }
 
 enum ViaStatusBadgeSize {
-  compact,   // Small badge with just dot and text
-  expanded,  // Larger badge with icon, text, and optional description
+  compact, // Small badge with just dot and text
+  expanded, // Larger badge with icon, text, and optional description
 }
 
 class ViaStatusBadge extends StatefulWidget {
@@ -238,7 +238,8 @@ class _ViaStatusBadgeState extends State<ViaStatusBadge>
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: statusColor.withValues(
-                          alpha: 0.3 * (1.0 - (_pulseAnimation.value - 1.0) / 0.6),
+                          alpha:
+                              0.3 * (1.0 - (_pulseAnimation.value - 1.0) / 0.6),
                         ),
                       ),
                     );
@@ -303,7 +304,8 @@ class _ViaStatusBadgeState extends State<ViaStatusBadge>
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: statusColor.withValues(
-                          alpha: 0.2 * (1.0 - (_pulseAnimation.value - 1.0) / 0.6),
+                          alpha:
+                              0.2 * (1.0 - (_pulseAnimation.value - 1.0) / 0.6),
                         ),
                       ),
                     );

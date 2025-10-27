@@ -61,7 +61,8 @@ class _ImageUploadGridState extends State<ImageUploadGrid> {
               ),
               decoration: BoxDecoration(
                 color: IndustrialDarkTokens.statusActive.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                borderRadius:
+                    BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
               ),
               child: Text(
                 '${_images.length}/${widget.maxImages}',
@@ -83,20 +84,21 @@ class _ImageUploadGridState extends State<ImageUploadGrid> {
             padding: const EdgeInsets.all(IndustrialDarkTokens.spacingSection),
             decoration: BoxDecoration(
               color: IndustrialDarkTokens.bgSurface,
-              borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+              borderRadius:
+                  BorderRadius.circular(IndustrialDarkTokens.radiusButton),
               border: Border.all(
                 color: IndustrialDarkTokens.outline,
                 width: 1,
               ),
             ),
-            child: Column(
+            child: const Column(
               children: [
                 Icon(
                   Icons.photo_camera_outlined,
                   size: 32,
                   color: IndustrialDarkTokens.textSecondary,
                 ),
-                const SizedBox(height: IndustrialDarkTokens.spacingItem),
+                SizedBox(height: IndustrialDarkTokens.spacingItem),
                 Text(
                   'No images uploaded',
                   style: TextStyle(
@@ -105,7 +107,7 @@ class _ImageUploadGridState extends State<ImageUploadGrid> {
                     color: IndustrialDarkTokens.textSecondary,
                   ),
                 ),
-                const SizedBox(height: IndustrialDarkTokens.spacingCompact),
+                SizedBox(height: IndustrialDarkTokens.spacingCompact),
                 Text(
                   'Add photos to document cart condition and components',
                   style: TextStyle(
@@ -147,7 +149,8 @@ class _ImageUploadGridState extends State<ImageUploadGrid> {
       child: Container(
         decoration: BoxDecoration(
           color: IndustrialDarkTokens.bgSurface,
-          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          borderRadius:
+              BorderRadius.circular(IndustrialDarkTokens.radiusButton),
           border: Border.all(
             color: IndustrialDarkTokens.outline,
             width: 1,
@@ -157,7 +160,8 @@ class _ImageUploadGridState extends State<ImageUploadGrid> {
           children: [
             // Image
             ClipRRect(
-              borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+              borderRadius:
+                  BorderRadius.circular(IndustrialDarkTokens.radiusButton),
               child: image.file != null
                   ? Image.file(
                       image.file!,
@@ -169,7 +173,7 @@ class _ImageUploadGridState extends State<ImageUploadGrid> {
                       width: double.infinity,
                       height: double.infinity,
                       color: IndustrialDarkTokens.bgSurface,
-                      child: Icon(
+                      child: const Icon(
                         Icons.image,
                         size: 24,
                         color: IndustrialDarkTokens.textSecondary,
@@ -187,8 +191,10 @@ class _ImageUploadGridState extends State<ImageUploadGrid> {
                   vertical: 2,
                 ),
                 decoration: BoxDecoration(
-                  color: IndustrialDarkTokens.statusActive.withValues(alpha: 0.9),
-                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                  color:
+                      IndustrialDarkTokens.statusActive.withValues(alpha: 0.9),
+                  borderRadius:
+                      BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
                 ),
                 child: Text(
                   image.category,
@@ -259,7 +265,8 @@ class _ImageUploadGridState extends State<ImageUploadGrid> {
       child: Container(
         decoration: BoxDecoration(
           color: IndustrialDarkTokens.bgSurface,
-          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          borderRadius:
+              BorderRadius.circular(IndustrialDarkTokens.radiusButton),
           border: Border.all(
             color: IndustrialDarkTokens.outlineSoft,
             width: 2,
@@ -307,8 +314,8 @@ class _ImageUploadGridState extends State<ImageUploadGrid> {
             Container(
               width: 40,
               height: 4,
-              margin:
-                  const EdgeInsets.symmetric(vertical: IndustrialDarkTokens.spacingItem),
+              margin: const EdgeInsets.symmetric(
+                  vertical: IndustrialDarkTokens.spacingItem),
               decoration: BoxDecoration(
                 color: IndustrialDarkTokens.outline,
                 borderRadius: BorderRadius.circular(2),
@@ -372,7 +379,8 @@ class _ImageUploadGridState extends State<ImageUploadGrid> {
         padding: const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
         decoration: BoxDecoration(
           color: IndustrialDarkTokens.bgSurface,
-          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          borderRadius:
+              BorderRadius.circular(IndustrialDarkTokens.radiusButton),
           border: Border.all(
             color: IndustrialDarkTokens.outline,
             width: 1,
@@ -432,9 +440,9 @@ class _ImageUploadGridState extends State<ImageUploadGrid> {
           return ListTile(
             title: Text(
               category,
-              style: TextStyle(color: IndustrialDarkTokens.textPrimary),
+              style: const TextStyle(color: IndustrialDarkTokens.textPrimary),
             ),
-            trailing: Icon(
+            trailing: const Icon(
               Icons.arrow_forward_ios,
               color: IndustrialDarkTokens.textSecondary,
               size: 16,
@@ -488,7 +496,8 @@ class _ImageUploadGridState extends State<ImageUploadGrid> {
                   maxHeight: MediaQuery.of(context).size.height * 0.8,
                 ),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+                  borderRadius:
+                      BorderRadius.circular(IndustrialDarkTokens.radiusButton),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.5),
@@ -498,7 +507,8 @@ class _ImageUploadGridState extends State<ImageUploadGrid> {
                   ],
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+                  borderRadius:
+                      BorderRadius.circular(IndustrialDarkTokens.radiusButton),
                   child: image.file != null
                       ? Image.file(
                           image.file!,
@@ -506,7 +516,7 @@ class _ImageUploadGridState extends State<ImageUploadGrid> {
                         )
                       : Container(
                           color: IndustrialDarkTokens.bgSurface,
-                          child: Icon(
+                          child: const Icon(
                             Icons.image,
                             size: 32,
                             color: IndustrialDarkTokens.textSecondary,
@@ -546,7 +556,8 @@ class _ImageUploadGridState extends State<ImageUploadGrid> {
                 padding: const EdgeInsets.all(IndustrialDarkTokens.spacingItem),
                 decoration: BoxDecoration(
                   color: IndustrialDarkTokens.bgBase.withValues(alpha: 0.8),
-                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+                  borderRadius:
+                      BorderRadius.circular(IndustrialDarkTokens.radiusButton),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -562,14 +573,14 @@ class _ImageUploadGridState extends State<ImageUploadGrid> {
                     const SizedBox(height: IndustrialDarkTokens.spacingMinimal),
                     Text(
                       'Category: ${image.category}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: IndustrialDarkTokens.fontSizeSmall,
                         color: IndustrialDarkTokens.textSecondary,
                       ),
                     ),
                     Text(
                       'Uploaded: ${_formatDateTime(image.uploadedAt)}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: IndustrialDarkTokens.fontSizeSmall,
                         color: IndustrialDarkTokens.textSecondary,
                       ),

@@ -32,7 +32,8 @@ class PrioritySelector extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               color: isSelected ? color : IndustrialDarkTokens.bgSurface,
-              borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+              borderRadius:
+                  BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
               border: Border.all(
                 color: isSelected ? color : IndustrialDarkTokens.outline,
                 width: 1,
@@ -45,7 +46,8 @@ class PrioritySelector extends StatelessWidget {
                   width: 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color: isSelected ? IndustrialDarkTokens.textPrimary : color,
+                    color:
+                        isSelected ? IndustrialDarkTokens.textPrimary : color,
                     shape: BoxShape.circle,
                   ),
                 ),

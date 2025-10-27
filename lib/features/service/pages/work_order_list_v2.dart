@@ -80,7 +80,7 @@ class _WorkOrderListV2State extends ConsumerState<WorkOrderListV2> {
                     const SizedBox(height: IndustrialDarkTokens.spacingItem),
                     Text(
                       '${localizations.woErrorLoading}: $error',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: IndustrialDarkTokens.fontSizeDisplay,
                         color: IndustrialDarkTokens.textSecondary,
                       ),
@@ -173,21 +173,33 @@ class _WorkOrderListV2State extends ConsumerState<WorkOrderListV2> {
       ViaFilterOption(label: 'All', value: 'all', icon: Icons.list),
       ViaFilterOption(label: 'Urgent (P1)', value: 'urgent', icon: Icons.error),
       ViaFilterOption(label: 'Pending', value: 'pending', icon: Icons.pending),
-      ViaFilterOption(label: 'In Progress', value: 'inProgress', icon: Icons.play_arrow),
+      ViaFilterOption(
+          label: 'In Progress', value: 'inProgress', icon: Icons.play_arrow),
       ViaFilterOption(label: 'On Hold', value: 'onHold', icon: Icons.pause),
-      ViaFilterOption(label: 'Completed', value: 'completed', icon: Icons.check_circle),
-      ViaFilterOption(label: 'Cancelled', value: 'cancelled', icon: Icons.cancel),
+      ViaFilterOption(
+          label: 'Completed', value: 'completed', icon: Icons.check_circle),
+      ViaFilterOption(
+          label: 'Cancelled', value: 'cancelled', icon: Icons.cancel),
       ViaFilterOption(label: 'Today', value: 'today', icon: Icons.today),
     ];
   }
 
   List<ViaSortOption> _buildSortOptions() {
     return const [
-      ViaSortOption(label: 'Newest First', value: 'newest', icon: Icons.arrow_downward),
-      ViaSortOption(label: 'Oldest First', value: 'oldest', icon: Icons.arrow_upward),
-      ViaSortOption(label: 'Priority High→Low', value: 'priority_high', icon: Icons.arrow_upward),
-      ViaSortOption(label: 'Priority Low→High', value: 'priority_low', icon: Icons.arrow_downward),
-      ViaSortOption(label: 'Due Date', value: 'due_date', icon: Icons.calendar_today),
+      ViaSortOption(
+          label: 'Newest First', value: 'newest', icon: Icons.arrow_downward),
+      ViaSortOption(
+          label: 'Oldest First', value: 'oldest', icon: Icons.arrow_upward),
+      ViaSortOption(
+          label: 'Priority High→Low',
+          value: 'priority_high',
+          icon: Icons.arrow_upward),
+      ViaSortOption(
+          label: 'Priority Low→High',
+          value: 'priority_low',
+          icon: Icons.arrow_downward),
+      ViaSortOption(
+          label: 'Due Date', value: 'due_date', icon: Icons.calendar_today),
     ];
   }
 
@@ -198,10 +210,8 @@ class _WorkOrderListV2State extends ConsumerState<WorkOrderListV2> {
     ];
   }
 
-  Widget _buildContent(
-      List<WorkOrder> workOrders,
-      WorkOrderController controller,
-      BuildContext context) {
+  Widget _buildContent(List<WorkOrder> workOrders,
+      WorkOrderController controller, BuildContext context) {
     // Apply filter
     final filteredOrders = _applyFilter(workOrders, _currentFilter);
 
@@ -218,7 +228,7 @@ class _WorkOrderListV2State extends ConsumerState<WorkOrderListV2> {
             const SizedBox(height: IndustrialDarkTokens.spacingItem),
             Text(
               localizations.woNoWorkOrders,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: IndustrialDarkTokens.fontSizeDisplay,
                 color: IndustrialDarkTokens.textSecondary,
                 fontWeight: IndustrialDarkTokens.fontWeightBold,
@@ -229,7 +239,7 @@ class _WorkOrderListV2State extends ConsumerState<WorkOrderListV2> {
               _currentFilter == 'all'
                   ? 'Create a new work order to get started'
                   : 'No work orders match the selected filter',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: IndustrialDarkTokens.fontSizeSmall,
                 color: IndustrialDarkTokens.textSecondary,
               ),

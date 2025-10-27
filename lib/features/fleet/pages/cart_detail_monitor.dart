@@ -436,15 +436,15 @@ class _CartDetailMonitorState extends ConsumerState<CartDetailMonitor> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          const Row(
             children: [
               Icon(
                 Icons.analytics_outlined,
                 color: IndustrialDarkTokens.textSecondary,
                 size: 20,
               ),
-              const SizedBox(width: IndustrialDarkTokens.spacingCompact),
-              const Text(
+              SizedBox(width: IndustrialDarkTokens.spacingCompact),
+              Text(
                 'SYSTEM METRICS',
                 style: TextStyle(
                   fontSize: IndustrialDarkTokens.fontSizeLabel,
@@ -751,7 +751,7 @@ class _CartDetailMonitorState extends ConsumerState<CartDetailMonitor> {
           color: IndustrialDarkTokens.error,
         ),
       ),
-      child: Text(
+      child: const Text(
         'This will immediately stop the cart. This action cannot be undone. Are you sure?',
         style: TextStyle(color: IndustrialDarkTokens.textSecondary),
       ),

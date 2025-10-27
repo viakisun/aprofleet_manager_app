@@ -43,7 +43,8 @@ class UnifiedMapViewState extends ConsumerState<UnifiedMapView> {
   bool _isLoading = true;
   String? _error;
   late bool _isSatellite;
-  final GlobalKey<GoogleMapViewState> _googleMapKey = GlobalKey<GoogleMapViewState>();
+  final GlobalKey<GoogleMapViewState> _googleMapKey =
+      GlobalKey<GoogleMapViewState>();
 
   @override
   void initState() {

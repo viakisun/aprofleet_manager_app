@@ -36,6 +36,7 @@ class RealtimeMapState extends ChangeNotifier {
   }
 }
 
-final realtimeMapStateProvider = ChangeNotifierProvider<RealtimeMapState>((ref) {
+final realtimeMapStateProvider =
+    ChangeNotifierProvider<RealtimeMapState>((ref) {
   return RealtimeMapState();
 });

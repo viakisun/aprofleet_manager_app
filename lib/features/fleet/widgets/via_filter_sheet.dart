@@ -52,7 +52,8 @@ class ViaFilterSheet {
             final color = _getStatusColor(status);
 
             return Padding(
-              padding: const EdgeInsets.only(bottom: IndustrialDarkTokens.spacingCompact),
+              padding: const EdgeInsets.only(
+                  bottom: IndustrialDarkTokens.spacingCompact),
               child: GestureDetector(
                 onTap: () => onFilterToggle(status),
                 child: AnimatedContainer(
@@ -65,11 +66,10 @@ class ViaFilterSheet {
                     color: isActive
                         ? color.withValues(alpha: 0.15)
                         : IndustrialDarkTokens.bgSurface,
-                    borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+                    borderRadius: BorderRadius.circular(
+                        IndustrialDarkTokens.radiusButton),
                     border: Border.all(
-                      color: isActive
-                          ? color
-                          : IndustrialDarkTokens.outline,
+                      color: isActive ? color : IndustrialDarkTokens.outline,
                       width: isActive ? 1.5 : 1.0,
                     ),
                   ),
@@ -99,8 +99,11 @@ class ViaFilterSheet {
                         child: Text(
                           status.displayName,
                           style: IndustrialDarkTokens.bodyStyle.copyWith(
-                            color: isActive ? color : IndustrialDarkTokens.textPrimary,
-                            fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
+                            color: isActive
+                                ? color
+                                : IndustrialDarkTokens.textPrimary,
+                            fontWeight:
+                                isActive ? FontWeight.w600 : FontWeight.w500,
                           ),
                         ),
                       ),
@@ -116,7 +119,7 @@ class ViaFilterSheet {
                 ),
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
       footer: ViaButton.primary(

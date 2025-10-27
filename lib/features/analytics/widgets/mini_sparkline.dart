@@ -25,7 +25,7 @@ class MiniSparkline extends StatelessWidget {
       return SizedBox(
         width: width,
         height: height,
-        child: Center(
+        child: const Center(
           child: Text(
             'No Data',
             style: TextStyle(

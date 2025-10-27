@@ -23,7 +23,7 @@ enum ViaPriority {
 }
 
 enum ViaPriorityBadgeSize {
-  compact,  // Small badge with just priority label
+  compact, // Small badge with just priority label
   expanded, // Larger badge with icon and description
 }
 
@@ -182,7 +182,8 @@ class ViaPriorityBadge extends StatelessWidget {
                   color: priorityColor,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(IndustrialDarkTokens.radiusSmall),
-                    bottomLeft: Radius.circular(IndustrialDarkTokens.radiusSmall),
+                    bottomLeft:
+                        Radius.circular(IndustrialDarkTokens.radiusSmall),
                   ),
                 ),
               ),
@@ -231,7 +232,8 @@ class ViaPriorityBadge extends StatelessWidget {
                   color: priorityColor,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(IndustrialDarkTokens.radiusButton),
-                    bottomLeft: Radius.circular(IndustrialDarkTokens.radiusButton),
+                    bottomLeft:
+                        Radius.circular(IndustrialDarkTokens.radiusButton),
                   ),
                 ),
               ),
@@ -266,7 +268,8 @@ class ViaPriorityBadge extends StatelessWidget {
                           fontWeight: IndustrialDarkTokens.fontWeightBold,
                         ),
                       ),
-                      const SizedBox(height: IndustrialDarkTokens.spacingMinimal),
+                      const SizedBox(
+                          height: IndustrialDarkTokens.spacingMinimal),
                       Text(
                         _getPriorityDescription(),
                         style: IndustrialDarkTokens.bodyStyle.copyWith(
@@ -303,14 +306,15 @@ class ViaPrioritySelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final priorities = ViaPriority.values;
+    const priorities = ViaPriority.values;
 
     if (direction == Axis.horizontal) {
       return Row(
         mainAxisSize: MainAxisSize.min,
         children: priorities.map((priority) {
           return Padding(
-            padding: const EdgeInsets.only(right: IndustrialDarkTokens.spacingCompact),
+            padding: const EdgeInsets.only(
+                right: IndustrialDarkTokens.spacingCompact),
             child: _buildPriorityOption(priority),
           );
         }).toList(),
@@ -321,7 +325,8 @@ class ViaPrioritySelector extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: priorities.map((priority) {
           return Padding(
-            padding: const EdgeInsets.only(bottom: IndustrialDarkTokens.spacingCompact),
+            padding: const EdgeInsets.only(
+                bottom: IndustrialDarkTokens.spacingCompact),
             child: _buildPriorityOption(priority),
           );
         }).toList(),

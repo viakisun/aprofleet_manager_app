@@ -223,7 +223,7 @@ class _ViaToastWidgetState extends State<_ViaToastWidget>
 
   void _handleDragEnd(DragEndDetails details) {
     final velocity = details.primaryVelocity ?? 0;
-    final threshold = 100.0;
+    const threshold = 100.0;
 
     if (widget.toast.position == ViaToastPosition.top) {
       if (_dragOffset < -threshold || velocity < -500) {
@@ -380,7 +380,7 @@ class _ViaToastWidgetState extends State<_ViaToastWidget>
                     const SizedBox(width: IndustrialDarkTokens.spacingCompact),
                     GestureDetector(
                       onTap: _handleDismiss,
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         size: 20,
                         color: IndustrialDarkTokens.textSecondary,

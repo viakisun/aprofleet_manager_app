@@ -6,7 +6,6 @@ import '../../../core/widgets/shared_widgets.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/widgets/via/via_bottom_sheet.dart';
 import '../../../core/widgets/via/via_button.dart';
-import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 import '../../../core/theme/industrial_dark_tokens.dart';
 
 class AlertDetailModal extends StatefulWidget {
@@ -305,7 +304,8 @@ class _AlertDetailModalState extends State<AlertDetailModal> {
                           ),
                         ),
                       if (widget.onViewCart != null)
-                        const SizedBox(width: IndustrialDarkTokens.spacingCompact),
+                        const SizedBox(
+                            width: IndustrialDarkTokens.spacingCompact),
                       Expanded(
                         child: ViaButton.secondary(
                           text: 'Create Work Order',
@@ -325,10 +325,11 @@ class _AlertDetailModalState extends State<AlertDetailModal> {
                     Expanded(
                       child: ActionButton(
                         text: 'Acknowledge',
-                        onPressed: widget.alert.state == AlertStatus.triggered ||
-                                widget.alert.state == AlertStatus.notified
-                            ? widget.onAcknowledge
-                            : null,
+                        onPressed:
+                            widget.alert.state == AlertStatus.triggered ||
+                                    widget.alert.state == AlertStatus.notified
+                                ? widget.onAcknowledge
+                                : null,
                         type: ActionButtonType.secondary,
                         icon: Icons.check,
                       ),
@@ -530,10 +531,11 @@ class _AlertDetailModalState extends State<AlertDetailModal> {
 
           return RadioListTile<int>(
             title: Text('Level $level',
-                style: TextStyle(color: IndustrialDarkTokens.textPrimary)),
+                style:
+                    const TextStyle(color: IndustrialDarkTokens.textPrimary)),
             subtitle: Text(
               _getEscalationDescription(level),
-              style: TextStyle(color: IndustrialDarkTokens.textSecondary),
+              style: const TextStyle(color: IndustrialDarkTokens.textSecondary),
             ),
             value: level,
             groupValue: _selectedEscalationLevel,

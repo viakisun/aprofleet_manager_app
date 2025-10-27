@@ -20,24 +20,24 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   int _currentPage = 0;
 
   final List<OnboardingPageData> _pages = [
-    OnboardingPageData(
+    const OnboardingPageData(
       icon: Icons.location_on,
       title: '실시간 카트 모니터링',
       description: '모든 골프카트의 실시간 위치와 상태를\n한눈에 확인하고 효율적으로 관리하세요.',
       color: IndustrialDarkTokens.statusActive,
-      customIcon: const CartIcon(
+      customIcon: CartIcon(
         size: 80,
         color: Colors.white,
         showDirection: true,
       ),
     ),
-    OnboardingPageData(
+    const OnboardingPageData(
       icon: Icons.build_circle,
       title: '유지보수 및 워크오더 관리',
       description: '체계적인 유지보수 계획과\n워크오더 생성으로 관리 효율성을 높이세요.',
       color: IndustrialDarkTokens.statusCharging,
     ),
-    OnboardingPageData(
+    const OnboardingPageData(
       icon: Icons.analytics,
       title: '알림 및 분석 리포트',
       description: '데이터 기반의 인사이트로\n더 나은 의사결정을 내리세요.',
@@ -99,7 +99,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   if (_currentPage > 0)
                     IconButton(
                       onPressed: _previousPage,
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.arrow_back_ios,
                         color: IndustrialDarkTokens.textSecondary,
                       ),
@@ -166,7 +166,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   Widget _buildOnboardingPage(OnboardingPageData pageData) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: IndustrialDarkTokens.spacingCard),
+      padding: const EdgeInsets.symmetric(
+          horizontal: IndustrialDarkTokens.spacingCard),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -205,7 +206,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           // Title
           Text(
             pageData.title,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'Pretendard Variable',
               fontSize: 28,
               fontWeight: IndustrialDarkTokens.fontWeightBold,
@@ -220,7 +221,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           // Description
           Text(
             pageData.description,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'Pretendard Variable',
               fontSize: IndustrialDarkTokens.fontSizeBody,
               fontWeight: IndustrialDarkTokens.fontWeightRegular,
@@ -240,8 +241,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       width: isActive ? 24 : 8,
       height: 8,
       decoration: BoxDecoration(
-        color:
-            isActive ? IndustrialDarkTokens.statusActive : IndustrialDarkTokens.outlineSoft,
+        color: isActive
+            ? IndustrialDarkTokens.statusActive
+            : IndustrialDarkTokens.outlineSoft,
         borderRadius: BorderRadius.circular(4),
       ),
     );

@@ -10,7 +10,6 @@ import '../../../domain/models/alert.dart';
 import '../../../domain/models/telemetry.dart';
 import '../../../domain/models/kpi.dart';
 import '../../../domain/models/user_profile.dart';
-import '../../../domain/models/geojson_data.dart';
 import '../geojson_service.dart';
 
 class MockApi {
@@ -348,10 +347,12 @@ class MockApi {
           id: 'ISSUE-FB-001',
           category: IssueCategory.hardware,
           severity: IssueSeverity.critical,
-          message: 'Battery sensor fault detected - immediate inspection required',
+          message:
+              'Battery sensor fault detected - immediate inspection required',
           occurredAt: DateTime.now().subtract(const Duration(hours: 2)),
           actionType: 'Schedule inspection',
-          details: 'Battery management system reporting inconsistent voltage readings. Possible BMS malfunction.',
+          details:
+              'Battery management system reporting inconsistent voltage readings. Possible BMS malfunction.',
         ),
       ],
       activeIssuesCount: 1,

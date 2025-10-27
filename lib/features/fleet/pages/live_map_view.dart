@@ -66,15 +66,18 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
 
       // 2. 경로 총 거리 계산
       final totalDistance = RouteLoader.calculateTotalDistance(routeCoords);
-      final cumulativeDistances = RouteLoader.calculateCumulativeDistances(routeCoords);
-      debugPrint('[LiveMapView] Route total distance: ${totalDistance.toStringAsFixed(2)} km');
+      final cumulativeDistances =
+          RouteLoader.calculateCumulativeDistances(routeCoords);
+      debugPrint(
+          '[LiveMapView] Route total distance: ${totalDistance.toStringAsFixed(2)} km');
 
       // 3. 카트 데이터 로드
       final cartsAsync = await ref.read(cartsProvider.future);
 
       // 4. 카트를 경로상에 무작위로 배치
       _carts = _distributeCartsRandomly(cartsAsync, routeCoords);
-      debugPrint('[LiveMapView] Distributed ${_carts.length} carts along route');
+      debugPrint(
+          '[LiveMapView] Distributed ${_carts.length} carts along route');
 
       // 5. 카트 진행 상황 계산
       final cartProgressList = CartProgress.calculateProgress(
@@ -83,15 +86,18 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
         routeCoordinates: routeCoords,
         totalRouteDistance: totalDistance,
       );
-      debugPrint('[LiveMapView] Calculated progress for ${cartProgressList.length} active carts');
+      debugPrint(
+          '[LiveMapView] Calculated progress for ${cartProgressList.length} active carts');
 
       final elapsed = DateTime.now().difference(startTime);
-      debugPrint('[LiveMapView] Route loaded: ${routeCoords.length} points in ${elapsed.inMilliseconds}ms');
+      debugPrint(
+          '[LiveMapView] Route loaded: ${routeCoords.length} points in ${elapsed.inMilliseconds}ms');
 
       // 6. 최소 4초 로딩 시간 보장
       final remainingMs = 4000 - elapsed.inMilliseconds;
       if (remainingMs > 0) {
-        debugPrint('[LiveMapView] Waiting ${remainingMs}ms to meet 4-second loading time...');
+        debugPrint(
+            '[LiveMapView] Waiting ${remainingMs}ms to meet 4-second loading time...');
         await Future.delayed(Duration(milliseconds: remainingMs));
       }
 
@@ -103,7 +109,8 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
         _isLoadingRoute = false;
       });
 
-      debugPrint('[LiveMapView] Route loading complete, displaying map with route');
+      debugPrint(
+          '[LiveMapView] Route loading complete, displaying map with route');
     } catch (e) {
       debugPrint('[LiveMapView] Error loading data: $e');
       setState(() {
@@ -127,9 +134,9 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
         notificationBadgeCount: 0,
         onMenuPressed: () => _scaffoldKey.currentState?.openDrawer(),
       ),
-      drawer: Drawer(
+      drawer: const Drawer(
         child: SafeArea(
-          child: const SingleChildScrollView(
+          child: SingleChildScrollView(
             child: HamburgerMenu(),
           ),
         ),
@@ -161,11 +168,11 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
                   ),
 
                 // Ripple 애니메이션 (카트 선택 시)
-                if (_selectedCart != null && _selectedCart!.position != null)
+                if (_selectedCart != null)
                   Positioned.fill(
                     child: IgnorePointer(
                       child: CartRippleAnimation(
-                        position: _selectedCart!.position!,
+                        position: _selectedCart!.position,
                       ),
                     ),
                   ),
@@ -184,7 +191,7 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
               },
               backgroundColor: IndustrialDarkTokens.accentPrimary,
               icon: const Icon(Icons.route, color: Colors.black),
-              label: Text(
+              label: const Text(
                 'ON ROUTE',
                 style: TextStyle(
                   color: Colors.black,
@@ -228,7 +235,7 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
                   ),
 
                   // 애니메이션 프로그레스
-                  SizedBox(
+                  const SizedBox(
                     width: 100,
                     height: 100,
                     child: CircularProgressIndicator(
@@ -240,7 +247,7 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
                   ),
 
                   // 중앙 아이콘
-                  Icon(
+                  const Icon(
                     Icons.map_outlined,
                     size: 48,
                     color: IndustrialDarkTokens.accentPrimary,
@@ -262,7 +269,7 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
               const SizedBox(height: 12),
 
               // 서브 텍스트
-              Text(
+              const Text(
                 'PREPARING MAP DATA...',
                 style: TextStyle(
                   color: IndustrialDarkTokens.textSecondary,
@@ -303,7 +310,8 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
                 height: 8,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: IndustrialDarkTokens.accentPrimary.withOpacity(opacity),
+                  color:
+                      IndustrialDarkTokens.accentPrimary.withOpacity(opacity),
                 ),
               ),
             );
@@ -321,15 +329,10 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
 
   /// 카트 선택 핸들러 (카메라 센터링 + Ripple 애니메이션)
   Future<void> _handleCartSelection(Cart cart) async {
-    if (cart.position == null) {
-      debugPrint('[LiveMapView] Cannot select cart: no position data');
-      return;
-    }
-
     debugPrint('[LiveMapView] Cart selected: ${cart.id} at ${cart.position}');
 
     // 1. 카메라를 카트 위치로 이동 (1.5초)
-    await _mapKey.currentState?.animateCameraToCart(cart.position!);
+    await _mapKey.currentState?.animateCameraToCart(cart.position);
 
     // 2. Ripple 애니메이션 표시 (5초)
     setState(() {
@@ -368,17 +371,20 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
       if (index < 6) {
         // 처음 6개: 경로상 무작위 포인트에 배치
         final position = route[pointIndices[index]];
-        debugPrint('[LiveMapView] Cart ${cart.id} → Route point ${pointIndices[index]}: $position');
+        debugPrint(
+            '[LiveMapView] Cart ${cart.id} → Route point ${pointIndices[index]}: $position');
         return cart.copyWith(position: position);
       } else {
         // 나머지 6개: 오프라인/충전중 상태로 경로 밖 배치
-        final newStatus = index.isEven ? CartStatus.offline : CartStatus.charging;
+        final newStatus =
+            index.isEven ? CartStatus.offline : CartStatus.charging;
         // 충전소/정비소 위치 (경로 중심에서 약간 떨어진 곳)
         final offlinePosition = LatLng(
           35.9570 + (index - 6) * 0.0002, // 경로 밖
           127.0073 + (index - 6) * 0.0002,
         );
-        debugPrint('[LiveMapView] Cart ${cart.id} → Offline/Charging at: $offlinePosition (status: ${newStatus.name})');
+        debugPrint(
+            '[LiveMapView] Cart ${cart.id} → Offline/Charging at: $offlinePosition (status: ${newStatus.name})');
         return cart.copyWith(
           status: newStatus,
           position: offlinePosition,

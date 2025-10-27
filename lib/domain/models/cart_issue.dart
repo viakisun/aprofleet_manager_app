@@ -67,7 +67,8 @@ class CartIssue with _$CartIssue {
     DateTime? resolvedAt,
   }) = _CartIssue;
 
-  factory CartIssue.fromJson(Map<String, dynamic> json) => _$CartIssueFromJson(json);
+  factory CartIssue.fromJson(Map<String, dynamic> json) =>
+      _$CartIssueFromJson(json);
 }
 
 /// 이슈 카테고리별 한글 이름

@@ -17,10 +17,10 @@ import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 /// - Integration with VIA design tokens
 
 enum ViaChipVariant {
-  filter,  // Toggle filter (e.g., status filters)
-  choice,  // Single choice (radio-like behavior)
-  action,  // Action chip (perform action on tap)
-  input,   // Input chip (deletable)
+  filter, // Toggle filter (e.g., status filters)
+  choice, // Single choice (radio-like behavior)
+  action, // Action chip (perform action on tap)
+  input, // Input chip (deletable)
 }
 
 class ViaChip extends StatefulWidget {
@@ -103,8 +103,7 @@ class ViaChip extends StatefulWidget {
   State<ViaChip> createState() => _ViaChipState();
 }
 
-class _ViaChipState extends State<ViaChip>
-    with SingleTickerProviderStateMixin {
+class _ViaChipState extends State<ViaChip> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
 
@@ -220,7 +219,8 @@ class _ViaChipState extends State<ViaChip>
           ),
           decoration: BoxDecoration(
             color: _getBackgroundColor(),
-            borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusChip),
+            borderRadius:
+                BorderRadius.circular(IndustrialDarkTokens.radiusChip),
             border: Border.all(
               color: _getBorderColor(),
               width: widget.selected ? 1.5 : 1.0,
@@ -228,7 +228,8 @@ class _ViaChipState extends State<ViaChip>
             boxShadow: widget.selected
                 ? [
                     BoxShadow(
-                      color: IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.2),
+                      color: IndustrialDarkTokens.accentPrimary
+                          .withValues(alpha: 0.2),
                       blurRadius: 8.0,
                       spreadRadius: 0.0,
                     ),
@@ -261,7 +262,7 @@ class _ViaChipState extends State<ViaChip>
               // Selected indicator (checkmark)
               if (widget.selected &&
                   widget.variant == ViaChipVariant.filter) ...[
-                Icon(
+                const Icon(
                   Icons.check,
                   size: 16,
                   color: IndustrialDarkTokens.accentPrimary,
@@ -274,7 +275,8 @@ class _ViaChipState extends State<ViaChip>
                 widget.label,
                 style: IndustrialDarkTokens.labelStyle.copyWith(
                   color: _getTextColor(),
-                  fontWeight: widget.selected ? FontWeight.w600 : FontWeight.w500,
+                  fontWeight:
+                      widget.selected ? FontWeight.w600 : FontWeight.w500,
                 ),
               ),
 

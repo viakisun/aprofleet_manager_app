@@ -55,7 +55,7 @@ class _WorkOrderCreationStep3State
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Date',
                         style: TextStyle(
                           fontSize: IndustrialDarkTokens.fontSizeSmall,
@@ -77,7 +77,7 @@ class _WorkOrderCreationStep3State
                     ],
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                   color: IndustrialDarkTokens.textSecondary,
                   size: 16,
@@ -103,7 +103,7 @@ class _WorkOrderCreationStep3State
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Time',
                         style: TextStyle(
                           fontSize: IndustrialDarkTokens.fontSizeSmall,
@@ -125,7 +125,7 @@ class _WorkOrderCreationStep3State
                     ],
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                   color: IndustrialDarkTokens.textSecondary,
                   size: 16,
@@ -167,7 +167,7 @@ class _WorkOrderCreationStep3State
                 ),
               ),
               const SizedBox(width: IndustrialDarkTokens.spacingItem),
-              Text(
+              const Text(
                 'hours',
                 style: TextStyle(
                   color: IndustrialDarkTokens.textSecondary,

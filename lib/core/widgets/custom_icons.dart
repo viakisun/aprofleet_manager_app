@@ -42,8 +42,10 @@ class CustomIcons {
   static PhosphorIconData get settings => PhosphorIconsDuotone.gear;
 
   // iOS-style navigation icons
-  static PhosphorIconData get menu => PhosphorIconsBold.list;  // Modern list instead of hamburger
-  static PhosphorIconData get back => PhosphorIconsRegular.caretLeft;  // iOS chevron style
+  static PhosphorIconData get menu =>
+      PhosphorIconsBold.list; // Modern list instead of hamburger
+  static PhosphorIconData get back =>
+      PhosphorIconsRegular.caretLeft; // iOS chevron style
   static PhosphorIconData get close => PhosphorIconsBold.x;
   static PhosphorIconData get edit => PhosphorIconsRegular.pencilSimple;
   static PhosphorIconData get delete => PhosphorIconsRegular.trash;
@@ -66,7 +68,8 @@ class CustomIcons {
   static PhosphorIconData get list => PhosphorIconsRegular.list;
   static PhosphorIconData get grid => PhosphorIconsRegular.gridFour;
   static PhosphorIconData get doneAll => PhosphorIconsFill.checkCircle;
-  static PhosphorIconData get notificationsOff => PhosphorIconsRegular.bellSlash;
+  static PhosphorIconData get notificationsOff =>
+      PhosphorIconsRegular.bellSlash;
   static PhosphorIconData get notificationsOn => PhosphorIconsFill.bell;
   static PhosphorIconData get user => PhosphorIconsRegular.user;
   static PhosphorIconData get users => PhosphorIconsRegular.users;
@@ -78,7 +81,8 @@ class CustomIcons {
   static PhosphorIconData get phone => PhosphorIconsRegular.phone;
   static PhosphorIconData get email => PhosphorIconsRegular.envelope;
   static PhosphorIconData get link => PhosphorIconsRegular.link;
-  static PhosphorIconData get externalLink => PhosphorIconsRegular.arrowSquareOut;
+  static PhosphorIconData get externalLink =>
+      PhosphorIconsRegular.arrowSquareOut;
   static PhosphorIconData get copy => PhosphorIconsRegular.copy;
   static PhosphorIconData get share => PhosphorIconsRegular.shareNetwork;
   static PhosphorIconData get print => PhosphorIconsRegular.printer;
@@ -104,7 +108,8 @@ class CustomIcons {
   static PhosphorIconData get arrowLeft => PhosphorIconsRegular.arrowLeft;
   static PhosphorIconData get arrowRight => PhosphorIconsRegular.arrowRight;
   static PhosphorIconData get arrowUpDown => PhosphorIconsRegular.arrowsDownUp;
-  static PhosphorIconData get arrowLeftRight => PhosphorIconsRegular.arrowsLeftRight;
+  static PhosphorIconData get arrowLeftRight =>
+      PhosphorIconsRegular.arrowsLeftRight;
   static PhosphorIconData get chevronUp => PhosphorIconsBold.caretUp;
   static PhosphorIconData get chevronDown => PhosphorIconsBold.caretDown;
   static PhosphorIconData get chevronLeft => PhosphorIconsBold.caretLeft;
@@ -134,10 +139,12 @@ class CustomIcons {
   static PhosphorIconData get server => PhosphorIconsDuotone.hardDrives;
   static PhosphorIconData get cloud => PhosphorIconsDuotone.cloud;
   static PhosphorIconData get cloudUpload => PhosphorIconsRegular.cloudArrowUp;
-  static PhosphorIconData get cloudDownload => PhosphorIconsRegular.cloudArrowDown;
+  static PhosphorIconData get cloudDownload =>
+      PhosphorIconsRegular.cloudArrowDown;
   static PhosphorIconData get wifi => PhosphorIconsRegular.wifiHigh;
   static PhosphorIconData get wifiOff => PhosphorIconsRegular.wifiSlash;
-  static PhosphorIconData get bluetooth => PhosphorIconsRegular.bluetoothConnected;
+  static PhosphorIconData get bluetooth =>
+      PhosphorIconsRegular.bluetoothConnected;
   static PhosphorIconData get signal => PhosphorIconsRegular.waveform;
 
   // Weather Icons
@@ -176,7 +183,8 @@ class CustomIcons {
   static PhosphorIconData get activity => PhosphorIconsRegular.heartbeat;
   static PhosphorIconData get zap => PhosphorIconsDuotone.lightning;
   static PhosphorIconData get battery => PhosphorIconsDuotone.batteryFull;
-  static PhosphorIconData get batteryCharging => PhosphorIconsDuotone.batteryCharging;
+  static PhosphorIconData get batteryCharging =>
+      PhosphorIconsDuotone.batteryCharging;
   static PhosphorIconData get batteryLow => PhosphorIconsDuotone.batteryWarning;
 
   // Helper method to create icon widget

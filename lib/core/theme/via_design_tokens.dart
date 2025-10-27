@@ -539,14 +539,14 @@ class ViaDesignTokens {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(radiusMd),
-        borderSide: BorderSide(
+        borderSide: const BorderSide(
           color: primary,
           width: 1.5,
         ),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(radiusMd),
-        borderSide: BorderSide(
+        borderSide: const BorderSide(
           color: critical,
           width: 1.5,
         ),
@@ -563,7 +563,7 @@ class ViaDesignTokens {
   // ============================================================================
 
   /// Display text style (largest)
-  static TextStyle get displayLarge => TextStyle(
+  static TextStyle get displayLarge => const TextStyle(
         fontFamily: fontFamily,
         fontSize: fontSize3xl,
         fontWeight: fontWeightBold,
@@ -573,7 +573,7 @@ class ViaDesignTokens {
       );
 
   /// Display medium
-  static TextStyle get displayMedium => TextStyle(
+  static TextStyle get displayMedium => const TextStyle(
         fontFamily: fontFamily,
         fontSize: fontSize2xl,
         fontWeight: fontWeightBold,
@@ -583,7 +583,7 @@ class ViaDesignTokens {
       );
 
   /// Display small
-  static TextStyle get displaySmall => TextStyle(
+  static TextStyle get displaySmall => const TextStyle(
         fontFamily: fontFamily,
         fontSize: fontSizeXl,
         fontWeight: fontWeightSemibold,
@@ -593,7 +593,7 @@ class ViaDesignTokens {
       );
 
   /// Heading large
-  static TextStyle get headingLarge => TextStyle(
+  static TextStyle get headingLarge => const TextStyle(
         fontFamily: fontFamily,
         fontSize: fontSizeLg,
         fontWeight: fontWeightSemibold,
@@ -603,7 +603,7 @@ class ViaDesignTokens {
       );
 
   /// Heading medium
-  static TextStyle get headingMedium => TextStyle(
+  static TextStyle get headingMedium => const TextStyle(
         fontFamily: fontFamily,
         fontSize: fontSizeMd,
         fontWeight: fontWeightSemibold,
@@ -613,7 +613,7 @@ class ViaDesignTokens {
       );
 
   /// Heading small
-  static TextStyle get headingSmall => TextStyle(
+  static TextStyle get headingSmall => const TextStyle(
         fontFamily: fontFamily,
         fontSize: fontSizeSm,
         fontWeight: fontWeightSemibold,
@@ -643,7 +643,7 @@ class ViaDesignTokens {
       );
 
   /// Body small
-  static TextStyle get bodySmall => TextStyle(
+  static TextStyle get bodySmall => const TextStyle(
         fontFamily: fontFamily,
         fontSize: fontSizeXs,
         fontWeight: fontWeightNormal,
@@ -653,7 +653,7 @@ class ViaDesignTokens {
       );
 
   /// Label large
-  static TextStyle get labelLarge => TextStyle(
+  static TextStyle get labelLarge => const TextStyle(
         fontFamily: fontFamily,
         fontSize: fontSizeSm,
         fontWeight: fontWeightSemibold,
@@ -663,7 +663,7 @@ class ViaDesignTokens {
       );
 
   /// Label medium
-  static TextStyle get labelMedium => TextStyle(
+  static TextStyle get labelMedium => const TextStyle(
         fontFamily: fontFamily,
         fontSize: fontSizeXs,
         fontWeight: fontWeightSemibold,
@@ -673,7 +673,7 @@ class ViaDesignTokens {
       );
 
   /// Label small
-  static TextStyle get labelSmall => TextStyle(
+  static TextStyle get labelSmall => const TextStyle(
         fontFamily: fontFamily,
         fontSize: fontSizeXxs,
         fontWeight: fontWeightSemibold,

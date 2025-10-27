@@ -131,8 +131,9 @@ class GeoJsonService {
   /// 경로 좌표에서 특정 인덱스의 위치 반환
   LatLng? getPositionAtIndex(GeoJsonData data, int index) {
     final routeCoordinates = extractRouteCoordinates(data);
-    if (routeCoordinates.isEmpty || index >= routeCoordinates.length)
+    if (routeCoordinates.isEmpty || index >= routeCoordinates.length) {
       return null;
+    }
     return routeCoordinates[index];
   }
 

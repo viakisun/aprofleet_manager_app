@@ -64,7 +64,9 @@ class ViaStatChip extends StatelessWidget {
             color: isActive
                 ? color.withValues(alpha: 0.4)
                 : color.withValues(alpha: 0.2),
-            width: isActive ? IndustrialDarkTokens.borderWidth : IndustrialDarkTokens.borderWidthThin,
+            width: isActive
+                ? IndustrialDarkTokens.borderWidth
+                : IndustrialDarkTokens.borderWidthThin,
           ),
         ),
         child: Row(

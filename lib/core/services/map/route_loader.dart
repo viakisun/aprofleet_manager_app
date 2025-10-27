@@ -18,7 +18,8 @@ class RouteLoader {
       final Map<String, dynamic> geojson = json.decode(jsonString);
 
       // 첫 번째 Feature의 coordinates 추출
-      final List<dynamic> coordinates = geojson['features'][0]['geometry']['coordinates'];
+      final List<dynamic> coordinates =
+          geojson['features'][0]['geometry']['coordinates'];
 
       // LatLng 리스트로 변환
       // 주의: 이 GeoJSON 파일은 표준 형식이 아니라 [latitude, longitude] 순서입니다!
@@ -26,8 +27,8 @@ class RouteLoader {
       // LatLng 생성자도 LatLng(latitude, longitude) 순서이므로 그대로 사용
       return coordinates.map((coord) {
         return LatLng(
-          (coord[0] as num).toDouble(),  // latitude
-          (coord[1] as num).toDouble(),  // longitude
+          (coord[0] as num).toDouble(), // latitude
+          (coord[1] as num).toDouble(), // longitude
         );
       }).toList();
     } catch (e) {
@@ -118,7 +119,8 @@ class RouteLoader {
     double cumulativeDistance = 0.0;
 
     for (int i = 0; i < coordinates.length - 1; i++) {
-      cumulativeDistance += calculateDistance(coordinates[i], coordinates[i + 1]);
+      cumulativeDistance +=
+          calculateDistance(coordinates[i], coordinates[i + 1]);
       cumulativeDistances.add(cumulativeDistance);
     }
 
@@ -185,7 +187,7 @@ class RouteBounds {
 
 /// 카트의 경로상 위치 정보
 class CartRoutePosition {
-  final int routeIndex;          // 경로상 가장 가까운 포인트의 인덱스
+  final int routeIndex; // 경로상 가장 가까운 포인트의 인덱스
   final double distanceTraveled; // 해당 포인트까지의 누적 거리 (km)
 
   CartRoutePosition({

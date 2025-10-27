@@ -42,9 +42,11 @@ class Cart with _$Cart {
     String? activeAlertId,
     AlertSeverity? alertSeverity,
     // Manager-centric fields
-    String? courseLocation, // e.g., "On Course - Hole 7", "In Garage", "Charging Station"
+    String?
+        courseLocation, // e.g., "On Course - Hole 7", "In Garage", "Charging Station"
     String? firmwareVersion, // e.g., "v2.5.1"
-    @Default(false) bool firmwareUpdateAvailable, // Whether firmware update is needed
+    @Default(false)
+    bool firmwareUpdateAvailable, // Whether firmware update is needed
     DateTime? lastMaintenanceDate, // Last maintenance/service date
     DateTime? nextMaintenanceDate, // Next scheduled maintenance
     @Default(0) int activeIssuesCount, // Count of active unresolved issues

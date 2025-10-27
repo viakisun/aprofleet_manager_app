@@ -122,8 +122,8 @@ class _AdminCartCardState extends State<AdminCartCard>
 
   CartIssue? _getCriticalIssue() {
     return widget.cart.activeIssues
-        .where((issue) => issue.severity == IssueSeverity.critical)
-        .isNotEmpty
+            .where((issue) => issue.severity == IssueSeverity.critical)
+            .isNotEmpty
         ? widget.cart.activeIssues
             .where((issue) => issue.severity == IssueSeverity.critical)
             .first
@@ -135,9 +135,9 @@ class _AdminCartCardState extends State<AdminCartCard>
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
-        decoration: BoxDecoration(
-          color: const Color(0xFF181818),
-          borderRadius: const BorderRadius.only(
+        decoration: const BoxDecoration(
+          color: Color(0xFF181818),
+          borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16),
             topRight: Radius.circular(16),
           ),
@@ -271,79 +271,79 @@ class _AdminCartCardState extends State<AdminCartCard>
               // Primary Row: Status + ID + Battery + More
               Row(
                 children: [
-                        // Status indicator with glow
-                        Container(
-                          width: 10,
-                          height: 10,
-                          decoration: BoxDecoration(
-                            color: statusColor,
-                            shape: BoxShape.circle,
-                            boxShadow: _shouldGlow(statusColor)
-                                ? [
-                                    BoxShadow(
-                                      color: statusColor.withValues(alpha: 0.6),
-                                      blurRadius: 8,
-                                      spreadRadius: 0,
-                                    ),
-                                  ]
-                                : null,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-
-                        // Cart ID - FLEET typography
-                        Expanded(
-                          child: Text(
-                            widget.cart.id,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFFFFFFFF),
-                              letterSpacing: 0,
-                              height: 1.3,
-                            ),
-                          ),
-                        ),
-
-                        // Battery Indicator - FLEET style
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              _batteryIcon(batteryLevel),
-                              size: 16,
-                              color: batteryColor,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              '${batteryLevel.toInt()}%',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: batteryColor,
-                                height: 1.3,
+                  // Status indicator with glow
+                  Container(
+                    width: 10,
+                    height: 10,
+                    decoration: BoxDecoration(
+                      color: statusColor,
+                      shape: BoxShape.circle,
+                      boxShadow: _shouldGlow(statusColor)
+                          ? [
+                              BoxShadow(
+                                color: statusColor.withValues(alpha: 0.6),
+                                blurRadius: 8,
+                                spreadRadius: 0,
                               ),
-                            ),
-                          ],
-                        ),
-
-                        const SizedBox(width: 8),
-
-                        // More menu button
-                        InkWell(
-                          onTap: () => _showActionMenu(context),
-                          borderRadius: BorderRadius.circular(12),
-                          child: Padding(
-                            padding: const EdgeInsets.all(4),
-                            child: Icon(
-                              Icons.more_vert,
-                              size: 18,
-                              color: Colors.white.withValues(alpha: 0.6),
-                            ),
-                          ),
-                        ),
-                      ],
+                            ]
+                          : null,
                     ),
+                  ),
+                  const SizedBox(width: 10),
+
+                  // Cart ID - FLEET typography
+                  Expanded(
+                    child: Text(
+                      widget.cart.id,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFFFFFFFF),
+                        letterSpacing: 0,
+                        height: 1.3,
+                      ),
+                    ),
+                  ),
+
+                  // Battery Indicator - FLEET style
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        _batteryIcon(batteryLevel),
+                        size: 16,
+                        color: batteryColor,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '${batteryLevel.toInt()}%',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: batteryColor,
+                          height: 1.3,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(width: 8),
+
+                  // More menu button
+                  InkWell(
+                    onTap: () => _showActionMenu(context),
+                    borderRadius: BorderRadius.circular(12),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: Icon(
+                        Icons.more_vert,
+                        size: 18,
+                        color: Colors.white.withValues(alpha: 0.6),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
 
               // Critical Issue Badge + Action Buttons (if any)
               if (criticalIssue != null && !_isExpanded) ...[
@@ -373,149 +373,149 @@ class _AdminCartCardState extends State<AdminCartCard>
                         children: [
                           // Status & Location
                           Row(
-                              children: [
-                                // Status badge
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 4,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: statusColor.withValues(alpha: 0.12),
-                                    borderRadius: BorderRadius.circular(6),
-                                    border: Border.all(
-                                      color: statusColor.withValues(alpha: 0.3),
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    widget.cart.status.displayName,
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w600,
-                                      color: statusColor,
-                                      letterSpacing: 0.3,
-                                      height: 1.3,
-                                    ),
+                            children: [
+                              // Status badge
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: statusColor.withValues(alpha: 0.12),
+                                  borderRadius: BorderRadius.circular(6),
+                                  border: Border.all(
+                                    color: statusColor.withValues(alpha: 0.3),
+                                    width: 1,
                                   ),
                                 ),
-
-                                const SizedBox(width: 8),
-
-                                // Course location
-                                if (widget.cart.courseLocation != null)
-                                  Expanded(
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.location_on_rounded,
-                                          size: 12,
-                                          color:
-                                              Colors.white.withValues(alpha: 0.5),
-                                        ),
-                                        const SizedBox(width: 4),
-                                        Expanded(
-                                          child: Text(
-                                            widget.cart.courseLocation!,
-                                            style: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.white
-                                                  .withValues(alpha: 0.7),
-                                              height: 1.3,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                child: Text(
+                                  widget.cart.status.displayName,
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                    color: statusColor,
+                                    letterSpacing: 0.3,
+                                    height: 1.3,
                                   ),
-                              ],
-                            ),
+                                ),
+                              ),
+
+                              const SizedBox(width: 8),
+
+                              // Course location
+                              if (widget.cart.courseLocation != null)
+                                Expanded(
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_on_rounded,
+                                        size: 12,
+                                        color:
+                                            Colors.white.withValues(alpha: 0.5),
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Expanded(
+                                        child: Text(
+                                          widget.cart.courseLocation!,
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            color: Colors.white
+                                                .withValues(alpha: 0.7),
+                                            height: 1.3,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                            ],
+                          ),
 
                           // All Issues
                           if (widget.cart.activeIssues.isNotEmpty) ...[
-                              const SizedBox(height: 12),
-                              Text(
-                                'ISSUES (${widget.cart.activeIssuesCount})',
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white.withValues(alpha: 0.5),
-                                  letterSpacing: 0.5,
-                                  height: 1.3,
-                                ),
+                            const SizedBox(height: 12),
+                            Text(
+                              'ISSUES (${widget.cart.activeIssuesCount})',
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white.withValues(alpha: 0.5),
+                                letterSpacing: 0.5,
+                                height: 1.3,
                               ),
-                              const SizedBox(height: 6),
-                              ...widget.cart.activeIssues
-                                  .map((issue) => _buildIssueRow(issue)),
+                            ),
+                            const SizedBox(height: 6),
+                            ...widget.cart.activeIssues
+                                .map((issue) => _buildIssueRow(issue)),
                           ],
 
                           // Metrics Grid
                           const SizedBox(height: 12),
                           Row(
-                              children: [
-                                if (widget.cart.todayDistance != null)
-                                  Expanded(
-                                    child: _buildMetricItem(
-                                      icon: Icons.route_rounded,
-                                      label: 'TODAY',
-                                      value:
-                                          '${widget.cart.todayDistance!.toStringAsFixed(1)}km',
-                                    ),
+                            children: [
+                              if (widget.cart.todayDistance != null)
+                                Expanded(
+                                  child: _buildMetricItem(
+                                    icon: Icons.route_rounded,
+                                    label: 'TODAY',
+                                    value:
+                                        '${widget.cart.todayDistance!.toStringAsFixed(1)}km',
                                   ),
-                                if (widget.cart.firmwareVersion != null)
-                                  Expanded(
-                                    child: _buildMetricItem(
-                                      icon: Icons.memory_rounded,
-                                      label: 'FIRMWARE',
-                                      value: widget.cart.firmwareVersion!,
-                                      warning:
-                                          widget.cart.firmwareUpdateAvailable,
-                                    ),
+                                ),
+                              if (widget.cart.firmwareVersion != null)
+                                Expanded(
+                                  child: _buildMetricItem(
+                                    icon: Icons.memory_rounded,
+                                    label: 'FIRMWARE',
+                                    value: widget.cart.firmwareVersion!,
+                                    warning:
+                                        widget.cart.firmwareUpdateAvailable,
                                   ),
-                                if (widget.cart.odometer != null)
-                                  Expanded(
-                                    child: _buildMetricItem(
-                                      icon: Icons.speed_rounded,
-                                      label: 'ODO',
-                                      value:
-                                          '${(widget.cart.odometer! / 1000).toStringAsFixed(0)}k km',
-                                    ),
+                                ),
+                              if (widget.cart.odometer != null)
+                                Expanded(
+                                  child: _buildMetricItem(
+                                    icon: Icons.speed_rounded,
+                                    label: 'ODO',
+                                    value:
+                                        '${(widget.cart.odometer! / 1000).toStringAsFixed(0)}k km',
                                   ),
-                              ],
-                            ),
+                                ),
+                            ],
+                          ),
 
                           // Maintenance Dates
                           if (widget.cart.lastMaintenanceDate != null ||
                               widget.cart.nextMaintenanceDate != null) ...[
-                              const SizedBox(height: 12),
-                              if (widget.cart.nextMaintenanceDate != null)
-                                _buildInfoRow(
-                                  icon: Icons.event_rounded,
-                                  label: 'NEXT SERVICE',
-                                  value: DateFormat('MMM d, y')
-                                      .format(widget.cart.nextMaintenanceDate!),
-                                  warning: widget.cart.nextMaintenanceDate!
-                                      .isBefore(DateTime.now()),
-                                ),
-                              if (widget.cart.lastMaintenanceDate != null) ...[
-                                const SizedBox(height: 6),
-                                _buildInfoRow(
-                                  icon: Icons.build_circle_outlined,
-                                  label: 'LAST SERVICE',
-                                  value: DateFormat('MMM d, y')
-                                      .format(widget.cart.lastMaintenanceDate!),
-                                ),
-                              ],
+                            const SizedBox(height: 12),
+                            if (widget.cart.nextMaintenanceDate != null)
+                              _buildInfoRow(
+                                icon: Icons.event_rounded,
+                                label: 'NEXT SERVICE',
+                                value: DateFormat('MMM d, y')
+                                    .format(widget.cart.nextMaintenanceDate!),
+                                warning: widget.cart.nextMaintenanceDate!
+                                    .isBefore(DateTime.now()),
+                              ),
+                            if (widget.cart.lastMaintenanceDate != null) ...[
+                              const SizedBox(height: 6),
+                              _buildInfoRow(
+                                icon: Icons.build_circle_outlined,
+                                label: 'LAST SERVICE',
+                                value: DateFormat('MMM d, y')
+                                    .format(widget.cart.lastMaintenanceDate!),
+                              ),
+                            ],
                           ],
 
                           // Primary Actions
                           const SizedBox(height: 12),
                           _buildPrimaryAction(
-                              icon: Icons.assignment_rounded,
-                              label: 'CREATE WORK ORDER',
-                              onTap: widget.onWorkOrder,
-                            ),
+                            icon: Icons.assignment_rounded,
+                            label: 'CREATE WORK ORDER',
+                            onTap: widget.onWorkOrder,
+                          ),
                           const SizedBox(height: 8),
                           _buildPrimaryAction(
                             icon: Icons.my_location_rounded,
@@ -848,16 +848,16 @@ class _AdminCartCardState extends State<AdminCartCard>
                   width: 1,
                 ),
               ),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
                     Icons.build_rounded,
                     size: 14,
-                    color: const Color(0xFFD14B4B),
+                    color: Color(0xFFD14B4B),
                   ),
-                  const SizedBox(width: 6),
-                  const Text(
+                  SizedBox(width: 6),
+                  Text(
                     'CREATE WO',
                     style: TextStyle(
                       fontSize: 11,

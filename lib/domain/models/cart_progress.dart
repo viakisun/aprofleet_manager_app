@@ -35,8 +35,7 @@ class CartProgress {
 
   /// 경로상에 있는 카트인지 (오프라인/충전중 제외)
   bool get isOnRoute =>
-      cart.status != CartStatus.offline &&
-      cart.status != CartStatus.charging;
+      cart.status != CartStatus.offline && cart.status != CartStatus.charging;
 
   CartProgress({
     required this.cart,
@@ -57,8 +56,7 @@ class CartProgress {
   }) {
     // 1. 경로상에 있는 카트만 필터링 (오프라인/충전중 제외)
     final activeCarts = carts.where((cart) {
-      return cart.position != null &&
-          cart.status != CartStatus.offline &&
+      return cart.status != CartStatus.offline &&
           cart.status != CartStatus.charging;
     }).toList();
 
@@ -75,8 +73,8 @@ class CartProgress {
       for (int i = 0; i < routeCoordinates.length; i++) {
         final routePoint = routeCoordinates[i];
         final distance = _calculateDistance(
-          cart.position!.latitude,
-          cart.position!.longitude,
+          cart.position.latitude,
+          cart.position.longitude,
           routePoint.latitude,
           routePoint.longitude,
         );
@@ -95,8 +93,8 @@ class CartProgress {
     }).toList();
 
     // 3. 주행 거리 기준으로 내림차순 정렬 (가장 많이 진행한 카트가 1위)
-    cartDistances.sort((a, b) =>
-        (b['distance'] as double).compareTo(a['distance'] as double));
+    cartDistances.sort(
+        (a, b) => (b['distance'] as double).compareTo(a['distance'] as double));
 
     // 4. CartProgress 리스트 생성
     final progressList = <CartProgress>[];

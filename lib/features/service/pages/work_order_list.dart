@@ -131,8 +131,9 @@ class _WorkOrderListState extends ConsumerState<WorkOrderList>
     return Container(
       height: 60,
       padding: const EdgeInsets.symmetric(
-          horizontal: IndustrialDarkTokens.spacingItem, vertical: IndustrialDarkTokens.spacingCompact),
-      decoration: BoxDecoration(
+          horizontal: IndustrialDarkTokens.spacingItem,
+          vertical: IndustrialDarkTokens.spacingCompact),
+      decoration: const BoxDecoration(
         color: IndustrialDarkTokens.bgSurface,
         border: Border(
           bottom: BorderSide(
@@ -162,7 +163,8 @@ class _WorkOrderListState extends ConsumerState<WorkOrderList>
   Widget _buildStatChip(String label, int count, Color color) {
     return Container(
       padding: const EdgeInsets.symmetric(
-          horizontal: IndustrialDarkTokens.spacingCompact, vertical: IndustrialDarkTokens.spacingMinimal),
+          horizontal: IndustrialDarkTokens.spacingCompact,
+          vertical: IndustrialDarkTokens.spacingMinimal),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),

@@ -121,7 +121,8 @@ class WorkOrderCreationStep4 extends ConsumerWidget {
 
   Widget _buildReviewItem(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: IndustrialDarkTokens.spacingCompact),
+      padding:
+          const EdgeInsets.only(bottom: IndustrialDarkTokens.spacingCompact),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -129,7 +130,7 @@ class WorkOrderCreationStep4 extends ConsumerWidget {
             width: 100,
             child: Text(
               label,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: IndustrialDarkTokens.fontSizeSmall,
                 color: IndustrialDarkTokens.textSecondary,
                 fontWeight: IndustrialDarkTokens.fontWeightMedium,

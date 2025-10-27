@@ -146,7 +146,7 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           '시나리오 선택',
           style: TextStyle(
             fontSize: 12,
@@ -186,7 +186,9 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
             Row(
               children: [
                 Icon(
-                  isSelected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+                  isSelected
+                      ? Icons.radio_button_checked
+                      : Icons.radio_button_unchecked,
                   size: 20,
                   color: isSelected
                       ? IndustrialDarkTokens.accentPrimary
@@ -210,7 +212,7 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
               padding: const EdgeInsets.only(left: 28),
               child: Text(
                 scenario.description,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12,
                   color: IndustrialDarkTokens.textSecondary,
                 ),
@@ -220,7 +222,7 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
               padding: const EdgeInsets.only(left: 28, top: 4),
               child: Text(
                 '${scenario.events.length}개 이벤트 • ${scenario.totalDuration.inMinutes}분',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 11,
                   color: IndustrialDarkTokens.textSecondary,
                 ),
@@ -244,7 +246,7 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
           children: [
             Text(
               _formatTime(progress),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: IndustrialDarkTokens.textSecondary,
@@ -252,7 +254,7 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
             ),
             Text(
               _formatTime(totalSeconds),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 12,
                 color: IndustrialDarkTokens.textSecondary,
               ),
@@ -266,7 +268,8 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
             value: percentage,
             minHeight: 8,
             backgroundColor: IndustrialDarkTokens.bgSurface,
-            valueColor: AlwaysStoppedAnimation<Color>(IndustrialDarkTokens.accentPrimary),
+            valueColor: const AlwaysStoppedAnimation<Color>(
+                IndustrialDarkTokens.accentPrimary),
           ),
         ),
       ],
@@ -289,7 +292,7 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
 
         // Play/Pause button
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: IndustrialDarkTokens.accentPrimary,
             shape: BoxShape.circle,
           ),
@@ -331,7 +334,7 @@ class _ScenarioControlPanelState extends ConsumerState<ScenarioControlPanel> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           '재생 속도',
           style: TextStyle(
             fontSize: 12,

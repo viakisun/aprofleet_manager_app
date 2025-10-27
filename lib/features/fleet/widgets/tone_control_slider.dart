@@ -26,7 +26,8 @@ class ToneControlSlider extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: IndustrialDarkTokens.bgSurface.withValues(alpha: 0.85),
-          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          borderRadius:
+              BorderRadius.circular(IndustrialDarkTokens.radiusButton),
           border: Border.all(
             color: IndustrialDarkTokens.outline,
             width: 1,
@@ -59,9 +60,11 @@ class ToneControlSlider extends StatelessWidget {
                 child: SliderTheme(
                   data: SliderThemeData(
                     activeTrackColor: IndustrialDarkTokens.accentPrimary,
-                    inactiveTrackColor: IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.2),
+                    inactiveTrackColor: IndustrialDarkTokens.accentPrimary
+                        .withValues(alpha: 0.2),
                     thumbColor: IndustrialDarkTokens.accentPrimary,
-                    overlayColor: IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.2),
+                    overlayColor: IndustrialDarkTokens.accentPrimary
+                        .withValues(alpha: 0.2),
                     thumbShape: const RoundSliderThumbShape(
                       enabledThumbRadius: 6,
                     ),
@@ -84,8 +87,10 @@ class ToneControlSlider extends StatelessWidget {
                 vertical: 2,
               ),
               decoration: BoxDecoration(
-                color: IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                color:
+                    IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.15),
+                borderRadius:
+                    BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
               ),
               child: Text(
                 '${(mapOpacity * 100).round()}%',
@@ -102,4 +107,3 @@ class ToneControlSlider extends StatelessWidget {
     );
   }
 }
-

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../domain/models/alert.dart';
-import '../../../domain/models/work_order.dart';
 import '../../../core/localization/app_localizations.dart';
 import '../../../core/theme/industrial_dark_tokens.dart';
 import '../../../core/widgets/professional_app_bar.dart';
@@ -82,7 +81,7 @@ class _AlertManagementPageV2State extends ConsumerState<AlertManagementPageV2> {
                       color: IndustrialDarkTokens.error,
                     ),
                     const SizedBox(height: IndustrialDarkTokens.spacingItem),
-                    Text(
+                    const Text(
                       'Error loading alerts',
                       style: TextStyle(
                         fontSize: IndustrialDarkTokens.fontSizeDisplay,
@@ -92,7 +91,7 @@ class _AlertManagementPageV2State extends ConsumerState<AlertManagementPageV2> {
                     const SizedBox(height: IndustrialDarkTokens.spacingCompact),
                     Text(
                       error.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: IndustrialDarkTokens.fontSizeSmall,
                         color: IndustrialDarkTokens.textSecondary,
                       ),
@@ -142,21 +141,17 @@ class _AlertManagementPageV2State extends ConsumerState<AlertManagementPageV2> {
     final alerts = (alertState.alerts as AsyncData<List<Alert>>).value;
 
     // Count by severity
-    final criticalCount = alerts
-        .where((a) => a.severity == AlertSeverity.critical)
-        .length;
-    final warningCount = alerts
-        .where((a) => a.severity == AlertSeverity.warning)
-        .length;
-    final infoCount = alerts
-        .where((a) => a.severity == AlertSeverity.info)
-        .length;
+    final criticalCount =
+        alerts.where((a) => a.severity == AlertSeverity.critical).length;
+    final warningCount =
+        alerts.where((a) => a.severity == AlertSeverity.warning).length;
+    final infoCount =
+        alerts.where((a) => a.severity == AlertSeverity.info).length;
 
     // Count unread
     final unreadCount = alerts
         .where((a) =>
-            a.state == AlertStatus.triggered ||
-            a.state == AlertStatus.notified)
+            a.state == AlertStatus.triggered || a.state == AlertStatus.notified)
         .length;
 
     return [
@@ -194,24 +189,36 @@ class _AlertManagementPageV2State extends ConsumerState<AlertManagementPageV2> {
   List<ViaFilterOption> _buildFilterOptions() {
     return const [
       ViaFilterOption(label: 'All', value: 'all', icon: Icons.list),
-      ViaFilterOption(label: 'Unread', value: 'unread', icon: Icons.mark_email_unread),
+      ViaFilterOption(
+          label: 'Unread', value: 'unread', icon: Icons.mark_email_unread),
       ViaFilterOption(label: 'Critical', value: 'critical', icon: Icons.error),
       ViaFilterOption(label: 'Warning', value: 'warning', icon: Icons.warning),
       ViaFilterOption(label: 'Info', value: 'info', icon: Icons.info),
       ViaFilterOption(label: 'Cart', value: 'cart', icon: Icons.directions_car),
-      ViaFilterOption(label: 'Battery', value: 'battery', icon: Icons.battery_alert),
-      ViaFilterOption(label: 'Maintenance', value: 'maintenance', icon: Icons.build),
-      ViaFilterOption(label: 'Geofence', value: 'geofence', icon: Icons.location_on),
+      ViaFilterOption(
+          label: 'Battery', value: 'battery', icon: Icons.battery_alert),
+      ViaFilterOption(
+          label: 'Maintenance', value: 'maintenance', icon: Icons.build),
+      ViaFilterOption(
+          label: 'Geofence', value: 'geofence', icon: Icons.location_on),
       ViaFilterOption(label: 'System', value: 'system', icon: Icons.settings),
     ];
   }
 
   List<ViaSortOption> _buildSortOptions() {
     return const [
-      ViaSortOption(label: 'Newest First', value: 'newest', icon: Icons.arrow_downward),
-      ViaSortOption(label: 'Oldest First', value: 'oldest', icon: Icons.arrow_upward),
-      ViaSortOption(label: 'Priority High→Low', value: 'priority_high', icon: Icons.arrow_upward),
-      ViaSortOption(label: 'Priority Low→High', value: 'priority_low', icon: Icons.arrow_downward),
+      ViaSortOption(
+          label: 'Newest First', value: 'newest', icon: Icons.arrow_downward),
+      ViaSortOption(
+          label: 'Oldest First', value: 'oldest', icon: Icons.arrow_upward),
+      ViaSortOption(
+          label: 'Priority High→Low',
+          value: 'priority_high',
+          icon: Icons.arrow_upward),
+      ViaSortOption(
+          label: 'Priority Low→High',
+          value: 'priority_low',
+          icon: Icons.arrow_downward),
     ];
   }
 
@@ -227,13 +234,13 @@ class _AlertManagementPageV2State extends ConsumerState<AlertManagementPageV2> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.notifications_none,
               size: 64,
               color: IndustrialDarkTokens.textSecondary,
             ),
             const SizedBox(height: IndustrialDarkTokens.spacingItem),
-            Text(
+            const Text(
               'No alerts found',
               style: TextStyle(
                 fontSize: IndustrialDarkTokens.fontSizeDisplay,
@@ -246,7 +253,7 @@ class _AlertManagementPageV2State extends ConsumerState<AlertManagementPageV2> {
               _currentFilter == 'all'
                   ? 'All alerts are resolved'
                   : 'No alerts match the selected filter',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: IndustrialDarkTokens.fontSizeSmall,
                 color: IndustrialDarkTokens.textSecondary,
               ),
@@ -288,13 +295,9 @@ class _AlertManagementPageV2State extends ConsumerState<AlertManagementPageV2> {
             .where((a) => a.severity == AlertSeverity.warning)
             .toList();
       case 'info':
-        return alerts
-            .where((a) => a.severity == AlertSeverity.info)
-            .toList();
+        return alerts.where((a) => a.severity == AlertSeverity.info).toList();
       case 'cart':
-        return alerts
-            .where((a) => a.category == AlertCategory.cart)
-            .toList();
+        return alerts.where((a) => a.category == AlertCategory.cart).toList();
       case 'battery':
         return alerts
             .where((a) => a.category == AlertCategory.battery)
@@ -308,9 +311,7 @@ class _AlertManagementPageV2State extends ConsumerState<AlertManagementPageV2> {
             .where((a) => a.category == AlertCategory.geofence)
             .toList();
       case 'system':
-        return alerts
-            .where((a) => a.category == AlertCategory.system)
-            .toList();
+        return alerts.where((a) => a.category == AlertCategory.system).toList();
       default:
         return alerts;
     }

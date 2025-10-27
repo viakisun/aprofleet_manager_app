@@ -111,9 +111,6 @@ class MapMarkerFactory {
 
     for (final cart in carts) {
       // 위치 정보가 없는 카트는 건너뜁니다
-      if (cart.position == null) continue;
-
-      // 개별 마커 생성 (비동기 가능)
       final marker = await _createSingleMarker(
         cart: cart,
         onTap: onCartTap != null ? () => onCartTap(cart) : null,
@@ -150,8 +147,8 @@ class MapMarkerFactory {
 
       // 마커 위치
       position: google.LatLng(
-        cart.position!.latitude,
-        cart.position!.longitude,
+        cart.position.latitude,
+        cart.position.longitude,
       ),
 
       // 마커 아이콘 (커스텀 또는 기본)

@@ -33,7 +33,8 @@ class WorkOrderTypeSelector extends StatelessWidget {
               color: isSelected
                   ? IndustrialDarkTokens.textPrimary
                   : IndustrialDarkTokens.bgSurface,
-              borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+              borderRadius:
+                  BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
               border: Border.all(
                 color: isSelected
                     ? IndustrialDarkTokens.textPrimary

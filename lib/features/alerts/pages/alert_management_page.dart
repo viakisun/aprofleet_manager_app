@@ -160,7 +160,7 @@ class _AlertManagementPageState extends ConsumerState<AlertManagementPage>
 
   Widget _buildAlertListContent(List<Alert> filteredAlerts, alertController) {
     if (filteredAlerts.isEmpty) {
-      return Center(
+      return const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -169,7 +169,7 @@ class _AlertManagementPageState extends ConsumerState<AlertManagementPage>
               size: 64,
               color: IndustrialDarkTokens.textSecondary,
             ),
-            const SizedBox(height: IndustrialDarkTokens.spacingItem),
+            SizedBox(height: IndustrialDarkTokens.spacingItem),
             Text(
               'No alerts found',
               style: TextStyle(
@@ -177,7 +177,7 @@ class _AlertManagementPageState extends ConsumerState<AlertManagementPage>
                 color: IndustrialDarkTokens.textSecondary,
               ),
             ),
-            const SizedBox(height: IndustrialDarkTokens.spacingCompact),
+            SizedBox(height: IndustrialDarkTokens.spacingCompact),
             Text(
               'All alerts are resolved or filtered out',
               style: TextStyle(

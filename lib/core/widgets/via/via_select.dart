@@ -116,7 +116,8 @@ class ViaSelect<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isDisabled = onChanged == null;
-    final String displayText = value != null ? itemBuilder(value as T) : (placeholder ?? 'Select');
+    final String displayText =
+        value != null ? itemBuilder(value as T) : (placeholder ?? 'Select');
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,7 +145,8 @@ class ViaSelect<T> extends StatelessWidget {
               color: isDisabled
                   ? IndustrialDarkTokens.bgSurface.withValues(alpha: 0.5)
                   : IndustrialDarkTokens.bgSurface,
-              borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+              borderRadius:
+                  BorderRadius.circular(IndustrialDarkTokens.radiusButton),
               border: Border.all(
                 color: isDisabled
                     ? IndustrialDarkTokens.outline.withValues(alpha: 0.3)
@@ -236,7 +238,8 @@ class _SelectionListState<T> extends State<_SelectionList<T>> {
     setState(() {
       final query = _searchController.text.toLowerCase();
       _filteredItems = widget.items
-          .where((item) => widget.itemBuilder(item).toLowerCase().contains(query))
+          .where(
+              (item) => widget.itemBuilder(item).toLowerCase().contains(query))
           .toList();
     });
   }
@@ -248,32 +251,37 @@ class _SelectionListState<T> extends State<_SelectionList<T>> {
       children: [
         if (widget.enableSearch) ...[
           Padding(
-            padding: const EdgeInsets.only(bottom: IndustrialDarkTokens.spacingItem),
+            padding:
+                const EdgeInsets.only(bottom: IndustrialDarkTokens.spacingItem),
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
                 hintText: 'Search...',
-                hintStyle: TextStyle(color: IndustrialDarkTokens.textSecondary),
-                prefixIcon: Icon(
+                hintStyle:
+                    const TextStyle(color: IndustrialDarkTokens.textSecondary),
+                prefixIcon: const Icon(
                   Icons.search,
                   color: IndustrialDarkTokens.textSecondary,
                 ),
                 filled: true,
                 fillColor: IndustrialDarkTokens.bgSurface,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
-                  borderSide: BorderSide(
+                  borderRadius:
+                      BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+                  borderSide: const BorderSide(
                     color: IndustrialDarkTokens.outline,
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
-                  borderSide: BorderSide(
+                  borderRadius:
+                      BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+                  borderSide: const BorderSide(
                     color: IndustrialDarkTokens.outline,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+                  borderRadius:
+                      BorderRadius.circular(IndustrialDarkTokens.radiusButton),
                   borderSide: const BorderSide(
                     color: IndustrialDarkTokens.accentPrimary,
                     width: 2,
@@ -301,11 +309,13 @@ class _SelectionListState<T> extends State<_SelectionList<T>> {
                   ),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.1)
+                        ? IndustrialDarkTokens.accentPrimary
+                            .withValues(alpha: 0.1)
                         : null,
                     border: Border(
                       bottom: BorderSide(
-                        color: IndustrialDarkTokens.outline.withValues(alpha: 0.5),
+                        color:
+                            IndustrialDarkTokens.outline.withValues(alpha: 0.5),
                         width: 1,
                       ),
                     ),
@@ -321,7 +331,9 @@ class _SelectionListState<T> extends State<_SelectionList<T>> {
                                   color: isSelected
                                       ? IndustrialDarkTokens.accentPrimary
                                       : IndustrialDarkTokens.textPrimary,
-                                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                                  fontWeight: isSelected
+                                      ? FontWeight.w600
+                                      : FontWeight.w400,
                                 ),
                               ),
                       ),

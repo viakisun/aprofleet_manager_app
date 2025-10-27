@@ -126,7 +126,7 @@ class _WorkOrderCreationPageState extends ConsumerState<WorkOrderCreationPage> {
   Widget _buildNavigation(createWoState) {
     return Container(
       padding: const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: IndustrialDarkTokens.bgSurface,
         border: Border(
           top: BorderSide(color: IndustrialDarkTokens.outline),
@@ -267,7 +267,7 @@ class _WorkOrderCreationPageState extends ConsumerState<WorkOrderCreationPage> {
           color: IndustrialDarkTokens.textPrimary,
         ),
       ),
-      child: Text(
+      child: const Text(
         'Are you sure you want to exit? Any unsaved changes will be lost.',
         style: TextStyle(
           fontSize: IndustrialDarkTokens.fontSizeLabel,

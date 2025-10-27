@@ -56,7 +56,8 @@ class MicroTag extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: _getBadgeColor(badge!),
-                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                  borderRadius:
+                      BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
                 ),
                 child: Text(
                   badge!,

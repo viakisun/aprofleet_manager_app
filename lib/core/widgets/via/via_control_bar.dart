@@ -93,7 +93,7 @@ class ViaControlBar extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: backgroundColor ?? IndustrialDarkTokens.bgSurface,
-        border: Border(
+        border: const Border(
           bottom: BorderSide(
             color: IndustrialDarkTokens.outline,
             width: IndustrialDarkTokens.borderWidth, // 2px
@@ -125,7 +125,8 @@ class ViaControlBar extends StatelessWidget {
                             : null,
                       ),
                       if (i < stats.length - 1)
-                        const SizedBox(width: IndustrialDarkTokens.spacingCompact),
+                        const SizedBox(
+                            width: IndustrialDarkTokens.spacingCompact),
                     ],
                   ],
                 ),
@@ -222,9 +223,9 @@ class ViaControlBar extends StatelessWidget {
                     vertical: IndustrialDarkTokens.spacingCompact,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(IndustrialDarkTokens.radiusButton),
-                    borderSide: BorderSide(
+                    borderRadius: BorderRadius.circular(
+                        IndustrialDarkTokens.radiusButton),
+                    borderSide: const BorderSide(
                       color: IndustrialDarkTokens.outline,
                       width: IndustrialDarkTokens.borderWidth,
                     ),
@@ -336,13 +337,13 @@ class _ControlDropdown extends StatelessWidget {
             onChanged: onChanged,
             underline: const SizedBox(),
             isDense: true,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: IndustrialDarkTokens.fontSizeSmall,
               color: IndustrialDarkTokens.textPrimary,
               fontWeight: IndustrialDarkTokens.fontWeightBold,
             ),
             dropdownColor: IndustrialDarkTokens.bgBase,
-            icon: Icon(
+            icon: const Icon(
               Icons.keyboard_arrow_down,
               size: 16,
               color: IndustrialDarkTokens.textSecondary,
@@ -393,7 +394,8 @@ class _ViewModeToggle extends StatelessWidget {
                 color: isActive
                     ? IndustrialDarkTokens.accentPrimary
                     : Colors.transparent,
-                borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                borderRadius:
+                    BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
               ),
               child: Icon(
                 mode.icon,

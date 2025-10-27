@@ -16,10 +16,10 @@ import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 /// - Responsive sizing
 
 enum ViaModalSize {
-  small,  // 300px width
+  small, // 300px width
   medium, // 400px width
-  large,  // 500px width
-  full,   // 90% screen width
+  large, // 500px width
+  full, // 90% screen width
 }
 
 class ViaModal extends StatefulWidget {
@@ -66,8 +66,7 @@ class ViaModal extends StatefulWidget {
   }) {
     return showDialog<T>(
       context: context,
-      barrierColor: backdropColor ??
-          Colors.black.withValues(alpha: 0.7),
+      barrierColor: backdropColor ?? Colors.black.withValues(alpha: 0.7),
       builder: (context) => ViaModal(
         size: size,
         showCloseButton: showCloseButton,
@@ -97,16 +96,17 @@ class ViaModal extends StatefulWidget {
       header: Row(
         children: [
           if (isDangerous)
-            Icon(
+            const Icon(
               Icons.warning_amber_rounded,
-              color: IndustrialDarkTokens.critical,
+              color: IndustrialDarkTokens.error,
               size: 24,
             ),
-          if (isDangerous) const SizedBox(width: IndustrialDarkTokens.spacingCompact),
+          if (isDangerous)
+            const SizedBox(width: IndustrialDarkTokens.spacingCompact),
           Expanded(
             child: Text(
               title,
-              style: IndustrialDarkTokens.headingMedium,
+              style: IndustrialDarkTokens.displayStyle,
             ),
           ),
         ],
@@ -132,7 +132,7 @@ class ViaModal extends StatefulWidget {
             onPressed: () => Navigator.of(context).pop(true),
             style: ElevatedButton.styleFrom(
               backgroundColor: isDangerous
-                  ? IndustrialDarkTokens.critical
+                  ? IndustrialDarkTokens.error
                   : IndustrialDarkTokens.accentPrimary,
             ),
             child: Text(
@@ -158,7 +158,7 @@ class _ViaModalState extends State<ViaModal>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: IndustrialDarkTokens.durationNormal,
+      duration: IndustrialDarkTokens.durationMedium,
       vsync: this,
     );
 
@@ -167,7 +167,7 @@ class _ViaModalState extends State<ViaModal>
       end: 1.0,
     ).animate(CurvedAnimation(
       parent: _controller,
-      curve: IndustrialDarkTokens.curveDeceleration,
+      curve: IndustrialDarkTokens.curveStandard,
     ));
 
     _scaleAnimation = Tween<double>(
@@ -175,7 +175,7 @@ class _ViaModalState extends State<ViaModal>
       end: 1.0,
     ).animate(CurvedAnimation(
       parent: _controller,
-      curve: IndustrialDarkTokens.curveDeceleration,
+      curve: IndustrialDarkTokens.curveStandard,
     ));
 
     _controller.forward();
@@ -233,10 +233,10 @@ class _ViaModalState extends State<ViaModal>
                   maxHeight: MediaQuery.of(context).size.height * 0.8,
                 ),
                 decoration: BoxDecoration(
-                  color: widget.backgroundColor ??
-                      IndustrialDarkTokens.bgSurface,
+                  color:
+                      widget.backgroundColor ?? IndustrialDarkTokens.bgSurface,
                   borderRadius:
-                      BorderRadius.circular(IndustrialDarkTokens.radiusXl),
+                      BorderRadius.circular(IndustrialDarkTokens.radiusCard),
                   border: Border.all(
                     color: IndustrialDarkTokens.outline,
                     width: 1,
@@ -256,9 +256,9 @@ class _ViaModalState extends State<ViaModal>
                     // Header with close button
                     if (widget.header != null || widget.showCloseButton)
                       Container(
-                        padding:
-                            const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
-                        decoration: BoxDecoration(
+                        padding: const EdgeInsets.all(
+                            IndustrialDarkTokens.spacingCard),
+                        decoration: const BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
                               color: IndustrialDarkTokens.outline,
@@ -272,7 +272,7 @@ class _ViaModalState extends State<ViaModal>
                               Expanded(child: widget.header!),
                             if (widget.showCloseButton)
                               IconButton(
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.close,
                                   size: 24,
                                   color: IndustrialDarkTokens.textSecondary,
@@ -289,8 +289,8 @@ class _ViaModalState extends State<ViaModal>
                     if (widget.body != null || widget.child != null)
                       Flexible(
                         child: SingleChildScrollView(
-                          padding:
-                              const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
+                          padding: const EdgeInsets.all(
+                              IndustrialDarkTokens.spacingCard),
                           child: widget.body ?? widget.child,
                         ),
                       ),
@@ -298,9 +298,9 @@ class _ViaModalState extends State<ViaModal>
                     // Footer
                     if (widget.footer != null)
                       Container(
-                        padding:
-                            const EdgeInsets.all(IndustrialDarkTokens.spacingCard),
-                        decoration: BoxDecoration(
+                        padding: const EdgeInsets.all(
+                            IndustrialDarkTokens.spacingCard),
+                        decoration: const BoxDecoration(
                           border: Border(
                             top: BorderSide(
                               color: IndustrialDarkTokens.outline,
@@ -363,7 +363,7 @@ class ViaAlertModal extends StatelessWidget {
           const SizedBox(height: IndustrialDarkTokens.spacingCard),
           Text(
             title,
-            style: IndustrialDarkTokens.headingMedium,
+            style: IndustrialDarkTokens.displayStyle,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: IndustrialDarkTokens.spacingCompact),

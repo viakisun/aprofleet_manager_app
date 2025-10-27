@@ -166,7 +166,8 @@ class ScenarioEngine {
     final eventsToFire = _currentScenario!.sortedEvents.where(
       (event) =>
           event.offsetSeconds <= _currentOffsetSeconds &&
-          event.offsetSeconds > (_currentOffsetSeconds - (0.1 * _playbackSpeed).round()),
+          event.offsetSeconds >
+              (_currentOffsetSeconds - (0.1 * _playbackSpeed).round()),
     );
 
     for (final event in eventsToFire) {
@@ -178,7 +179,8 @@ class ScenarioEngine {
 
   /// Fire an event
   Future<void> _fireEvent(ScenarioEvent event) async {
-    print('🎬 Scenario Event [${event.timeString}] ${event.icon} ${event.title}: ${event.message}');
+    print(
+        '🎬 Scenario Event [${event.timeString}] ${event.icon} ${event.title}: ${event.message}');
 
     // Broadcast event
     _eventController.add(event);

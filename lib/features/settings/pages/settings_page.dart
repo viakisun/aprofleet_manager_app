@@ -42,7 +42,8 @@ class SettingsPage extends ConsumerWidget {
             onPressed: () {
               ViaToast.show(
                 context: context,
-                message: '${localizations.search} - ${localizations.comingSoon}',
+                message:
+                    '${localizations.search} - ${localizations.comingSoon}',
                 variant: ViaToastVariant.info,
               );
             },
@@ -76,8 +77,7 @@ class SettingsPage extends ConsumerWidget {
                       : null,
                   trailing: currentLocale.languageCode == 'en'
                       ? const Icon(Icons.check_circle,
-                          color: IndustrialDarkTokens.statusActive,
-                          size: 20)
+                          color: IndustrialDarkTokens.statusActive, size: 20)
                       : null,
                   onTap: () =>
                       _changeLanguage(languageController, 'en', context),
@@ -91,8 +91,7 @@ class SettingsPage extends ConsumerWidget {
                       : null,
                   trailing: currentLocale.languageCode == 'ko'
                       ? const Icon(Icons.check_circle,
-                          color: IndustrialDarkTokens.statusActive,
-                          size: 20)
+                          color: IndustrialDarkTokens.statusActive, size: 20)
                       : null,
                   onTap: () =>
                       _changeLanguage(languageController, 'ko', context),
@@ -106,8 +105,7 @@ class SettingsPage extends ConsumerWidget {
                       : null,
                   trailing: currentLocale.languageCode == 'ja'
                       ? const Icon(Icons.check_circle,
-                          color: IndustrialDarkTokens.statusActive,
-                          size: 20)
+                          color: IndustrialDarkTokens.statusActive, size: 20)
                       : null,
                   onTap: () =>
                       _changeLanguage(languageController, 'ja', context),
@@ -123,8 +121,7 @@ class SettingsPage extends ConsumerWidget {
                   trailing: currentLocale.languageCode == 'zh' &&
                           currentLocale.countryCode == 'CN'
                       ? const Icon(Icons.check_circle,
-                          color: IndustrialDarkTokens.statusActive,
-                          size: 20)
+                          color: IndustrialDarkTokens.statusActive, size: 20)
                       : null,
                   onTap: () =>
                       _changeLanguage(languageController, 'zh_CN', context),
@@ -140,8 +137,7 @@ class SettingsPage extends ConsumerWidget {
                   trailing: currentLocale.languageCode == 'zh' &&
                           currentLocale.countryCode == 'TW'
                       ? const Icon(Icons.check_circle,
-                          color: IndustrialDarkTokens.statusActive,
-                          size: 20)
+                          color: IndustrialDarkTokens.statusActive, size: 20)
                       : null,
                   onTap: () =>
                       _changeLanguage(languageController, 'zh_TW', context),
@@ -205,8 +201,7 @@ class SettingsPage extends ConsumerWidget {
                   title: 'Theme',
                   subtitle: 'Dark mode (always on)',
                   trailing: const Icon(Icons.check_circle,
-                      color: IndustrialDarkTokens.statusActive,
-                      size: 20),
+                      color: IndustrialDarkTokens.statusActive, size: 20),
                   onTap: () => _showThemeSettings(context),
                 ),
                 SettingsMenuItem(
@@ -222,9 +217,9 @@ class SettingsPage extends ConsumerWidget {
             const SizedBox(height: IndustrialDarkTokens.spacingSection),
 
             // Simulation Section
-            SettingsSection(
+            const SettingsSection(
               title: 'SIMULATION & DEMO',
-              children: const [
+              children: [
                 ScenarioControlPanel(),
               ],
             ),
@@ -283,7 +278,8 @@ class SettingsPage extends ConsumerWidget {
 
     ViaToast.show(
       context: context,
-      message: '${localizations.languageChanged} ${controller.currentLanguageName}',
+      message:
+          '${localizations.languageChanged} ${controller.currentLanguageName}',
       variant: ViaToastVariant.success,
     );
   }
@@ -319,11 +315,11 @@ class SettingsPage extends ConsumerWidget {
             ),
             title: Text(
               provider.name,
-              style: TextStyle(color: IndustrialDarkTokens.textPrimary),
+              style: const TextStyle(color: IndustrialDarkTokens.textPrimary),
             ),
             subtitle: Text(
               provider.description,
-              style: TextStyle(color: IndustrialDarkTokens.textSecondary),
+              style: const TextStyle(color: IndustrialDarkTokens.textSecondary),
             ),
             onTap: () async {
               Navigator.pop(context);
@@ -448,15 +444,18 @@ class SettingsPage extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(localizations.versionInfo,
-              style: TextStyle(color: IndustrialDarkTokens.textSecondary)),
+              style:
+                  const TextStyle(color: IndustrialDarkTokens.textSecondary)),
           const SizedBox(height: IndustrialDarkTokens.spacingCompact),
           Text(localizations.manufacturerInfo,
-              style: TextStyle(color: IndustrialDarkTokens.textSecondary)),
+              style:
+                  const TextStyle(color: IndustrialDarkTokens.textSecondary)),
           const SizedBox(height: IndustrialDarkTokens.spacingCompact),
           Text(localizations.productInfo,
-              style: TextStyle(color: IndustrialDarkTokens.textSecondary)),
+              style:
+                  const TextStyle(color: IndustrialDarkTokens.textSecondary)),
           const SizedBox(height: IndustrialDarkTokens.spacingCompact),
-          Text('© 2024 DY Innovate. All rights reserved.',
+          const Text('© 2024 DY Innovate. All rights reserved.',
               style: TextStyle(color: IndustrialDarkTokens.textSecondary)),
         ],
       ),
@@ -483,7 +482,7 @@ class SettingsPage extends ConsumerWidget {
       ),
       child: Text(
         localizations.signOutConfirm,
-        style: TextStyle(color: IndustrialDarkTokens.textSecondary),
+        style: const TextStyle(color: IndustrialDarkTokens.textSecondary),
       ),
       footer: Row(
         children: [

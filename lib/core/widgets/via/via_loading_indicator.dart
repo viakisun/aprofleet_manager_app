@@ -141,8 +141,7 @@ class ViaLoadingIndicator extends StatelessWidget {
         valueColor: AlwaysStoppedAnimation<Color>(
           color ?? IndustrialDarkTokens.accentPrimary, // Blue accent
         ),
-        backgroundColor:
-            IndustrialDarkTokens.bgBase.withValues(alpha: 0.5),
+        backgroundColor: IndustrialDarkTokens.bgBase.withValues(alpha: 0.5),
       ),
     );
   }
@@ -153,15 +152,15 @@ class ViaLoadingIndicator extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusChip), // 20px pill
+          borderRadius: BorderRadius.circular(
+              IndustrialDarkTokens.radiusChip), // 20px pill
           child: LinearProgressIndicator(
             value: value,
             minHeight: 6.0,
             valueColor: AlwaysStoppedAnimation<Color>(
               color ?? IndustrialDarkTokens.accentPrimary, // Blue accent
             ),
-            backgroundColor:
-                IndustrialDarkTokens.bgBase.withValues(alpha: 0.5),
+            backgroundColor: IndustrialDarkTokens.bgBase.withValues(alpha: 0.5),
           ),
         ),
         if (value != null) ...[
@@ -252,7 +251,7 @@ class _SkeletonShimmerState extends State<_SkeletonShimmer>
                 _animation.value,
                 _animation.value + 0.3,
               ],
-              colors: [
+              colors: const [
                 IndustrialDarkTokens.bgBase,
                 IndustrialDarkTokens.bgSurface,
                 IndustrialDarkTokens.bgBase,
@@ -432,7 +431,7 @@ class ViaSkeletonListItem extends StatelessWidget {
             Container(
               width: 48,
               height: 48,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: IndustrialDarkTokens.bgBase,
                 shape: BoxShape.circle,
               ),
@@ -448,8 +447,8 @@ class ViaSkeletonListItem extends StatelessWidget {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: IndustrialDarkTokens.bgBase,
-                      borderRadius:
-                          BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                      borderRadius: BorderRadius.circular(
+                          IndustrialDarkTokens.radiusSmall),
                     ),
                   ),
                   const SizedBox(height: IndustrialDarkTokens.spacingCompact),
@@ -458,8 +457,8 @@ class ViaSkeletonListItem extends StatelessWidget {
                     width: 200,
                     decoration: BoxDecoration(
                       color: IndustrialDarkTokens.bgBase,
-                      borderRadius:
-                          BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                      borderRadius: BorderRadius.circular(
+                          IndustrialDarkTokens.radiusSmall),
                     ),
                   ),
                 ],
@@ -496,7 +495,8 @@ class ViaLoadingOverlay extends StatelessWidget {
           padding: const EdgeInsets.all(IndustrialDarkTokens.spacingSection),
           decoration: BoxDecoration(
             color: IndustrialDarkTokens.bgSurface,
-            borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusCard),
+            borderRadius:
+                BorderRadius.circular(IndustrialDarkTokens.radiusCard),
             border: Border.all(
               color: IndustrialDarkTokens.outline,
               width: IndustrialDarkTokens.borderWidth, // 2px

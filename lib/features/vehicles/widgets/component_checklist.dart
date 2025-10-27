@@ -50,7 +50,8 @@ class _ComponentChecklistState extends State<ComponentChecklist> {
               ),
               decoration: BoxDecoration(
                 color: IndustrialDarkTokens.statusActive.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                borderRadius:
+                    BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
               ),
               child: Text(
                 '${_getCheckedCount()}/${_components.length}',
@@ -76,7 +77,8 @@ class _ComponentChecklistState extends State<ComponentChecklist> {
             ),
             decoration: BoxDecoration(
               color: IndustrialDarkTokens.bgSurface,
-              borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+              borderRadius:
+                  BorderRadius.circular(IndustrialDarkTokens.radiusButton),
               border: Border.all(
                 color: IndustrialDarkTokens.outline,
                 width: 1,
@@ -88,7 +90,8 @@ class _ComponentChecklistState extends State<ComponentChecklist> {
                 // Category header
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(IndustrialDarkTokens.spacingItem),
+                  padding:
+                      const EdgeInsets.all(IndustrialDarkTokens.spacingItem),
                   decoration: const BoxDecoration(
                     color: IndustrialDarkTokens.bgSurface,
                     borderRadius: BorderRadius.vertical(
@@ -102,7 +105,8 @@ class _ComponentChecklistState extends State<ComponentChecklist> {
                         size: 20,
                         color: IndustrialDarkTokens.statusActive,
                       ),
-                      const SizedBox(width: IndustrialDarkTokens.spacingCompact),
+                      const SizedBox(
+                          width: IndustrialDarkTokens.spacingCompact),
                       Text(
                         category.toUpperCase(),
                         style: IndustrialDarkTokens.getUppercaseLabelStyle(
@@ -121,8 +125,8 @@ class _ComponentChecklistState extends State<ComponentChecklist> {
                         decoration: BoxDecoration(
                           color: _getCategoryProgressColor(components)
                               .withValues(alpha: 0.2),
-                          borderRadius:
-                              BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                          borderRadius: BorderRadius.circular(
+                              IndustrialDarkTokens.radiusSmall),
                         ),
                         child: Text(
                           '${_getCategoryCheckedCount(components)}/${components.length}',
@@ -147,7 +151,7 @@ class _ComponentChecklistState extends State<ComponentChecklist> {
                     decoration: BoxDecoration(
                       border: isLast
                           ? null
-                          : Border(
+                          : const Border(
                               bottom: BorderSide(
                                 color: IndustrialDarkTokens.outline,
                                 width: 1,
@@ -164,8 +168,8 @@ class _ComponentChecklistState extends State<ComponentChecklist> {
                         onChanged: (value) => _toggleComponent(component),
                         activeColor: IndustrialDarkTokens.statusActive,
                         shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                          borderRadius: BorderRadius.circular(
+                              IndustrialDarkTokens.radiusSmall),
                         ),
                       ),
                       title: Text(
@@ -186,7 +190,7 @@ class _ComponentChecklistState extends State<ComponentChecklist> {
                       subtitle: component.description.isNotEmpty
                           ? Text(
                               component.description,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: IndustrialDarkTokens.fontSizeSmall,
                                 color: IndustrialDarkTokens.textSecondary,
                               ),
@@ -208,9 +212,11 @@ class _ComponentChecklistState extends State<ComponentChecklist> {
                                 'CRITICAL',
                                 style: TextStyle(
                                   fontSize: 10,
-                                  fontWeight: IndustrialDarkTokens.fontWeightBold,
+                                  fontWeight:
+                                      IndustrialDarkTokens.fontWeightBold,
                                   color: IndustrialDarkTokens.error,
-                                  letterSpacing: IndustrialDarkTokens.letterSpacing,
+                                  letterSpacing:
+                                      IndustrialDarkTokens.letterSpacing,
                                 ),
                               ),
                             )

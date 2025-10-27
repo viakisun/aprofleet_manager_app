@@ -76,7 +76,8 @@ class ViaSwitch extends StatefulWidget {
   State<ViaSwitch> createState() => _ViaSwitchState();
 }
 
-class _ViaSwitchState extends State<ViaSwitch> with SingleTickerProviderStateMixin {
+class _ViaSwitchState extends State<ViaSwitch>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -84,7 +85,7 @@ class _ViaSwitchState extends State<ViaSwitch> with SingleTickerProviderStateMix
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: IndustrialDarkTokens.durationNormal,
+      duration: IndustrialDarkTokens.durationMedium,
       vsync: this,
     );
     _animation = CurvedAnimation(
@@ -160,9 +161,12 @@ class _ViaSwitchState extends State<ViaSwitch> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     final bool isDisabled = widget.onChanged == null;
-    final Color activeColor = widget.activeColor ?? IndustrialDarkTokens.accentPrimary;
-    final Color inactiveTrackColor = widget.inactiveTrackColor ?? IndustrialDarkTokens.bgSurface;
-    final Color inactiveThumbColor = widget.inactiveThumbColor ?? IndustrialDarkTokens.textSecondary;
+    final Color activeColor =
+        widget.activeColor ?? IndustrialDarkTokens.accentPrimary;
+    final Color inactiveTrackColor =
+        widget.inactiveTrackColor ?? IndustrialDarkTokens.bgSurface;
+    final Color inactiveThumbColor =
+        widget.inactiveThumbColor ?? IndustrialDarkTokens.textSecondary;
 
     Widget switchWidget = GestureDetector(
       onTap: isDisabled ? null : _handleTap,
@@ -206,7 +210,8 @@ class _ViaSwitchState extends State<ViaSwitch> with SingleTickerProviderStateMix
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: isDisabled
-                        ? IndustrialDarkTokens.textSecondary.withValues(alpha: 0.5)
+                        ? IndustrialDarkTokens.textSecondary
+                            .withValues(alpha: 0.5)
                         : Color.lerp(
                             inactiveThumbColor,
                             activeColor,
@@ -327,7 +332,8 @@ class ViaSwitchListItem extends StatelessWidget {
                       ),
                     ),
                     if (subtitle != null) ...[
-                      const SizedBox(height: IndustrialDarkTokens.spacingMinimal),
+                      const SizedBox(
+                          height: IndustrialDarkTokens.spacingMinimal),
                       Text(
                         subtitle!,
                         style: IndustrialDarkTokens.bodyStyle.copyWith(
@@ -355,7 +361,7 @@ class ViaSwitchListItem extends StatelessWidget {
                       IndustrialDarkTokens.spacingItem
                   : IndustrialDarkTokens.spacingCard,
             ),
-            child: Divider(
+            child: const Divider(
               height: 1,
               color: IndustrialDarkTokens.outline,
             ),

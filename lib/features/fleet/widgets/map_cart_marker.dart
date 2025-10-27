@@ -25,7 +25,7 @@ class MapCartMarker extends StatelessWidget {
       onTap: onTap,
       child: AnimatedScale(
         scale: scale,
-        duration: IndustrialDarkTokens.animationFast,
+        duration: IndustrialDarkTokens.durationFast,
         child: Container(
           width: 40,
           height: 40,
@@ -61,7 +61,7 @@ class MapCartMarker extends StatelessWidget {
               ),
 
               // Custom cart icon
-              Center(
+              const Center(
                 child: SizedBox(
                   width: 24,
                   height: 24,
@@ -116,9 +116,7 @@ class MapCartPopup extends StatelessWidget {
 
     return Container(
       width: 280,
-      decoration: IndustrialDarkTokens.getCardDecoration(
-        elevation: IndustrialDarkTokens.elevationLg,
-      ),
+      decoration: IndustrialDarkTokens.getCardDecoration(),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -200,7 +198,7 @@ class MapCartPopup extends StatelessWidget {
                 // Location info
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.location_on,
                       size: 16,
                       color: IndustrialDarkTokens.textSecondary,
@@ -209,7 +207,7 @@ class MapCartPopup extends StatelessWidget {
                     Expanded(
                       child: Text(
                         cart.location ?? 'Unknown Location',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: IndustrialDarkTokens.fontSizeSmall,
                           color: IndustrialDarkTokens.textSecondary,
                         ),

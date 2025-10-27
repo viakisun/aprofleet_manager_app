@@ -32,7 +32,8 @@ class _MarkerOverlayTagState extends State<MarkerOverlayTag> {
   @override
   void didUpdateWidget(MarkerOverlayTag oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.position != widget.position || oldWidget.controller != widget.controller) {
+    if (oldWidget.position != widget.position ||
+        oldWidget.controller != widget.controller) {
       _recalc();
     }
   }
@@ -62,12 +63,14 @@ class _MarkerOverlayTagState extends State<MarkerOverlayTag> {
     }
 
     try {
-      print('MarkerOverlayTag: Getting screen coordinate for position: ${widget.position}');
+      print(
+          'MarkerOverlayTag: Getting screen coordinate for position: ${widget.position}');
       final sc = await widget.controller!.getScreenCoordinate(widget.position);
       if (mounted) {
         final newScreen = Offset(sc.x.toDouble(), sc.y.toDouble());
         print('MarkerOverlayTag: Screen coordinate = $newScreen');
-        print('MarkerOverlayTag: Calculated position - dx: ${newScreen.dx + 12}, dy: ${newScreen.dy - 32}');
+        print(
+            'MarkerOverlayTag: Calculated position - dx: ${newScreen.dx + 12}, dy: ${newScreen.dy - 32}');
         setState(() => screen = newScreen);
       }
     } catch (e) {

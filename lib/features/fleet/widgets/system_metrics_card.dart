@@ -25,8 +25,9 @@ class SystemMetricsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(
-          isCompact ? IndustrialDarkTokens.spacingCompact : IndustrialDarkTokens.spacingItem),
+      padding: EdgeInsets.all(isCompact
+          ? IndustrialDarkTokens.spacingCompact
+          : IndustrialDarkTokens.spacingItem),
       decoration: IndustrialDarkTokens.getCardDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,10 +36,12 @@ class SystemMetricsCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(IndustrialDarkTokens.spacingMinimal),
+                padding:
+                    const EdgeInsets.all(IndustrialDarkTokens.spacingMinimal),
                 decoration: BoxDecoration(
                   color: color.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                  borderRadius:
+                      BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
                 ),
                 child: Icon(
                   icon,
@@ -64,9 +67,12 @@ class SystemMetricsCard extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: trend!.startsWith('+')
-                        ? IndustrialDarkTokens.statusActive.withValues(alpha: 0.1)
-                        : IndustrialDarkTokens.statusMaintenance.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                        ? IndustrialDarkTokens.statusActive
+                            .withValues(alpha: 0.1)
+                        : IndustrialDarkTokens.statusMaintenance
+                            .withValues(alpha: 0.1),
+                    borderRadius:
+                        BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
                   ),
                   child: Text(
                     trend!,

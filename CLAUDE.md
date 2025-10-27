@@ -8,9 +8,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - **Brand**: APRO golf carts
 - **Manufacturer**: DY Innovate
-- **Current Phase**: Development (using Mock API)
+- **Current Phase**: Development (using Mock API) + VIA Design System Migration (Phase 4)
 - **Supported Languages**: English, Japanese, Korean, Chinese (Simplified & Traditional)
-- **Design**: Dark monochrome theme with Material3
+- **Design**: VIA Design System (Industrial Dark Theme) - monochrome glassmorphic design
 
 ## Build, Test, and Run Commands
 
@@ -94,12 +94,12 @@ features/<module>/
 
 **Core Modules**:
 - `auth/`: Splash, onboarding, login flow with SharedPreferences persistence
-- `realtime_monitoring/`: Live map with Google Maps, real-time telemetry streaming, cart detail monitoring
-- `cart_management/`: Inventory list with multi-filter search, 4-step registration wizard with QR generation
-- `maintenance_management/`: Work order CRUD with 4-step creation wizard, priority-based workflow (P1-P4)
-- `alert_management/`: Real-time alert center with severity-based routing, escalation workflow, SLA tracking
-- `analytics_reporting/`: KPI dashboard with 30-second auto-refresh, chart visualizations, export functionality
-- `settings/`: Language selection, preferences
+- `fleet/`: Live map with Google Maps/Mapbox, real-time telemetry streaming, cart detail monitoring
+- `vehicles/`: Cart inventory list with multi-filter search, cart registration wizard with QR generation
+- `service/`: Work order CRUD with 4-step creation wizard, priority-based workflow (P1-P4)
+- `alerts/`: Real-time alert center with severity-based routing, escalation workflow, SLA tracking
+- `analytics/`: KPI dashboard with 30-second auto-refresh, chart visualizations, export functionality
+- `settings/`: Language selection, map provider, preferences
 
 ### State Management Pattern
 
@@ -145,8 +145,9 @@ final filteredCarts = ref.watch(cartInventoryControllerProvider.select((s) => s.
 
 **Cross-Module Navigation**:
 - Alert → Cart Detail: `context.go('/rt/cart/${alert.cartId}')`
-- Alert → Create Work Order: `context.go('/mm/create?cart=${alert.cartId}')`
+- Alert → Create Work Order: `context.go('/service/create?cart=${alert.cartId}')`
 - Cart → Track: `context.go('/rt/cart/${cart.id}')`
+- Cart Inventory: `context.go('/vehicles/inventory')`
 
 Route guards check `authControllerProvider` state for onboarding completion and login status.
 
@@ -263,40 +264,77 @@ void main() {
 
 Authentication via Bearer token in headers. Token refresh logic should be implemented in `AuthTokenManager`.
 
-## Design System
+## Design System - VIA (Phase 4 Migration in Progress)
 
-**Theme**: Dark monochrome with pure black (#000000) background
+**Current Status**: Migrating to VIA Design System (75% complete)
+- ✅ Phase 1-2: Core VIA components (ViaButton, ViaCard, ViaToast, etc.)
+- ✅ Phase 3: Live Map View 100% VIA
+- 🔄 Phase 4: Remaining screens (Settings, Alerts, Work Orders, etc.)
 
-**Color Tokens** (`lib/core/theme/design_tokens.dart`):
-- Backgrounds: Pure black (#000000), dark gray (#0A0A0A), card surface (#1A1A1A)
-- Borders: White with 4-12% opacity for subtle separation
+**Theme**: VIA Industrial Dark - glassmorphic monochrome design
+
+**Color Tokens** (`lib/core/theme/via_design_tokens.dart`):
+- Primary: #00C97B (Green) - VIA brand color
+- Critical: #C23D3D (Red) - Alerts, errors
+- Backgrounds: Pure black (#000000), surface (#0A0A0A with 5% white opacity)
+- Borders: White with 4-12% opacity for glassmorphic effects
 - Status Colors:
-  - Active: Bright green (#00FF00)
-  - Idle: Orange (#FFAA00)
-  - Charging: Blue (#0088FF)
-  - Maintenance: Red (#FF4444)
-  - Offline: Gray (#666666)
-- Priority Colors: P1 (Red) → P2 (Orange) → P3 (Blue) → P4 (Green)
+  - Active: #00C97B (Green)
+  - Idle: #FFAA00 (Orange)
+  - Charging: #3B83CC (Blue)
+  - Maintenance: #D67500 (Dark Orange)
+  - Offline: #666666 (Gray)
+- Priority Colors: P1 (#C23D3D) → P2 (#D67500) → P3 (#3B83CC) → P4 (#00C97B)
 
 **Typography**:
-- Font: SF Pro Display (custom font in `assets/fonts/`)
-- All text uses uppercase with letter-spacing for professional look
-- Numeric displays use tabular figures for alignment
+- **Primary Font**: Pretendard Variable (Korean-optimized, weights 100-900)
+- **Fallback Font**: SF Pro Display (if Pretendard not available)
+- Clean, modern sans-serif with excellent readability
+- Variable font allows precise weight control
+- See `PRETENDARD_FONT_SETUP.md` for installation instructions
 
-**Spacing Scale**: 4px base unit (4, 8, 12, 16, 20, 24, 32, 48, 64)
+**VIA Components** (in `lib/core/widgets/via/`):
+- `ViaButton` - 4 variants (primary, secondary, ghost, danger), 3 sizes
+- `ViaCard` - Glassmorphic cards with blur effects
+- `ViaToast` - 4 variants with slide animations
+- `ViaBottomSheet` - Draggable sheets with snap points
+- `ViaInput` - Text inputs with validation
+- `ViaStatusBadge`, `ViaPriorityBadge` - Status indicators
+- And more (see `VIA_DESIGN_SYSTEM_STATUS.md`)
 
-**Access Design Tokens**:
+**Spacing Scale**: 2, 4, 8, 12, 16, 20, 24, 32 (xxs to 2xl)
+
+**Animations**:
+- Fast: 150ms (micro-interactions)
+- Normal: 300ms (modals, sheets)
+- Slow: 500ms (page transitions)
+- Standard curve: easeInOut
+
+**Access VIA Design Tokens**:
 ```dart
-import 'package:aprofleet_manager/core/theme/design_tokens.dart';
+import 'package:aprofleet_manager/core/theme/via_design_tokens.dart';
 
-Container(
-  color: DesignTokens.bgPrimary,
-  decoration: BoxDecoration(
-    border: Border.all(color: DesignTokens.borderPrimary),
-  ),
-  child: Text('ACTIVE', style: TextStyle(color: DesignTokens.statusActive)),
+// Use VIA components instead of Material widgets
+ViaCard(
+  child: Text('Content', style: ViaDesignTokens.headingMedium),
+)
+
+ViaButton.primary(
+  text: 'Submit',
+  onPressed: () {},
+)
+
+ViaToast.show(
+  context: context,
+  message: 'Success!',
+  variant: ViaToastVariant.success,
 )
 ```
+
+**Important**: When working on new features or updates:
+- Always use VIA components instead of Material widgets
+- Follow patterns in `PHASE4_PLAN.md` for component migration
+- Never mix Material and VIA components in the same screen
 
 ## Development Workflows
 
@@ -397,34 +435,55 @@ Add to `android/app/src/main/AndroidManifest.xml`:
 | Providers (DI) | `lib/core/services/providers.dart` |
 | Mock API | `lib/core/services/mock/mock_api.dart` |
 | Mock WebSocket | `lib/core/services/mock/mock_ws_hub.dart` |
-| Theme | `lib/theme/app_theme.dart` |
-| Design Tokens | `lib/core/theme/design_tokens.dart` |
+| VIA Theme | `lib/theme/via_theme.dart` |
+| Industrial Dark Theme | `lib/theme/industrial_dark_theme.dart` |
+| VIA Design Tokens | `lib/core/theme/via_design_tokens.dart` |
+| Legacy Design Tokens | `lib/core/theme/design_tokens.dart` |
+| VIA Components | `lib/core/widgets/via/*.dart` |
 | Domain Models | `lib/domain/models/*.dart` |
 | Auth Controller | `lib/features/auth/controllers/auth_controller.dart` |
-| Cart Inventory | `lib/features/cart_management/controllers/cart_inventory_controller.dart` |
-| Work Orders | `lib/features/maintenance_management/controllers/work_order_controller.dart` |
-| Alerts | `lib/features/alert_management/controllers/alert_controller.dart` |
-| Analytics | `lib/features/analytics_reporting/controllers/analytics_controller.dart` |
-| Live Map | `lib/features/realtime_monitoring/pages/live_map_view.dart` |
+| Live Map (Fleet) | `lib/features/fleet/pages/live_map_view.dart` |
+| Cart Inventory | `lib/features/vehicles/pages/cart_inventory_list.dart` |
+| Work Orders | `lib/features/service/pages/work_order_list_v2.dart` |
+| Alerts | `lib/features/alerts/pages/alert_management_page_v2.dart` |
+| Analytics | `lib/features/analytics/pages/analytics_dashboard.dart` |
+| Settings | `lib/features/settings/pages/settings_page.dart` |
 | Localization | `lib/core/localization/app_localizations.dart` |
 | Seed Data | `assets/seeds/*.json` |
 
 ## Important Notes
 
+- **VIA Design System**: Always use VIA components (ViaButton, ViaCard, etc.) instead of Material widgets
 - **Never hardcode strings**: Always use `AppLocalizations.of(context)` for user-facing text
-- **Always use DesignTokens**: Never hardcode colors or spacing values
+- **Always use ViaDesignTokens**: Never hardcode colors or spacing values
 - **Stream cleanup**: All StreamSubscriptions must be cancelled in controller `dispose()`
 - **Immutable models**: All domain models use Freezed, modify via `copyWith()`
 - **Repository pattern**: UI never calls MockApi directly, always through repository providers
 - **Authentication**: Auth state persisted in SharedPreferences, guards routes via GoRouter redirect
+- **Haptic feedback**: Include `enableHaptic: true` for all interactive VIA components
 
-## Project Status
+## Project Status & Migration
 
-Current branch: `design/monochrome-theme`
+**Current Branch**: `main`
 
-Recent features:
-- Monochrome design system implementation
-- Layer toggle, compact vertical cart strip in map view
-- Top status strip with keyboard shortcuts
-- Micro tag synchronization and performance fixes
-- Custom cart markers with Android compatibility
+**VIA Design System Migration** (Phase 4):
+- ✅ Phase 1-2: Core VIA components complete (11 components)
+- ✅ Phase 3: Live Map View 100% VIA
+- 🔄 Phase 4: Remaining screens (see `PHASE4_PLAN.md`)
+  - Week 1: Settings Page + Quick Wins
+  - Week 2: New VIA components (ViaSwitch, ViaSelect, etc.)
+  - Week 3-4: Alerts, Work Orders, Cart Management
+
+**Recent Features**:
+- VIA Design System - glassmorphic industrial dark theme
+- Pretendard Variable font integration
+- Live map with Google Maps + Mapbox support
+- Tab redesign and refactoring (fleet, vehicles, service modules)
+- Custom cart markers with status-based colors
+- Real-time telemetry streaming with MockWsHub
+
+**Key Documentation**:
+- `VIA_DESIGN_SYSTEM_STATUS.md` - Current migration status
+- `PHASE4_PLAN.md` - Complete migration roadmap
+- `PRETENDARD_FONT_SETUP.md` - Font installation guide
+- `TAB_REMOVAL_REDESIGN_PLAN.md` - Navigation restructure

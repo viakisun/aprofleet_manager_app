@@ -77,7 +77,8 @@ class ViaCheckbox extends StatefulWidget {
   State<ViaCheckbox> createState() => _ViaCheckboxState();
 }
 
-class _ViaCheckboxState extends State<ViaCheckbox> with SingleTickerProviderStateMixin {
+class _ViaCheckboxState extends State<ViaCheckbox>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _checkAnimation;
   late Animation<double> _scaleAnimation;
@@ -179,8 +180,10 @@ class _ViaCheckboxState extends State<ViaCheckbox> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
     final bool isDisabled = widget.onChanged == null;
-    final Color activeColor = widget.activeColor ?? IndustrialDarkTokens.accentPrimary; // Blue accent
-    final Color borderColor = widget.borderColor ?? IndustrialDarkTokens.outline;
+    final Color activeColor =
+        widget.activeColor ?? IndustrialDarkTokens.accentPrimary; // Blue accent
+    final Color borderColor =
+        widget.borderColor ?? IndustrialDarkTokens.outline;
 
     Widget checkboxWidget = GestureDetector(
       onTap: isDisabled ? null : _handleTap,
@@ -267,7 +270,8 @@ class _ViaCheckboxState extends State<ViaCheckbox> with SingleTickerProviderStat
                   style: IndustrialDarkTokens.labelStyle.copyWith(
                     fontSize: IndustrialDarkTokens.fontSizeLabel,
                     color: isDisabled
-                        ? IndustrialDarkTokens.textSecondary.withValues(alpha: 0.3)
+                        ? IndustrialDarkTokens.textSecondary
+                            .withValues(alpha: 0.3)
                         : IndustrialDarkTokens.textPrimary,
                   ),
                 ),
@@ -411,7 +415,8 @@ class ViaCheckboxListItem extends StatelessWidget {
                       ),
                     ),
                     if (subtitle != null) ...[
-                      const SizedBox(height: IndustrialDarkTokens.spacingMinimal),
+                      const SizedBox(
+                          height: IndustrialDarkTokens.spacingMinimal),
                       Text(
                         subtitle!,
                         style: IndustrialDarkTokens.bodyStyle.copyWith(
@@ -441,7 +446,7 @@ class ViaCheckboxListItem extends StatelessWidget {
                       IndustrialDarkTokens.spacingItem
                   : IndustrialDarkTokens.spacingCard,
             ),
-            child: Divider(
+            child: const Divider(
               height: 1,
               thickness: IndustrialDarkTokens.borderWidthThin,
               color: IndustrialDarkTokens.outline,

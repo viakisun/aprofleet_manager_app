@@ -415,7 +415,7 @@ class SpeedMeterPainter extends CustomPainter {
 
       textPainter.text = TextSpan(
         text: speedValue.toString(),
-        style: TextStyle(
+        style: const TextStyle(
           color: IndustrialDarkTokens.textSecondary,
           fontSize: 10,
           fontWeight: IndustrialDarkTokens.fontWeightMedium,

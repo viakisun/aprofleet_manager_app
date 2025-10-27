@@ -18,7 +18,7 @@ class ViaTheme {
       // ========================================================================
       // COLOR SCHEME
       // ========================================================================
-      colorScheme: ColorScheme.dark(
+      colorScheme: const ColorScheme.dark(
         primary: ViaDesignTokens.primary,
         secondary: ViaDesignTokens.secondary,
         surface: ViaDesignTokens.surfacePrimary,
@@ -47,7 +47,7 @@ class ViaTheme {
         elevation: 0,
         centerTitle: true,
         titleTextStyle: ViaDesignTokens.headingMedium,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: ViaDesignTokens.textPrimary,
           size: ViaDesignTokens.iconMd,
         ),
@@ -134,21 +134,21 @@ class ViaTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(ViaDesignTokens.radiusMd),
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             color: ViaDesignTokens.primary,
             width: 1.5,
           ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(ViaDesignTokens.radiusMd),
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             color: ViaDesignTokens.critical,
             width: 1.5,
           ),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(ViaDesignTokens.radiusMd),
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             color: ViaDesignTokens.critical,
             width: 1.5,
           ),
@@ -192,7 +192,7 @@ class ViaTheme {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: ViaDesignTokens.primary,
-          side: BorderSide(
+          side: const BorderSide(
             color: ViaDesignTokens.primary,
             width: 1.5,
           ),
@@ -221,7 +221,7 @@ class ViaTheme {
       // ========================================================================
       // ICON THEME
       // ========================================================================
-      iconTheme: IconThemeData(
+      iconTheme: const IconThemeData(
         color: ViaDesignTokens.textPrimary,
         size: ViaDesignTokens.iconMd,
       ),
@@ -266,7 +266,7 @@ class ViaTheme {
       // ========================================================================
       // DIALOG THEME
       // ========================================================================
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
         backgroundColor: ViaDesignTokens.surfaceSecondary,
         elevation: ViaDesignTokens.elevationXl,
         shape: RoundedRectangleBorder(
@@ -283,7 +283,7 @@ class ViaTheme {
       // ========================================================================
       // BOTTOM SHEET THEME
       // ========================================================================
-      bottomSheetTheme: BottomSheetThemeData(
+      bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: ViaDesignTokens.surfaceSecondary,
         elevation: ViaDesignTokens.elevationXl,
         shape: RoundedRectangleBorder(
@@ -315,7 +315,7 @@ class ViaTheme {
       // ========================================================================
       // PROGRESS INDICATOR THEME
       // ========================================================================
-      progressIndicatorTheme: ProgressIndicatorThemeData(
+      progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: ViaDesignTokens.primary,
         linearTrackColor: ViaDesignTokens.surfaceSecondary,
         circularTrackColor: ViaDesignTokens.surfaceSecondary,
@@ -325,17 +325,17 @@ class ViaTheme {
       // SWITCH THEME
       // ========================================================================
       switchTheme: SwitchThemeData(
-        thumbColor: MaterialStateProperty.resolveWith<Color>(
-          (Set<MaterialState> states) {
-            if (states.contains(MaterialState.selected)) {
+        thumbColor: WidgetStateProperty.resolveWith<Color>(
+          (Set<WidgetState> states) {
+            if (states.contains(WidgetState.selected)) {
               return Colors.white;
             }
             return ViaDesignTokens.textMuted;
           },
         ),
-        trackColor: MaterialStateProperty.resolveWith<Color>(
-          (Set<MaterialState> states) {
-            if (states.contains(MaterialState.selected)) {
+        trackColor: WidgetStateProperty.resolveWith<Color>(
+          (Set<WidgetState> states) {
+            if (states.contains(WidgetState.selected)) {
               return ViaDesignTokens.primary;
             }
             return ViaDesignTokens.surfaceSecondary;
@@ -347,15 +347,15 @@ class ViaTheme {
       // CHECKBOX THEME
       // ========================================================================
       checkboxTheme: CheckboxThemeData(
-        fillColor: MaterialStateProperty.resolveWith<Color>(
-          (Set<MaterialState> states) {
-            if (states.contains(MaterialState.selected)) {
+        fillColor: WidgetStateProperty.resolveWith<Color>(
+          (Set<WidgetState> states) {
+            if (states.contains(WidgetState.selected)) {
               return ViaDesignTokens.primary;
             }
             return Colors.transparent;
           },
         ),
-        checkColor: MaterialStateProperty.all(Colors.white),
+        checkColor: WidgetStateProperty.all(Colors.white),
         side: BorderSide(
           color: ViaDesignTokens.borderSecondary,
           width: 1.5,
@@ -369,9 +369,9 @@ class ViaTheme {
       // RADIO THEME
       // ========================================================================
       radioTheme: RadioThemeData(
-        fillColor: MaterialStateProperty.resolveWith<Color>(
-          (Set<MaterialState> states) {
-            if (states.contains(MaterialState.selected)) {
+        fillColor: WidgetStateProperty.resolveWith<Color>(
+          (Set<WidgetState> states) {
+            if (states.contains(WidgetState.selected)) {
               return ViaDesignTokens.primary;
             }
             return ViaDesignTokens.textMuted;
@@ -396,12 +396,12 @@ class ViaTheme {
       // ========================================================================
       // TAB BAR THEME
       // ========================================================================
-      tabBarTheme: TabBarTheme(
+      tabBarTheme: TabBarThemeData(
         labelColor: ViaDesignTokens.primary,
         unselectedLabelColor: ViaDesignTokens.textMuted,
         labelStyle: ViaDesignTokens.labelMedium,
         unselectedLabelStyle: ViaDesignTokens.labelMedium,
-        indicator: UnderlineTabIndicator(
+        indicator: const UnderlineTabIndicator(
           borderSide: BorderSide(
             color: ViaDesignTokens.primary,
             width: 2,

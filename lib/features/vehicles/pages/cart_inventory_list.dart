@@ -208,7 +208,6 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
     );
   }
 
-
   Widget _buildSelectionActions(CartInventoryController controller) {
     return Container(
       padding: const EdgeInsets.all(16),

@@ -77,14 +77,15 @@ class MapboxMapViewState extends ConsumerState<MapboxMapView> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('[MapboxMapView] Building with ${widget.carts.length} carts, route: ${widget.routeCoordinates?.length ?? 0} points');
+    debugPrint(
+        '[MapboxMapView] Building with ${widget.carts.length} carts, route: ${widget.routeCoordinates?.length ?? 0} points');
 
     return MapWidget(
       key: const ValueKey('mapWidget'),
       // Globe Scale 초기 카메라 (지구본 뷰)
       cameraOptions: CameraOptions(
-        center: Point(coordinates: Position(0, 0)),  // 적도, 본초 자오선
-        zoom: 0.0,  // 최대 줌 아웃 (지구본 스케일)
+        center: Point(coordinates: Position(0, 0)), // 적도, 본초 자오선
+        zoom: 0.0, // 최대 줌 아웃 (지구본 스케일)
       ),
       // 스타일 URL (Satellite)
       styleUri: MapboxStyles.SATELLITE_STREETS,
@@ -113,7 +114,9 @@ class MapboxMapViewState extends ConsumerState<MapboxMapView> {
   /// 3단계: 멈춤 (1초)
   /// 4단계: 줌인 - 해당 위치에서 확대 (2초)
   Future<void> _animateToRouteBounds() async {
-    if (_mapboxMap == null || widget.routeCoordinates == null || widget.routeCoordinates!.isEmpty) {
+    if (_mapboxMap == null ||
+        widget.routeCoordinates == null ||
+        widget.routeCoordinates!.isEmpty) {
       return;
     }
 
@@ -132,7 +135,8 @@ class MapboxMapViewState extends ConsumerState<MapboxMapView> {
       // ========================================================================
       debugPrint('[MapboxMapView] Stage 1: Holding at globe zoom level...');
       await Future.delayed(const Duration(seconds: 2));
-      debugPrint('[MapboxMapView] Stage 1 complete: Held at globe level for 2 seconds');
+      debugPrint(
+          '[MapboxMapView] Stage 1 complete: Held at globe level for 2 seconds');
 
       // ========================================================================
       // 4. 2단계 애니메이션: 경로 위치로 이동 (5초, 약간의 줌으로 위경도 이동)
@@ -146,14 +150,14 @@ class MapboxMapViewState extends ConsumerState<MapboxMapView> {
             bounds.center.latitude,
           ),
         ),
-        zoom: 2.0,  // 약간의 줌으로 위경도 이동이 더 명확하게 보임
+        zoom: 2.0, // 약간의 줌으로 위경도 이동이 더 명확하게 보임
         pitch: 0.0,
         bearing: 0.0,
       );
 
       _mapboxMap!.easeTo(
         rotationCameraOptions,
-        MapAnimationOptions(duration: 5000, startDelay: 0),  // 5초 회전 애니메이션
+        MapAnimationOptions(duration: 5000, startDelay: 0), // 5초 회전 애니메이션
       );
 
       // easeTo는 완료를 기다리지 않으므로, duration만큼 수동으로 대기
@@ -174,12 +178,13 @@ class MapboxMapViewState extends ConsumerState<MapboxMapView> {
       debugPrint('[MapboxMapView] Stage 4: Zooming in to route...');
 
       final targetZoom = _calculateZoomLevel(bounds);
-      final zoomDifference = targetZoom - 0.0;  // 0에서 targetZoom까지의 차이
+      final zoomDifference = targetZoom - 0.0; // 0에서 targetZoom까지의 차이
 
       // 줌 레벨당 500ms씩 할당 (예: zoom 16이면 16 * 500ms = 8초)
       final zoomDuration = (zoomDifference * 500).toInt();
 
-      debugPrint('[MapboxMapView] Zoom from 0.0 to $targetZoom (difference: $zoomDifference) - Duration: ${zoomDuration}ms');
+      debugPrint(
+          '[MapboxMapView] Zoom from 0.0 to $targetZoom (difference: $zoomDifference) - Duration: ${zoomDuration}ms');
 
       final zoomCameraOptions = CameraOptions(
         center: Point(
@@ -188,14 +193,15 @@ class MapboxMapViewState extends ConsumerState<MapboxMapView> {
             bounds.center.latitude,
           ),
         ),
-        zoom: targetZoom,  // 바운드에 맞는 줌 레벨 계산
+        zoom: targetZoom, // 바운드에 맞는 줌 레벨 계산
         pitch: 0.0,
         bearing: 0.0,
       );
 
       _mapboxMap!.easeTo(
         zoomCameraOptions,
-        MapAnimationOptions(duration: zoomDuration, startDelay: 0),  // 동적 줌인 애니메이션
+        MapAnimationOptions(
+            duration: zoomDuration, startDelay: 0), // 동적 줌인 애니메이션
       );
 
       // easeTo는 완료를 기다리지 않으므로, duration만큼 수동으로 대기
@@ -226,16 +232,18 @@ class MapboxMapViewState extends ConsumerState<MapboxMapView> {
     }
 
     try {
-      debugPrint('[MapboxMapView] Gently animating camera to cart at: $position');
+      debugPrint(
+          '[MapboxMapView] Gently animating camera to cart at: $position');
 
       await _mapboxMap!.easeTo(
         CameraOptions(
-          center: Point(coordinates: Position(position.longitude, position.latitude)),
-          zoom: 16.5,  // 적절한 줌 레벨 (너무 가깝지 않음)
+          center: Point(
+              coordinates: Position(position.longitude, position.latitude)),
+          zoom: 16.5, // 적절한 줌 레벨 (너무 가깝지 않음)
           pitch: 0.0,
           bearing: 0.0,
         ),
-        MapAnimationOptions(duration: 2500, startDelay: 0),  // 2.5초 부드러운 애니메이션
+        MapAnimationOptions(duration: 2500, startDelay: 0), // 2.5초 부드러운 애니메이션
       );
 
       debugPrint('[MapboxMapView] Gentle camera animation complete');
@@ -265,7 +273,7 @@ class MapboxMapViewState extends ConsumerState<MapboxMapView> {
     } else if (maxSpan > 0.01) {
       return 16.0;
     } else {
-      return 17.0;  // 매우 작은 영역
+      return 17.0; // 매우 작은 영역
     }
   }
 
@@ -274,10 +282,12 @@ class MapboxMapViewState extends ConsumerState<MapboxMapView> {
     if (_mapboxMap == null) return;
 
     try {
-      debugPrint('[MapboxMapView] Adding route with ${coordinates.length} points');
+      debugPrint(
+          '[MapboxMapView] Adding route with ${coordinates.length} points');
 
       // Polyline Annotation Manager 생성
-      final polylineManager = await _mapboxMap!.annotations.createPolylineAnnotationManager();
+      final polylineManager =
+          await _mapboxMap!.annotations.createPolylineAnnotationManager();
 
       // 좌표를 Mapbox Position 리스트로 변환
       final positions = coordinates.map((coord) {
@@ -287,7 +297,7 @@ class MapboxMapViewState extends ConsumerState<MapboxMapView> {
       // Polyline Annotation 옵션 생성
       final options = PolylineAnnotationOptions(
         geometry: LineString(coordinates: positions),
-        lineColor: 0xFF00FF00,  // 밝은 초록색 (ARGB)
+        lineColor: 0xFF00FF00, // 밝은 초록색 (ARGB)
         lineWidth: 4.0,
         lineOpacity: 0.8,
       );
@@ -325,8 +335,8 @@ class MapboxMapViewState extends ConsumerState<MapboxMapView> {
       for (final cart in cartsWithPosition) {
         final position = Point(
           coordinates: Position(
-            cart.position!.longitude,
-            cart.position!.latitude,
+            cart.position.longitude,
+            cart.position.latitude,
           ),
         );
 
@@ -342,19 +352,21 @@ class MapboxMapViewState extends ConsumerState<MapboxMapView> {
         // B. Text 레이블 생성 (ID 표시)
         await pointManager.create(PointAnnotationOptions(
           geometry: position,
-          textField: cart.id,              // "APRO-001"
+          textField: cart.id, // "APRO-001"
           textSize: 12.0,
-          textColor: Colors.white.value,   // 흰색 글자
-          textOffset: [0.0, -2.0],        // 원 위쪽으로 offset
-          textHaloColor: Colors.black.value,  // 검은색 외곽선 (가독성)
+          textColor: Colors.white.value, // 흰색 글자
+          textOffset: [0.0, -2.0], // 원 위쪽으로 offset
+          textHaloColor: Colors.black.value, // 검은색 외곽선 (가독성)
           textHaloWidth: 1.5,
-          textAnchor: TextAnchor.BOTTOM,  // 텍스트 하단이 position에 고정
+          textAnchor: TextAnchor.BOTTOM, // 텍스트 하단이 position에 고정
         ));
 
-        debugPrint('[MapboxMapView] Added marker for ${cart.id} at ${cart.position}');
+        debugPrint(
+            '[MapboxMapView] Added marker for ${cart.id} at ${cart.position}');
       }
 
-      debugPrint('[MapboxMapView] Added ${cartsWithPosition.length} cart markers with labels successfully');
+      debugPrint(
+          '[MapboxMapView] Added ${cartsWithPosition.length} cart markers with labels successfully');
     } catch (e, stackTrace) {
       debugPrint('[MapboxMapView] Error adding cart markers: $e');
       debugPrint('[MapboxMapView] Stack trace: $stackTrace');

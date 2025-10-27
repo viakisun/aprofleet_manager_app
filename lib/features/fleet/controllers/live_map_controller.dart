@@ -15,7 +15,7 @@ class LiveMapController extends StateNotifier<LiveMapState> {
   final Ref ref;
   List<Cart>? _cachedFilteredCarts;
   String? _lastFilterKey;
-  int _cartsVersion = 0;  // Track cart updates for efficient cache invalidation
+  int _cartsVersion = 0; // Track cart updates for efficient cache invalidation
 
   // Debouncing for updateCarts to prevent rapid-fire updates
   DateTime _lastUpdateCartsTime = DateTime.fromMillisecondsSinceEpoch(0);
@@ -133,38 +133,40 @@ class LiveMapController extends StateNotifier<LiveMapState> {
   }
 
   void centerOnCart(Cart cart) {
-    if (cart.position != null) {
-      // Get current zoom level and add 2 for closer view
-      final currentZoom = state.cameraPosition.zoom;
-      final targetZoom = (currentZoom + 2).clamp(14.0, 18.0); // Clamp between reasonable bounds
-      
-      final newCameraPosition = CameraPosition(
-        center: cart.position!,
-        zoom: targetZoom,
-      );
-      state = state.copyWith(cameraPosition: newCameraPosition);
-    }
+    // Get current zoom level and add 2 for closer view
+    final currentZoom = state.cameraPosition.zoom;
+    final targetZoom =
+        (currentZoom + 2).clamp(14.0, 18.0); // Clamp between reasonable bounds
+
+    final newCameraPosition = CameraPosition(
+      center: cart.position!,
+      zoom: targetZoom,
+    );
+    state = state.copyWith(cameraPosition: newCameraPosition);
   }
 
-  Future<void> focusOn(LatLng target, {
+  Future<void> focusOn(
+    LatLng target, {
     double paddingTopPx = 96,
     double paddingLeftPx = 140, // cart list width + spacing
   }) async {
     print('focusOn called with target: $target');
-    print('Current camera position: ${state.cameraPosition.center}, zoom: ${state.cameraPosition.zoom}');
-    
+    print(
+        'Current camera position: ${state.cameraPosition.center}, zoom: ${state.cameraPosition.zoom}');
+
     // For now, use the existing centerOnCart logic but with offset
     // TODO: Implement proper screen coordinate offset calculation
     // This would require access to GoogleMapController which is not available here
     final currentZoom = state.cameraPosition.zoom;
     final targetZoom = (currentZoom + 2).clamp(14.0, 18.0);
-    
+
     final newCameraPosition = CameraPosition(
       center: target,
       zoom: targetZoom,
     );
-    
-    print('New camera position: ${newCameraPosition.center}, zoom: ${newCameraPosition.zoom}');
+
+    print(
+        'New camera position: ${newCameraPosition.center}, zoom: ${newCameraPosition.zoom}');
     state = state.copyWith(cameraPosition: newCameraPosition);
   }
 
@@ -180,18 +182,20 @@ class LiveMapController extends StateNotifier<LiveMapState> {
 
     _lastUpdateCartsTime = now;
     state = state.copyWith(carts: carts);
-    _cartsVersion++;  // Increment version to invalidate cache
-    _cachedFilteredCarts = null;  // Clear cache to force rebuild with new positions
+    _cartsVersion++; // Increment version to invalidate cache
+    _cachedFilteredCarts =
+        null; // Clear cache to force rebuild with new positions
   }
 
   List<Cart> get filteredCarts {
     // CRITICAL: Cache filtered carts to prevent new list creation on every access
     // This prevents GoogleMapView.didUpdateWidget from triggering on every cart update
     // Use version counter instead of expensive hash calculation for cache invalidation
-    final filterKey = '$_cartsVersion${state.statusFilters.join(',')}_${state.searchQuery}';
+    final filterKey =
+        '$_cartsVersion${state.statusFilters.join(',')}_${state.searchQuery}';
 
     if (_lastFilterKey == filterKey && _cachedFilteredCarts != null) {
-      return _cachedFilteredCarts!;  // Return cached list with same reference
+      return _cachedFilteredCarts!; // Return cached list with same reference
     }
 
     var carts = state.carts;

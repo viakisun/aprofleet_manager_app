@@ -51,7 +51,8 @@ class WorkOrderCreationStep1 extends ConsumerWidget {
           _buildSectionHeader('DESCRIPTION'),
           const SizedBox(height: IndustrialDarkTokens.spacingItem),
           ViaInput(
-            controller: TextEditingController(text: createWoState.draft.description),
+            controller:
+                TextEditingController(text: createWoState.draft.description),
             onChanged: controller.setDescription,
             label: 'Description',
             placeholder: 'Describe the work to be performed...',

@@ -172,7 +172,7 @@ class AlertRulesPanel extends StatelessWidget {
           color: IndustrialDarkTokens.textPrimary,
         ),
       ),
-      child: Text(
+      child: const Text(
         'Alert rules configuration will be available in the full version.',
         style: TextStyle(color: IndustrialDarkTokens.textSecondary),
       ),
@@ -196,7 +196,7 @@ class AlertRulesPanel extends StatelessWidget {
           color: IndustrialDarkTokens.textPrimary,
         ),
       ),
-      child: Text(
+      child: const Text(
         'Notification settings will be available in the full version.',
         style: TextStyle(color: IndustrialDarkTokens.textSecondary),
       ),
@@ -220,7 +220,7 @@ class AlertRulesPanel extends StatelessWidget {
           color: IndustrialDarkTokens.textPrimary,
         ),
       ),
-      child: Text(
+      child: const Text(
         'Escalation matrix will be available in the full version.',
         style: TextStyle(color: IndustrialDarkTokens.textSecondary),
       ),
@@ -244,7 +244,7 @@ class AlertRulesPanel extends StatelessWidget {
           color: IndustrialDarkTokens.textPrimary,
         ),
       ),
-      child: Text(
+      child: const Text(
         'This will permanently remove all resolved alerts. This action cannot be undone.',
         style: TextStyle(color: IndustrialDarkTokens.textSecondary),
       ),

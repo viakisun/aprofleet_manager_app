@@ -59,9 +59,11 @@ class _PulseEffectState extends State<PulseEffect>
               height: 60 + (_animation.value * 20),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: widget.pulseColor.withValues(alpha: 0.3 - (_animation.value * 0.2)),
+                color: widget.pulseColor
+                    .withValues(alpha: 0.3 - (_animation.value * 0.2)),
                 border: Border.all(
-                  color: widget.pulseColor.withValues(alpha: 0.6 - (_animation.value * 0.4)),
+                  color: widget.pulseColor
+                      .withValues(alpha: 0.6 - (_animation.value * 0.4)),
                   width: 2,
                 ),
               ),

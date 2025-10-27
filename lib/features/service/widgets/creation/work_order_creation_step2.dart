@@ -53,19 +53,19 @@ class _WorkOrderCreationStep2State
           // QR Scanner Button
           ViaCard(
             onTap: _toggleScanner,
-            child: Row(
+            child: const Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.qr_code_scanner,
                   color: IndustrialDarkTokens.textPrimary,
                   size: 20,
                 ),
-                const SizedBox(width: IndustrialDarkTokens.spacingItem),
+                SizedBox(width: IndustrialDarkTokens.spacingItem),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Scan QR Code',
                         style: TextStyle(
                           fontSize: IndustrialDarkTokens.fontSizeLabel,
@@ -104,70 +104,74 @@ class _WorkOrderCreationStep2State
                   final isSelected = createWoState.draft.cartId == cart.id;
 
                   return Padding(
-                    padding:
-                        const EdgeInsets.only(bottom: IndustrialDarkTokens.spacingCompact),
+                    padding: const EdgeInsets.only(
+                        bottom: IndustrialDarkTokens.spacingCompact),
                     child: ViaCard(
                       onTap: () => widget.controller.setCartId(cart.id),
-                    child: Row(
-                      children: [
-                        // Selection indicator
-                        Container(
-                          width: 20,
-                          height: 20,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
+                      child: Row(
+                        children: [
+                          // Selection indicator
+                          Container(
+                            width: 20,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: isSelected
+                                    ? IndustrialDarkTokens.textPrimary
+                                    : IndustrialDarkTokens.outline,
+                                width: 2,
+                              ),
                               color: isSelected
                                   ? IndustrialDarkTokens.textPrimary
-                                  : IndustrialDarkTokens.outline,
-                              width: 2,
+                                  : Colors.transparent,
                             ),
-                            color: isSelected
-                                ? IndustrialDarkTokens.textPrimary
-                                : Colors.transparent,
+                            child: isSelected
+                                ? const Icon(
+                                    Icons.check,
+                                    size: 12,
+                                    color: IndustrialDarkTokens.bgBase,
+                                  )
+                                : null,
                           ),
-                          child: isSelected
-                              ? const Icon(
-                                  Icons.check,
-                                  size: 12,
-                                  color: IndustrialDarkTokens.bgBase,
-                                )
-                              : null,
-                        ),
-                        const SizedBox(width: IndustrialDarkTokens.spacingItem),
+                          const SizedBox(
+                              width: IndustrialDarkTokens.spacingItem),
 
-                        // Cart info
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                cart.id,
-                                style: const TextStyle(
-                                  fontSize: IndustrialDarkTokens.fontSizeLabel,
-                                  fontWeight: IndustrialDarkTokens.fontWeightBold,
-                                  color: IndustrialDarkTokens.textPrimary,
+                          // Cart info
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  cart.id,
+                                  style: const TextStyle(
+                                    fontSize:
+                                        IndustrialDarkTokens.fontSizeLabel,
+                                    fontWeight:
+                                        IndustrialDarkTokens.fontWeightBold,
+                                    color: IndustrialDarkTokens.textPrimary,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                '${cart.manufacturer} ${cart.model}',
-                                style: TextStyle(
-                                  fontSize: IndustrialDarkTokens.fontSizeSmall,
-                                  color: IndustrialDarkTokens.textSecondary,
+                                Text(
+                                  '${cart.manufacturer} ${cart.model}',
+                                  style: const TextStyle(
+                                    fontSize:
+                                        IndustrialDarkTokens.fontSizeSmall,
+                                    color: IndustrialDarkTokens.textSecondary,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
 
-                        // Status indicator
-                        ViaStatusBadge(
-                          status: _mapCartStatusToViaStatus(cart.status),
-                          customText: cart.status.displayName.toUpperCase(),
-                        ),
-                      ],
+                          // Status indicator
+                          ViaStatusBadge(
+                            status: _mapCartStatusToViaStatus(cart.status),
+                            customText: cart.status.displayName.toUpperCase(),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
                   );
                 },
               ),
@@ -177,7 +181,8 @@ class _WorkOrderCreationStep2State
               error: (error, stack) => Center(
                 child: Text(
                   'Error loading carts: $error',
-                  style: TextStyle(color: IndustrialDarkTokens.textSecondary),
+                  style: const TextStyle(
+                      color: IndustrialDarkTokens.textSecondary),
                 ),
               ),
             ),

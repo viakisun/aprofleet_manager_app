@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 
 /// VIA Design System Cart List Item
 ///
@@ -195,6 +194,6 @@ class _ViaCartListItemState extends State<ViaCartListItem>
   bool _shouldGlow(Color statusColor) {
     // Glow for active (green) and charging (blue) states
     return statusColor == const Color(0xFF00C97B) || // Active green
-           statusColor == const Color(0xFF3B83CC);   // Charging blue
+        statusColor == const Color(0xFF3B83CC); // Charging blue
   }
 }

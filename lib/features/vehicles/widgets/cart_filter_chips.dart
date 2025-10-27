@@ -20,7 +20,8 @@ class CartFilterChips extends StatelessWidget {
 
     return Container(
       height: 60,
-      padding: const EdgeInsets.symmetric(horizontal: IndustrialDarkTokens.spacingItem),
+      padding: const EdgeInsets.symmetric(
+          horizontal: IndustrialDarkTokens.spacingItem),
       child: Row(
         children: [
           // Clear Filters Button
@@ -34,13 +35,14 @@ class CartFilterChips extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: IndustrialDarkTokens.bgSurface,
-                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+                  borderRadius:
+                      BorderRadius.circular(IndustrialDarkTokens.radiusButton),
                   border: Border.all(
                     color: IndustrialDarkTokens.outline,
                     width: 1.0,
                   ),
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
@@ -48,7 +50,7 @@ class CartFilterChips extends StatelessWidget {
                       size: 16,
                       color: IndustrialDarkTokens.textSecondary,
                     ),
-                    const SizedBox(width: IndustrialDarkTokens.spacingMinimal),
+                    SizedBox(width: IndustrialDarkTokens.spacingMinimal),
                     Text(
                       'CLEAR',
                       style: TextStyle(
@@ -94,8 +96,8 @@ class CartFilterChips extends StatelessWidget {
                         color: isSelected
                             ? color.withValues(alpha: 0.2)
                             : IndustrialDarkTokens.bgSurface,
-                        borderRadius:
-                            BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+                        borderRadius: BorderRadius.circular(
+                            IndustrialDarkTokens.radiusButton),
                         border: Border.all(
                           color:
                               isSelected ? color : IndustrialDarkTokens.outline,
@@ -113,7 +115,8 @@ class CartFilterChips extends StatelessWidget {
                               shape: BoxShape.circle,
                             ),
                           ),
-                          const SizedBox(width: IndustrialDarkTokens.spacingMinimal),
+                          const SizedBox(
+                              width: IndustrialDarkTokens.spacingMinimal),
                           Text(
                             status.displayName.toUpperCase(),
                             style: TextStyle(

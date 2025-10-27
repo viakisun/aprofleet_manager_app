@@ -28,7 +28,8 @@ class CartGridItem extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: IndustrialDarkTokens.bgSurface,
-          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          borderRadius:
+              BorderRadius.circular(IndustrialDarkTokens.radiusButton),
           border: Border.all(
             color: isSelected
                 ? IndustrialDarkTokens.statusMaintenance
@@ -74,7 +75,7 @@ class CartGridItem extends StatelessWidget {
               // Model
               Text(
                 cart.model,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: IndustrialDarkTokens.fontSizeSmall,
                   fontWeight: IndustrialDarkTokens.fontWeightMedium,
                   color: IndustrialDarkTokens.textSecondary,
@@ -124,7 +125,7 @@ class CartGridItem extends StatelessWidget {
                   const SizedBox(width: 2),
                   Text(
                     '${(cart.speedKph ?? 0).toStringAsFixed(0)}km/h',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 10,
                       fontWeight: IndustrialDarkTokens.fontWeightBold,
                       color: IndustrialDarkTokens.textSecondary,

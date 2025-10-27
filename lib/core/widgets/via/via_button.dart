@@ -205,7 +205,7 @@ class _ViaButtonState extends State<ViaButton>
                       size: _getIconSize(),
                       color: _getTextColor(),
                     ),
-                  SizedBox(width: IndustrialDarkTokens.spacingCompact),
+                  const SizedBox(width: IndustrialDarkTokens.spacingCompact),
                 ],
                 if (!widget.isLoading || widget.icon == null)
                   Text(
@@ -215,7 +215,7 @@ class _ViaButtonState extends State<ViaButton>
                     ),
                   ),
                 if (widget.icon != null && widget.iconTrailing) ...[
-                  SizedBox(width: IndustrialDarkTokens.spacingCompact),
+                  const SizedBox(width: IndustrialDarkTokens.spacingCompact),
                   if (widget.isLoading)
                     SizedBox(
                       width: _getIconSize(),
@@ -235,7 +235,7 @@ class _ViaButtonState extends State<ViaButton>
                     ),
                 ],
                 if (widget.isLoading && widget.icon == null) ...[
-                  SizedBox(width: IndustrialDarkTokens.spacingCompact),
+                  const SizedBox(width: IndustrialDarkTokens.spacingCompact),
                   SizedBox(
                     width: _getIconSize(),
                     height: _getIconSize(),
@@ -313,14 +313,16 @@ class _ViaButtonState extends State<ViaButton>
           color: isDisabled
               ? IndustrialDarkTokens.accentDisabled
               : IndustrialDarkTokens.accentPrimary,
-          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          borderRadius:
+              BorderRadius.circular(IndustrialDarkTokens.radiusButton),
           // No shadow in Industrial Dark
         );
 
       case ViaButtonVariant.secondary:
         return BoxDecoration(
           color: Colors.transparent,
-          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          borderRadius:
+              BorderRadius.circular(IndustrialDarkTokens.radiusButton),
           border: Border.all(
             color: isDisabled
                 ? IndustrialDarkTokens.accentDisabled
@@ -334,7 +336,8 @@ class _ViaButtonState extends State<ViaButton>
           color: _isPressed && !isDisabled
               ? IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.1)
               : Colors.transparent,
-          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          borderRadius:
+              BorderRadius.circular(IndustrialDarkTokens.radiusButton),
         );
 
       case ViaButtonVariant.danger:
@@ -342,7 +345,8 @@ class _ViaButtonState extends State<ViaButton>
           color: isDisabled
               ? IndustrialDarkTokens.error.withValues(alpha: 0.3)
               : IndustrialDarkTokens.error,
-          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          borderRadius:
+              BorderRadius.circular(IndustrialDarkTokens.radiusButton),
           // No shadow in Industrial Dark
         );
     }

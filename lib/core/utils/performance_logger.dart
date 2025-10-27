@@ -54,7 +54,7 @@ class PerformanceLogger {
       return;
     }
 
-    print('\n' + '=' * 70);
+    print('\n${'=' * 70}');
     print('📊 Performance Summary');
     print('=' * 70);
 

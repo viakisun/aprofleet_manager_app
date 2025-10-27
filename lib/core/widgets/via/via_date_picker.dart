@@ -105,15 +105,16 @@ class ViaDatePicker extends StatelessWidget {
             colorScheme: const ColorScheme.dark(
               primary: IndustrialDarkTokens.accentPrimary,
               onPrimary: Colors.white,
-              surface: IndustrialDarkTokens.surfacePrimary,
+              surface: IndustrialDarkTokens.bgSurface,
               onSurface: IndustrialDarkTokens.textPrimary,
             ),
-            dialogBackgroundColor: IndustrialDarkTokens.surfacePrimary,
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
                 foregroundColor: IndustrialDarkTokens.accentPrimary,
               ),
             ),
+            dialogTheme: DialogThemeData(
+                backgroundColor: IndustrialDarkTokens.bgSurface),
           ),
           child: child!,
         );
@@ -177,7 +178,8 @@ class ViaDatePicker extends StatelessWidget {
               color: isDisabled
                   ? IndustrialDarkTokens.bgSurface.withValues(alpha: 0.5)
                   : IndustrialDarkTokens.bgSurface,
-              borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+              borderRadius:
+                  BorderRadius.circular(IndustrialDarkTokens.radiusButton),
               border: Border.all(
                 color: isDisabled
                     ? IndustrialDarkTokens.outline.withValues(alpha: 0.3)
@@ -210,7 +212,7 @@ class ViaDatePicker extends StatelessWidget {
                 if (showClearButton && selectedDate != null && !isDisabled)
                   GestureDetector(
                     onTap: _clearDate,
-                    child: Icon(
+                    child: const Icon(
                       Icons.close,
                       size: 20,
                       color: IndustrialDarkTokens.textSecondary,
@@ -300,15 +302,16 @@ class ViaDateRangePicker extends StatelessWidget {
             colorScheme: const ColorScheme.dark(
               primary: IndustrialDarkTokens.accentPrimary,
               onPrimary: Colors.white,
-              surface: IndustrialDarkTokens.surfacePrimary,
+              surface: IndustrialDarkTokens.bgSurface,
               onSurface: IndustrialDarkTokens.textPrimary,
             ),
-            dialogBackgroundColor: IndustrialDarkTokens.surfacePrimary,
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
                 foregroundColor: IndustrialDarkTokens.accentPrimary,
               ),
             ),
+            dialogTheme: DialogThemeData(
+                backgroundColor: IndustrialDarkTokens.bgSurface),
           ),
           child: child!,
         );
@@ -372,7 +375,8 @@ class ViaDateRangePicker extends StatelessWidget {
               color: isDisabled
                   ? IndustrialDarkTokens.bgSurface.withValues(alpha: 0.5)
                   : IndustrialDarkTokens.bgSurface,
-              borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+              borderRadius:
+                  BorderRadius.circular(IndustrialDarkTokens.radiusButton),
               border: Border.all(
                 color: isDisabled
                     ? IndustrialDarkTokens.outline.withValues(alpha: 0.3)
@@ -405,7 +409,7 @@ class ViaDateRangePicker extends StatelessWidget {
                 if (showClearButton && selectedRange != null && !isDisabled)
                   GestureDetector(
                     onTap: _clearRange,
-                    child: Icon(
+                    child: const Icon(
                       Icons.close,
                       size: 20,
                       color: IndustrialDarkTokens.textSecondary,

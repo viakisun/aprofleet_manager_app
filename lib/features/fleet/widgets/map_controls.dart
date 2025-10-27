@@ -56,7 +56,8 @@ class MapControls extends StatelessWidget {
           ViaIconButton.ghost(
             icon: isSatelliteUI ? Icons.layers : Icons.layers_clear,
             onPressed: onLayerToggle,
-            tooltip: isSatelliteUI ? 'Layer: Satellite (L)' : 'Layer: Standard (L)',
+            tooltip:
+                isSatelliteUI ? 'Layer: Satellite (L)' : 'Layer: Standard (L)',
             size: ViaIconButtonSize.medium,
           ),
           const SizedBox(height: IndustrialDarkTokens.spacingCompact),

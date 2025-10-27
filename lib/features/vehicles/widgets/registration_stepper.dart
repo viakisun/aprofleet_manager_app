@@ -90,7 +90,8 @@ class RegistrationStepper extends StatelessWidget {
                   color: isCompleted
                       ? IndustrialDarkTokens.statusActive
                       : isCurrent
-                          ? IndustrialDarkTokens.statusActive.withValues(alpha: 0.2)
+                          ? IndustrialDarkTokens.statusActive
+                              .withValues(alpha: 0.2)
                           : IndustrialDarkTokens.bgSurface,
                   shape: BoxShape.circle,
                   border: Border.all(
@@ -156,7 +157,7 @@ class RegistrationStepper extends StatelessWidget {
                 const SizedBox(height: IndustrialDarkTokens.spacingMinimal),
                 Text(
                   step.description,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 10,
                     color: IndustrialDarkTokens.textSecondary,
                   ),

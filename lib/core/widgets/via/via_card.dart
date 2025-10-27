@@ -17,10 +17,10 @@ import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 /// - Outline-based depth (no elevation/shadows)
 
 enum ViaCardVariant {
-  outline,  // Border only
-  glass,    // Glassmorphism with blur
+  outline, // Border only
+  glass, // Glassmorphism with blur
   elevated, // Outline borders (NO shadows in Industrial Dark)
-  filled,   // Solid background
+  filled, // Solid background
 }
 
 class ViaCard extends StatefulWidget {
@@ -103,8 +103,7 @@ class ViaCard extends StatefulWidget {
   State<ViaCard> createState() => _ViaCardState();
 }
 
-class _ViaCardState extends State<ViaCard>
-    with SingleTickerProviderStateMixin {
+class _ViaCardState extends State<ViaCard> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
 
@@ -295,7 +294,7 @@ class ViaCardSectioned extends StatelessWidget {
               child: header!,
             ),
             if (showDividers && (body != null || footer != null))
-              Divider(
+              const Divider(
                 height: 1,
                 thickness: 1,
                 color: IndustrialDarkTokens.outline,
@@ -310,7 +309,7 @@ class ViaCardSectioned extends StatelessWidget {
               child: body!,
             ),
             if (showDividers && footer != null)
-              Divider(
+              const Divider(
                 height: 1,
                 thickness: 1,
                 color: IndustrialDarkTokens.outline,

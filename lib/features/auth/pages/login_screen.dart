@@ -21,7 +21,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isLoading = false;
-  bool _obscurePassword = true;
 
   @override
   void dispose() {
@@ -129,7 +128,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         const SizedBox(height: IndustrialDarkTokens.spacingCard),
 
         // App name
-        Text(
+        const Text(
           'APRO FLEET',
           style: TextStyle(
             fontFamily: 'Pretendard Variable',
@@ -143,7 +142,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         const SizedBox(height: IndustrialDarkTokens.spacingCompact),
 
         // Welcome message
-        Text(
+        const Text(
           '시스템에 로그인하세요',
           style: TextStyle(
             fontFamily: 'Pretendard Variable',
@@ -204,5 +203,4 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       ),
     );
   }
-
 }

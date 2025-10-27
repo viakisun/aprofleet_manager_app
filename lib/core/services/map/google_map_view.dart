@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as google;
 import 'package:latlong2/latlong.dart' as latlong;
-import 'package:flutter/foundation.dart' show kIsWeb, setEquals;
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:flutter/foundation.dart' show setEquals;
 
 import '../../../domain/models/cart.dart';
 import '../../../domain/models/geojson_data.dart';
@@ -54,7 +53,8 @@ class GoogleMapViewState extends ConsumerState<GoogleMapView> {
   bool _isCameraMoving = false;
   List<Cart>? _pendingCarts;
   DateTime _lastUpdateTime = DateTime.fromMillisecondsSinceEpoch(0);
-  Duration _minUpdateInterval = const Duration(milliseconds: 1000); // 1s for battery efficiency (markers update in 1ms)
+  final Duration _minUpdateInterval = const Duration(
+      milliseconds: 1000); // 1s for battery efficiency (markers update in 1ms)
 
   @override
   void initState() {
@@ -79,7 +79,8 @@ class GoogleMapViewState extends ConsumerState<GoogleMapView> {
     final route = google.Polyline(
       polylineId: const google.PolylineId('golf_course_route'),
       points: points,
-      color: IndustrialDarkTokens.accentPrimary.withValues(alpha: 0.8), // #0072E5 with 80% opacity
+      color: IndustrialDarkTokens.accentPrimary
+          .withValues(alpha: 0.8), // #0072E5 with 80% opacity
       width: 5, // Slightly thicker for better visibility
       zIndex: 1,
       patterns: [
@@ -267,7 +268,8 @@ class GoogleMapViewState extends ConsumerState<GoogleMapView> {
 
     // Flush any pending cart updates IMMEDIATELY after camera settles (bypass throttle)
     if (_pendingCarts != null) {
-      _lastUpdateTime = DateTime.fromMillisecondsSinceEpoch(0); // Reset throttle
+      _lastUpdateTime =
+          DateTime.fromMillisecondsSinceEpoch(0); // Reset throttle
       _scheduleMarkerUpdate(_pendingCarts!);
       _pendingCarts = null;
     }
@@ -308,7 +310,8 @@ class GoogleMapViewState extends ConsumerState<GoogleMapView> {
     PerformanceLogger.start('updateMarkers.loop');
     for (final cart in widget.carts) {
       final id = cart.id;
-      final pos = google.LatLng(cart.position.latitude, cart.position.longitude);
+      final pos =
+          google.LatLng(cart.position.latitude, cart.position.longitude);
       final statusColor = MapConstants.getStatusColor(cart.status);
       final isSelected = widget.selectedCartId == id;
 
@@ -320,14 +323,11 @@ class GoogleMapViewState extends ConsumerState<GoogleMapView> {
         scale: 1.0,
       );
 
-      if (icon == null) {
-        // Fallback: generate once and it will be cached for future
-        icon = await CustomMarkerIcon.buildMarkerIcon(
-          color: statusColor,
-          selected: isSelected,
-          scale: 1.0,
-        );
-      }
+      icon ??= await CustomMarkerIcon.buildMarkerIcon(
+        color: statusColor,
+        selected: isSelected,
+        scale: 1.0,
+      );
       PerformanceLogger.end('updateMarkers.iconGet');
 
       PerformanceLogger.start('updateMarkers.diffCheck');
@@ -471,13 +471,12 @@ class GoogleMapViewState extends ConsumerState<GoogleMapView> {
 
   String _buildInfoWindowSnippet(Cart cart) {
     final statusIcon = _getCartStatusIcon(cart.status);
-    final batteryIcon = cart.batteryPct != null && cart.batteryPct! > 20 
-        ? '🔋' 
-        : '🔴';
-    final speedText = cart.speedKph != null 
-        ? '${cart.speedKph!.toStringAsFixed(0)}km/h' 
+    final batteryIcon =
+        cart.batteryPct != null && cart.batteryPct! > 20 ? '🔋' : '🔴';
+    final speedText = cart.speedKph != null
+        ? '${cart.speedKph!.toStringAsFixed(0)}km/h'
         : '0km/h';
-    
+
     return '$statusIcon ${cart.model} • $batteryIcon${cart.batteryPct?.toStringAsFixed(0) ?? '0'}% • $speedText';
   }
 

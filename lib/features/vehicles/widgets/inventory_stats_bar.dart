@@ -25,7 +25,7 @@ class InventoryStatsBar extends StatelessWidget {
         horizontal: IndustrialDarkTokens.spacingItem,
         vertical: IndustrialDarkTokens.spacingItem,
       ),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: IndustrialDarkTokens.bgSurface,
         border: Border(
           bottom: BorderSide(color: IndustrialDarkTokens.outline),

@@ -30,7 +30,8 @@ class MapPolylineFactory {
     final polylines = <google.Polyline>{};
 
     // GeoJSON에서 좌표 추출
-    final routeCoordinates = GeoJsonService.instance.extractRouteCoordinates(routeData);
+    final routeCoordinates =
+        GeoJsonService.instance.extractRouteCoordinates(routeData);
 
     // 좌표가 없으면 빈 Set 반환
     if (routeCoordinates.isEmpty) {

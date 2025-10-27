@@ -1,15 +1,12 @@
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../theme/design_tokens.dart';
 
 /// Utility class for creating custom marker icons for Google Maps
 class CustomMarkerIcon {
   static final Map<String, BitmapDescriptor> _iconCache = {};
-  static bool _initialized = false;
 
   /// Prebuild and cache marker icons for given colors and sizes.
   /// Call once (e.g., when map is created) to avoid runtime icon generation spikes.
@@ -30,7 +27,7 @@ class CustomMarkerIcon {
             scale: size,
           ).then((icon) => _iconCache[normalKey] = icon));
         }
-        
+
         // Selected marker
         if (includeSelected) {
           final selectedKey = 'marker_${color.value}_selected_$size';
@@ -45,7 +42,6 @@ class CustomMarkerIcon {
       }
     }
     await Future.wait(tasks);
-    _initialized = true;
   }
 
   /// Get a cached status icon if available. Returns null if not cached.
@@ -54,7 +50,8 @@ class CustomMarkerIcon {
     double size = 40.0,
     bool showDirection = true,
   }) {
-    final key = _cacheKey(color: statusColor, size: size, showDirection: showDirection);
+    final key =
+        _cacheKey(color: statusColor, size: size, showDirection: showDirection);
     return _iconCache[key];
   }
 
@@ -91,11 +88,15 @@ class CustomMarkerIcon {
     bool selected = false,
     double scale = 1.0,
   }) {
-    final key = 'marker_${color.value}_${selected ? 'selected' : 'normal'}_$scale';
+    final key =
+        'marker_${color.value}_${selected ? 'selected' : 'normal'}_$scale';
     return _iconCache[key];
   }
 
-  static String _cacheKey({required Color color, required double size, required bool showDirection}) {
+  static String _cacheKey(
+      {required Color color,
+      required double size,
+      required bool showDirection}) {
     return 'status_cart_${color.value}_${size}_$showDirection';
   }
 
@@ -107,11 +108,11 @@ class CustomMarkerIcon {
   }) async {
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);
-    
+
     // Platform-specific sizing - 웹은 작게, 모바일은 명확하게
-    final baseSize = kIsWeb ? 24.0 : 64.0; // 모바일 크기 유지 (사용자 선호)
+    const baseSize = kIsWeb ? 24.0 : 64.0; // 모바일 크기 유지 (사용자 선호)
     final size = baseSize * scale;
-    final center = Offset(size/2, size/2);
+    final center = Offset(size / 2, size / 2);
 
     // Halo (selected only)
     if (selected) {
@@ -141,8 +142,11 @@ class CustomMarkerIcon {
       ..color = color;
     canvas.drawCircle(center, size * 0.22, dot);
 
-    final img = await recorder.endRecording().toImage(size.toInt(), size.toInt());
-    final bytes = (await img.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+    final img =
+        await recorder.endRecording().toImage(size.toInt(), size.toInt());
+    final bytes = (await img.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
     return BitmapDescriptor.fromBytes(bytes);
   }
 
@@ -163,9 +167,11 @@ class CustomMarkerIcon {
       iconColor: Colors.white,
       size: size,
       showDirection: showDirection,
-      cacheKey: _cacheKey(color: statusColor, size: size, showDirection: showDirection),
+      cacheKey: _cacheKey(
+          color: statusColor, size: size, showDirection: showDirection),
     );
-    _iconCache[_cacheKey(color: statusColor, size: size, showDirection: showDirection)] = icon;
+    _iconCache[_cacheKey(
+        color: statusColor, size: size, showDirection: showDirection)] = icon;
     return icon;
   }
 

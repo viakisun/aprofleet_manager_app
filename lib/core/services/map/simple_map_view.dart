@@ -4,10 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart' as google;
 
 import '../../../domain/models/cart.dart';
 import '../../constants/map_constants.dart';
-import 'golf_course_route_provider.dart';
 import 'map_adapter.dart';
-import 'map_marker_factory.dart';
-import 'map_polyline_factory.dart';
 import 'map_style_constants.dart';
 
 /// 극도로 단순화된 Google Maps 뷰 위젯
@@ -115,8 +112,10 @@ class _SimpleMapViewState extends ConsumerState<SimpleMapView> {
 
     // 초기화 로그 출력
     debugPrint('[SimpleMapView] Initialized with preloaded data');
-    debugPrint('[SimpleMapView] Preloaded markers: ${widget.preloadedMarkers.length}');
-    debugPrint('[SimpleMapView] Preloaded polylines: ${widget.preloadedPolylines.length}');
+    debugPrint(
+        '[SimpleMapView] Preloaded markers: ${widget.preloadedMarkers.length}');
+    debugPrint(
+        '[SimpleMapView] Preloaded polylines: ${widget.preloadedPolylines.length}');
   }
 
   @override

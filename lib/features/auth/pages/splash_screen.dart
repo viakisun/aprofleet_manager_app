@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:aprofleet_manager/core/theme/industrial_dark_tokens.dart';
 import '../controllers/auth_controller.dart';
-import '../controllers/splash_controller.dart';
 import '../widgets/cart_icon.dart';
 
 /// Splash screen with APRO FLEET branding and animations
@@ -123,7 +122,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                             height: 120,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              gradient: LinearGradient(
+                              gradient: const LinearGradient(
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                                 colors: [
@@ -149,10 +148,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                             ),
                           ),
 
-                          const SizedBox(height: IndustrialDarkTokens.spacingSection),
+                          const SizedBox(
+                              height: IndustrialDarkTokens.spacingSection),
 
                           // App name
-                          Text(
+                          const Text(
                             'APRO FLEET',
                             style: TextStyle(
                               fontFamily: 'Pretendard Variable',
@@ -163,10 +163,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                             ),
                           ),
 
-                          const SizedBox(height: IndustrialDarkTokens.spacingCompact),
+                          const SizedBox(
+                              height: IndustrialDarkTokens.spacingCompact),
 
                           // Subtitle
-                          Text(
+                          const Text(
                             'Fleet Management System',
                             style: TextStyle(
                               fontFamily: 'Pretendard Variable',
@@ -191,7 +192,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                 builder: (context, child) {
                   return Opacity(
                     opacity: _fadeAnimation.value,
-                    child: SizedBox(
+                    child: const SizedBox(
                       width: 24,
                       height: 24,
                       child: CircularProgressIndicator(

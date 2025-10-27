@@ -118,7 +118,7 @@ class CartListBottomSheet extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           child: Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.route,
                 color: IndustrialDarkTokens.accentPrimary,
                 size: 24,
@@ -139,7 +139,7 @@ class CartListBottomSheet extends StatelessWidget {
         Container(
           height: 1,
           margin: const EdgeInsets.symmetric(horizontal: 16),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
                 Colors.transparent,
@@ -179,7 +179,8 @@ class CartListBottomSheet extends StatelessWidget {
   }
 
   /// 카트 진행 카드 (고급스러운 디자인)
-  Widget _buildCartProgressCard(CartProgress progress, BuildContext parentContext) {
+  Widget _buildCartProgressCard(
+      CartProgress progress, BuildContext parentContext) {
     return TweenAnimationBuilder<double>(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
@@ -201,68 +202,68 @@ class CartListBottomSheet extends StatelessWidget {
           onCartTap?.call(progress.cart);
         },
         child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: IndustrialDarkTokens.bgCard,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: progress.isLeading
-                ? IndustrialDarkTokens.accentPrimary.withOpacity(0.5)
-                : IndustrialDarkTokens.outline,
-            width: progress.isLeading ? 2 : 1,
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 헤더 행: 랭킹 배지 + 카트 ID + 리딩 배지
-            Row(
-              children: [
-                // 랭킹 배지
-                _buildRankBadge(progress.rank),
-                const SizedBox(width: 12),
-
-                // 카트 ID + 상태
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        progress.cart.id,
-                        style: IndustrialDarkTokens.displayStyle.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 1.2,
-                          color: _getStatusColor(progress.cart.status),
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        progress.cart.status.name.toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 10,
-                          letterSpacing: 1.0,
-                          fontWeight: FontWeight.w600,
-                          color: IndustrialDarkTokens.textSecondary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: IndustrialDarkTokens.bgCard,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: progress.isLeading
+                  ? IndustrialDarkTokens.accentPrimary.withOpacity(0.5)
+                  : IndustrialDarkTokens.outline,
+              width: progress.isLeading ? 2 : 1,
             ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 헤더 행: 랭킹 배지 + 카트 ID + 리딩 배지
+              Row(
+                children: [
+                  // 랭킹 배지
+                  _buildRankBadge(progress.rank),
+                  const SizedBox(width: 12),
 
-            const SizedBox(height: 16),
+                  // 카트 ID + 상태
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          progress.cart.id,
+                          style: IndustrialDarkTokens.displayStyle.copyWith(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 1.2,
+                            color: _getStatusColor(progress.cart.status),
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          progress.cart.status.name.toUpperCase(),
+                          style: const TextStyle(
+                            fontSize: 10,
+                            letterSpacing: 1.0,
+                            fontWeight: FontWeight.w600,
+                            color: IndustrialDarkTokens.textSecondary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
 
-            // 진행 바
-            _buildProgressBar(progress),
+              const SizedBox(height: 16),
 
-            const SizedBox(height: 16),
+              // 진행 바
+              _buildProgressBar(progress),
 
-            // 메트릭스 행
-            _buildMetricsRow(progress),
-          ],
-        ),
+              const SizedBox(height: 16),
+
+              // 메트릭스 행
+              _buildMetricsRow(progress),
+            ],
+          ),
         ),
       ),
     );
@@ -284,14 +285,14 @@ class CartListBottomSheet extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.arrow_forward,
             color: IndustrialDarkTokens.accentPrimary,
             size: 14,
           ),
           Text(
             '$rank',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w900,
               color: IndustrialDarkTokens.accentPrimary,
@@ -311,7 +312,7 @@ class CartListBottomSheet extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
+            const Text(
               'PROGRESS',
               style: TextStyle(
                 fontSize: 10,
@@ -362,7 +363,8 @@ class CartListBottomSheet extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4),
                       gradient: LinearGradient(
                         colors: [
-                          _getStatusColor(progress.cart.status).withOpacity(0.6),
+                          _getStatusColor(progress.cart.status)
+                              .withOpacity(0.6),
                           _getStatusColor(progress.cart.status),
                         ],
                       ),
@@ -440,7 +442,7 @@ class CartListBottomSheet extends StatelessWidget {
               const SizedBox(width: 6),
               Text(
                 label,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 9,
                   letterSpacing: 1.0,
                   fontWeight: FontWeight.w600,

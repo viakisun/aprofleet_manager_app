@@ -13,7 +13,8 @@ class PerformanceDebugOverlay extends StatefulWidget {
   const PerformanceDebugOverlay({super.key});
 
   @override
-  State<PerformanceDebugOverlay> createState() => _PerformanceDebugOverlayState();
+  State<PerformanceDebugOverlay> createState() =>
+      _PerformanceDebugOverlayState();
 }
 
 class _PerformanceDebugOverlayState extends State<PerformanceDebugOverlay> {
@@ -35,7 +36,8 @@ class _PerformanceDebugOverlayState extends State<PerformanceDebugOverlay> {
               color: IndustrialDarkTokens.outline,
               width: IndustrialDarkTokens.borderWidth,
             ),
-            borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusCard),
+            borderRadius:
+                BorderRadius.circular(IndustrialDarkTokens.radiusCard),
           ),
           child: _isExpanded ? _buildExpandedView() : _buildCollapsedView(),
         ),
@@ -87,7 +89,7 @@ class _PerformanceDebugOverlayState extends State<PerformanceDebugOverlay> {
         // Header
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             border: Border(
               bottom: BorderSide(
                 color: IndustrialDarkTokens.outline,
@@ -97,7 +99,7 @@ class _PerformanceDebugOverlayState extends State<PerformanceDebugOverlay> {
           ),
           child: Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.speed,
                 color: IndustrialDarkTokens.accentPrimary,
                 size: 14,
@@ -178,7 +180,7 @@ class _PerformanceDebugOverlayState extends State<PerformanceDebugOverlay> {
                 child: Stack(
                   children: [
                     // Background circle
-                    Center(
+                    const Center(
                       child: SizedBox(
                         width: 50,
                         height: 50,
@@ -212,13 +214,17 @@ class _PerformanceDebugOverlayState extends State<PerformanceDebugOverlay> {
           padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
           child: Column(
             children: [
-              _buildMetricRow('Build', '${metrics['build']}ms', metrics['build']! <= 5),
+              _buildMetricRow(
+                  'Build', '${metrics['build']}ms', metrics['build']! <= 5),
               const SizedBox(height: 6),
-              _buildMetricRow('Markers', '${metrics['markers']}ms', metrics['markers']! <= 2),
+              _buildMetricRow('Markers', '${metrics['markers']}ms',
+                  metrics['markers']! <= 2),
               const SizedBox(height: 6),
-              _buildMetricRow('Icon Cache', '${metrics['iconHits']}%', metrics['iconHits']! >= 95),
+              _buildMetricRow('Icon Cache', '${metrics['iconHits']}%',
+                  metrics['iconHits']! >= 95),
               const SizedBox(height: 6),
-              _buildMetricRow('Update Rate', '${metrics['updateRate']}ms', true),
+              _buildMetricRow(
+                  'Update Rate', '${metrics['updateRate']}ms', true),
             ],
           ),
         ),
@@ -235,12 +241,13 @@ class _PerformanceDebugOverlayState extends State<PerformanceDebugOverlay> {
               },
               style: OutlinedButton.styleFrom(
                 padding: EdgeInsets.zero,
-                side: BorderSide(
+                side: const BorderSide(
                   color: IndustrialDarkTokens.outline,
                   width: 1,
                 ),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+                  borderRadius:
+                      BorderRadius.circular(IndustrialDarkTokens.radiusButton),
                 ),
               ),
               child: Text(
@@ -265,7 +272,9 @@ class _PerformanceDebugOverlayState extends State<PerformanceDebugOverlay> {
           height: 6,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isGood ? IndustrialDarkTokens.statusActive : IndustrialDarkTokens.statusIdle,
+            color: isGood
+                ? IndustrialDarkTokens.statusActive
+                : IndustrialDarkTokens.statusIdle,
           ),
         ),
         const SizedBox(width: 8),
@@ -283,7 +292,9 @@ class _PerformanceDebugOverlayState extends State<PerformanceDebugOverlay> {
           style: IndustrialDarkTokens.labelStyle.copyWith(
             fontSize: 11,
             fontWeight: FontWeight.w700,
-            color: isGood ? IndustrialDarkTokens.statusActive : IndustrialDarkTokens.statusIdle,
+            color: isGood
+                ? IndustrialDarkTokens.statusActive
+                : IndustrialDarkTokens.statusIdle,
           ),
         ),
       ],
@@ -291,13 +302,23 @@ class _PerformanceDebugOverlayState extends State<PerformanceDebugOverlay> {
   }
 
   Map<String, int> _getMetrics() {
-    final buildTimes = PerformanceLogger.getMeasurements('LiveMapView.build') ?? [];
-    final markerTimes = PerformanceLogger.getMeasurements('updateMarkers') ?? [];
-    final iconGetTimes = PerformanceLogger.getMeasurements('updateMarkers.iconGet') ?? [];
+    final buildTimes =
+        PerformanceLogger.getMeasurements('LiveMapView.build') ?? [];
+    final markerTimes =
+        PerformanceLogger.getMeasurements('updateMarkers') ?? [];
+    final iconGetTimes =
+        PerformanceLogger.getMeasurements('updateMarkers.iconGet') ?? [];
 
-    final avgBuild = buildTimes.isEmpty ? 0 : (buildTimes.reduce((a, b) => a + b) / buildTimes.length).round();
-    final avgMarkers = markerTimes.isEmpty ? 0 : (markerTimes.reduce((a, b) => a + b) / markerTimes.length).round();
-    final iconCacheHits = iconGetTimes.isEmpty ? 100 : (iconGetTimes.where((t) => t == 0).length / iconGetTimes.length * 100).round();
+    final avgBuild = buildTimes.isEmpty
+        ? 0
+        : (buildTimes.reduce((a, b) => a + b) / buildTimes.length).round();
+    final avgMarkers = markerTimes.isEmpty
+        ? 0
+        : (markerTimes.reduce((a, b) => a + b) / markerTimes.length).round();
+    final iconCacheHits = iconGetTimes.isEmpty
+        ? 100
+        : (iconGetTimes.where((t) => t == 0).length / iconGetTimes.length * 100)
+            .round();
 
     return {
       'build': avgBuild,
@@ -328,8 +349,8 @@ class _PerformanceDebugOverlayState extends State<PerformanceDebugOverlay> {
 
   Color _getScoreColor(int score) {
     if (score >= 90) return IndustrialDarkTokens.statusActive; // Green
-    if (score >= 70) return IndustrialDarkTokens.statusIdle;   // Orange
-    return IndustrialDarkTokens.statusMaintenance;             // Red
+    if (score >= 70) return IndustrialDarkTokens.statusIdle; // Orange
+    return IndustrialDarkTokens.statusMaintenance; // Red
   }
 
   String _getScoreLabel(int score) {

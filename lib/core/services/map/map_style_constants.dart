@@ -46,11 +46,11 @@ class MapStyleConstants {
   /// Google Maps는 기본 마커의 색상을 Hue (색조) 값으로 지정합니다.
   /// Hue 값은 0~360도 사이의 색상환 각도입니다.
   static const Map<CartStatus, double> markerHueByStatus = {
-    CartStatus.active: google.BitmapDescriptor.hueGreen,      // 활성 (초록)
-    CartStatus.idle: google.BitmapDescriptor.hueOrange,       // 대기 (주황)
-    CartStatus.charging: google.BitmapDescriptor.hueBlue,     // 충전 중 (파랑)
-    CartStatus.maintenance: google.BitmapDescriptor.hueRed,   // 정비 중 (빨강)
-    CartStatus.offline: google.BitmapDescriptor.hueViolet,    // 오프라인 (보라)
+    CartStatus.active: google.BitmapDescriptor.hueGreen, // 활성 (초록)
+    CartStatus.idle: google.BitmapDescriptor.hueOrange, // 대기 (주황)
+    CartStatus.charging: google.BitmapDescriptor.hueBlue, // 충전 중 (파랑)
+    CartStatus.maintenance: google.BitmapDescriptor.hueRed, // 정비 중 (빨강)
+    CartStatus.offline: google.BitmapDescriptor.hueViolet, // 오프라인 (보라)
   };
 
   // ============================================================================

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../domain/models/cart.dart';
-import '../../core/constants/app_constants.dart';
 import '../theme/status_colors.dart';
 
 class StatusBar extends StatelessWidget {
@@ -23,7 +22,8 @@ class StatusBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 40, // Compact height
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), // Tighter padding
+      padding: const EdgeInsets.symmetric(
+          horizontal: 8, vertical: 4), // Tighter padding
       decoration: BoxDecoration(
         color: const Color(0xFF0B0B0B), // Pure black base
         border: Border(
@@ -49,12 +49,15 @@ class StatusBar extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () => onFilterTap(status),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3), // Compact padding
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 6, vertical: 3), // Compact padding
                         decoration: BoxDecoration(
                           color: isActive
-                              ? color.withValues(alpha: 0.1) // Subtle active state
+                              ? color.withValues(
+                                  alpha: 0.1) // Subtle active state
                               : Colors.transparent,
-                          borderRadius: BorderRadius.circular(10), // Smaller radius
+                          borderRadius:
+                              BorderRadius.circular(10), // Smaller radius
                           border: Border.all(
                             color: isActive
                                 ? color.withValues(alpha: 0.3)

@@ -1140,7 +1140,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
             ),
           ),
           const SizedBox(height: IndustrialDarkTokens.spacingCompact),
-          Text(
+          const Text(
             'Cart has been registered successfully',
             style: TextStyle(
               color: IndustrialDarkTokens.textSecondary,
@@ -1196,7 +1196,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
           color: IndustrialDarkTokens.textPrimary,
         ),
       ),
-      child: Text(
+      child: const Text(
         'Any unsaved changes will be lost.',
         style: TextStyle(color: IndustrialDarkTokens.textSecondary),
       ),

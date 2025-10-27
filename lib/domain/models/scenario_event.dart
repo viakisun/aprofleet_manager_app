@@ -6,11 +6,11 @@ import 'work_order.dart';
 
 /// Type of scenario event
 enum ScenarioEventType {
-  alertTrigger,      // Alert is triggered
-  stateChange,       // Cart state changes
-  positionUpdate,    // Cart position updates
-  telemetryUpdate,   // Cart telemetry updates
-  info,              // Informational message
+  alertTrigger, // Alert is triggered
+  stateChange, // Cart state changes
+  positionUpdate, // Cart position updates
+  telemetryUpdate, // Cart telemetry updates
+  info, // Informational message
 }
 
 /// Scenario event definition
@@ -126,7 +126,8 @@ class ScenarioEvent {
       type: ScenarioEventType.positionUpdate,
       cartId: cartId,
       title: title,
-      message: 'Position updated to ${newPosition.latitude.toStringAsFixed(6)}, ${newPosition.longitude.toStringAsFixed(6)}',
+      message:
+          'Position updated to ${newPosition.latitude.toStringAsFixed(6)}, ${newPosition.longitude.toStringAsFixed(6)}',
       newPosition: newPosition,
     );
   }
@@ -158,8 +159,11 @@ class ScenarioEvent {
   String get icon {
     switch (type) {
       case ScenarioEventType.alertTrigger:
-        return severity == AlertSeverity.critical ? '🔴' :
-               severity == AlertSeverity.warning ? '🟡' : '🟢';
+        return severity == AlertSeverity.critical
+            ? '🔴'
+            : severity == AlertSeverity.warning
+                ? '🟡'
+                : '🟢';
       case ScenarioEventType.stateChange:
         return '🔄';
       case ScenarioEventType.positionUpdate:

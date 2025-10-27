@@ -44,7 +44,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the widget loads (basic smoke test)
-        expect(find.byType(AlertManagementPageV2V2), findsOneWidget);
+        expect(find.byType(AlertManagementPageV2), findsOneWidget);
       } finally {
         // 화면 크기 원상복구
         await tester.binding.setSurfaceSize(null);

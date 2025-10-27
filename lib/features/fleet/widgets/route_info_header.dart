@@ -41,7 +41,7 @@ class RouteInfoHeader extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.route,
                       color: IndustrialDarkTokens.accentPrimary,
                       size: 20,
@@ -73,7 +73,7 @@ class RouteInfoHeader extends StatelessWidget {
               // 총 거리
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.straighten,
                     color: IndustrialDarkTokens.textSecondary,
                     size: 18,

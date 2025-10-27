@@ -23,11 +23,14 @@ class AlertCompactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final severityColor = AppConstants.alertColors[alert.severity] ?? IndustrialDarkTokens.textSecondary;
-    final isUnread = alert.state == AlertStatus.triggered || alert.state == AlertStatus.notified;
+    final severityColor = AppConstants.alertColors[alert.severity] ??
+        IndustrialDarkTokens.textSecondary;
+    final isUnread = alert.state == AlertStatus.triggered ||
+        alert.state == AlertStatus.notified;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: IndustrialDarkTokens.spacingCompact),
+      margin:
+          const EdgeInsets.only(bottom: IndustrialDarkTokens.spacingCompact),
       decoration: BoxDecoration(
         color: IndustrialDarkTokens.bgBase,
         borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
@@ -42,7 +45,8 @@ class AlertCompactCard extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          borderRadius:
+              BorderRadius.circular(IndustrialDarkTokens.radiusButton),
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: IndustrialDarkTokens.spacingItem,
@@ -56,7 +60,8 @@ class AlertCompactCard extends StatelessWidget {
                   height: 48,
                   decoration: BoxDecoration(
                     color: severityColor,
-                    borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                    borderRadius:
+                        BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
                   ),
                 ),
 
@@ -88,14 +93,16 @@ class AlertCompactCard extends StatelessWidget {
                                     ? IndustrialDarkTokens.fontWeightBold
                                     : IndustrialDarkTokens.fontWeightBold,
                                 color: IndustrialDarkTokens.textPrimary,
-                                letterSpacing: IndustrialDarkTokens.letterSpacing,
+                                letterSpacing:
+                                    IndustrialDarkTokens.letterSpacing,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
                           if (isUnread) ...[
-                            const SizedBox(width: IndustrialDarkTokens.spacingCompact),
+                            const SizedBox(
+                                width: IndustrialDarkTokens.spacingCompact),
                             Container(
                               width: 8,
                               height: 8,
@@ -114,7 +121,7 @@ class AlertCompactCard extends StatelessWidget {
                       Row(
                         children: [
                           if (alert.cartId != null) ...[
-                            Icon(
+                            const Icon(
                               Icons.directions_car,
                               size: 12,
                               color: IndustrialDarkTokens.textSecondary,
@@ -122,32 +129,37 @@ class AlertCompactCard extends StatelessWidget {
                             const SizedBox(width: 4),
                             Text(
                               alert.cartId!,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: IndustrialDarkTokens.fontSizeSmall,
                                 color: IndustrialDarkTokens.textSecondary,
-                                letterSpacing: IndustrialDarkTokens.letterSpacing,
+                                letterSpacing:
+                                    IndustrialDarkTokens.letterSpacing,
                               ),
                             ),
                           ],
-                          if (alert.cartId != null && alert.location != null) ...[
-                            const SizedBox(width: IndustrialDarkTokens.spacingCompact),
-                            Text(
+                          if (alert.cartId != null &&
+                              alert.location != null) ...[
+                            const SizedBox(
+                                width: IndustrialDarkTokens.spacingCompact),
+                            const Text(
                               '•',
                               style: TextStyle(
                                 fontSize: IndustrialDarkTokens.fontSizeSmall,
                                 color: IndustrialDarkTokens.textSecondary,
                               ),
                             ),
-                            const SizedBox(width: IndustrialDarkTokens.spacingCompact),
+                            const SizedBox(
+                                width: IndustrialDarkTokens.spacingCompact),
                           ],
                           if (alert.location != null)
                             Expanded(
                               child: Text(
                                 alert.location!,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: IndustrialDarkTokens.fontSizeSmall,
                                   color: IndustrialDarkTokens.textSecondary,
-                                  letterSpacing: IndustrialDarkTokens.letterSpacing,
+                                  letterSpacing:
+                                      IndustrialDarkTokens.letterSpacing,
                                 ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -164,7 +176,7 @@ class AlertCompactCard extends StatelessWidget {
                 // Time ago
                 Text(
                   _formatTimeAgo(alert.createdAt, context),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: IndustrialDarkTokens.fontSizeSmall,
                     color: IndustrialDarkTokens.textSecondary,
                     letterSpacing: IndustrialDarkTokens.letterSpacing,
@@ -174,7 +186,7 @@ class AlertCompactCard extends StatelessWidget {
                 const SizedBox(width: IndustrialDarkTokens.spacingCompact),
 
                 // Chevron
-                Icon(
+                const Icon(
                   Icons.chevron_right,
                   size: 20,
                   color: IndustrialDarkTokens.textSecondary,

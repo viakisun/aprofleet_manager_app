@@ -25,7 +25,7 @@ class IndustrialDarkTheme {
       // ========================================================================
       // COLOR SCHEME
       // ========================================================================
-      colorScheme: ColorScheme.dark(
+      colorScheme: const ColorScheme.dark(
         primary: IndustrialDarkTokens.accentPrimary,
         secondary: IndustrialDarkTokens.accentPrimary,
         surface: IndustrialDarkTokens.bgSurface,
@@ -49,13 +49,13 @@ class IndustrialDarkTheme {
       // ========================================================================
       // APP BAR THEME
       // ========================================================================
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         backgroundColor: IndustrialDarkTokens.bgBase,
         foregroundColor: IndustrialDarkTokens.textPrimary,
         elevation: 0, // No elevation - outline only
         centerTitle: true,
         titleTextStyle: IndustrialDarkTokens.displayStyle,
-        iconTheme: const IconThemeData(
+        iconTheme: IconThemeData(
           color: IndustrialDarkTokens.textPrimary,
           size: 24,
         ),
@@ -70,7 +70,7 @@ class IndustrialDarkTheme {
       // ========================================================================
       // BOTTOM NAVIGATION BAR THEME
       // ========================================================================
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: IndustrialDarkTokens.bgBase,
         selectedItemColor: IndustrialDarkTokens.accentPrimary,
         unselectedItemColor: IndustrialDarkTokens.textSecondary,
@@ -88,7 +88,7 @@ class IndustrialDarkTheme {
         elevation: 0, // No elevation - use borders
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusCard),
-          side: BorderSide(
+          side: const BorderSide(
             color: IndustrialDarkTokens.outline,
             width: IndustrialDarkTokens.borderWidth,
           ),
@@ -223,36 +223,41 @@ class IndustrialDarkTheme {
         filled: true,
         fillColor: IndustrialDarkTokens.bgSurface,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
-          borderSide: BorderSide(
+          borderRadius:
+              BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          borderSide: const BorderSide(
             color: IndustrialDarkTokens.outline,
             width: IndustrialDarkTokens.borderWidth,
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
-          borderSide: BorderSide(
+          borderRadius:
+              BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          borderSide: const BorderSide(
             color: IndustrialDarkTokens.outline,
             width: IndustrialDarkTokens.borderWidth,
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
-          borderSide: BorderSide(
+          borderRadius:
+              BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          borderSide: const BorderSide(
             color: IndustrialDarkTokens.accentPrimary,
             width: IndustrialDarkTokens.borderWidth,
           ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
-          borderSide: BorderSide(
+          borderRadius:
+              BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          borderSide: const BorderSide(
             color: IndustrialDarkTokens.error,
             width: IndustrialDarkTokens.borderWidth,
           ),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
-          borderSide: BorderSide(
+          borderRadius:
+              BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          borderSide: const BorderSide(
             color: IndustrialDarkTokens.error,
             width: IndustrialDarkTokens.borderWidth,
           ),
@@ -263,7 +268,7 @@ class IndustrialDarkTheme {
         ),
         hintStyle: IndustrialDarkTokens.labelStyle,
         labelStyle: IndustrialDarkTokens.labelStyle,
-        floatingLabelStyle: TextStyle(
+        floatingLabelStyle: const TextStyle(
           fontSize: IndustrialDarkTokens.fontSizeSmall,
           color: IndustrialDarkTokens.accentPrimary,
         ),
@@ -282,21 +287,23 @@ class IndustrialDarkTheme {
             vertical: IndustrialDarkTokens.spacingItem,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+            borderRadius:
+                BorderRadius.circular(IndustrialDarkTokens.radiusButton),
           ),
           textStyle: const TextStyle(
             fontSize: IndustrialDarkTokens.fontSizeBody,
             fontWeight: IndustrialDarkTokens.fontWeightMedium,
             letterSpacing: IndustrialDarkTokens.letterSpacing,
           ),
-          minimumSize: const Size(IndustrialDarkTokens.touchTargetMin, IndustrialDarkTokens.touchTargetMin),
+          minimumSize: const Size(IndustrialDarkTokens.touchTargetMin,
+              IndustrialDarkTokens.touchTargetMin),
         ),
       ),
 
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: IndustrialDarkTokens.textPrimary,
-          side: BorderSide(
+          side: const BorderSide(
             color: IndustrialDarkTokens.outline,
             width: IndustrialDarkTokens.borderWidth,
           ),
@@ -305,14 +312,16 @@ class IndustrialDarkTheme {
             vertical: IndustrialDarkTokens.spacingItem,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+            borderRadius:
+                BorderRadius.circular(IndustrialDarkTokens.radiusButton),
           ),
           textStyle: const TextStyle(
             fontSize: IndustrialDarkTokens.fontSizeBody,
             fontWeight: IndustrialDarkTokens.fontWeightMedium,
             letterSpacing: IndustrialDarkTokens.letterSpacing,
           ),
-          minimumSize: const Size(IndustrialDarkTokens.touchTargetMin, IndustrialDarkTokens.touchTargetMin),
+          minimumSize: const Size(IndustrialDarkTokens.touchTargetMin,
+              IndustrialDarkTokens.touchTargetMin),
         ),
       ),
 
@@ -342,7 +351,7 @@ class IndustrialDarkTheme {
       // ========================================================================
       // DIVIDER THEME
       // ========================================================================
-      dividerTheme: DividerThemeData(
+      dividerTheme: const DividerThemeData(
         color: IndustrialDarkTokens.outline,
         thickness: IndustrialDarkTokens.borderWidthThin,
         space: IndustrialDarkTokens.borderWidthThin,
@@ -351,12 +360,12 @@ class IndustrialDarkTheme {
       // ========================================================================
       // DIALOG THEME
       // ========================================================================
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
         backgroundColor: IndustrialDarkTokens.bgSurface,
         elevation: 0, // No elevation
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusCard),
-          side: BorderSide(
+          side: const BorderSide(
             color: IndustrialDarkTokens.outline,
             width: IndustrialDarkTokens.borderWidth,
           ),
@@ -368,11 +377,11 @@ class IndustrialDarkTheme {
       // ========================================================================
       // BOTTOM SHEET THEME
       // ========================================================================
-      bottomSheetTheme: BottomSheetThemeData(
+      bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: IndustrialDarkTokens.bgSurface,
         elevation: 0, // No elevation
         shape: RoundedRectangleBorder(
-          borderRadius: const BorderRadius.only(
+          borderRadius: BorderRadius.only(
             topLeft: Radius.circular(IndustrialDarkTokens.radiusCard),
             topRight: Radius.circular(IndustrialDarkTokens.radiusCard),
           ),
@@ -394,8 +403,9 @@ class IndustrialDarkTheme {
         behavior: SnackBarBehavior.floating,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusButton),
-          side: BorderSide(
+          borderRadius:
+              BorderRadius.circular(IndustrialDarkTokens.radiusButton),
+          side: const BorderSide(
             color: IndustrialDarkTokens.outline,
             width: IndustrialDarkTokens.borderWidth,
           ),
@@ -420,7 +430,7 @@ class IndustrialDarkTheme {
         elevation: 0, // No elevation
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusCard),
-          side: BorderSide(
+          side: const BorderSide(
             color: IndustrialDarkTokens.outline,
             width: IndustrialDarkTokens.borderWidth,
           ),

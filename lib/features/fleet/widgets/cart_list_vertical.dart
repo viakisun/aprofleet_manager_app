@@ -32,7 +32,8 @@ class CartListVertical extends StatefulWidget {
   State<CartListVertical> createState() => _CartListVerticalState();
 }
 
-class _CartListVerticalState extends State<CartListVertical> with SingleTickerProviderStateMixin {
+class _CartListVerticalState extends State<CartListVertical>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
 
   @override
@@ -67,8 +68,8 @@ class _CartListVerticalState extends State<CartListVertical> with SingleTickerPr
   Widget build(BuildContext context) {
     PerformanceLogger.start('CartListVertical.build');
 
-    final stripWidth = 180.0; // Increased width for card design
-    final bottomNavHeight = 56.0; // 하단 네비게이션 바 높이
+    const stripWidth = 180.0; // Increased width for card design
+    const bottomNavHeight = 56.0; // 하단 네비게이션 바 높이
 
     final result = Positioned(
       top: IndustrialDarkTokens.spacingItem,
@@ -86,7 +87,8 @@ class _CartListVerticalState extends State<CartListVertical> with SingleTickerPr
                 // 헤더 (고정)
                 Container(
                   height: 40,
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   child: Row(
                     children: [
                       const Icon(Icons.directions_car, size: 14),
@@ -94,15 +96,18 @@ class _CartListVerticalState extends State<CartListVertical> with SingleTickerPr
                       Expanded(
                         child: Row(
                           children: [
-                            const Text('CARTS', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, letterSpacing: 0.3)),
+                            const Text('CARTS',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 0.3)),
                             const SizedBox(width: 4),
                             Text('${widget.carts.length}',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.white.withOpacity(.5),
-                                fontWeight: FontWeight.w500,
-                              )
-                            ),
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white.withOpacity(.5),
+                                  fontWeight: FontWeight.w500,
+                                )),
                           ],
                         ),
                       ),
@@ -110,10 +115,13 @@ class _CartListVerticalState extends State<CartListVertical> with SingleTickerPr
                         tooltip: widget.isCollapsed ? '펼치기' : '접기',
                         iconSize: 16,
                         onPressed: widget.onToggleCollapse,
-                        icon: Icon(widget.isCollapsed ? Icons.unfold_more : Icons.unfold_less),
+                        icon: Icon(widget.isCollapsed
+                            ? Icons.unfold_more
+                            : Icons.unfold_less),
                         splashRadius: 16,
                         padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(minWidth: 28, minHeight: 28),
+                        constraints:
+                            const BoxConstraints(minWidth: 28, minHeight: 28),
                       ),
                     ],
                   ),
@@ -128,16 +136,19 @@ class _CartListVerticalState extends State<CartListVertical> with SingleTickerPr
                   animation: _animationController,
                   builder: (context, child) {
                     // Each cart item: 13px padding top + 13px padding bottom + content (~16px) + 8px margin = ~50px
-                    final itemHeight = 50.0;
-                    final topPadding = 12.0;
-                    final bottomPadding = 8.0;
-                    final listHeight = (widget.carts.length * itemHeight) + topPadding + bottomPadding;
+                    const itemHeight = 50.0;
+                    const topPadding = 12.0;
+                    const bottomPadding = 8.0;
+                    final listHeight = (widget.carts.length * itemHeight) +
+                        topPadding +
+                        bottomPadding;
 
-                    return Container(
+                    return SizedBox(
                       height: _animationController.value * listHeight,
                       child: ClipRect(
                         child: ListView.builder(
-                          padding: const EdgeInsets.only(left: 12, right: 12, top: 12, bottom: 8),
+                          padding: const EdgeInsets.only(
+                              left: 12, right: 12, top: 12, bottom: 8),
                           physics: const BouncingScrollPhysics(),
                           itemCount: widget.carts.length,
                           itemBuilder: (context, index) {
@@ -147,7 +158,8 @@ class _CartListVerticalState extends State<CartListVertical> with SingleTickerPr
                               name: cart.id,
                               batteryPercent: batteryPct,
                               statusColor: _getCartStatusColor(cart.status),
-                              showBattery: true, // Always show battery like reference
+                              showBattery:
+                                  true, // Always show battery like reference
                               isSelected: widget.selectedCartId == cart.id,
                               onTap: () => widget.onCartSelected(cart),
                             );
@@ -167,7 +179,6 @@ class _CartListVerticalState extends State<CartListVertical> with SingleTickerPr
     PerformanceLogger.end('CartListVertical.build');
     return result;
   }
-
 
   IconData _getCartStatusIcon(CartStatus status) {
     switch (status) {
@@ -208,4 +219,3 @@ class _CartListVerticalState extends State<CartListVertical> with SingleTickerPr
     return Colors.red;
   }
 }
-

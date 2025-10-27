@@ -27,7 +27,7 @@ class ViaStatusBar extends StatelessWidget {
         horizontal: IndustrialDarkTokens.spacingItem,
         vertical: IndustrialDarkTokens.spacingCompact,
       ),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: IndustrialDarkTokens.bgBase,
         border: Border(
           top: BorderSide(
@@ -83,7 +83,7 @@ class ViaStatusBar extends StatelessWidget {
                       width: 1,
                     ),
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.filter_list,
                     size: 16,
                     color: IndustrialDarkTokens.textSecondary,
@@ -191,11 +191,11 @@ class _StatusChipState extends State<_StatusChip>
             color: widget.isActive
                 ? widget.color.withValues(alpha: 0.15)
                 : IndustrialDarkTokens.bgSurface,
-            borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusChip),
+            borderRadius:
+                BorderRadius.circular(IndustrialDarkTokens.radiusChip),
             border: Border.all(
-              color: widget.isActive
-                  ? widget.color
-                  : IndustrialDarkTokens.outline,
+              color:
+                  widget.isActive ? widget.color : IndustrialDarkTokens.outline,
               width: widget.isActive ? 1.5 : 1.0,
             ),
           ),
@@ -228,7 +228,8 @@ class _StatusChipState extends State<_StatusChip>
                   color: widget.isActive
                       ? widget.color
                       : IndustrialDarkTokens.textSecondary,
-                  fontWeight: widget.isActive ? FontWeight.w700 : FontWeight.w600,
+                  fontWeight:
+                      widget.isActive ? FontWeight.w700 : FontWeight.w600,
                 ),
               ),
               const SizedBox(width: IndustrialDarkTokens.spacingMinimal),
@@ -241,7 +242,8 @@ class _StatusChipState extends State<_StatusChip>
                   color: widget.isActive
                       ? widget.color.withValues(alpha: 0.2)
                       : IndustrialDarkTokens.bgBase,
-                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                  borderRadius:
+                      BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
                 ),
                 child: Text(
                   widget.count.toString(),

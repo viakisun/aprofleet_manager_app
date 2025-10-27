@@ -87,11 +87,11 @@ class AlertSummaryCards extends ConsumerWidget {
                   title: localizations.warning,
                   count: stats['warning'] ?? 0,
                   icon: Icons.warning,
-                  color: IndustrialDarkTokens.alertWarning,
+                  color: IndustrialDarkTokens.warning,
                   gradient: LinearGradient(
                     colors: [
-                      IndustrialDarkTokens.alertWarning.withValues(alpha: 0.2),
-                      IndustrialDarkTokens.alertWarning.withValues(alpha: 0.1),
+                      IndustrialDarkTokens.warning.withValues(alpha: 0.2),
+                      IndustrialDarkTokens.warning.withValues(alpha: 0.1),
                     ],
                   ),
                 ),
@@ -137,11 +137,11 @@ class AlertSummaryCards extends ConsumerWidget {
                   title: localizations.resolved,
                   count: stats['resolved'] ?? 0,
                   icon: Icons.check_circle,
-                  color: IndustrialDarkTokens.alertSuccess,
+                  color: IndustrialDarkTokens.success,
                   gradient: LinearGradient(
                     colors: [
-                      IndustrialDarkTokens.alertSuccess.withValues(alpha: 0.2),
-                      IndustrialDarkTokens.alertSuccess.withValues(alpha: 0.1),
+                      IndustrialDarkTokens.success.withValues(alpha: 0.2),
+                      IndustrialDarkTokens.success.withValues(alpha: 0.1),
                     ],
                   ),
                 ),
@@ -176,10 +176,12 @@ class AlertSummaryCards extends ConsumerWidget {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(IndustrialDarkTokens.spacingCompact),
+                padding:
+                    const EdgeInsets.all(IndustrialDarkTokens.spacingCompact),
                 decoration: BoxDecoration(
                   color: color.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                  borderRadius:
+                      BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
                 ),
                 child: Icon(
                   icon,
@@ -196,9 +198,10 @@ class AlertSummaryCards extends ConsumerWidget {
                 ),
                 decoration: BoxDecoration(
                   color: count > 0
-                      ? IndustrialDarkTokens.alertWarning.withValues(alpha: 0.2)
-                      : IndustrialDarkTokens.alertSuccess.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                      ? IndustrialDarkTokens.warning.withValues(alpha: 0.2)
+                      : IndustrialDarkTokens.success.withValues(alpha: 0.2),
+                  borderRadius:
+                      BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -207,8 +210,8 @@ class AlertSummaryCards extends ConsumerWidget {
                       count > 0 ? Icons.trending_up : Icons.trending_down,
                       size: 12,
                       color: count > 0
-                          ? IndustrialDarkTokens.alertWarning
-                          : IndustrialDarkTokens.alertSuccess,
+                          ? IndustrialDarkTokens.warning
+                          : IndustrialDarkTokens.success,
                     ),
                     const SizedBox(width: 2),
                     Text(
@@ -217,8 +220,8 @@ class AlertSummaryCards extends ConsumerWidget {
                         fontSize: 10,
                         fontWeight: IndustrialDarkTokens.fontWeightBold,
                         color: count > 0
-                            ? IndustrialDarkTokens.alertWarning
-                            : IndustrialDarkTokens.alertSuccess,
+                            ? IndustrialDarkTokens.warning
+                            : IndustrialDarkTokens.success,
                       ),
                     ),
                   ],

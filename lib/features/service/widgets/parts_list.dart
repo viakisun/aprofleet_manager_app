@@ -66,20 +66,21 @@ class _PartsListState extends State<PartsList> {
             padding: const EdgeInsets.all(IndustrialDarkTokens.spacingSection),
             decoration: BoxDecoration(
               color: IndustrialDarkTokens.bgSurface,
-              borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+              borderRadius:
+                  BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
               border: Border.all(
                 color: IndustrialDarkTokens.outline,
                 width: 1,
               ),
             ),
-            child: Column(
+            child: const Column(
               children: [
                 Icon(
                   Icons.inventory_2_outlined,
                   size: 48,
                   color: IndustrialDarkTokens.textSecondary,
                 ),
-                const SizedBox(height: IndustrialDarkTokens.spacingItem),
+                SizedBox(height: IndustrialDarkTokens.spacingItem),
                 Text(
                   'No parts added yet',
                   style: TextStyle(
@@ -87,7 +88,7 @@ class _PartsListState extends State<PartsList> {
                     color: IndustrialDarkTokens.textSecondary,
                   ),
                 ),
-                const SizedBox(height: IndustrialDarkTokens.spacingCompact),
+                SizedBox(height: IndustrialDarkTokens.spacingCompact),
                 Text(
                   'Add parts required for this work order',
                   style: TextStyle(
@@ -104,11 +105,13 @@ class _PartsListState extends State<PartsList> {
             final part = entry.value;
 
             return Container(
-              margin: const EdgeInsets.only(bottom: IndustrialDarkTokens.spacingCompact),
+              margin: const EdgeInsets.only(
+                  bottom: IndustrialDarkTokens.spacingCompact),
               padding: const EdgeInsets.all(IndustrialDarkTokens.spacingItem),
               decoration: BoxDecoration(
                 color: IndustrialDarkTokens.bgSurface,
-                borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                borderRadius:
+                    BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
                 border: Border.all(
                   color: IndustrialDarkTokens.outline,
                   width: 1,
@@ -129,19 +132,21 @@ class _PartsListState extends State<PartsList> {
                           ),
                         ),
                         if (part.notes != null) ...[
-                          const SizedBox(height: IndustrialDarkTokens.spacingMinimal),
+                          const SizedBox(
+                              height: IndustrialDarkTokens.spacingMinimal),
                           Text(
                             part.notes!,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: IndustrialDarkTokens.fontSizeSmall,
                               color: IndustrialDarkTokens.textSecondary,
                             ),
                           ),
                         ],
-                        const SizedBox(height: IndustrialDarkTokens.spacingMinimal),
+                        const SizedBox(
+                            height: IndustrialDarkTokens.spacingMinimal),
                         Text(
                           'Quantity: ${part.quantity}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: IndustrialDarkTokens.fontSizeSmall,
                             color: IndustrialDarkTokens.textSecondary,
                           ),

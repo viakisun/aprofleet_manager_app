@@ -92,13 +92,15 @@ class ProfessionalAppBar extends StatelessWidget
 
               // Notification button (if enabled)
               if (showNotificationButton) ...[
-                const SizedBox(width: DesignTokens.spacingMd), // More generous spacing
+                const SizedBox(
+                    width: DesignTokens.spacingMd), // More generous spacing
                 _buildNotificationButton(context),
               ],
 
               // Actions (right-aligned)
               if (actions != null) ...[
-                const SizedBox(width: DesignTokens.spacingMd), // More generous spacing
+                const SizedBox(
+                    width: DesignTokens.spacingMd), // More generous spacing
                 ...actions!,
               ],
             ],
@@ -119,7 +121,7 @@ class ProfessionalAppBar extends StatelessWidget
         splashColor: Colors.white.withOpacity(0.1),
         highlightColor: Colors.white.withOpacity(0.05),
         child: Container(
-          width: 48,  // Minimum touch area (accessibility)
+          width: 48, // Minimum touch area (accessibility)
           height: 48,
           alignment: Alignment.center,
           child: Icon(
@@ -143,7 +145,7 @@ class ProfessionalAppBar extends StatelessWidget
         splashColor: Colors.white.withOpacity(0.1),
         highlightColor: Colors.white.withOpacity(0.05),
         child: Container(
-          width: 48,  // Minimum touch area (accessibility)
+          width: 48, // Minimum touch area (accessibility)
           height: 48,
           alignment: Alignment.center,
           child: Icon(
@@ -167,7 +169,7 @@ class ProfessionalAppBar extends StatelessWidget
         splashColor: Colors.white.withOpacity(0.1),
         highlightColor: Colors.white.withOpacity(0.05),
         child: Container(
-          width: 48,  // Minimum touch area (accessibility)
+          width: 48, // Minimum touch area (accessibility)
           height: 48,
           alignment: Alignment.center,
           child: Stack(
@@ -197,7 +199,9 @@ class ProfessionalAppBar extends StatelessWidget
                       minHeight: 18,
                     ),
                     child: Text(
-                      notificationBadgeCount! > 99 ? '99+' : notificationBadgeCount.toString(),
+                      notificationBadgeCount! > 99
+                          ? '99+'
+                          : notificationBadgeCount.toString(),
                       style: const TextStyle(
                         color: DesignTokens.textPrimary,
                         fontSize: 10,

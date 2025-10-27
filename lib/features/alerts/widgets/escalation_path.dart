@@ -74,7 +74,8 @@ class EscalationPath extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: IndustrialDarkTokens.warning.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                  borderRadius:
+                      BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
                 ),
                 child: const Text(
                   'SLA: 2H',
@@ -132,7 +133,8 @@ class EscalationPath extends StatelessWidget {
               Container(
                 width: 2,
                 height: 40,
-                margin: const EdgeInsets.only(top: IndustrialDarkTokens.spacingMinimal),
+                margin: const EdgeInsets.only(
+                    top: IndustrialDarkTokens.spacingMinimal),
                 decoration: BoxDecoration(
                   color: IndustrialDarkTokens.outline,
                   borderRadius: BorderRadius.circular(1),
@@ -154,7 +156,8 @@ class EscalationPath extends StatelessWidget {
               color: step.status == EscalationStatus.inProgress
                   ? statusColor.withValues(alpha: 0.1)
                   : IndustrialDarkTokens.bgSurface,
-              borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+              borderRadius:
+                  BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
               border: Border.all(
                 color: step.status == EscalationStatus.inProgress
                     ? statusColor.withValues(alpha: 0.3)
@@ -185,8 +188,8 @@ class EscalationPath extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: statusColor.withValues(alpha: 0.2),
-                        borderRadius:
-                            BorderRadius.circular(IndustrialDarkTokens.radiusSmall),
+                        borderRadius: BorderRadius.circular(
+                            IndustrialDarkTokens.radiusSmall),
                       ),
                       child: Text(
                         step.status.name.toUpperCase(),
@@ -206,7 +209,7 @@ class EscalationPath extends StatelessWidget {
                 // Step description
                 Text(
                   step.description,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: IndustrialDarkTokens.fontSizeSmall,
                     color: IndustrialDarkTokens.textSecondary,
                   ),
@@ -218,15 +221,16 @@ class EscalationPath extends StatelessWidget {
                   Row(
                     children: [
                       if (step.assignedTo != null) ...[
-                        Icon(
+                        const Icon(
                           Icons.person,
                           size: 16,
                           color: IndustrialDarkTokens.textSecondary,
                         ),
-                        const SizedBox(width: IndustrialDarkTokens.spacingMinimal),
+                        const SizedBox(
+                            width: IndustrialDarkTokens.spacingMinimal),
                         Text(
                           step.assignedTo!,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 10,
                             color: IndustrialDarkTokens.textSecondary,
                           ),
@@ -234,15 +238,16 @@ class EscalationPath extends StatelessWidget {
                       ],
                       const Spacer(),
                       if (step.completedAt != null) ...[
-                        Icon(
+                        const Icon(
                           Icons.schedule,
                           size: 16,
                           color: IndustrialDarkTokens.textSecondary,
                         ),
-                        const SizedBox(width: IndustrialDarkTokens.spacingMinimal),
+                        const SizedBox(
+                            width: IndustrialDarkTokens.spacingMinimal),
                         Text(
                           _formatDateTime(step.completedAt!),
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 10,
                             color: IndustrialDarkTokens.textSecondary,
                           ),
@@ -266,7 +271,7 @@ class EscalationPath extends StatelessWidget {
       case EscalationStatus.inProgress:
         return IndustrialDarkTokens.statusCharging;
       case EscalationStatus.completed:
-        return IndustrialDarkTokens.alertSuccess;
+        return IndustrialDarkTokens.success;
       case EscalationStatus.skipped:
         return IndustrialDarkTokens.statusOffline;
     }

@@ -135,8 +135,8 @@ class IndustrialDarkTokens {
   static const double fontSizeData = 18.0;
 
   // Font weights
-  static const FontWeight fontWeightBold = FontWeight.w600;    // Semibold
-  static const FontWeight fontWeightMedium = FontWeight.w500;  // Medium
+  static const FontWeight fontWeightBold = FontWeight.w600; // Semibold
+  static const FontWeight fontWeightMedium = FontWeight.w500; // Medium
   static const FontWeight fontWeightRegular = FontWeight.w400; // Regular
 
   /// Line height for outdoor legibility
@@ -308,9 +308,7 @@ class IndustrialDarkTokens {
     double? radius,
   }) {
     return BoxDecoration(
-      color: isPrimary
-          ? (customColor ?? accentPrimary)
-          : Colors.transparent,
+      color: isPrimary ? (customColor ?? accentPrimary) : Colors.transparent,
       borderRadius: BorderRadius.circular(radius ?? radiusButton),
       border: isPrimary
           ? null
