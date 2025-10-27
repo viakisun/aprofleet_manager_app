@@ -232,7 +232,7 @@ class _CartBottomSheetState extends ConsumerState<CartBottomSheet>
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: ViaDesignTokens.spacingLg,
-        vertical: ViaDesignTokens.spacingMd,
+        vertical: ViaDesignTokens.spacingSm, // Reduced from spacingMd
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -240,7 +240,7 @@ class _CartBottomSheetState extends ConsumerState<CartBottomSheet>
           // KPI summary bar
           _buildKPISummary(statusCounts),
 
-          const SizedBox(height: ViaDesignTokens.spacingMd),
+          const SizedBox(height: ViaDesignTokens.spacingSm), // Reduced from spacingMd
 
           // Selected cart or hint
           if (selectedCart != null)

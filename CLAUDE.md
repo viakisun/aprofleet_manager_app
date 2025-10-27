@@ -8,9 +8,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - **Brand**: APRO golf carts
 - **Manufacturer**: DY Innovate
-- **Current Phase**: Development (using Mock API)
+- **Current Phase**: VIA Design System Migration (Phase 4)
 - **Supported Languages**: English, Japanese, Korean, Chinese (Simplified & Traditional)
-- **Design**: Dark monochrome theme with Material3
+- **Design**: VIA Design System - Dark monochrome with glassmorphism
 
 ## Build, Test, and Run Commands
 
@@ -23,7 +23,7 @@ flutter pub get
 dart run build_runner build --delete-conflicting-outputs
 
 # Watch mode for continuous code generation during development
-dart run build_runner watch
+dart run build_runner watch --delete-conflicting-outputs
 
 # Run the app
 flutter run
@@ -42,9 +42,6 @@ flutter test test/kpi_calculator_test.dart
 
 # Generate test coverage
 flutter test --coverage
-
-# Widget testing with specific file
-flutter test test/alert_center_list_test.dart
 ```
 
 ### Maintenance
@@ -78,7 +75,7 @@ The codebase follows strict separation of concerns across three main layers:
 
 3. **Presentation Layer** (`lib/features/`):
    - Seven feature modules, each self-contained with pages/controllers/widgets
-   - Controllers use `StateNotifier` pattern
+   - Controllers use `StateNotifier` pattern with Riverpod code generation
    - All state management via Riverpod 2.4.9
 
 ### Feature Modules
@@ -112,9 +109,16 @@ Future<List<Cart>> carts(Ref ref) async {...}
 @riverpod
 Stream<Telemetry> telemetryStream(Ref ref, String cartId) {...}
 
-// Controllers use StateNotifier
-class CartInventoryController extends StateNotifier<CartInventoryState> {
-  // Manage local feature state
+// Controllers use generated StateNotifier
+@riverpod
+class CartInventoryController extends _$CartInventoryController {
+  @override
+  CartInventoryState build() => CartInventoryState.initial();
+
+  Future<void> filterByStatus(CartStatus status) async {
+    state = state.copyWith(filter: state.filter.copyWith(status: status));
+    await _refreshCarts();
+  }
 }
 
 // UI layer watches state
@@ -183,6 +187,130 @@ class MyController extends StateNotifier<MyState> {
   }
 }
 ```
+
+## VIA Design System
+
+**Current Status:** Phase 4 in progress - migrating entire app to VIA Design System
+**Documentation:** See `PHASE4_PLAN.md` and `VIA_DESIGN_SYSTEM_STATUS.md` for detailed migration roadmap
+
+### VIA Components Available (16 total)
+
+**Basic Components (11)**:
+- `ViaButton` - 4 variants (primary, secondary, ghost, danger), 3 sizes
+- `ViaIconButton` - 3 variants (primary, secondary, ghost), circular design
+- `ViaCard` - Glassmorphic cards with subtle elevation
+- `ViaChip` - Filter chips with animations
+- `ViaToast` - 4 variants (success, error, warning, info) with slide animations
+- `ViaBottomSheet` - Draggable sheets with snap points
+- `ViaModal` - Modal dialogs with VIA styling
+- `ViaStatusBadge` - Status indicators (active, idle, charging, maintenance, offline)
+- `ViaPriorityBadge` - Priority levels (P1-P4) with color mapping
+- `ViaLoadingIndicator` - Loading states
+- `ViaInput` - Text input fields with validation
+
+**Custom Components (5)**:
+- `ViaFilterSheet` - Filter bottom sheet (used in Live Map)
+- `ViaStatusBar` - Status filter chips with animations
+- `ViaCartListItem` - Cart list item with scale animations
+- `MicroTag` - Map marker badges
+- `ToneControlSlider` - Opacity control slider
+
+**Recently Added Components**:
+- `ViaSwitch` - Toggle switches with haptic feedback
+- `ViaCheckbox` - Checkboxes with check animation
+- `ViaSelect` - Dropdown/bottom sheet pickers
+- `ViaDatePicker` - Calendar date picker in VIA style
+
+### Design Tokens Location
+
+All design tokens are centralized in `lib/core/theme/via_design_tokens.dart`:
+
+```dart
+// Colors
+ViaDesignTokens.primary           // #00C97B (Green)
+ViaDesignTokens.secondary         // #3B83CC (Blue)
+ViaDesignTokens.warning           // #D67500 (Orange)
+ViaDesignTokens.critical          // #C23D3D (Red)
+ViaDesignTokens.surfacePrimary    // #0F0F0F (Pure black)
+ViaDesignTokens.surfaceSecondary  // #181818
+ViaDesignTokens.textPrimary       // #FFFFFF
+ViaDesignTokens.textSecondary     // #A0A0A0
+
+// Typography
+ViaDesignTokens.headingLarge      // 24px, w700
+ViaDesignTokens.headingMedium     // 20px, w600
+ViaDesignTokens.bodyMedium        // 14px, w400
+ViaDesignTokens.labelSmall        // 12px, w600
+
+// Spacing
+ViaDesignTokens.spacingXs         // 4px
+ViaDesignTokens.spacingSm         // 8px
+ViaDesignTokens.spacingMd         // 12px
+ViaDesignTokens.spacingLg         // 16px
+ViaDesignTokens.spacingXl         // 20px
+
+// Animations
+ViaDesignTokens.durationFast      // 150ms
+ViaDesignTokens.durationNormal    // 300ms
+ViaDesignTokens.curveStandard     // easeInOut
+```
+
+### Using VIA Components
+
+**ALWAYS prefer VIA components over Material equivalents:**
+
+```dart
+// ✅ CORRECT - Use VIA components
+ViaToast.show(
+  context: context,
+  message: 'Success!',
+  variant: ViaToastVariant.success,
+);
+
+ViaButton.primary(
+  text: 'Submit',
+  onPressed: () {},
+  icon: Icons.check,
+);
+
+ViaCard(
+  child: Text('Content', style: ViaDesignTokens.bodyMedium),
+);
+
+ViaBottomSheet.show(
+  context: context,
+  header: Text('Title', style: ViaDesignTokens.headingMedium),
+  child: Text('Content'),
+  footer: Row(
+    children: [
+      Expanded(child: ViaButton.ghost(text: 'Cancel', onPressed: () {})),
+      SizedBox(width: ViaDesignTokens.spacingMd),
+      Expanded(child: ViaButton.primary(text: 'OK', onPressed: () {})),
+    ],
+  ),
+);
+
+// ❌ WRONG - Don't use Material equivalents
+ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('...')));
+ElevatedButton(child: Text('Submit'), onPressed: () {});
+Card(child: Text('Content'));
+showDialog(context: context, builder: (context) => AlertDialog(...));
+```
+
+### Migration Status
+
+**Completed (✅)**:
+- Live Map View (100% VIA)
+- Auth screens (Login, Onboarding, Splash)
+- Work Order module (100% VIA)
+
+**In Progress (⏳)**:
+- Settings Page
+- Alert Management
+- Cart Management
+- Analytics Dashboard
+
+See `VIA_DESIGN_SYSTEM_STATUS.md` for detailed migration tracking.
 
 ## Domain Models & Business Logic
 
@@ -263,41 +391,6 @@ void main() {
 
 Authentication via Bearer token in headers. Token refresh logic should be implemented in `AuthTokenManager`.
 
-## Design System
-
-**Theme**: Dark monochrome with pure black (#000000) background
-
-**Color Tokens** (`lib/core/theme/design_tokens.dart`):
-- Backgrounds: Pure black (#000000), dark gray (#0A0A0A), card surface (#1A1A1A)
-- Borders: White with 4-12% opacity for subtle separation
-- Status Colors:
-  - Active: Bright green (#00FF00)
-  - Idle: Orange (#FFAA00)
-  - Charging: Blue (#0088FF)
-  - Maintenance: Red (#FF4444)
-  - Offline: Gray (#666666)
-- Priority Colors: P1 (Red) → P2 (Orange) → P3 (Blue) → P4 (Green)
-
-**Typography**:
-- Font: SF Pro Display (custom font in `assets/fonts/`)
-- All text uses uppercase with letter-spacing for professional look
-- Numeric displays use tabular figures for alignment
-
-**Spacing Scale**: 4px base unit (4, 8, 12, 16, 20, 24, 32, 48, 64)
-
-**Access Design Tokens**:
-```dart
-import 'package:aprofleet_manager/core/theme/design_tokens.dart';
-
-Container(
-  color: DesignTokens.bgPrimary,
-  decoration: BoxDecoration(
-    border: Border.all(color: DesignTokens.borderPrimary),
-  ),
-  child: Text('ACTIVE', style: TextStyle(color: DesignTokens.statusActive)),
-)
-```
-
 ## Development Workflows
 
 ### Adding a New Feature
@@ -306,26 +399,10 @@ Container(
 2. Define domain models in `lib/domain/models/` with `@freezed`
 3. Add repository interface and mock implementation
 4. Register provider in `lib/core/services/providers.dart`
-5. Create controller extending `StateNotifier<YourState>`
-6. Build UI pages/widgets using `ConsumerWidget`
+5. Create controller extending generated Riverpod controller base
+6. Build UI pages/widgets using `ConsumerWidget` and VIA components
 7. Register routes in `lib/router/app_router.dart`
 8. Run `dart run build_runner build --delete-conflicting-outputs`
-
-### Modifying State Logic
-
-Controllers live in `features/<module>/controllers/`. Pattern:
-```dart
-@riverpod
-class CartInventoryController extends _$CartInventoryController {
-  @override
-  CartInventoryState build() => CartInventoryState.initial();
-
-  Future<void> filterByStatus(CartStatus status) async {
-    state = state.copyWith(filter: state.filter.copyWith(status: status));
-    await _refreshCarts();
-  }
-}
-```
 
 ### Adding Localization
 
@@ -339,19 +416,6 @@ class CartInventoryController extends _$CartInventoryController {
 - Prefer `ListView.builder` for long lists (virtualization)
 - Cancel StreamSubscriptions in controller `dispose()`
 - Limit image sizes (thumbnails at 200x200 via `ImageOptimizer`)
-
-## Testing Strategy
-
-### Unit Tests
-- `test/kpi_calculator_test.dart`: Validates KPI calculations (availability, MTTR, utilization)
-- `test/priority_queue_test.dart`: Alert ordering by P1-P4 then timestamp
-- `test/code_formatter_test.dart`: ID generation format validation
-
-### Widget Tests
-- `test/alert_center_list_test.dart`: Filter application, acknowledge action
-- `test/create_wo_form_test.dart`: Multi-step validation, auto-priority assignment
-
-Run tests with `flutter test`. Add tests for new features following existing patterns.
 
 ## Common Troubleshooting
 
@@ -389,42 +453,58 @@ Add to `android/app/src/main/AndroidManifest.xml`:
 
 ## Key File Locations
 
-| Component | Path |
-|-----------|------|
-| Main entry | `lib/main.dart` |
-| App root | `lib/app.dart` |
-| Routing | `lib/router/app_router.dart` |
-| Providers (DI) | `lib/core/services/providers.dart` |
-| Mock API | `lib/core/services/mock/mock_api.dart` |
-| Mock WebSocket | `lib/core/services/mock/mock_ws_hub.dart` |
-| Theme | `lib/theme/app_theme.dart` |
-| Design Tokens | `lib/core/theme/design_tokens.dart` |
-| Domain Models | `lib/domain/models/*.dart` |
-| Auth Controller | `lib/features/auth/controllers/auth_controller.dart` |
-| Cart Inventory | `lib/features/cart_management/controllers/cart_inventory_controller.dart` |
-| Work Orders | `lib/features/maintenance_management/controllers/work_order_controller.dart` |
-| Alerts | `lib/features/alert_management/controllers/alert_controller.dart` |
-| Analytics | `lib/features/analytics_reporting/controllers/analytics_controller.dart` |
-| Live Map | `lib/features/realtime_monitoring/pages/live_map_view.dart` |
-| Localization | `lib/core/localization/app_localizations.dart` |
-| Seed Data | `assets/seeds/*.json` |
+**Core Architecture:**
+- Entry: `lib/main.dart`, `lib/app.dart`
+- Routing: `lib/router/app_router.dart`
+- DI/Providers: `lib/core/services/providers.dart`
+- Mock Data: `lib/core/services/mock/mock_api.dart`, `lib/core/services/mock/mock_ws_hub.dart`
 
-## Important Notes
+**VIA Design System:**
+- Design Tokens: `lib/core/theme/via_design_tokens.dart`
+- VIA Components: `lib/core/widgets/via/*.dart`
+- Legacy Tokens: `lib/core/theme/design_tokens.dart` (being phased out)
 
-- **Never hardcode strings**: Always use `AppLocalizations.of(context)` for user-facing text
-- **Always use DesignTokens**: Never hardcode colors or spacing values
-- **Stream cleanup**: All StreamSubscriptions must be cancelled in controller `dispose()`
-- **Immutable models**: All domain models use Freezed, modify via `copyWith()`
-- **Repository pattern**: UI never calls MockApi directly, always through repository providers
-- **Authentication**: Auth state persisted in SharedPreferences, guards routes via GoRouter redirect
+**Domain Models:** `lib/domain/models/*.dart`
+
+**Features:** `lib/features/<module>/{pages,controllers,widgets}/`
+
+**Localization:** `lib/core/localization/app_localizations*.dart`
+
+**Seed Data:** `assets/seeds/*.json`
+
+## Critical Development Rules
+
+1. **VIA Design System First**: ALWAYS use VIA components instead of Material equivalents (ElevatedButton → ViaButton, SnackBar → ViaToast, AlertDialog → ViaBottomSheet, etc.)
+
+2. **No Hardcoded Design Values**: Use `ViaDesignTokens` for all colors, spacing, typography, and animations. Never hardcode `Color()`, `EdgeInsets`, or font sizes.
+
+3. **Localization Required**: Use `AppLocalizations.of(context)` for all user-facing text. Never hardcode strings.
+
+4. **Stream Cleanup**: All StreamSubscriptions must be cancelled in controller `dispose()` to prevent memory leaks.
+
+5. **Immutable Models**: All domain models use Freezed. Modify via `copyWith()`, never by direct mutation.
+
+6. **Repository Pattern**: UI never calls MockApi directly. Always use repository providers.
+
+7. **Code Generation**: After modifying models or providers, run `dart run build_runner build --delete-conflicting-outputs`
+
+8. **Authentication**: Auth state persisted in SharedPreferences, guards routes via GoRouter redirect.
 
 ## Project Status
 
-Current branch: `design/monochrome-theme`
+**Current Phase:** VIA Design System Migration (Phase 4)
+**Branch:** main
+**Latest Milestone:** Work Order module VIA conversion complete (Phase 4 Week 1)
 
-Recent features:
-- Monochrome design system implementation
-- Layer toggle, compact vertical cart strip in map view
-- Top status strip with keyboard shortcuts
-- Micro tag synchronization and performance fixes
-- Custom cart markers with Android compatibility
+**Recent Commits:**
+- Complete Work Order module VIA conversion (Day 1-4)
+- Add VIA Design System Status documentation
+- Implement ViaSwitch, ViaCheckbox, ViaSelect, ViaDatePicker components
+
+**Next Steps:** Settings Page migration, Alert Management migration
+**See:** `PHASE4_PLAN.md` for detailed 4-week migration roadmap
+
+## Additional Resources
+
+For comprehensive Korean documentation, see `README.md`.
+For design system migration details, see `PHASE4_PLAN.md` and `VIA_DESIGN_SYSTEM_STATUS.md`.

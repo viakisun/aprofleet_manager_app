@@ -28,6 +28,7 @@ mixin _$Telemetry {
   double get current => throw _privateConstructorUsedError;
   double get runtime => throw _privateConstructorUsedError;
   double get distance => throw _privateConstructorUsedError;
+  @LatLngConverter()
   LatLng get position => throw _privateConstructorUsedError;
   DateTime get timestamp => throw _privateConstructorUsedError;
 
@@ -55,7 +56,7 @@ abstract class $TelemetryCopyWith<$Res> {
       double current,
       double runtime,
       double distance,
-      LatLng position,
+      @LatLngConverter() LatLng position,
       DateTime timestamp});
 }
 
@@ -147,7 +148,7 @@ abstract class _$$TelemetryImplCopyWith<$Res>
       double current,
       double runtime,
       double distance,
-      LatLng position,
+      @LatLngConverter() LatLng position,
       DateTime timestamp});
 }
 
@@ -232,7 +233,7 @@ class _$TelemetryImpl implements _Telemetry {
       required this.current,
       required this.runtime,
       required this.distance,
-      required this.position,
+      @LatLngConverter() required this.position,
       required this.timestamp});
 
   factory _$TelemetryImpl.fromJson(Map<String, dynamic> json) =>
@@ -255,6 +256,7 @@ class _$TelemetryImpl implements _Telemetry {
   @override
   final double distance;
   @override
+  @LatLngConverter()
   final LatLng position;
   @override
   final DateTime timestamp;
@@ -316,7 +318,7 @@ abstract class _Telemetry implements Telemetry {
       required final double current,
       required final double runtime,
       required final double distance,
-      required final LatLng position,
+      @LatLngConverter() required final LatLng position,
       required final DateTime timestamp}) = _$TelemetryImpl;
 
   factory _Telemetry.fromJson(Map<String, dynamic> json) =
@@ -339,6 +341,7 @@ abstract class _Telemetry implements Telemetry {
   @override
   double get distance;
   @override
+  @LatLngConverter()
   LatLng get position;
   @override
   DateTime get timestamp;
