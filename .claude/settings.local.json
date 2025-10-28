@@ -20,7 +20,8 @@
       "Bash(nc:*)",
       "Bash(awk:*)",
       "Bash(xargs kill -s USR1)",
-      "Bash(pgrep:*)"
+      "Bash(pgrep:*)",
+      "Bash(git push)"
     ],
     "deny": [],
     "ask": []

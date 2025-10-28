@@ -4,13 +4,24 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**AproFleet Manager App** - A comprehensive fleet management system for APRO golf carts manufactured by DY Innovate. Built with Flutter using Clean Architecture principles with feature-based organization.
+**AproFleet Manager App v0.2.0** - A comprehensive fleet management system for APRO golf carts manufactured by DY Innovate. Built with Flutter using Clean Architecture principles with feature-based organization.
 
+- **Version**: 0.2.0 (Released: 2025-10-28)
 - **Brand**: APRO golf carts
 - **Manufacturer**: DY Innovate
-- **Current Phase**: Development (using Mock API) + VIA Design System Migration (Phase 4)
+- **Current Phase**: Production-ready (using Mock API, ready for backend swap)
 - **Supported Languages**: English, Japanese, Korean, Chinese (Simplified & Traditional)
 - **Design**: VIA Design System (Industrial Dark Theme) - monochrome glassmorphic design
+- **Migration Status**: Phase 4 Complete (100% VIA components)
+
+**Key Documentation**:
+- [README.md](./README.md) - Project overview (Korean)
+- [CHANGELOG.md](./CHANGELOG.md) - Version history
+- [RELEASE_NOTES_v0.2.0.md](./RELEASE_NOTES_v0.2.0.md) - v0.2 release details
+- [CONTRIBUTING.md](./CONTRIBUTING.md) - Development guidelines
+- [GETTING_STARTED.md](./GETTING_STARTED.md) - Quick start guide
+- [docs/design-system.md](./docs/design-system.md) - VIA Design System
+- [docs/guides/junior-developer-guide.md](./docs/guides/junior-developer-guide.md) - Learning path
 
 ## Build, Test, and Run Commands
 
@@ -464,26 +475,35 @@ Add to `android/app/src/main/AndroidManifest.xml`:
 
 ## Project Status & Migration
 
+**Current Version**: v0.2.0 (Released: 2025-10-28)
 **Current Branch**: `main`
 
-**VIA Design System Migration** (Phase 4):
+**VIA Design System Migration**: ✅ **COMPLETE**
 - ✅ Phase 1-2: Core VIA components complete (11 components)
 - ✅ Phase 3: Live Map View 100% VIA
-- 🔄 Phase 4: Remaining screens (see `PHASE4_PLAN.md`)
-  - Week 1: Settings Page + Quick Wins
-  - Week 2: New VIA components (ViaSwitch, ViaSelect, etc.)
-  - Week 3-4: Alerts, Work Orders, Cart Management
+- ✅ Phase 4: All remaining screens migrated
+  - Settings Page 100% VIA
+  - Work Orders 100% VIA
+  - Cart Management 100% VIA
+  - Alerts 100% VIA
 
-**Recent Features**:
-- VIA Design System - glassmorphic industrial dark theme
-- Pretendard Variable font integration
-- Live map with Google Maps + Mapbox support
-- Tab redesign and refactoring (fleet, vehicles, service modules)
-- Custom cart markers with status-based colors
-- Real-time telemetry streaming with MockWsHub
+**v0.2.0 Features**:
+- ✅ VIA Design System - glassmorphic industrial dark theme
+- ✅ Pretendard Variable font integration
+- ✅ Live map with Google Maps + Mapbox support
+- ✅ Enhanced cart cards with critical alerts and quick actions
+- ✅ Custom cart markers with status-based colors
+- ✅ Real-time telemetry streaming with MockWsHub
+- ✅ 4-step work order creation wizard
+- ✅ Real-time alert center with severity-based routing
+- ✅ Outdoor visibility improvements
 
-**Key Documentation**:
-- `VIA_DESIGN_SYSTEM_STATUS.md` - Current migration status
-- `PHASE4_PLAN.md` - Complete migration roadmap
-- `PRETENDARD_FONT_SETUP.md` - Font installation guide
-- `TAB_REMOVAL_REDESIGN_PLAN.md` - Navigation restructure
+**Project Documentation**:
+- [README.md](./README.md) - Project overview (Korean)
+- [CHANGELOG.md](./CHANGELOG.md) - Version history
+- [RELEASE_NOTES_v0.2.0.md](./RELEASE_NOTES_v0.2.0.md) - v0.2 release details
+- [CONTRIBUTING.md](./CONTRIBUTING.md) - Development guidelines
+- [GETTING_STARTED.md](./GETTING_STARTED.md) - Quick start guide
+- [docs/design-system.md](./docs/design-system.md) - VIA Design System
+- [docs/guides/junior-developer-guide.md](./docs/guides/junior-developer-guide.md) - Learning path
+- [docs/archive/](./docs/archive/) - Historical documentation (PHASE plans, migration docs)

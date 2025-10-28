@@ -1,6 +1,20 @@
 # AproFleet Manager App
 
-**DY Innovate**에서 제조한 **APRO** 골프카트를 위한 종합적인 플리트 관리 시스템입니다. Flutter로 개발된 이 애플리케이션은 실시간 모니터링, 정비 관리, 알림 처리, 분석 기능을 제공합니다.
+**Version 0.2.0** | **DY Innovate** | **APRO Golf Carts**
+
+**DY Innovate**에서 제조한 **APRO** 골프카트를 위한 종합적인 플리트 관리 시스템입니다. Flutter로 개발된 이 애플리케이션은 VIA Design System 기반의 Industrial Dark 테마를 적용하여 실시간 모니터링, 정비 관리, 알림 처리, 분석 기능을 제공합니다.
+
+## 🚀 v0.2.0 주요 업데이트
+
+- ✅ **VIA Design System 완전 구현** - Industrial Dark 테마 with 글래스모피즘
+- ✅ **Pretendard Variable 폰트** - 한국어 최적화 타이포그래피
+- ✅ **향상된 카트 카드** - 위험 알림 및 빠른 작업 버튼
+- ✅ **라이브 맵 개선** - 맞춤형 마커 및 실시간 텔레메트리
+- ✅ **작업 지시 시스템** - 4단계 생성 마법사 및 우선순위 워크플로우
+- ✅ **알림 관리** - 실시간 알림 센터 및 심각도 기반 라우팅
+- ✅ **아웃도어 가시성** - 햇빛 환경에서의 높은 대비
+
+자세한 변경사항은 [CHANGELOG.md](./CHANGELOG.md) 및 [RELEASE_NOTES_v0.2.0.md](./RELEASE_NOTES_v0.2.0.md)를 참조하세요.
 
 ## 📋 목차
 
@@ -39,11 +53,13 @@
 
 언어 전환은 설정 메뉴에서 가능합니다.
 
-### 디자인 시스템
-- **테마**: 다크 테마 (올블랙 배경)
-- **컬러 팔레트**: 모노크롬 기반
-- **타이포그래피**: 대문자, letter-spacing 적용
-- **UI 스타일**: 전문적이고 미니멀한 디자인
+### 디자인 시스템 - VIA Industrial Dark
+- **테마**: Industrial Dark with Glassmorphism
+- **컬러 팔레트**: 모노크롬 + VIA Green (#00C97B) 악센트
+- **타이포그래피**: Pretendard Variable (Primary) + SF Pro Display (Fallback)
+- **UI 컴포넌트**: 11개 VIA 컴포넌트 (ViaButton, ViaCard, ViaToast, ViaBottomSheet 등)
+- **디자인 원칙**: 우아한 글래스모피즘, 높은 대비, 아웃도어 가시성
+- **상세 문서**: [docs/design-system.md](./docs/design-system.md)
 
 ### 주요 기능 개요
 8개의 핵심 페이지로 구성된 모듈식 아키텍처:
