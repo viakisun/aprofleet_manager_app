@@ -45,7 +45,10 @@ dependencies:
   
   # Local Storage
   shared_preferences: ^2.2.2
-  
+
+  # Environment Variables
+  flutter_dotenv: ^5.1.0
+
   # Utilities
   intl: ^0.20.2
   latlong2: ^0.8.1
@@ -78,6 +81,7 @@ flutter:
     - assets/svg/
     - assets/seeds/
     - assets/seeds/course_playground.geojson
+    - .env
   
   fonts:
     # VIA Design System - Primary Font

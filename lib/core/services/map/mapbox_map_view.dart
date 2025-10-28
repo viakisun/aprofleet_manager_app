@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../../../domain/models/cart.dart';
 import 'route_loader.dart';
@@ -37,9 +38,9 @@ class MapboxMapView extends ConsumerStatefulWidget {
   /// 카트 마커를 탭했을 때 실행될 콜백 함수
   final Function(Cart)? onCartTap;
 
-  /// Mapbox Access Token
-  static const String accessToken =
-      'pk.eyJ1IjoiamVvbmdldW5qaSIsImEiOiJjbGt0ZzljcW4wYWpuM2ttZ2NlOW8zYjc2In0.IbUj-eV7VBIfyBfGdAM9xA';
+  /// Mapbox Access Token (환경변수에서 로드)
+  static String get accessToken =>
+      dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? '';
 
   const MapboxMapView({
     super.key,
@@ -97,13 +98,13 @@ class MapboxMapViewState extends ConsumerState<MapboxMapView> {
   /// 지도 생성 완료 시 호출
   Future<void> _onMapCreated(MapboxMap mapboxMap) async {
     _mapboxMap = mapboxMap;
-    debugPrint('[MapboxMapView] Map created at globe scale');
 
     // Hide scale bar
     await mapboxMap.scaleBar.updateSettings(ScaleBarSettings(enabled: false));
 
-    // 경로가 있으면 즉시 애니메이션 시작
+    // 경로가 있고 아직 애니메이션하지 않았으면 애니메이션 실행
     if (widget.routeCoordinates != null && !_hasAnimatedToRoute) {
+      debugPrint('[MapboxMapView] Map created at globe scale - starting intro animation');
       await _animateToRouteBounds();
     }
   }

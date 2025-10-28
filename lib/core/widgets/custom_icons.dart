@@ -3,11 +3,11 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 /// Modern Phosphor icons for the AproFleet Manager app
 ///
-/// Features:
-/// - Duotone: 2-tone depth for navigation and primary actions
-/// - Fill: Solid icons for emphasis
-/// - Regular: Standard weight for general use
-/// - iOS-inspired design
+/// Icon System:
+/// - Regular: Default style for inactive/general use (clean, minimal)
+/// - Fill: Active state emphasis (navigation, important actions)
+/// - Bold: Special emphasis (buttons, key actions)
+/// - Consistent, professional design language
 class CustomIcons {
   // Private constructor to prevent instantiation
   CustomIcons._();
@@ -20,16 +20,16 @@ class CustomIcons {
   static const double iconXl = 32.0;
   static const double icon2xl = 36.0;
 
-  // Navigation Icons - Duotone for depth
-  static PhosphorIconData get live => PhosphorIconsDuotone.mapPin;
+  // Navigation Icons - Regular for inactive, Fill for active
+  static PhosphorIconData get live => PhosphorIconsRegular.mapPin;
   static PhosphorIconData get liveFilled => PhosphorIconsFill.mapPin;
-  static PhosphorIconData get carts => PhosphorIconsDuotone.car;
+  static PhosphorIconData get carts => PhosphorIconsRegular.car;
   static PhosphorIconData get cartsFilled => PhosphorIconsFill.car;
-  static PhosphorIconData get work => PhosphorIconsDuotone.wrench;
+  static PhosphorIconData get work => PhosphorIconsRegular.wrench;
   static PhosphorIconData get workFilled => PhosphorIconsFill.wrench;
-  static PhosphorIconData get alerts => PhosphorIconsDuotone.bell;
+  static PhosphorIconData get alerts => PhosphorIconsRegular.bell;
   static PhosphorIconData get alertsFilled => PhosphorIconsFill.bell;
-  static PhosphorIconData get analytics => PhosphorIconsDuotone.chartBar;
+  static PhosphorIconData get analytics => PhosphorIconsRegular.chartBar;
   static PhosphorIconData get analyticsFilled => PhosphorIconsFill.chartBar;
 
   // Action Icons - Mix of Regular and Bold for clarity
@@ -39,7 +39,9 @@ class CustomIcons {
   static PhosphorIconData get refresh => PhosphorIconsRegular.arrowClockwise;
   static PhosphorIconData get download => PhosphorIconsRegular.downloadSimple;
   static PhosphorIconData get fullscreen => PhosphorIconsRegular.arrowsOut;
-  static PhosphorIconData get settings => PhosphorIconsDuotone.gear;
+  static PhosphorIconData get settings => PhosphorIconsRegular.gear;
+  static PhosphorIconData get route => PhosphorIconsRegular.path;
+  static PhosphorIconData get moreVert => PhosphorIconsBold.dotsThreeVertical;
 
   // iOS-style navigation icons
   static PhosphorIconData get menu =>
@@ -52,15 +54,15 @@ class CustomIcons {
   static PhosphorIconData get save => PhosphorIconsRegular.floppyDisk;
   static PhosphorIconData get cancel => PhosphorIconsRegular.xCircle;
 
-  // Status Icons - Duotone for visual richness
-  static PhosphorIconData get active => PhosphorIconsDuotone.playCircle;
-  static PhosphorIconData get idle => PhosphorIconsDuotone.pauseCircle;
-  static PhosphorIconData get charging => PhosphorIconsDuotone.batteryCharging;
-  static PhosphorIconData get maintenance => PhosphorIconsDuotone.wrench;
-  static PhosphorIconData get warning => PhosphorIconsDuotone.warningCircle;
-  static PhosphorIconData get error => PhosphorIconsDuotone.xCircle;
-  static PhosphorIconData get success => PhosphorIconsDuotone.checkCircle;
-  static PhosphorIconData get info => PhosphorIconsDuotone.info;
+  // Status Icons - Regular for consistency
+  static PhosphorIconData get active => PhosphorIconsRegular.playCircle;
+  static PhosphorIconData get idle => PhosphorIconsRegular.pauseCircle;
+  static PhosphorIconData get charging => PhosphorIconsRegular.batteryCharging;
+  static PhosphorIconData get maintenance => PhosphorIconsRegular.wrench;
+  static PhosphorIconData get warning => PhosphorIconsRegular.warningCircle;
+  static PhosphorIconData get error => PhosphorIconsRegular.xCircle;
+  static PhosphorIconData get success => PhosphorIconsRegular.checkCircle;
+  static PhosphorIconData get info => PhosphorIconsRegular.info;
 
   // Utility Icons
   static PhosphorIconData get qrCode => PhosphorIconsRegular.qrCode;
@@ -74,7 +76,7 @@ class CustomIcons {
   static PhosphorIconData get user => PhosphorIconsRegular.user;
   static PhosphorIconData get users => PhosphorIconsRegular.users;
   static PhosphorIconData get home => PhosphorIconsRegular.house;
-  static PhosphorIconData get dashboard => PhosphorIconsDuotone.squaresFour;
+  static PhosphorIconData get dashboard => PhosphorIconsRegular.squaresFour;
   static PhosphorIconData get calendar => PhosphorIconsRegular.calendar;
   static PhosphorIconData get clock => PhosphorIconsRegular.clock;
   static PhosphorIconData get location => PhosphorIconsRegular.mapPin;
@@ -118,26 +120,26 @@ class CustomIcons {
   // Communication Icons
   static PhosphorIconData get message => PhosphorIconsRegular.chatCircle;
   static PhosphorIconData get messageSquare => PhosphorIconsRegular.chatText;
-  static PhosphorIconData get chat => PhosphorIconsDuotone.chatCircle;
+  static PhosphorIconData get chat => PhosphorIconsRegular.chatCircle;
   static PhosphorIconData get comment => PhosphorIconsRegular.chatText;
   static PhosphorIconData get reply => PhosphorIconsRegular.arrowBendUpLeft;
   static PhosphorIconData get forward => PhosphorIconsRegular.arrowBendUpRight;
   static PhosphorIconData get send => PhosphorIconsFill.paperPlaneTilt;
 
   // Security Icons
-  static PhosphorIconData get lock => PhosphorIconsDuotone.lock;
-  static PhosphorIconData get unlock => PhosphorIconsDuotone.lockOpen;
+  static PhosphorIconData get lock => PhosphorIconsRegular.lock;
+  static PhosphorIconData get unlock => PhosphorIconsRegular.lockOpen;
   static PhosphorIconData get key => PhosphorIconsRegular.key;
-  static PhosphorIconData get shield => PhosphorIconsDuotone.shield;
-  static PhosphorIconData get shieldCheck => PhosphorIconsDuotone.shieldCheck;
-  static PhosphorIconData get shieldAlert => PhosphorIconsDuotone.shieldWarning;
+  static PhosphorIconData get shield => PhosphorIconsRegular.shield;
+  static PhosphorIconData get shieldCheck => PhosphorIconsRegular.shieldCheck;
+  static PhosphorIconData get shieldAlert => PhosphorIconsRegular.shieldWarning;
   static PhosphorIconData get eye => PhosphorIconsRegular.eye;
   static PhosphorIconData get eyeOff => PhosphorIconsRegular.eyeSlash;
 
   // Data Icons
-  static PhosphorIconData get database => PhosphorIconsDuotone.database;
-  static PhosphorIconData get server => PhosphorIconsDuotone.hardDrives;
-  static PhosphorIconData get cloud => PhosphorIconsDuotone.cloud;
+  static PhosphorIconData get database => PhosphorIconsRegular.database;
+  static PhosphorIconData get server => PhosphorIconsRegular.hardDrives;
+  static PhosphorIconData get cloud => PhosphorIconsRegular.cloud;
   static PhosphorIconData get cloudUpload => PhosphorIconsRegular.cloudArrowUp;
   static PhosphorIconData get cloudDownload =>
       PhosphorIconsRegular.cloudArrowDown;
@@ -148,28 +150,28 @@ class CustomIcons {
   static PhosphorIconData get signal => PhosphorIconsRegular.waveform;
 
   // Weather Icons
-  static PhosphorIconData get sun => PhosphorIconsDuotone.sun;
-  static PhosphorIconData get moon => PhosphorIconsDuotone.moon;
-  static PhosphorIconData get cloudSun => PhosphorIconsDuotone.cloudSun;
-  static PhosphorIconData get cloudRain => PhosphorIconsDuotone.cloudRain;
-  static PhosphorIconData get cloudSnow => PhosphorIconsDuotone.cloudSnow;
+  static PhosphorIconData get sun => PhosphorIconsRegular.sun;
+  static PhosphorIconData get moon => PhosphorIconsRegular.moon;
+  static PhosphorIconData get cloudSun => PhosphorIconsRegular.cloudSun;
+  static PhosphorIconData get cloudRain => PhosphorIconsRegular.cloudRain;
+  static PhosphorIconData get cloudSnow => PhosphorIconsRegular.cloudSnow;
   static PhosphorIconData get wind => PhosphorIconsRegular.wind;
   static PhosphorIconData get thermometer => PhosphorIconsRegular.thermometer;
 
   // Transportation Icons
-  static PhosphorIconData get car => PhosphorIconsDuotone.car;
-  static PhosphorIconData get truck => PhosphorIconsDuotone.truck;
-  static PhosphorIconData get bus => PhosphorIconsDuotone.bus;
-  static PhosphorIconData get train => PhosphorIconsDuotone.train;
-  static PhosphorIconData get plane => PhosphorIconsDuotone.airplane;
-  static PhosphorIconData get ship => PhosphorIconsDuotone.boat;
+  static PhosphorIconData get car => PhosphorIconsRegular.car;
+  static PhosphorIconData get truck => PhosphorIconsRegular.truck;
+  static PhosphorIconData get bus => PhosphorIconsRegular.bus;
+  static PhosphorIconData get train => PhosphorIconsRegular.train;
+  static PhosphorIconData get plane => PhosphorIconsRegular.airplane;
+  static PhosphorIconData get ship => PhosphorIconsRegular.boat;
   static PhosphorIconData get bike => PhosphorIconsRegular.bicycle;
   static PhosphorIconData get walking => PhosphorIconsRegular.personSimpleWalk;
 
   // Shopping Icons
   static PhosphorIconData get shoppingCart => PhosphorIconsRegular.shoppingCart;
   static PhosphorIconData get shoppingBag => PhosphorIconsRegular.shoppingBag;
-  static PhosphorIconData get creditCard => PhosphorIconsDuotone.creditCard;
+  static PhosphorIconData get creditCard => PhosphorIconsRegular.creditCard;
   static PhosphorIconData get dollarSign => PhosphorIconsRegular.currencyDollar;
   static PhosphorIconData get euro => PhosphorIconsRegular.currencyEur;
   static PhosphorIconData get poundSterling => PhosphorIconsRegular.currencyGbp;
@@ -181,11 +183,11 @@ class CustomIcons {
   static PhosphorIconData get heartBroken => PhosphorIconsRegular.heartBreak;
   static PhosphorIconData get pulse => PhosphorIconsRegular.heartbeat;
   static PhosphorIconData get activity => PhosphorIconsRegular.heartbeat;
-  static PhosphorIconData get zap => PhosphorIconsDuotone.lightning;
-  static PhosphorIconData get battery => PhosphorIconsDuotone.batteryFull;
+  static PhosphorIconData get zap => PhosphorIconsRegular.lightning;
+  static PhosphorIconData get battery => PhosphorIconsRegular.batteryFull;
   static PhosphorIconData get batteryCharging =>
-      PhosphorIconsDuotone.batteryCharging;
-  static PhosphorIconData get batteryLow => PhosphorIconsDuotone.batteryWarning;
+      PhosphorIconsRegular.batteryCharging;
+  static PhosphorIconData get batteryLow => PhosphorIconsRegular.batteryWarning;
 
   // Helper method to create icon widget
   static Widget icon(

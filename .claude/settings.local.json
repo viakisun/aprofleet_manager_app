@@ -16,7 +16,11 @@
       "Bash(adb:*)",
       "Bash(find:*)",
       "Bash(flutter pub get:*)",
-      "Bash(flutter clean:*)"
+      "Bash(flutter clean:*)",
+      "Bash(nc:*)",
+      "Bash(awk:*)",
+      "Bash(xargs kill -s USR1)",
+      "Bash(pgrep:*)"
     ],
     "deny": [],
     "ask": []

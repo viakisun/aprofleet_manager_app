@@ -246,15 +246,14 @@ class _AdminCartCardState extends State<AdminCartCard>
         onTapUp: _handleTapUp,
         onTapCancel: _handleTapCancel,
         onTap: () {
-          setState(() {
-            _isExpanded = !_isExpanded;
-          });
+          // 카드 본체 클릭 시 상세 페이지로만 이동
+          // 확장/축소는 전용 버튼이 담당
           widget.onTap?.call();
         },
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 250),
           margin: const EdgeInsets.only(bottom: 12),
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
             color: IndustrialDarkTokens.bgCard,
             borderRadius: BorderRadius.circular(16),
@@ -296,7 +295,7 @@ class _AdminCartCardState extends State<AdminCartCard>
                     child: Text(
                       widget.cart.id,
                       style: const TextStyle(
-                        fontSize: 14,
+                        fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Color(0xFFFFFFFF),
                         letterSpacing: 0,
@@ -311,14 +310,14 @@ class _AdminCartCardState extends State<AdminCartCard>
                     children: [
                       Icon(
                         _batteryIcon(batteryLevel),
-                        size: 16,
+                        size: 20,
                         color: batteryColor,
                       ),
-                      const SizedBox(width: 4),
+                      const SizedBox(width: 6),
                       Text(
                         '${batteryLevel.toInt()}%',
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: batteryColor,
                           height: 1.3,
@@ -345,12 +344,70 @@ class _AdminCartCardState extends State<AdminCartCard>
                 ],
               ),
 
-              // Critical Issue Badge + Action Buttons (if any)
+              // Secondary Row: Status + Location (always visible in collapsed)
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  // Status badge
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: statusColor.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(
+                        color: statusColor.withValues(alpha: 0.3),
+                        width: 1,
+                      ),
+                    ),
+                    child: Text(
+                      widget.cart.status.displayName,
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: statusColor,
+                        letterSpacing: 0.3,
+                        height: 1.3,
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(width: 8),
+
+                  // Course location
+                  if (widget.cart.courseLocation != null)
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.location_on_rounded,
+                            size: 12,
+                            color: Colors.white.withValues(alpha: 0.5),
+                          ),
+                          const SizedBox(width: 4),
+                          Expanded(
+                            child: Text(
+                              widget.cart.courseLocation!,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.white.withValues(alpha: 0.7),
+                                height: 1.3,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+
+              // Critical Issue Badge (if any)
               if (criticalIssue != null && !_isExpanded) ...[
                 const SizedBox(height: 12),
                 _buildCriticalIssueBadge(criticalIssue),
-                const SizedBox(height: 8),
-                _buildQuickActionButtons(),
               ],
 
               // Expanded Details Section
@@ -371,67 +428,6 @@ class _AdminCartCardState extends State<AdminCartCard>
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Status & Location
-                          Row(
-                            children: [
-                              // Status badge
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: statusColor.withValues(alpha: 0.12),
-                                  borderRadius: BorderRadius.circular(6),
-                                  border: Border.all(
-                                    color: statusColor.withValues(alpha: 0.3),
-                                    width: 1,
-                                  ),
-                                ),
-                                child: Text(
-                                  widget.cart.status.displayName,
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w600,
-                                    color: statusColor,
-                                    letterSpacing: 0.3,
-                                    height: 1.3,
-                                  ),
-                                ),
-                              ),
-
-                              const SizedBox(width: 8),
-
-                              // Course location
-                              if (widget.cart.courseLocation != null)
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.location_on_rounded,
-                                        size: 12,
-                                        color:
-                                            Colors.white.withValues(alpha: 0.5),
-                                      ),
-                                      const SizedBox(width: 4),
-                                      Expanded(
-                                        child: Text(
-                                          widget.cart.courseLocation!,
-                                          style: TextStyle(
-                                            fontSize: 11,
-                                            color: Colors.white
-                                                .withValues(alpha: 0.7),
-                                            height: 1.3,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                            ],
-                          ),
-
                           // All Issues
                           if (widget.cart.activeIssues.isNotEmpty) ...[
                             const SizedBox(height: 12),
@@ -527,21 +523,30 @@ class _AdminCartCardState extends State<AdminCartCard>
                       ),
 
                       // Collapse indicator
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            top: BorderSide(
-                              color: Colors.white.withValues(alpha: 0.08),
-                              width: 1,
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _isExpanded = false;
+                          });
+                          // widget.onTap 호출 안 함 (네비게이션 차단)
+                        },
+                        behavior: HitTestBehavior.opaque,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              top: BorderSide(
+                                color: Colors.white.withValues(alpha: 0.08),
+                                width: 1,
+                              ),
                             ),
                           ),
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 6),
-                        child: Center(
-                          child: Icon(
-                            Icons.keyboard_arrow_up_rounded,
-                            size: 20,
-                            color: Colors.white.withValues(alpha: 0.6),
+                          padding: const EdgeInsets.symmetric(vertical: 6),
+                          child: Center(
+                            child: Icon(
+                              Icons.keyboard_arrow_up_rounded,
+                              size: 20,
+                              color: Colors.white.withValues(alpha: 0.6),
+                            ),
                           ),
                         ),
                       ),
@@ -550,21 +555,30 @@ class _AdminCartCardState extends State<AdminCartCard>
                 ),
               ] else
                 // Expand indicator (collapsed state)
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        color: Colors.white.withValues(alpha: 0.08),
-                        width: 1,
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isExpanded = true;
+                    });
+                    // widget.onTap 호출 안 함 (네비게이션 차단)
+                  },
+                  behavior: HitTestBehavior.opaque,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        top: BorderSide(
+                          color: Colors.white.withValues(alpha: 0.08),
+                          width: 1,
+                        ),
                       ),
                     ),
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 6),
-                  child: Center(
-                    child: Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      size: 20,
-                      color: Colors.white.withValues(alpha: 0.6),
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    child: Center(
+                      child: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        size: 20,
+                        color: Colors.white.withValues(alpha: 0.6),
+                      ),
                     ),
                   ),
                 ),
@@ -713,7 +727,7 @@ class _AdminCartCardState extends State<AdminCartCard>
               Text(
                 label,
                 style: TextStyle(
-                  fontSize: 9,
+                  fontSize: 11,
                   fontWeight: FontWeight.w600,
                   color: Colors.white.withValues(alpha: 0.4),
                   letterSpacing: 0.3,
@@ -724,7 +738,7 @@ class _AdminCartCardState extends State<AdminCartCard>
               Text(
                 value,
                 style: TextStyle(
-                  fontSize: 11,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: warning ? const Color(0xFFD67500) : Colors.white,
                   height: 1.3,
@@ -830,88 +844,4 @@ class _AdminCartCardState extends State<AdminCartCard>
     );
   }
 
-  /// Quick action buttons for collapsed state when critical issues exist
-  Widget _buildQuickActionButtons() {
-    return Row(
-      children: [
-        Expanded(
-          child: InkWell(
-            onTap: widget.onWorkOrder,
-            borderRadius: BorderRadius.circular(6),
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              decoration: BoxDecoration(
-                color: const Color(0xFFD14B4B).withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(
-                  color: const Color(0xFFD14B4B).withValues(alpha: 0.3),
-                  width: 1,
-                ),
-              ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.build_rounded,
-                    size: 14,
-                    color: Color(0xFFD14B4B),
-                  ),
-                  SizedBox(width: 6),
-                  Text(
-                    'CREATE WO',
-                    style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFFD14B4B),
-                      letterSpacing: 0.3,
-                      height: 1.3,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: InkWell(
-            onTap: widget.onTrack,
-            borderRadius: BorderRadius.circular(6),
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.05),
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.1),
-                  width: 1,
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.my_location_rounded,
-                    size: 14,
-                    color: Colors.white.withValues(alpha: 0.8),
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    'TRACK',
-                    style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white.withValues(alpha: 0.8),
-                      letterSpacing: 0.3,
-                      height: 1.3,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 }

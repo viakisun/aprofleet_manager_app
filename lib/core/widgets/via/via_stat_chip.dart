@@ -48,7 +48,8 @@ class ViaStatChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final chipPadding = _getPadding();
-    final fontSize = _getFontSize();
+    final labelFontSize = _getLabelFontSize();
+    final countFontSize = _getCountFontSize();
     final dotSize = _getDotSize();
 
     return GestureDetector(
@@ -57,13 +58,13 @@ class ViaStatChip extends StatelessWidget {
         padding: chipPadding,
         decoration: BoxDecoration(
           color: isActive
-              ? color.withValues(alpha: 0.15)
-              : color.withValues(alpha: 0.08),
+              ? color.withValues(alpha: 0.18) // VIA elegant: 0.25 → 0.18
+              : color.withValues(alpha: 0.10), // VIA elegant: 0.15 → 0.10
           borderRadius: BorderRadius.circular(IndustrialDarkTokens.radiusChip),
           border: Border.all(
             color: isActive
-                ? color.withValues(alpha: 0.4)
-                : color.withValues(alpha: 0.2),
+                ? color.withValues(alpha: 0.35) // VIA elegant: 0.50 → 0.35
+                : color.withValues(alpha: 0.20), // VIA elegant: 0.30 → 0.20
             width: isActive
                 ? IndustrialDarkTokens.borderWidth
                 : IndustrialDarkTokens.borderWidthThin,
@@ -88,7 +89,7 @@ class ViaStatChip extends StatelessWidget {
               label,
               style: TextStyle(
                 color: isActive ? color : color.withValues(alpha: 0.8),
-                fontSize: fontSize,
+                fontSize: labelFontSize,
                 fontWeight: isActive
                     ? IndustrialDarkTokens.fontWeightBold
                     : IndustrialDarkTokens.fontWeightMedium,
@@ -102,7 +103,7 @@ class ViaStatChip extends StatelessWidget {
               count.toString(),
               style: TextStyle(
                 color: color,
-                fontSize: fontSize,
+                fontSize: countFontSize,
                 fontWeight: IndustrialDarkTokens.fontWeightBold,
                 letterSpacing: IndustrialDarkTokens.letterSpacing,
               ),
@@ -133,14 +134,25 @@ class ViaStatChip extends StatelessWidget {
     }
   }
 
-  double _getFontSize() {
+  double _getLabelFontSize() {
     switch (size) {
       case ViaStatChipSize.small:
-        return IndustrialDarkTokens.fontSizeSmall;
+        return 10; // Smaller label
       case ViaStatChipSize.medium:
-        return IndustrialDarkTokens.fontSizeLabel;
+        return 11; // 12 → 11 (smaller)
       case ViaStatChipSize.large:
-        return IndustrialDarkTokens.fontSizeBody;
+        return IndustrialDarkTokens.fontSizeLabel;
+    }
+  }
+
+  double _getCountFontSize() {
+    switch (size) {
+      case ViaStatChipSize.small:
+        return IndustrialDarkTokens.fontSizeLabel;
+      case ViaStatChipSize.medium:
+        return 18; // 14 → 18 (bigger)
+      case ViaStatChipSize.large:
+        return 20; // Bigger count
     }
   }
 

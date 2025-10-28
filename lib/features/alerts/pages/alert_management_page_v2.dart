@@ -363,7 +363,7 @@ class _AlertManagementPageV2State extends ConsumerState<AlertManagementPageV2> {
         onViewCart: alert.cartId != null
             ? () {
                 Navigator.of(context).pop();
-                context.go('/rt/cart/${alert.cartId}');
+                context.push('/rt/cart/${alert.cartId}');
               }
             : null,
       ),

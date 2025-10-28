@@ -199,7 +199,7 @@ class _AlertManagementPageState extends ConsumerState<AlertManagementPage>
           alert: alert,
           onTap: () => _showAlertDetail(alert, alertController),
           onAcknowledge: () => alertController.acknowledgeAlert(alert.id),
-          onViewCart: () => context.go('/rt/cart/${alert.cartId}'),
+          onViewCart: () => context.push('/rt/cart/${alert.cartId}'),
           onCreateWorkOrder: () =>
               context.go('/mm/create?cart=${alert.cartId}'),
         );

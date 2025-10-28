@@ -15,9 +15,9 @@ import '../../../core/widgets/via/via_toast.dart';
 import '../../../core/widgets/via/via_bottom_sheet.dart';
 import '../../../core/widgets/via/via_button.dart';
 import '../../../core/widgets/via/via_input.dart';
+import '../../../core/widgets/via/via_control_bar.dart';
 import '../controllers/cart_inventory_controller.dart';
 import '../widgets/cart_grid_item.dart';
-import '../widgets/inventory_stats_bar.dart';
 import '../widgets/admin_cart_card.dart';
 
 class CartInventoryList extends ConsumerStatefulWidget {
@@ -32,6 +32,8 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
   ViewMode _viewMode = ViewMode.list;
   bool _isSelectionMode = false;
   final Set<String> _selectedCarts = {};
+  String _currentFilter = 'all';
+  String _currentSort = 'id';
 
   @override
   void dispose() {
@@ -52,34 +54,16 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
         title: localizations.navCartManagement,
         showBackButton: false,
         showMenuButton: true,
-        showNotificationButton: true,
-        notificationBadgeCount: 3, // Mock count
+        showNotificationButton: false, // Removed - use bottom nav instead
         onMenuPressed: () => _showHamburgerMenu(context),
-        onNotificationPressed: () => context.go('/al/center'),
         actions: [
-          AppBarActionButton(
-            icon: Icons.route, // 경로 아이콘
-            onPressed: () => _goToRouteView(context),
-          ),
           AppBarActionButton(
             icon: CustomIcons.search,
             onPressed: () => _showSearchDialog(context, inventoryController),
           ),
           AppBarActionButton(
-            icon: CustomIcons.filter,
-            onPressed: () =>
-                _showFilterSheet(context, inventoryController, inventoryState),
-          ),
-          AppBarActionButton(
-            icon: _viewMode == ViewMode.list
-                ? CustomIcons.grid
-                : CustomIcons.list,
-            onPressed: () {
-              setState(() {
-                _viewMode =
-                    _viewMode == ViewMode.list ? ViewMode.grid : ViewMode.list;
-              });
-            },
+            icon: CustomIcons.moreVert,
+            onPressed: () => _showMoreMenu(context, inventoryController, inventoryState),
           ),
           AppBarActionButton(
             icon: CustomIcons.add,
@@ -89,8 +73,8 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
       ),
       body: Column(
         children: [
-          // Stats Bar
-          _buildStatsBar(inventoryController),
+          // Control Bar
+          _buildControlBar(inventoryController),
 
           // Cart List/Grid
           Expanded(
@@ -122,21 +106,169 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
     );
   }
 
-  Widget _buildStatsBar(CartInventoryController controller) {
+  Widget _buildControlBar(CartInventoryController controller) {
     final inventoryState = ref.watch(cartInventoryControllerProvider);
     return inventoryState.carts.when(
-      data: (carts) => InventoryStatsBar(carts: carts),
+      data: (carts) {
+        final stats = _calculateStats(carts);
+        return ViaControlBar(
+          stats: stats,
+          filterOptions: _buildFilterOptions(),
+          sortOptions: _buildSortOptions(),
+          viewModes: _buildViewModes(),
+          currentFilter: _currentFilter,
+          currentSort: _currentSort,
+          currentViewMode: _viewMode == ViewMode.list ? 'list' : 'grid',
+          onFilterChanged: (value) {
+            setState(() {
+              // Handle sort options (prefixed with 'sort:')
+              if (value.startsWith('sort:')) {
+                final sortType = value.substring(5); // Remove 'sort:' prefix
+                _currentSort = sortType;
+                // Sorting logic handled by controller
+              }
+              // Handle divider (do nothing)
+              else if (value == 'divider') {
+                // Do nothing for divider
+              }
+              // Handle filter options
+              else {
+                _currentFilter = value;
+                if (value == 'all') {
+                  controller.clearFilters();
+                } else if (value == 'issues') {
+                  // Filter for maintenance + offline
+                  controller.clearFilters();
+                  controller.toggleStatusFilter(CartStatus.maintenance);
+                  controller.toggleStatusFilter(CartStatus.offline);
+                } else {
+                  final status = _parseCartStatus(value);
+                  if (status != null) {
+                    controller.clearFilters();
+                    controller.toggleStatusFilter(status);
+                  }
+                }
+              }
+            });
+          },
+          onSortChanged: (sort) {
+            setState(() {
+              _currentSort = sort;
+              // Sorting will be handled by controller
+            });
+          },
+          onViewModeChanged: (mode) {
+            setState(() {
+              _viewMode = mode == 'list' ? ViewMode.list : ViewMode.grid;
+            });
+          },
+          onStatTapped: (statId) {
+            setState(() {
+              _currentFilter = statId;
+              if (statId == 'all') {
+                controller.clearFilters();
+              } else if (statId == 'issues') {
+                // Filter for maintenance + offline
+                controller.clearFilters();
+                controller.toggleStatusFilter(CartStatus.maintenance);
+                controller.toggleStatusFilter(CartStatus.offline);
+              } else {
+                final status = _parseCartStatus(statId);
+                if (status != null) {
+                  controller.clearFilters();
+                  controller.toggleStatusFilter(status);
+                }
+              }
+            });
+          },
+        );
+      },
       loading: () => Container(
-        height: 80,
+        height: 120,
         padding: const EdgeInsets.all(IndustrialDarkTokens.spacingItem),
         child: const Center(child: CircularProgressIndicator()),
       ),
       error: (error, stack) => Container(
-        height: 80,
+        height: 120,
         padding: const EdgeInsets.all(IndustrialDarkTokens.spacingItem),
         child: Text('Error loading stats: $error'),
       ),
     );
+  }
+
+  List<ViaStatData> _calculateStats(List<Cart> carts) {
+    final totalCount = carts.length;
+    final activeCount = carts.where((c) => c.status == CartStatus.active).length;
+    final maintenanceCount = carts.where((c) => c.status == CartStatus.maintenance).length;
+    final offlineCount = carts.where((c) => c.status == CartStatus.offline).length;
+    final issuesCount = maintenanceCount + offlineCount;
+
+    return [
+      ViaStatData(
+        label: 'Total',
+        count: totalCount,
+        color: IndustrialDarkTokens.textPrimary,
+        isActive: _currentFilter == 'all',
+        id: 'all',
+      ),
+      ViaStatData(
+        label: 'Active',
+        count: activeCount,
+        color: IndustrialDarkTokens.statusActive,
+        isActive: _currentFilter == 'active',
+        id: 'active',
+      ),
+      ViaStatData(
+        label: 'Issues',
+        count: issuesCount,
+        color: IndustrialDarkTokens.error,
+        isActive: _currentFilter == 'issues',
+        id: 'issues',
+      ),
+    ];
+  }
+
+  List<ViaFilterOption> _buildFilterOptions() {
+    return const [
+      ViaFilterOption(label: 'All Vehicles', value: 'all'),
+      ViaFilterOption(label: 'Active Only', value: 'active'),
+      ViaFilterOption(label: 'Issues Only', value: 'issues'),
+      ViaFilterOption(label: 'Charging', value: 'charging'),
+      ViaFilterOption(label: '─────────', value: 'divider'),
+      ViaFilterOption(label: 'Sort by ID', value: 'sort:id'),
+      ViaFilterOption(label: 'Sort by Battery', value: 'sort:battery'),
+      ViaFilterOption(label: 'Sort by Status', value: 'sort:status'),
+    ];
+  }
+
+  List<ViaSortOption> _buildSortOptions() {
+    // Sort options are now integrated into filter options
+    // Keeping this method for compatibility but returning empty
+    return const [];
+  }
+
+  List<ViaViewMode> _buildViewModes() {
+    return const [
+      ViaViewMode(label: 'List', value: 'list', icon: Icons.view_list),
+      ViaViewMode(label: 'Grid', value: 'grid', icon: Icons.grid_view),
+    ];
+  }
+
+  CartStatus? _parseCartStatus(String statusString) {
+    switch (statusString.toLowerCase()) {
+      case 'active':
+        return CartStatus.active;
+      case 'idle':
+        return CartStatus.idle;
+      case 'charging':
+        return CartStatus.charging;
+      case 'maintenance':
+        return CartStatus.maintenance;
+      case 'offline':
+        return CartStatus.offline;
+      default:
+        return null;
+    }
   }
 
   Widget _buildCartList(List<Cart> carts, CartInventoryController controller) {
@@ -178,7 +310,7 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
           cart: cart,
           isSelected: _selectedCarts.contains(cart.id),
           onTap: () => _handleCartTap(cart),
-          onTrack: () => context.go('/rt/cart/${cart.id}'),
+          onTrack: () => context.go('/rt/map?cartId=${cart.id}'),
           onService: () => _showServiceSheet(cart),
           onWorkOrder: () => context.go('/mm/create?cart=${cart.id}'),
         );
@@ -311,7 +443,7 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
                         style: TextStyle(color: Colors.white)),
                     onTap: () {
                       Navigator.of(context).pop();
-                      context.go('/rt/cart/${cart.id}');
+                      context.push('/rt/cart/${cart.id}');
                     },
                   ),
                   ListTile(
@@ -412,7 +544,7 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
             text: locale.view.toUpperCase(),
             onPressed: () {
               Navigator.of(context).pop();
-              context.go('/rt/cart/${cart.id}');
+              context.push('/rt/cart/${cart.id}');
             },
           ),
         ],
@@ -474,7 +606,7 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
     if (_isSelectionMode) {
       _handleCartSelection(cart);
     } else {
-      context.go('/rt/cart/${cart.id}');
+      context.push('/rt/cart/${cart.id}');
     }
   }
 
@@ -540,6 +672,81 @@ class _CartInventoryListState extends ConsumerState<CartInventoryList> {
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
       builder: (context) => const HamburgerMenu(),
+    );
+  }
+
+  void _showMoreMenu(BuildContext context, CartInventoryController controller, inventoryState) {
+    ViaBottomSheet.show(
+      context: context,
+      snapPoints: [0.35],
+      header: const Text(
+        'More Options',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: IndustrialDarkTokens.textPrimary,
+        ),
+      ),
+      child: Column(
+        children: [
+          // Route view option
+          ListTile(
+            leading: Icon(
+              CustomIcons.route,
+              color: IndustrialDarkTokens.textPrimary,
+            ),
+            title: const Text(
+              'Route View',
+              style: TextStyle(
+                color: IndustrialDarkTokens.textPrimary,
+                fontSize: 16,
+              ),
+            ),
+            onTap: () {
+              Navigator.of(context).pop();
+              _goToRouteView(context);
+            },
+          ),
+          // Filter option
+          ListTile(
+            leading: Icon(
+              CustomIcons.filter,
+              color: IndustrialDarkTokens.textPrimary,
+            ),
+            title: const Text(
+              'Filter',
+              style: TextStyle(
+                color: IndustrialDarkTokens.textPrimary,
+                fontSize: 16,
+              ),
+            ),
+            onTap: () {
+              Navigator.of(context).pop();
+              _showFilterSheet(context, controller, inventoryState);
+            },
+          ),
+          // View mode toggle
+          ListTile(
+            leading: Icon(
+              _viewMode == ViewMode.list ? CustomIcons.grid : CustomIcons.list,
+              color: IndustrialDarkTokens.textPrimary,
+            ),
+            title: Text(
+              _viewMode == ViewMode.list ? 'Grid View' : 'List View',
+              style: const TextStyle(
+                color: IndustrialDarkTokens.textPrimary,
+                fontSize: 16,
+              ),
+            ),
+            onTap: () {
+              Navigator.of(context).pop();
+              setState(() {
+                _viewMode = _viewMode == ViewMode.list ? ViewMode.grid : ViewMode.list;
+              });
+            },
+          ),
+        ],
+      ),
     );
   }
 }

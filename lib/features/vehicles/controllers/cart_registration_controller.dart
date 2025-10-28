@@ -219,11 +219,11 @@ class CartRegistrationState {
   });
 
   factory CartRegistrationState.initial() {
-    return const CartRegistrationState(
-      cartId: '',
+    return CartRegistrationState(
+      cartId: CodeFormatters.formatCartId(1), // Generate initial cart ID
       vin: '',
-      componentSerials: {},
-      imagePaths: {},
+      componentSerials: const {},
+      imagePaths: const {},
       isLoading: false,
     );
   }

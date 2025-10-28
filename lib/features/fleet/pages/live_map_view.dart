@@ -28,7 +28,12 @@ import '../widgets/cart_ripple_animation.dart';
 /// 4. MapboxMapView가 경로 바운드로 부드럽게 줌인 (2초)
 /// 5. 경로와 카트 마커 표시
 class LiveMapView extends ConsumerStatefulWidget {
-  const LiveMapView({super.key});
+  final String? initialCartId;
+
+  const LiveMapView({
+    super.key,
+    this.initialCartId,
+  });
 
   @override
   ConsumerState<LiveMapView> createState() => _LiveMapViewState();
@@ -111,6 +116,27 @@ class _LiveMapViewState extends ConsumerState<LiveMapView> {
 
       debugPrint(
           '[LiveMapView] Route loading complete, displaying map with route');
+
+      // 8. initialCartId가 있으면 해당 카트로 포커스
+      if (widget.initialCartId != null) {
+        final targetCart = _carts.firstWhere(
+          (cart) => cart.id == widget.initialCartId,
+          orElse: () => _carts.first,
+        );
+
+        // 약간의 딜레이 후 카트 선택 및 포커스 (지도 렌더링 대기)
+        await Future.delayed(const Duration(milliseconds: 500));
+
+        setState(() {
+          _selectedCart = targetCart;
+        });
+
+        // 지도 카메라를 해당 카트로 이동
+        _mapKey.currentState?.animateCameraToCart(targetCart.position);
+
+        debugPrint(
+            '[LiveMapView] Focused on initial cart: ${targetCart.id} at ${targetCart.position}');
+      }
     } catch (e) {
       debugPrint('[LiveMapView] Error loading data: $e');
       setState(() {

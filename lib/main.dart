@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'router/app_router.dart';
 import 'theme/app_theme.dart';
@@ -12,6 +13,9 @@ import 'core/services/providers.dart';
 void main() async {
   // Flutter 바인딩 초기화
   WidgetsFlutterBinding.ensureInitialized();
+
+  // 환경 변수 로드
+  await dotenv.load(fileName: ".env");
 
   // 화면 방향을 세로 모드로만 고정
   await SystemChrome.setPreferredOrientations([

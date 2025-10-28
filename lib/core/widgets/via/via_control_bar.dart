@@ -125,8 +125,7 @@ class ViaControlBar extends StatelessWidget {
                             : null,
                       ),
                       if (i < stats.length - 1)
-                        const SizedBox(
-                            width: IndustrialDarkTokens.spacingCompact),
+                        const SizedBox(width: 8),
                     ],
                   ],
                 ),

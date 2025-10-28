@@ -74,18 +74,21 @@ class ProfessionalAppBar extends StatelessWidget
 
               // Title (left-aligned, iOS-style typography)
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: DesignTokens.spacingMd),
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: DesignTokens.fontSizeXl,
-                      fontWeight: FontWeight.w600, // iOS SF Pro semibold
-                      color: foregroundColor ?? DesignTokens.textPrimary,
-                      letterSpacing: -0.5, // iOS-style tighter tracking
-                      height: 1.2,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: DesignTokens.fontSizeXl,
+                        fontWeight: FontWeight.w600, // iOS SF Pro semibold
+                        color: foregroundColor ?? DesignTokens.textPrimary,
+                        letterSpacing: -0.5, // iOS-style tighter tracking
+                        height: 1.2,
+                      ),
+                      textAlign: TextAlign.left,
                     ),
-                    textAlign: TextAlign.left,
                   ),
                 ),
               ),
@@ -137,17 +140,20 @@ class ProfessionalAppBar extends StatelessWidget
   /// Modern iOS-style menu button with proper touch area and ripple
   Widget _buildMenuButton(BuildContext context) {
     return Material(
-      color: Colors.white.withOpacity(0.06), // Subtle background
-      borderRadius: BorderRadius.circular(12),
+      color: Colors.transparent,
       child: InkWell(
         onTap: onMenuPressed,
         borderRadius: BorderRadius.circular(12),
-        splashColor: Colors.white.withOpacity(0.1),
-        highlightColor: Colors.white.withOpacity(0.05),
+        splashColor: Colors.white.withValues(alpha: 0.1),
+        highlightColor: Colors.white.withValues(alpha: 0.05),
         child: Container(
           width: 48, // Minimum touch area (accessibility)
           height: 48,
           alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.08), // VIA glassmorphism - lighter & elegant
+            borderRadius: BorderRadius.circular(12),
+          ),
           child: Icon(
             CustomIcons.menu,
             size: 24, // Standard icon size
@@ -161,17 +167,20 @@ class ProfessionalAppBar extends StatelessWidget
   /// Modern iOS-style notification button with badge and proper touch area
   Widget _buildNotificationButton(BuildContext context) {
     return Material(
-      color: Colors.white.withOpacity(0.06), // Subtle background
-      borderRadius: BorderRadius.circular(12),
+      color: Colors.transparent,
       child: InkWell(
         onTap: onNotificationPressed,
         borderRadius: BorderRadius.circular(12),
-        splashColor: Colors.white.withOpacity(0.1),
-        highlightColor: Colors.white.withOpacity(0.05),
+        splashColor: Colors.white.withValues(alpha: 0.1),
+        highlightColor: Colors.white.withValues(alpha: 0.05),
         child: Container(
           width: 48, // Minimum touch area (accessibility)
           height: 48,
           alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.08), // VIA glassmorphism - lighter & elegant
+            borderRadius: BorderRadius.circular(12),
+          ),
           child: Stack(
             clipBehavior: Clip.none,
             children: [
@@ -247,14 +256,18 @@ class AppBarActionButton extends StatelessWidget {
     return Tooltip(
       message: tooltip ?? '',
       child: Material(
-        color: backgroundColor ?? Colors.transparent,
+        color: Colors.transparent,
         child: InkWell(
           onTap: onPressed,
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(12.0),
           child: Container(
             width: size + 16,
             height: size + 16,
             padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              color: backgroundColor ?? Colors.white.withValues(alpha: 0.08), // VIA glassmorphism - lighter & elegant
+              borderRadius: BorderRadius.circular(12.0),
+            ),
             child: Icon(
               icon,
               size: size,

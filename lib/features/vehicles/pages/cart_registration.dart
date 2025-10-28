@@ -32,18 +32,10 @@ class CartRegistrationPage extends ConsumerStatefulWidget {
 }
 
 class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
-  late CartRegistrationController _controller;
   final PageController _pageController = PageController();
   int _currentStep = 0;
   bool _isLoading = false;
   final ImagePicker _imagePicker = ImagePicker();
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = ref.read(cartRegistrationControllerProvider.notifier);
-    _controller.generateCartId();
-  }
 
   @override
   void dispose() {
@@ -136,7 +128,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
             ),
             style: const TextStyle(color: Colors.white),
             readOnly: true,
-            onTap: () => _controller.generateCartId(),
+            onTap: () => ref.read(cartRegistrationControllerProvider.notifier).generateCartId(),
           ),
 
           const SizedBox(height: 16),
@@ -152,7 +144,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
             ),
             style: const TextStyle(color: Colors.white),
             maxLength: 17,
-            onChanged: _controller.setVin,
+            onChanged: ref.read(cartRegistrationControllerProvider.notifier).setVin,
             validator: (value) {
               if (value == null || value.length < 11 || value.length > 17) {
                 return 'VIN must be 11-17 characters';
@@ -184,8 +176,8 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
                   }).toList(),
                   onChanged: (manufacturer) {
                     if (manufacturer != null) {
-                      _controller.setManufacturer(manufacturer);
-                      _controller.setModel(
+                      ref.read(cartRegistrationControllerProvider.notifier).setManufacturer(manufacturer);
+                      ref.read(cartRegistrationControllerProvider.notifier).setModel(
                           ''); // Reset model when manufacturer changes
                     }
                   },
@@ -215,7 +207,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
                   }).toList(),
                   onChanged: (model) {
                     if (model != null) {
-                      _controller.setModel(model);
+                      ref.read(cartRegistrationControllerProvider.notifier).setModel(model);
                     }
                   },
                 ),
@@ -247,7 +239,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
                   }),
                   onChanged: (year) {
                     if (year != null) {
-                      _controller.setYear(year);
+                      ref.read(cartRegistrationControllerProvider.notifier).setYear(year);
                     }
                   },
                 ),
@@ -263,7 +255,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
                     hintText: 'e.g., White, Black',
                   ),
                   style: const TextStyle(color: Colors.white),
-                  onChanged: _controller.setColor,
+                  onChanged: ref.read(cartRegistrationControllerProvider.notifier).setColor,
                 ),
               ),
             ],
@@ -336,7 +328,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
                   }).toList(),
                   onChanged: (type) {
                     if (type != null) {
-                      _controller.setBatteryType(type);
+                      ref.read(cartRegistrationControllerProvider.notifier).setBatteryType(type);
                     }
                   },
                 ),
@@ -360,7 +352,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
                   }).toList(),
                   onChanged: (voltage) {
                     if (voltage != null) {
-                      _controller.setVoltage(voltage);
+                      ref.read(cartRegistrationControllerProvider.notifier).setVoltage(voltage);
                     }
                   },
                 ),
@@ -391,7 +383,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
                   }).toList(),
                   onChanged: (seating) {
                     if (seating != null) {
-                      _controller.setSeating(seating);
+                      ref.read(cartRegistrationControllerProvider.notifier).setSeating(seating);
                     }
                   },
                 ),
@@ -411,7 +403,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
                   onChanged: (value) {
                     final speed = double.tryParse(value);
                     if (speed != null) {
-                      _controller.setMaxSpeed(speed);
+                      ref.read(cartRegistrationControllerProvider.notifier).setMaxSpeed(speed);
                     }
                   },
                 ),
@@ -431,7 +423,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
               hintText: 'GPS-001',
             ),
             style: const TextStyle(color: Colors.white),
-            onChanged: _controller.setGpsTrackerId,
+            onChanged: ref.read(cartRegistrationControllerProvider.notifier).setGpsTrackerId,
           ),
 
           const SizedBox(height: 16),
@@ -445,7 +437,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
               hintText: 'TEL-001',
             ),
             style: const TextStyle(color: Colors.white),
-            onChanged: _controller.setTelemetryDeviceId,
+            onChanged: ref.read(cartRegistrationControllerProvider.notifier).setTelemetryDeviceId,
           ),
         ],
       ),
@@ -475,7 +467,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
             ImageUploadGrid(
               images: registrationState.images ?? [],
               onImagesChanged: (images) {
-                _controller.setImages(images);
+                ref.read(cartRegistrationControllerProvider.notifier).setImages(images);
               },
               maxImages: 10,
               allowedCategories: const [
@@ -615,7 +607,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
               hintText: 'INS-001',
             ),
             style: const TextStyle(color: Colors.white),
-            onChanged: _controller.setInsuranceNumber,
+            onChanged: ref.read(cartRegistrationControllerProvider.notifier).setInsuranceNumber,
           ),
 
           const SizedBox(height: 16),
@@ -634,7 +626,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
             onChanged: (value) {
               final odometer = double.tryParse(value);
               if (odometer != null) {
-                _controller.setOdometer(odometer);
+                ref.read(cartRegistrationControllerProvider.notifier).setOdometer(odometer);
               }
             },
           ),
@@ -715,9 +707,9 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
                   value: serial != null && serial.isNotEmpty,
                   onChanged: (value) {
                     if (value == true) {
-                      _controller.setComponentSerial(serialKey, '');
+                      ref.read(cartRegistrationControllerProvider.notifier).setComponentSerial(serialKey, '');
                     } else {
-                      _controller.removeComponentSerial(serialKey);
+                      ref.read(cartRegistrationControllerProvider.notifier).removeComponentSerial(serialKey);
                     }
                   },
                   activeColor: Colors.white,
@@ -746,7 +738,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
                 ),
                 style: const TextStyle(color: Colors.white),
                 onChanged: (value) =>
-                    _controller.setComponentSerial(serialKey, value),
+                    ref.read(cartRegistrationControllerProvider.notifier).setComponentSerial(serialKey, value),
               ),
             ],
           ],
@@ -799,7 +791,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
                 const SizedBox(width: 8),
                 IconButton(
                   icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () => _controller.removeImage(photoKey),
+                  onPressed: () => ref.read(cartRegistrationControllerProvider.notifier).removeImage(photoKey),
                 ),
               ] else ...[
                 ActionButton(
@@ -987,7 +979,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
         final fileName = '$photoKey.jpg';
         final filePath = '${cartDir.path}/$fileName';
         await image.saveTo(filePath);
-        _controller.setImagePath(photoKey, filePath);
+        ref.read(cartRegistrationControllerProvider.notifier).setImagePath(photoKey, filePath);
 
         if (mounted) {
           ViaToast.show(
@@ -1030,7 +1022,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
     );
 
     if (selectedDate != null) {
-      _controller.setPurchaseDate(selectedDate);
+      ref.read(cartRegistrationControllerProvider.notifier).setPurchaseDate(selectedDate);
     }
   }
 
@@ -1056,7 +1048,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
     );
 
     if (selectedDate != null) {
-      _controller.setWarrantyExpiry(selectedDate);
+      ref.read(cartRegistrationControllerProvider.notifier).setWarrantyExpiry(selectedDate);
     }
   }
 
@@ -1167,7 +1159,7 @@ class _CartRegistrationPageState extends ConsumerState<CartRegistrationPage> {
             onPressed: () {
               Navigator.of(context).pop();
               // Reset form for new registration
-              _controller.reset();
+              ref.read(cartRegistrationControllerProvider.notifier).reset();
               setState(() {
                 _currentStep = 0;
               });
