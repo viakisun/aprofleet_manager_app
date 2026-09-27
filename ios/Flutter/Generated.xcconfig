@@ -4,7 +4,7 @@ FLUTTER_APPLICATION_PATH=/Users/adminvia/devwork/_DY/aprofleet_manager_app
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_TARGET=/Users/adminvia/devwork/_DY/aprofleet_manager_app/lib/main.dart
 FLUTTER_BUILD_DIR=build
-FLUTTER_BUILD_NAME=0.1.1
+FLUTTER_BUILD_NAME=0.2.0
 FLUTTER_BUILD_NUMBER=1
 EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386 arm64
 EXCLUDED_ARCHS[sdk=iphoneos*]=armv7
